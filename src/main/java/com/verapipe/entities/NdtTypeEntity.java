@@ -1,6 +1,5 @@
 package com.verapipe.entities;
 
-import com.verapipe.dto.FusionProcess;
 import com.verapipe.dto.NdtType;
 
 import javax.persistence.*;

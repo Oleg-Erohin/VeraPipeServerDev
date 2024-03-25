@@ -1,17 +1,17 @@
 package com.verapipe.dto;
 
-public class Material {
+public class BaseMaterialType {
     private int id;
     private String name;
 
-    public Material() {
+    public BaseMaterialType() {
     }
 
-    public Material(String name) {
+    public BaseMaterialType(String name) {
         this.name = name;
     }
 
-    public Material(int id, String name) {
+    public BaseMaterialType(int id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -34,7 +34,7 @@ public class Material {
 
     @Override
     public String toString() {
-        return "Material{" +
+        return "BaseMaterialType{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

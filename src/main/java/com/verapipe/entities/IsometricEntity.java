@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "p&id")
-public class PidEntity {
+public class IsometricEntity {
     @Id
     @GeneratedValue
     private int id;
@@ -24,18 +24,18 @@ public class PidEntity {
     private int sheets;
 
 //    @ManyToMany(mappedBy = "p&id", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-//    private List<IsometricDrawingEntity> isometricDrawingsList;
-//
+//    private List<IsometricEntity> isometricsList;
+
 //    @OneToMany(mappedBy = "p&id", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 //    private List<JointEntity> JointsList;
 //
 //    @ManyToMany(mappedBy = "p&id", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 //    private List<PressureTestPackageEntity> pressureTestPackagesList;
 
-    public PidEntity() {
+    public IsometricEntity() {
     }
 
-    public PidEntity(Pid pid) {
+    public IsometricEntity(Pid pid) {
         this.id = pid.getId();
         this.name = pid.getName();
         this.file = pid.getFile();

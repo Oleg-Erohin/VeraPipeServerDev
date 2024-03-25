@@ -1,17 +1,17 @@
 package com.verapipe.dto;
 
-public class FillerMaterial {
+public class FillerMaterialType {
     private int id;
     private String name;
 
-    public FillerMaterial() {
+    public FillerMaterialType() {
     }
 
-    public FillerMaterial(String name) {
+    public FillerMaterialType(String name) {
         this.name = name;
     }
 
-    public FillerMaterial(int id, String name) {
+    public FillerMaterialType(int id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -34,7 +34,7 @@ public class FillerMaterial {
 
     @Override
     public String toString() {
-        return "FillerMaterial{" +
+        return "FillerMaterialType{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
