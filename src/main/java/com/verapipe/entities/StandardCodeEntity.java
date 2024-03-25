@@ -1,13 +1,13 @@
 package com.verapipe.entities;
 
 import com.verapipe.dto.JointDesign;
+import com.verapipe.dto.StandardCode;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name = "joint_design")
-public class JointDesignEntity {
+@Table(name = "standard_code")
+public class StandardCodeEntity {
     @Id
     @GeneratedValue
     private int id;
@@ -15,18 +15,15 @@ public class JointDesignEntity {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-//    @OneToMany(mappedBy = "joint_design", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+//    @OneToMany(mappedBy = "standard_code", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 //    private List<ProcessSpecificationProcedureEntity> processSpecificationProceduresList;
-//
-//    @OneToMany(mappedBy = "joint_design", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-//    private List<JointerEntity> jointerList;
 
-    public JointDesignEntity() {
+    public StandardCodeEntity() {
     }
 
-    public JointDesignEntity(JointDesign jointDesign) {
-        this.id = jointDesign.getId();
-        this.name = jointDesign.getName();
+    public StandardCodeEntity(StandardCode standardCode) {
+        this.id = standardCode.getId();
+        this.name = standardCode.getName();
     }
 
     public int getId() {
