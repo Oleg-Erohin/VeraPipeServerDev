@@ -1,12 +1,13 @@
 package com.verapipe.entities;
 
-import com.verapipe.dto.Pid;
+import com.verapipe.dto.Coordinates;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "p&id")
+@Table(name = "isometric")
 public class IsometricEntity {
     @Id
     @GeneratedValue
@@ -22,73 +23,15 @@ public class IsometricEntity {
     private Date date;
     @Column(name = "sheets", nullable = false)
     private int sheets;
+    @Column(name = "coordinates")
+    private List<Coordinates> coordinatesInPid;
+    @Column(name = "is_approved", nullable = false)
+    private boolean isApproved;
+    @ManyToMany
+    private List<PidEntity> pidsList;
+//    @OneToMany(mappedBy = "isometric", fetch = FetchType.LAZY)
+//    private List<JointEntity> jointsList;
+//    @ManyToMany(mappedBy = "isometric", fetch = FetchType.LAZY)
+//    private List<PressureTestPackage> testPacksList;
 
-//    @ManyToMany(mappedBy = "p&id", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-//    private List<IsometricEntity> isometricsList;
-
-//    @OneToMany(mappedBy = "p&id", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-//    private List<JointEntity> JointsList;
-//
-//    @ManyToMany(mappedBy = "p&id", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-//    private List<PressureTestPackageEntity> pressureTestPackagesList;
-
-    public IsometricEntity() {
-    }
-
-    public IsometricEntity(Pid pid) {
-        this.id = pid.getId();
-        this.name = pid.getName();
-        this.file = pid.getFile();
-        this.revision = pid.getRevision();
-        this.date = pid.getDate();
-        this.sheets = pid.getSheets();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
-    }
-
-    public String getRevision() {
-        return revision;
-    }
-
-    public void setRevision(String revision) {
-        this.revision = revision;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public int getSheets() {
-        return sheets;
-    }
-
-    public void setSheets(int sheets) {
-        this.sheets = sheets;
-    }
 }

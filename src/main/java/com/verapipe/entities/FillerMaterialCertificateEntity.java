@@ -4,14 +4,12 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "base_material_certificate")
-public class BaseMaterialCertificateEntity {
+public class FillerMaterialCertificateEntity {
     @Id
     @GeneratedValue
     private int id;
     @Column(name = "heat_number", unique = true, nullable = false)
     private String heatNum;
-    @Column(name = "lot_number", unique = true, nullable = false)
-    private String lotNum;
     @Column(name = "certificate_file")
     private byte[] certificateFile;
     @ManyToOne(fetch = FetchType.EAGER)

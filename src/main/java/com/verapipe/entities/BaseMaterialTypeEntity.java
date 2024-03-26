@@ -18,9 +18,9 @@ public class BaseMaterialTypeEntity {
     @ManyToMany(mappedBy = "base_material_type", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<ProcessSpecificationProcedureEntity> processSpecificationProceduresList;
 
-//    @ManyToMany(mappedBy = "base_material_type", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-//    private List<JointerEntity> jointerList;
-//
+    @ManyToMany(mappedBy = "base_material_type", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<JoinerEntity> joinerList;
+
     @OneToMany(mappedBy = "base_material_type", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<BaseMaterialCertificateEntity> baseMaterialCertificatesList;
 

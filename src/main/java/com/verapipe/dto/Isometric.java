@@ -13,13 +13,13 @@ public class Isometric {
     private String revision;
     private Date date;
     private int sheets;
-    private List<Coordinates> coordinatesList;
+    private List<Coordinates> coordinatesInPid;
     private boolean isApproved;
 
     public Isometric() {
     }
 
-    public Isometric(String name, String pidName, List<Integer> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesList, boolean isApproved) {
+    public Isometric(String name, String pidName, List<Integer> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved) {
         this.name = name;
         PidName = pidName;
         PidSheets = pidSheets;
@@ -27,11 +27,11 @@ public class Isometric {
         this.revision = revision;
         this.date = date;
         this.sheets = sheets;
-        this.coordinatesList = coordinatesList;
+        this.coordinatesInPid = coordinatesInPid;
         this.isApproved = isApproved;
     }
 
-    public Isometric(int id, String name, String pidName, List<Integer> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesList, boolean isApproved) {
+    public Isometric(int id, String name, String pidName, List<Integer> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved) {
         this.id = id;
         this.name = name;
         PidName = pidName;
@@ -40,7 +40,7 @@ public class Isometric {
         this.revision = revision;
         this.date = date;
         this.sheets = sheets;
-        this.coordinatesList = coordinatesList;
+        this.coordinatesInPid = coordinatesInPid;
         this.isApproved = isApproved;
     }
 
@@ -108,12 +108,12 @@ public class Isometric {
         this.sheets = sheets;
     }
 
-    public List<Coordinates> getCoordinatesList() {
-        return coordinatesList;
+    public List<Coordinates> getCoordinatesInPid() {
+        return coordinatesInPid;
     }
 
-    public void setCoordinatesList(List<Coordinates> coordinatesList) {
-        this.coordinatesList = coordinatesList;
+    public void setCoordinatesInPid(List<Coordinates> coordinatesInPid) {
+        this.coordinatesInPid = coordinatesInPid;
     }
 
     public boolean isApproved() {
@@ -135,7 +135,7 @@ public class Isometric {
                 ", revision='" + revision + '\'' +
                 ", date=" + date +
                 ", sheets=" + sheets +
-                ", coordinatesList=" + coordinatesList +
+                ", coordinatesInPid=" + coordinatesInPid +
                 ", isApproved=" + isApproved +
                 '}';
     }

@@ -1,3 +1,4 @@
 Add comments to P&ID, Iso, and Joint
 Make constructors and setters/getters for all entities
 Ensure all the "MappedBy" match the table name
+Ensure all tables names are correct

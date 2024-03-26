@@ -4,6 +4,7 @@ import com.verapipe.dto.Pid;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "p&id")
@@ -22,13 +23,10 @@ public class PidEntity {
     private Date date;
     @Column(name = "sheets", nullable = false)
     private int sheets;
-
-//    @ManyToMany(mappedBy = "p&id", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-//    private List<IsometricDrawingEntity> isometricDrawingsList;
-//
+    @ManyToMany(mappedBy = "p&id", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<IsometricEntity> isometricDrawingsList;
 //    @OneToMany(mappedBy = "p&id", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 //    private List<JointEntity> JointsList;
-//
 //    @ManyToMany(mappedBy = "p&id", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 //    private List<PressureTestPackageEntity> pressureTestPackagesList;
 
