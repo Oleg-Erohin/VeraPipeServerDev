@@ -1,6 +1,7 @@
 package com.verapipe.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "base_material_certificate")
@@ -16,5 +17,7 @@ public class BaseMaterialCertificateEntity {
     private byte[] certificateFile;
     @ManyToOne(fetch = FetchType.EAGER)
     private String materialName;
+    @ManyToMany(mappedBy = "base_material_certificate", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<JointEntity> jointsList;
 
 }

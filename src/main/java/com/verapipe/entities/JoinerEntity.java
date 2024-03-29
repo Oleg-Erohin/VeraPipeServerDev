@@ -5,6 +5,7 @@ import com.verapipe.dto.FusionProcess;
 import com.verapipe.dto.JointDesign;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "joiner")
@@ -34,6 +35,6 @@ public class JoinerEntity {
     private JointDesign jointDesign;
     @ManyToOne
     private FusionProcess fusionProcess;
-//    @ManyToMany(mappedBy = "joiner", fetch = FetchType.LAZY)
-//    private List<JointEntity> jointsList;
+    @ManyToMany(mappedBy = "joiner", fetch = FetchType.LAZY)
+    private List<JointEntity> jointsList;
 }

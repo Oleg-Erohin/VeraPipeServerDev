@@ -11,15 +11,15 @@ public class Joiner {
     private Float certifiedDiameterMinInch;
     private Float certifiedDiameterMaxInch;
     private Float maxDepositedMaterial;
-    private BaseMaterialType baseMaterialType1;
-    private BaseMaterialType baseMaterialType2;
-    private JointDesign jointDesign;
-    private FusionProcess fusionProcess;
+    private String baseMaterialTypeName1;
+    private String baseMaterialTypeName2;
+    private String jointDesignName;
+    private String fusionProcessName;
 
     public Joiner() {
     }
 
-    public Joiner(String tagId, byte[] certificate, Float certifiedDiameterMinMm, Float certifiedDiameterMaxMm, Float certifiedDiameterMinInch, Float certifiedDiameterMaxInch, Float maxDepositedMaterial, BaseMaterialType baseMaterialType1, BaseMaterialType baseMaterialType2, JointDesign jointDesign, FusionProcess fusionProcess) {
+    public Joiner(String tagId, byte[] certificate, Float certifiedDiameterMinMm, Float certifiedDiameterMaxMm, Float certifiedDiameterMinInch, Float certifiedDiameterMaxInch, Float maxDepositedMaterial, String baseMaterialTypeName1, String baseMaterialTypeName2, String jointDesignName, String fusionProcessName) {
         this.tagId = tagId;
         this.certificate = certificate;
         this.certifiedDiameterMinMm = certifiedDiameterMinMm;
@@ -27,13 +27,13 @@ public class Joiner {
         this.certifiedDiameterMinInch = certifiedDiameterMinInch;
         this.certifiedDiameterMaxInch = certifiedDiameterMaxInch;
         this.maxDepositedMaterial = maxDepositedMaterial;
-        this.baseMaterialType1 = baseMaterialType1;
-        this.baseMaterialType2 = baseMaterialType2;
-        this.jointDesign = jointDesign;
-        this.fusionProcess = fusionProcess;
+        this.baseMaterialTypeName1 = baseMaterialTypeName1;
+        this.baseMaterialTypeName2 = baseMaterialTypeName2;
+        this.jointDesignName = jointDesignName;
+        this.fusionProcessName = fusionProcessName;
     }
 
-    public Joiner(int id, String tagId, byte[] certificate, Float certifiedDiameterMinMm, Float certifiedDiameterMaxMm, Float certifiedDiameterMinInch, Float certifiedDiameterMaxInch, Float maxDepositedMaterial, BaseMaterialType baseMaterialType1, BaseMaterialType baseMaterialType2, JointDesign jointDesign, FusionProcess fusionProcess) {
+    public Joiner(int id, String tagId, byte[] certificate, Float certifiedDiameterMinMm, Float certifiedDiameterMaxMm, Float certifiedDiameterMinInch, Float certifiedDiameterMaxInch, Float maxDepositedMaterial, String baseMaterialTypeName1, String baseMaterialTypeName2, String jointDesignName, String fusionProcessName) {
         this.id = id;
         this.tagId = tagId;
         this.certificate = certificate;
@@ -42,10 +42,10 @@ public class Joiner {
         this.certifiedDiameterMinInch = certifiedDiameterMinInch;
         this.certifiedDiameterMaxInch = certifiedDiameterMaxInch;
         this.maxDepositedMaterial = maxDepositedMaterial;
-        this.baseMaterialType1 = baseMaterialType1;
-        this.baseMaterialType2 = baseMaterialType2;
-        this.jointDesign = jointDesign;
-        this.fusionProcess = fusionProcess;
+        this.baseMaterialTypeName1 = baseMaterialTypeName1;
+        this.baseMaterialTypeName2 = baseMaterialTypeName2;
+        this.jointDesignName = jointDesignName;
+        this.fusionProcessName = fusionProcessName;
     }
 
     public int getId() {
@@ -112,36 +112,36 @@ public class Joiner {
         this.maxDepositedMaterial = maxDepositedMaterial;
     }
 
-    public BaseMaterialType getBaseMaterialType1() {
-        return baseMaterialType1;
+    public String getBaseMaterialTypeName1() {
+        return baseMaterialTypeName1;
     }
 
-    public void setBaseMaterialType1(BaseMaterialType baseMaterialType1) {
-        this.baseMaterialType1 = baseMaterialType1;
+    public void setBaseMaterialTypeName1(String baseMaterialTypeName1) {
+        this.baseMaterialTypeName1 = baseMaterialTypeName1;
     }
 
-    public BaseMaterialType getBaseMaterialType2() {
-        return baseMaterialType2;
+    public String getBaseMaterialTypeName2() {
+        return baseMaterialTypeName2;
     }
 
-    public void setBaseMaterialType2(BaseMaterialType baseMaterialType2) {
-        this.baseMaterialType2 = baseMaterialType2;
+    public void setBaseMaterialTypeName2(String baseMaterialTypeName2) {
+        this.baseMaterialTypeName2 = baseMaterialTypeName2;
     }
 
-    public JointDesign getJointDesign() {
-        return jointDesign;
+    public String getJointDesignName() {
+        return jointDesignName;
     }
 
-    public void setJointDesign(JointDesign jointDesign) {
-        this.jointDesign = jointDesign;
+    public void setJointDesignName(String jointDesignName) {
+        this.jointDesignName = jointDesignName;
     }
 
-    public FusionProcess getFusionProcess() {
-        return fusionProcess;
+    public String getFusionProcessName() {
+        return fusionProcessName;
     }
 
-    public void setFusionProcess(FusionProcess fusionProcess) {
-        this.fusionProcess = fusionProcess;
+    public void setFusionProcessName(String fusionProcessName) {
+        this.fusionProcessName = fusionProcessName;
     }
 
     @Override
@@ -155,10 +155,10 @@ public class Joiner {
                 ", certifiedDiameterMinInch=" + certifiedDiameterMinInch +
                 ", certifiedDiameterMaxInch=" + certifiedDiameterMaxInch +
                 ", maxDepositedMaterial=" + maxDepositedMaterial +
-                ", baseMaterialType1=" + baseMaterialType1 +
-                ", baseMaterialType2=" + baseMaterialType2 +
-                ", jointDesign=" + jointDesign +
-                ", fusionProcess=" + fusionProcess +
+                ", baseMaterialTypeName1=" + baseMaterialTypeName1 +
+                ", baseMaterialTypeName2=" + baseMaterialTypeName2 +
+                ", jointDesignName=" + jointDesignName +
+                ", fusionProcessName=" + fusionProcessName +
                 '}';
     }
 }

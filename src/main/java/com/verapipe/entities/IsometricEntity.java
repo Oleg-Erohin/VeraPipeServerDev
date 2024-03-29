@@ -29,9 +29,9 @@ public class IsometricEntity {
     private boolean isApproved;
     @ManyToMany
     private List<PidEntity> pidsList;
-//    @OneToMany(mappedBy = "isometric", fetch = FetchType.LAZY)
-//    private List<JointEntity> jointsList;
-//    @ManyToMany(mappedBy = "isometric", fetch = FetchType.LAZY)
-//    private List<PressureTestPackage> testPacksList;
+    @OneToMany(mappedBy = "isometric", fetch = FetchType.LAZY)
+    private List<JointEntity> jointsList;
+    @ManyToMany(mappedBy = "isometric", fetch = FetchType.LAZY)
+    private List<PressureTestPackageEntity> testPacksList;
 
 }

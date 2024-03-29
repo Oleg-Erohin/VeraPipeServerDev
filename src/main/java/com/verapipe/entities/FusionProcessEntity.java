@@ -18,27 +18,4 @@ public class FusionProcessEntity {
     @OneToMany(mappedBy = "fusion_process", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<JoinerEntity> joinerList;
 
-    public FusionProcessEntity() {
-    }
-
-    public FusionProcessEntity(FusionProcess fusionProcess) {
-        this.id = fusionProcess.getId();
-        this.name = fusionProcess.getName();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

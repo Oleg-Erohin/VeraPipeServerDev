@@ -63,20 +63,20 @@ public class ProcessSpecificationProcedureEntity {
     private List<FusionProcessEntity> fusionProcessesList;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<FillerMaterialEntityType> fillerMaterials1List;
+    private List<FillerMaterialTypeEntity> fillerMaterials1List;
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<FillerMaterialEntityType> fillerMaterials2List;
+    private List<FillerMaterialTypeEntity> fillerMaterials2List;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private String standardCode;
 
-//    @OneToMany(mappedBy = "process_specification_procedure", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-//    private List<JointEntity> JointsList;
+    @OneToMany(mappedBy = "process_specification_procedure", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<JointEntity> JointsList;
 
-//    @OneToMany(mappedBy = "process_specification_procedure", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-//    private List<PreheatReportEntity> PreheatReportsList;
+    @OneToMany(mappedBy = "process_specification_procedure", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<PreheatEntity> PreheatReportsList;
 
-//    @OneToMany(mappedBy = "process_specification_procedure", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-//    private List<PostWeldHeatTreatmentEntity> PostWeldHeatTreatmentsList;
+    @OneToMany(mappedBy = "process_specification_procedure", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<PostWeldHeatTreatmentEntity> PostWeldHeatTreatmentsList;
 
 }

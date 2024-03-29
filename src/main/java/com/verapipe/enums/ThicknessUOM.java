@@ -1,6 +1,6 @@
 package com.verapipe.enums;
 
 public enum ThicknessUOM {
-    mm,
-    sch
+    MM,
+    SCH
 }

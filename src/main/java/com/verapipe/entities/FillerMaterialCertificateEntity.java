@@ -1,9 +1,10 @@
 package com.verapipe.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "base_material_certificate")
+@Table(name = "filler_material_certificate")
 public class FillerMaterialCertificateEntity {
     @Id
     @GeneratedValue
@@ -14,5 +15,7 @@ public class FillerMaterialCertificateEntity {
     private byte[] certificateFile;
     @ManyToOne(fetch = FetchType.EAGER)
     private String materialName;
+    @ManyToMany(mappedBy = "filler_material_certificate", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<JointEntity> JointsList;
 
 }

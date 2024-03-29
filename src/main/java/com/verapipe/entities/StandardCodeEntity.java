@@ -1,7 +1,5 @@
 package com.verapipe.entities;
 
-import com.verapipe.dto.StandardCode;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -18,27 +16,4 @@ public class StandardCodeEntity {
     @OneToMany(mappedBy = "standard_code", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<ProcessSpecificationProcedureEntity> processSpecificationProceduresList;
 
-    public StandardCodeEntity() {
-    }
-
-    public StandardCodeEntity(StandardCode standardCode) {
-        this.id = standardCode.getId();
-        this.name = standardCode.getName();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

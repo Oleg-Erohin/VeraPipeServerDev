@@ -1,6 +1,8 @@
-Add comments to P&ID, Iso, and Joint
-Make constructors and setters/getters for all entities
-Ensure all the "MappedBy" match the table name
-Ensure all tables names are correct
-Comment cell in DB to be "Text()"
-Ensure all line breaks in text cells get </BR>
+-Comment cell
+    Add comments to P&ID, Iso, and Joint
+    Comment cell in DB to be "Text()"
+    Ensure all line breaks in text cells get </BR>
+-Make constructors and setters/getters for all entities
+-Ensure all the "MappedBy" match the table name
+-Ensure all tables names are correct
+-Where nullable = true in entity, make not primitive in DTO
