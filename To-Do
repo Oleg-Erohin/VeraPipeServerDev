@@ -6,3 +6,6 @@
 -Ensure all the "MappedBy" match the table name
 -Ensure all tables names are correct
 -Where nullable = true in entity, make not primitive in DTO
+
+-Test findAll and findById for all the resources
+-Add "@RequestHeader(value = "Authorization") String token" and validate user type in any add, update and delete function on controller
