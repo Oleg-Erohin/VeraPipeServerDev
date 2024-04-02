@@ -13,9 +13,48 @@ public class FusionProcessEntity {
     private int id;
     @Column(name = "name", unique = true, nullable = false)
     private String name;
-    @OneToMany(mappedBy = "fusion_process", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "fusion_process", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProcessSpecificationProcedureEntity> processSpecificationProceduresList;
-    @OneToMany(mappedBy = "fusion_process", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "fusion_process", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<JoinerEntity> joinerList;
 
+    public FusionProcessEntity() {
+    }
+
+    public FusionProcessEntity(FusionProcess fusionProcess) {
+        this.id = fusionProcess.getId();
+        this.name = fusionProcess.getName();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<ProcessSpecificationProcedureEntity> getProcessSpecificationProceduresList() {
+        return processSpecificationProceduresList;
+    }
+
+    public void setProcessSpecificationProceduresList(List<ProcessSpecificationProcedureEntity> processSpecificationProceduresList) {
+        this.processSpecificationProceduresList = processSpecificationProceduresList;
+    }
+
+    public List<JoinerEntity> getJoinerList() {
+        return joinerList;
+    }
+
+    public void setJoinerList(List<JoinerEntity> joinerList) {
+        this.joinerList = joinerList;
+    }
 }

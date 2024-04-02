@@ -6,22 +6,22 @@ public class FillerMaterialCertificate {
     private int id;
     private String heatNum;
     private byte[] file;
-    private String materialName;
+    private String materialTypeName;
 
     public FillerMaterialCertificate() {
     }
 
-    public FillerMaterialCertificate(String heatNum, byte[] file, String materialName) {
+    public FillerMaterialCertificate(String heatNum, byte[] file, String materialTypeName) {
         this.heatNum = heatNum;
         this.file = file;
-        this.materialName = materialName;
+        this.materialTypeName = materialTypeName;
     }
 
-    public FillerMaterialCertificate(int id, String heatNum, byte[] file, String materialName) {
+    public FillerMaterialCertificate(int id, String heatNum, byte[] file, String materialTypeName) {
         this.id = id;
         this.heatNum = heatNum;
         this.file = file;
-        this.materialName = materialName;
+        this.materialTypeName = materialTypeName;
     }
 
     public int getId() {
@@ -48,12 +48,12 @@ public class FillerMaterialCertificate {
         this.file = file;
     }
 
-    public String getMaterialName() {
-        return materialName;
+    public String getMaterialTypeName() {
+        return materialTypeName;
     }
 
-    public void setMaterialName(String materialName) {
-        this.materialName = materialName;
+    public void setMaterialTypeName(String materialTypeName) {
+        this.materialTypeName = materialTypeName;
     }
 
     @Override
@@ -62,7 +62,7 @@ public class FillerMaterialCertificate {
                 "id=" + id +
                 ", heatNum='" + heatNum + '\'' +
                 ", file=" + Arrays.toString(file) +
-                ", materialName='" + materialName + '\'' +
+                ", materialTypeName='" + materialTypeName + '\'' +
                 '}';
     }
 }

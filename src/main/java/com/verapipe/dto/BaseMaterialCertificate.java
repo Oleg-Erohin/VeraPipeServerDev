@@ -7,24 +7,24 @@ public class BaseMaterialCertificate {
     private String heatNum;
     private String lotNum;
     private byte[] file;
-    private String materialName;
+    private String materialTypeName;
 
     public BaseMaterialCertificate() {
     }
 
-    public BaseMaterialCertificate(String heatNum, String lotNum, byte[] file, String materialName) {
+    public BaseMaterialCertificate(String heatNum, String lotNum, byte[] file, String materialTypeName) {
         this.heatNum = heatNum;
         this.lotNum = lotNum;
         this.file = file;
-        this.materialName = materialName;
+        this.materialTypeName = materialTypeName;
     }
 
-    public BaseMaterialCertificate(int id, String heatNum, String lotNum, byte[] file, String materialName) {
+    public BaseMaterialCertificate(int id, String heatNum, String lotNum, byte[] file, String materialTypeName) {
         this.id = id;
         this.heatNum = heatNum;
         this.lotNum = lotNum;
         this.file = file;
-        this.materialName = materialName;
+        this.materialTypeName = materialTypeName;
     }
 
     public int getId() {
@@ -59,12 +59,12 @@ public class BaseMaterialCertificate {
         this.file = file;
     }
 
-    public String getMaterialName() {
-        return materialName;
+    public String getMaterialTypeName() {
+        return materialTypeName;
     }
 
-    public void setMaterialName(String materialName) {
-        this.materialName = materialName;
+    public void setMaterialTypeName(String materialTypeName) {
+        this.materialTypeName = materialTypeName;
     }
 
     @Override
@@ -74,7 +74,7 @@ public class BaseMaterialCertificate {
                 ", heatNum='" + heatNum + '\'' +
                 ", lotNum='" + lotNum + '\'' +
                 ", file=" + Arrays.toString(file) +
-                ", materialName='" + materialName + '\'' +
+                ", materialTypeName='" + materialTypeName + '\'' +
                 '}';
     }
 }
