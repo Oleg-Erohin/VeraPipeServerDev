@@ -29,28 +29,38 @@ public class JointEntity {
     @Column(name = "fitting_description_1", unique = false, nullable = false)
     private String fittingDescription1;
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "base_material_type_1")
     private BaseMaterialTypeEntity baseMaterialType1;
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "base_material_certificate_1")
     private BaseMaterialCertificateEntity baseMaterialCertificate1;
     @Column(name = "fitting_description_1", unique = false, nullable = false)
     private String fittingDescription2;
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "base_material_type_2")
     private BaseMaterialTypeEntity baseMaterialType2;
-    @ManyToMany
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "base_material_certificate_2")
     private BaseMaterialCertificateEntity baseMaterialCertificate2;
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "filler_material_type_1")
     private FillerMaterialTypeEntity fillerMaterialType1;
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "filler_material_certificate_1")
     private FillerMaterialCertificateEntity fillerMaterialCertificate1;
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "filler_material_type_2")
     private FillerMaterialTypeEntity fillerMaterialType2;
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "filler_material_certificate_2")
     private FillerMaterialCertificateEntity fillerMaterialCertificate2;
     @ManyToOne(fetch = FetchType.EAGER)
     private ProcessSpecificationProcedureEntity processSpecificationProcedure;
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "joiner_1")
     private JoinerEntity joiner1;
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "joiner_2")
     private JoinerEntity joiner2;
     @Column(name = "date", unique = false, nullable = false)
     private Date date;

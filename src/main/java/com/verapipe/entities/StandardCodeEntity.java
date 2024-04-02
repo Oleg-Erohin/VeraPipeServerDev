@@ -13,7 +13,7 @@ public class StandardCodeEntity {
     private int id;
     @Column(name = "name", unique = true, nullable = false)
     private String name;
-    @OneToMany(mappedBy = "standard_code", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "standardCode", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProcessSpecificationProcedureEntity> processSpecificationProceduresList;
 
     public StandardCodeEntity() {

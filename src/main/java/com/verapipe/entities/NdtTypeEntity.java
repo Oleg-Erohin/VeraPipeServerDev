@@ -13,7 +13,7 @@ public class NdtTypeEntity {
     private int id;
     @Column(name = "name", unique = true, nullable = false)
     private String name;
-    @OneToMany(mappedBy = "ndt_type", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "ndtType", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<NdtReportEntity> ndtReportsList;
 
     public NdtTypeEntity() {

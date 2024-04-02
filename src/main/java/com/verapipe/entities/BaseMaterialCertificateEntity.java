@@ -19,7 +19,7 @@ public class BaseMaterialCertificateEntity {
     private byte[] certificateFile;
     @ManyToOne(fetch = FetchType.EAGER)
     private BaseMaterialTypeEntity baseMaterialType;
-    @OneToMany(mappedBy = "base_material_certificate", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<JointEntity> jointsList;
 
     public BaseMaterialCertificateEntity() {

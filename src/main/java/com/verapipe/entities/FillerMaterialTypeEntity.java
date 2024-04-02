@@ -13,11 +13,11 @@ public class FillerMaterialTypeEntity {
     private int id;
     @Column(name = "name", unique = true, nullable = false)
     private String name;
-    @OneToMany(mappedBy = "filler_material_type", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProcessSpecificationProcedureEntity> processSpecificationProceduresList;
-    @OneToMany(mappedBy = "filler_material_type", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "fillerMaterialType", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<FillerMaterialCertificateEntity> fillerMaterialCertificatesList;
-    @OneToMany(mappedBy = "filler_material_type", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<JointEntity> JointsList;
 
     public FillerMaterialTypeEntity() {

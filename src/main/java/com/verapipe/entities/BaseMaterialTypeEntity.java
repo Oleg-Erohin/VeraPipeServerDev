@@ -13,13 +13,13 @@ public class BaseMaterialTypeEntity {
     private int id;
     @Column(name = "name", unique = true, nullable = false)
     private String name;
-    @OneToMany(mappedBy = "base_material_type", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProcessSpecificationProcedureEntity> processSpecificationProceduresList;
-    @OneToMany(mappedBy = "base_material_type", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<JoinerEntity> joinerList;
-    @OneToMany(mappedBy = "base_material_type", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "baseMaterialType", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<BaseMaterialCertificateEntity> baseMaterialCertificatesList;
-    @OneToMany(mappedBy = "base_material_type", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<JointEntity> JointsList;
 
     public BaseMaterialTypeEntity() {

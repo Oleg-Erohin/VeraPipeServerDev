@@ -1,6 +1,7 @@
 package com.verapipe.dto;
 
 public class Coordinates {
+    private int id;
     private Float startCoordinateX;
     private Float endCoordinateX;
     private Float startCoordinateY;
@@ -9,11 +10,20 @@ public class Coordinates {
     public Coordinates() {
     }
 
-    public Coordinates(Float startCoordinateX, Float endCoordinateX, Float startCoordinateY, Float endCoordinateY) {
+    public Coordinates(int id, Float startCoordinateX, Float endCoordinateX, Float startCoordinateY, Float endCoordinateY) {
+        this.id = id;
         this.startCoordinateX = startCoordinateX;
         this.endCoordinateX = endCoordinateX;
         this.startCoordinateY = startCoordinateY;
         this.endCoordinateY = endCoordinateY;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Float getStartCoordinateX() {
@@ -51,7 +61,8 @@ public class Coordinates {
     @Override
     public String toString() {
         return "Coordinates{" +
-                "startCoordinateX=" + startCoordinateX +
+                "id=" + id +
+                ", startCoordinateX=" + startCoordinateX +
                 ", endCoordinateX=" + endCoordinateX +
                 ", startCoordinateY=" + startCoordinateY +
                 ", endCoordinateY=" + endCoordinateY +

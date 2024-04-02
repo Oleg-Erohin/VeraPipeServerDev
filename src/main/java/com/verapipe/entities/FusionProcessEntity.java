@@ -13,9 +13,9 @@ public class FusionProcessEntity {
     private int id;
     @Column(name = "name", unique = true, nullable = false)
     private String name;
-    @OneToMany(mappedBy = "fusion_process", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "fusionProcess", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProcessSpecificationProcedureEntity> processSpecificationProceduresList;
-    @OneToMany(mappedBy = "fusion_process", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "fusionProcess", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<JoinerEntity> joinerList;
 
     public FusionProcessEntity() {

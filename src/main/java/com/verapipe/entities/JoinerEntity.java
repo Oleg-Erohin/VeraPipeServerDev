@@ -1,9 +1,6 @@
 package com.verapipe.entities;
 
-import com.verapipe.dto.BaseMaterialType;
-import com.verapipe.dto.FusionProcess;
 import com.verapipe.dto.Joiner;
-import com.verapipe.dto.JointDesign;
 
 import javax.persistence.*;
 import java.util.List;
@@ -29,14 +26,16 @@ public class JoinerEntity {
     @Column(name = "max_deposited_material", unique = false, nullable = true)
     private Float maxDepositedMaterial;
     @ManyToOne(fetch = FetchType.EAGER)
-    private BaseMaterialType baseMaterialType1;
+    @JoinColumn(name = "base_material_type_1")
+    private BaseMaterialTypeEntity baseMaterialType1;
     @ManyToOne(fetch = FetchType.EAGER)
-    private BaseMaterialType baseMaterialType2;
+    @JoinColumn(name = "base_material_type_2")
+    private BaseMaterialTypeEntity baseMaterialType2;
     @ManyToOne(fetch = FetchType.EAGER)
-    private JointDesign jointDesign;
+    private JointDesignEntity jointDesign;
     @ManyToOne(fetch = FetchType.EAGER)
-    private FusionProcess fusionProcess;
-    @OneToMany(mappedBy = "joiner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private FusionProcessEntity fusionProcess;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<JointEntity> jointsList;
 
     public JoinerEntity() {
@@ -51,16 +50,16 @@ public class JoinerEntity {
         this.certifiedDiameterMinInch = joiner.getCertifiedDiameterMinInch();
         this.certifiedDiameterMaxInch = joiner.getCertifiedDiameterMaxInch();
         this.maxDepositedMaterial = joiner.getMaxDepositedMaterial();
-        this.baseMaterialType1 = new BaseMaterialType();
+        this.baseMaterialType1 = new BaseMaterialTypeEntity();
         String baseMaterialTypeName1 = joiner.getBaseMaterialTypeName1();
         this.baseMaterialType1.setName(baseMaterialTypeName1);
-        this.baseMaterialType2 = new BaseMaterialType();
+        this.baseMaterialType2 = new BaseMaterialTypeEntity();
         String baseMaterialTypeName2 = joiner.getBaseMaterialTypeName2();
         this.baseMaterialType2.setName(baseMaterialTypeName2);
-        this.jointDesign = new JointDesign();
+        this.jointDesign = new JointDesignEntity();
         String jointDesignName = joiner.getJointDesignName();
         this.jointDesign.setName(jointDesignName);
-        this.fusionProcess = new FusionProcess();
+        this.fusionProcess = new FusionProcessEntity();
         String fusionProcessName = joiner.getFusionProcessName();
         this.fusionProcess.setName(fusionProcessName);
     }
@@ -129,35 +128,35 @@ public class JoinerEntity {
         this.maxDepositedMaterial = maxDepositedMaterial;
     }
 
-    public BaseMaterialType getBaseMaterialType1() {
+    public BaseMaterialTypeEntity getBaseMaterialType1() {
         return baseMaterialType1;
     }
 
-    public void setBaseMaterialType1(BaseMaterialType baseMaterialType1) {
+    public void setBaseMaterialType1(BaseMaterialTypeEntity baseMaterialType1) {
         this.baseMaterialType1 = baseMaterialType1;
     }
 
-    public BaseMaterialType getBaseMaterialType2() {
+    public BaseMaterialTypeEntity getBaseMaterialType2() {
         return baseMaterialType2;
     }
 
-    public void setBaseMaterialType2(BaseMaterialType baseMaterialType2) {
+    public void setBaseMaterialType2(BaseMaterialTypeEntity baseMaterialType2) {
         this.baseMaterialType2 = baseMaterialType2;
     }
 
-    public JointDesign getJointDesign() {
+    public JointDesignEntity getJointDesign() {
         return jointDesign;
     }
 
-    public void setJointDesign(JointDesign jointDesign) {
+    public void setJointDesign(JointDesignEntity jointDesign) {
         this.jointDesign = jointDesign;
     }
 
-    public FusionProcess getFusionProcess() {
+    public FusionProcessEntity getFusionProcess() {
         return fusionProcess;
     }
 
-    public void setFusionProcess(FusionProcess fusionProcess) {
+    public void setFusionProcess(FusionProcessEntity fusionProcess) {
         this.fusionProcess = fusionProcess;
     }
 

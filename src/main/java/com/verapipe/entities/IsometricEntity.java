@@ -28,11 +28,11 @@ public class IsometricEntity {
     private List<Coordinates> coordinatesInPid;
     @Column(name = "is_approved", unique = false,  nullable = false)
     private boolean isApproved;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "isometricDrawingsList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PidEntity> pidsList;
     @OneToMany(mappedBy = "isometric", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<JointEntity> jointsList;
-    @ManyToMany(mappedBy = "isometric", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "isometricsList", fetch = FetchType.LAZY)
     private List<PressureTestPackageEntity> testPacksList;
 
     public IsometricEntity() {

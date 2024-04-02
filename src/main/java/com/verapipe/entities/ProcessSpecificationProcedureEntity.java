@@ -41,22 +41,26 @@ public class ProcessSpecificationProcedureEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private JointDesignEntity jointDesign;
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "base_material_type_1")
     private BaseMaterialTypeEntity baseMaterial1;
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "base_material_type_2")
     private BaseMaterialTypeEntity baseMaterial2;
     @ManyToOne(fetch = FetchType.EAGER)
     private FusionProcessEntity fusionProcess;
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "filler_material_type_1")
     private FillerMaterialTypeEntity fillerMaterial1;
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "filler_material_type_2")
     private FillerMaterialTypeEntity fillerMaterial2;
     @ManyToOne(fetch = FetchType.EAGER)
     private StandardCodeEntity standardCode;
-    @OneToMany(mappedBy = "process_specification_procedure", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "processSpecificationProcedure", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<JointEntity> JointsList;
-    @OneToMany(mappedBy = "process_specification_procedure", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "processSpecificationProcedure", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PreheatEntity> PreheatReportsList;
-    @OneToMany(mappedBy = "process_specification_procedure", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "processSpecificationProcedure", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PostWeldHeatTreatmentEntity> PostWeldHeatTreatmentsList;
 
     public ProcessSpecificationProcedureEntity() {

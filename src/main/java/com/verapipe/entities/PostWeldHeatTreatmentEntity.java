@@ -20,7 +20,7 @@ public class PostWeldHeatTreatmentEntity {
     private Date date;
     @ManyToOne(fetch = FetchType.EAGER)
     private ProcessSpecificationProcedureEntity processSpecificationProcedure;
-    @OneToMany(mappedBy = "post_weld_heat_treatment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "postWeldHeatTreatment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<JointEntity> jointsList;
 
     public PostWeldHeatTreatmentEntity() {
