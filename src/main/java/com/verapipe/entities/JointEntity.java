@@ -1,6 +1,5 @@
 package com.verapipe.entities;
 
-import com.verapipe.dto.Coordinates;
 import com.verapipe.dto.Joint;
 
 import javax.persistence.*;
@@ -10,12 +9,12 @@ import java.util.Date;
 @Table(name = "joint")
 public class JointEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "number", unique = false, nullable = false)
     private int number;
     @Column(name = "coordinates", unique = true, nullable = false)
-    private Coordinates coordinatesOnIsometric;
+    private String coordinatesOnIsometric;
     @ManyToOne(fetch = FetchType.EAGER)
     private PidEntity pid;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -34,7 +33,7 @@ public class JointEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "base_material_certificate_1")
     private BaseMaterialCertificateEntity baseMaterialCertificate1;
-    @Column(name = "fitting_description_1", unique = false, nullable = false)
+    @Column(name = "fitting_description_2", unique = false, nullable = false)
     private String fittingDescription2;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "base_material_type_2")
@@ -64,7 +63,7 @@ public class JointEntity {
     private JoinerEntity joiner2;
     @Column(name = "date", unique = false, nullable = false)
     private Date date;
-    @Column(name = "is_fit-up_done", unique = false, nullable = false)
+    @Column(name = "is_fitup_done", unique = false, nullable = false)
     private boolean isFitUpDone;
     @Column(name = "is_visual_inspection_done", unique = false, nullable = false)
     private boolean isVisualInspectionDone;
@@ -83,7 +82,7 @@ public class JointEntity {
     public JointEntity(Joint joint) {
         this.id = joint.getId();
         this.number = joint.getNumber();
-        this.coordinatesOnIsometric = joint.getCoordinatesOnIsometric();
+        this.coordinatesOnIsometric = joint.getCoordinatesOnIsometric().toString();
         this.pid = new PidEntity();
         String pidName = joint.getPidName();
         this.pid.setName(pidName);
@@ -159,11 +158,11 @@ public class JointEntity {
         this.number = number;
     }
 
-    public Coordinates getCoordinatesOnIsometric() {
+    public String getCoordinatesOnIsometric() {
         return coordinatesOnIsometric;
     }
 
-    public void setCoordinatesOnIsometric(Coordinates coordinatesOnIsometric) {
+    public void setCoordinatesOnIsometric(String coordinatesOnIsometric) {
         this.coordinatesOnIsometric = coordinatesOnIsometric;
     }
 

@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "p&id")
+@Table(name = "pid")
 public class PidEntity {
     @Id
     @GeneratedValue

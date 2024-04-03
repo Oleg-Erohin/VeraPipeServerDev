@@ -10,7 +10,7 @@ import java.util.List;
 @Table(name = "process_specification_procedure")
 public class ProcessSpecificationProcedureEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "name", unique = true, nullable = false)
     private String name;
@@ -18,7 +18,7 @@ public class ProcessSpecificationProcedureEntity {
     @Column(name = "procedure_file", unique = true, nullable = true)
     private Byte[] procedureFile;
     @Lob
-    @Column(name = "procedure_file", unique = false, nullable = true)
+    @Column(name = "procedure_qualification_record_file", unique = false, nullable = true)
     private Byte[] processQualificationRecordFile;
     @Column(name = "is_preheat_required", unique = false, nullable = false)
     private boolean isPreheatRequired;

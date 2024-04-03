@@ -1,6 +1,5 @@
 package com.verapipe.entities;
 
-import com.verapipe.dto.Coordinates;
 import com.verapipe.dto.Isometric;
 
 import javax.persistence.*;
@@ -25,7 +24,7 @@ public class IsometricEntity {
     @Column(name = "sheets", unique = false, nullable = false)
     private int sheets;
     @Column(name = "coordinates", unique = true, nullable = true)
-    private List<Coordinates> coordinatesInPid;
+    private String coordinatesInPid;
     @Column(name = "is_approved", unique = false,  nullable = false)
     private boolean isApproved;
     @ManyToMany(mappedBy = "isometricDrawingsList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -45,7 +44,7 @@ public class IsometricEntity {
         this.revision = isometric.getRevision();
         this.date = isometric.getDate();
         this.sheets = isometric.getSheets();
-        this.coordinatesInPid = isometric.getCoordinatesInPid();
+        this.coordinatesInPid = isometric.getCoordinatesInPid().toString();
         this.isApproved = isometric.isApproved();
     }
 
@@ -97,11 +96,11 @@ public class IsometricEntity {
         this.sheets = sheets;
     }
 
-    public List<Coordinates> getCoordinatesInPid() {
+    public String getCoordinatesInPid() {
         return coordinatesInPid;
     }
 
-    public void setCoordinatesInPid(List<Coordinates> coordinatesInPid) {
+    public void setCoordinatesInPid(String coordinatesInPid) {
         this.coordinatesInPid = coordinatesInPid;
     }
 

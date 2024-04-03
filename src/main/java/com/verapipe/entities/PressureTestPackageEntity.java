@@ -1,6 +1,5 @@
 package com.verapipe.entities;
 
-import com.verapipe.dto.Coordinates;
 import com.verapipe.dto.PressureTestPackage;
 
 import javax.persistence.*;
@@ -15,12 +14,12 @@ public class PressureTestPackageEntity {
     private int id;
     @Column(name = "name", unique = true, nullable = false)
     private String name;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<PidEntity> pidsList;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<IsometricEntity> isometricsList;
     @Column(name = "coordinates", unique = true, nullable = true)
-    private List<Coordinates> coordinatesInPids;
+    private String coordinatesInPids;
     @Lob
     @Column(name = "test_report", unique = true, nullable = false)
     private byte[] testReport;
@@ -45,7 +44,7 @@ public class PressureTestPackageEntity {
             tempIsometricEntity.setName(isometricName);
             this.isometricsList.add(tempIsometricEntity);
         }
-        this.coordinatesInPids = pressureTestPackage.getCoordinatesInPidsList();
+        this.coordinatesInPids = pressureTestPackage.getCoordinatesInPidsList().toString();
         this.testReport = pressureTestPackage.getTestReport();
         this.date = pressureTestPackage.getDate();
     }
@@ -82,11 +81,11 @@ public class PressureTestPackageEntity {
         this.isometricsList = isometricsList;
     }
 
-    public List<Coordinates> getCoordinatesInPids() {
+    public String getCoordinatesInPids() {
         return coordinatesInPids;
     }
 
-    public void setCoordinatesInPids(List<Coordinates> coordinatesInPids) {
+    public void setCoordinatesInPids(String coordinatesInPids) {
         this.coordinatesInPids = coordinatesInPids;
     }
 
