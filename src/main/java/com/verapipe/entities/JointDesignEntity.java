@@ -15,7 +15,7 @@ public class JointDesignEntity {
     private String name;
     @OneToMany(mappedBy = "jointDesign", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProcessSpecificationProcedureEntity> processSpecificationProceduresList;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "jointDesign", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<JoinerEntity> joinerList;
 
     public JointDesignEntity() {
