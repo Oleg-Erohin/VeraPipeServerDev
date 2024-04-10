@@ -1,6 +1,7 @@
 package com.verapipe.dto;
 
 import java.util.Date;
+import java.util.List;
 
 public class Joint {
     private int id;
@@ -22,8 +23,9 @@ public class Joint {
     private String fillerMaterialTypeName2;
     private String fillerMaterialHeatNum2;
     private String processSpecificationProcedureName;
-    private String joinerTagId1;
-    private String joinerTagId2;
+//    private String joinerTagId1;
+//    private String joinerTagId2;
+    private List<String> joinersTagIdList;
     private Date date;
     private boolean isFitUpDone;
     private boolean isVisualInspectionDone;
@@ -35,7 +37,7 @@ public class Joint {
     public Joint() {
     }
 
-    public Joint(int number, Coordinates coordinatesOnIsometric, String pidName, String isometricName, int sheetOnIsometric, Float diameterMm, Float diameterInch, String fittingDescription1, String baseMaterialTypeName1, String baseMaterialHeatNum1, String fittingDescription2, String baseMaterialTypeName2, String baseMaterialHeatNum2, String fillerMaterialTypeName1, String fillerMaterialHeatNum1, String fillerMaterialTypeName2, String fillerMaterialHeatNum2, String processSpecificationProcedureName, String joinerTagId1, String joinerTagId2, Date date, boolean isFitUpDone, boolean isVisualInspectionDone, String ndtReportName, boolean isNdtPassed, String preheatName, String postWeldHeatTreatmentName) {
+    public Joint(int number, Coordinates coordinatesOnIsometric, String pidName, String isometricName, int sheetOnIsometric, Float diameterMm, Float diameterInch, String fittingDescription1, String baseMaterialTypeName1, String baseMaterialHeatNum1, String fittingDescription2, String baseMaterialTypeName2, String baseMaterialHeatNum2, String fillerMaterialTypeName1, String fillerMaterialHeatNum1, String fillerMaterialTypeName2, String fillerMaterialHeatNum2, String processSpecificationProcedureName,List<String> joinersTagIdList, Date date, boolean isFitUpDone, boolean isVisualInspectionDone, String ndtReportName, boolean isNdtPassed, String preheatName, String postWeldHeatTreatmentName) {
         this.number = number;
         this.coordinatesOnIsometric = coordinatesOnIsometric;
         this.pidName = pidName;
@@ -54,8 +56,7 @@ public class Joint {
         this.fillerMaterialTypeName2 = fillerMaterialTypeName2;
         this.fillerMaterialHeatNum2 = fillerMaterialHeatNum2;
         this.processSpecificationProcedureName = processSpecificationProcedureName;
-        this.joinerTagId1 = joinerTagId1;
-        this.joinerTagId2 = joinerTagId2;
+        this.joinersTagIdList = joinersTagIdList;
         this.date = date;
         this.isFitUpDone = isFitUpDone;
         this.isVisualInspectionDone = isVisualInspectionDone;
@@ -65,7 +66,7 @@ public class Joint {
         this.postWeldHeatTreatmentName = postWeldHeatTreatmentName;
     }
 
-    public Joint(int id, int number, Coordinates coordinatesOnIsometric, String pidName, String isometricName, int sheetOnIsometric, Float diameterMm, Float diameterInch, String fittingDescription1, String baseMaterialTypeName1, String baseMaterialHeatNum1, String fittingDescription2, String baseMaterialTypeName2, String baseMaterialHeatNum2, String fillerMaterialTypeName1, String fillerMaterialHeatNum1, String fillerMaterialTypeName2, String fillerMaterialHeatNum2, String processSpecificationProcedureName, String joinerTagId1, String joinerTagId2, Date date, boolean isFitUpDone, boolean isVisualInspectionDone, String ndtReportName, boolean isNdtPassed, String preheatName, String postWeldHeatTreatmentName) {
+    public Joint(int id, int number, Coordinates coordinatesOnIsometric, String pidName, String isometricName, int sheetOnIsometric, Float diameterMm, Float diameterInch, String fittingDescription1, String baseMaterialTypeName1, String baseMaterialHeatNum1, String fittingDescription2, String baseMaterialTypeName2, String baseMaterialHeatNum2, String fillerMaterialTypeName1, String fillerMaterialHeatNum1, String fillerMaterialTypeName2, String fillerMaterialHeatNum2, String processSpecificationProcedureName, List<String> joinersTagIdList, Date date, boolean isFitUpDone, boolean isVisualInspectionDone, String ndtReportName, boolean isNdtPassed, String preheatName, String postWeldHeatTreatmentName) {
         this.id = id;
         this.number = number;
         this.coordinatesOnIsometric = coordinatesOnIsometric;
@@ -85,8 +86,7 @@ public class Joint {
         this.fillerMaterialTypeName2 = fillerMaterialTypeName2;
         this.fillerMaterialHeatNum2 = fillerMaterialHeatNum2;
         this.processSpecificationProcedureName = processSpecificationProcedureName;
-        this.joinerTagId1 = joinerTagId1;
-        this.joinerTagId2 = joinerTagId2;
+        this.joinersTagIdList = joinersTagIdList;
         this.date = date;
         this.isFitUpDone = isFitUpDone;
         this.isVisualInspectionDone = isVisualInspectionDone;
@@ -248,20 +248,12 @@ public class Joint {
         this.processSpecificationProcedureName = processSpecificationProcedureName;
     }
 
-    public String getJoinerTagId1() {
-        return joinerTagId1;
+    public List<String> getJoinersTagIdList() {
+        return joinersTagIdList;
     }
 
-    public void setJoinerTagId1(String joinerTagId1) {
-        this.joinerTagId1 = joinerTagId1;
-    }
-
-    public String getJoinerTagId2() {
-        return joinerTagId2;
-    }
-
-    public void setJoinerTagId2(String joinerTagId2) {
-        this.joinerTagId2 = joinerTagId2;
+    public void setJoinersTagIdList(List<String> joinersTagIdList) {
+        this.joinersTagIdList = joinersTagIdList;
     }
 
     public Date getDate() {
@@ -342,8 +334,7 @@ public class Joint {
                 ", fillerMaterialTypeName2='" + fillerMaterialTypeName2 + '\'' +
                 ", fillerMaterialHeatNum2='" + fillerMaterialHeatNum2 + '\'' +
                 ", processSpecificationProcedureName='" + processSpecificationProcedureName + '\'' +
-                ", joinerTagId1='" + joinerTagId1 + '\'' +
-                ", joinerTagId2='" + joinerTagId2 + '\'' +
+                ", joinersTagIdList=" + joinersTagIdList +
                 ", date=" + date +
                 ", isFitUpDone=" + isFitUpDone +
                 ", isVisualInspectionDone=" + isVisualInspectionDone +

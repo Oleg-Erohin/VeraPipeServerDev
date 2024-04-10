@@ -4,7 +4,9 @@ import com.verapipe.dto.Pid;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "pid")
@@ -24,7 +26,12 @@ public class PidEntity {
     @Column(name = "sheets", unique = false, nullable = false)
     private int sheets;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<IsometricEntity> isometricDrawingsList;
+    @JoinTable(
+            name = "Pid_Isometric_list",
+            joinColumns = @JoinColumn(name = "Pid_id"),
+            inverseJoinColumns = @JoinColumn(name = "Isometric_id")
+    )
+    private Set<IsometricEntity> isometricDrawingsList;
     @OneToMany(mappedBy = "pid", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<JointEntity> JointsList;
     @ManyToMany(mappedBy = "pidsList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -40,6 +47,7 @@ public class PidEntity {
         this.revision = pid.getRevision();
         this.date = pid.getDate();
         this.sheets = pid.getSheets();
+        this.isometricDrawingsList = new HashSet<>();
     }
 
     public int getId() {
@@ -90,11 +98,11 @@ public class PidEntity {
         this.sheets = sheets;
     }
 
-    public List<IsometricEntity> getIsometricDrawingsList() {
+    public Set<IsometricEntity> getIsometricDrawingsList() {
         return isometricDrawingsList;
     }
 
-    public void setIsometricDrawingsList(List<IsometricEntity> isometricDrawingsList) {
+    public void setIsometricDrawingsList(Set<IsometricEntity> isometricDrawingsList) {
         this.isometricDrawingsList = isometricDrawingsList;
     }
 

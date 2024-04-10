@@ -1,10 +1,11 @@
--Comment cell
+- Comment cell
     Add comments to P&ID, Iso, and Joint
     Comment cell in DB to be "Text()"
     Ensure all line breaks in text cells get </BR>
--Where nullable = true in entity, make not primitive in DTO
--Convert coordinates to string in entities and make constructors in entities and DTOs convert between string and list of coordinates
--Change all entities constructors to receive ID instead of names
+- Where nullable = true in entity, make not primitive in DTO
+- Convert coordinates to string in entities and make constructors in entities and DTOs convert between string and list of coordinates
+- Change all entities constructors to receive ID instead of names
+- Change hash function to Entities which are "Set" in other entities
 
--Test findAll and findById for all the resources
--Add "@RequestHeader(value = "Authorization") String token" and validate user type in any add, update and delete function on controller
+- Test findAll and findById for all the resources
+- Add "@RequestHeader(value = "Authorization") String token" and validate user type in any add, update and delete function on controller

@@ -38,16 +38,16 @@ public class BaseMaterialCertificateLogic {
     public void update (BaseMaterialCertificate baseMaterialCertificate) throws Exception {
         validations(baseMaterialCertificate);
 ////        TODO Cancel comment after entity constructor has made
-//        BaseMaterialCertificateEntity baseMaterialCertificateEntity = new BaseMaterialCertificateEntity(baseMaterialCertificate);
-//        BaseMaterialCertificateEntity updatedBaseMaterialCertificateEntity;
+//        BaseMaterialCertificateEntity sentBaseMaterialCertificateEntity = new BaseMaterialCertificateEntity(baseMaterialCertificate);
+//        BaseMaterialCertificateEntity receivedBaseMaterialCertificateEntity;
 //        try {
-//            updatedBaseMaterialCertificateEntity = this.baseMaterialCertificateDal.save(baseMaterialCertificateEntity);
+//            receivedBaseMaterialCertificateEntity = this.baseMaterialCertificateDal.save(sentBaseMaterialCertificateEntity);
 //        } catch (Exception e) {
 ////          TODO throw new ApplicationException
 //            throw new Exception(e.getMessage());
 //        }
 //        // Validate sent entity and return entity from DB are equals
-//        if (!baseMaterialCertificateEntity.equals(updatedBaseMaterialCertificateEntity)) {
+//        if (!sentBaseMaterialCertificateEntity.equals(receivedBaseMaterialCertificateEntity)) {
 ////            TODO throw new ApplicationException
 //            throw new Exception();
 //        }

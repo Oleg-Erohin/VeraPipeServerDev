@@ -4,7 +4,9 @@ import com.verapipe.dto.Isometric;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "isometric")
@@ -28,7 +30,8 @@ public class IsometricEntity {
     @Column(name = "is_approved", unique = false,  nullable = false)
     private boolean isApproved;
     @ManyToMany(mappedBy = "isometricDrawingsList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<PidEntity> pidsList;
+//    private List<PidEntity> pidsList;
+    private Set<PidEntity> pidsList;
     @OneToMany(mappedBy = "isometric", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<JointEntity> jointsList;
     @ManyToMany(mappedBy = "isometricsList", fetch = FetchType.LAZY)
@@ -46,6 +49,7 @@ public class IsometricEntity {
         this.sheets = isometric.getSheets();
         this.coordinatesInPid = isometric.getCoordinatesInPid().toString();
         this.isApproved = isometric.isApproved();
+        this.pidsList = new HashSet<>();
     }
 
     public int getId() {
@@ -112,11 +116,11 @@ public class IsometricEntity {
         isApproved = approved;
     }
 
-    public List<PidEntity> getPidsList() {
+    public Set<PidEntity> getPidsList() {
         return pidsList;
     }
 
-    public void setPidsList(List<PidEntity> pidsList) {
+    public void setPidsList(Set<PidEntity> pidsList) {
         this.pidsList = pidsList;
     }
 

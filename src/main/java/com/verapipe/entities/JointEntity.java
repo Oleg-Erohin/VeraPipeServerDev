@@ -3,7 +3,7 @@ package com.verapipe.entities;
 import com.verapipe.dto.Joint;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Table(name = "joint")
@@ -55,12 +55,13 @@ public class JointEntity {
     private FillerMaterialCertificateEntity fillerMaterialCertificate2;
     @ManyToOne(fetch = FetchType.EAGER)
     private ProcessSpecificationProcedureEntity processSpecificationProcedure;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "joiner_1")
-    private JoinerEntity joiner1;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "joiner_2")
-    private JoinerEntity joiner2;
+    @ManyToMany
+    @JoinTable(
+            name = "joint_joiners_list",
+            joinColumns = @JoinColumn(name = "joints_list_id"),
+            inverseJoinColumns = @JoinColumn(name = "joiners_list_id")
+    )
+    private Set<JoinerEntity> joinersList;
     @Column(name = "date", unique = false, nullable = false)
     private Date date;
     @Column(name = "is_fitup_done", unique = false, nullable = false)
@@ -121,12 +122,8 @@ public class JointEntity {
         this.processSpecificationProcedure = new ProcessSpecificationProcedureEntity();
         String processSpecificationProcedureName = joint.getProcessSpecificationProcedureName();
         this.processSpecificationProcedure.setName(processSpecificationProcedureName);
-        this.joiner1 = new JoinerEntity();
-        String joinerTagId1 = joint.getJoinerTagId1();
-        this.joiner1.setTagId(joinerTagId1);
-        this.joiner2 = new JoinerEntity();
-        String joinerTagId2 = joint.getJoinerTagId2();
-        this.joiner2.setTagId(joinerTagId2);
+        this.joinersList = new HashSet<>();
+        initiateJoinersList(joint.getJoinersTagIdList());
         this.date = joint.getDate();
         this.isFitUpDone = joint.isFitUpDone();
         this.isVisualInspectionDone = joint.isVisualInspectionDone();
@@ -142,6 +139,19 @@ public class JointEntity {
         this.postWeldHeatTreatment.setName(postWeldHeatTreatmentName);
     }
 
+    private void initiateJoinersList(List<String> joinersTagIdList) {
+        if (!joinersTagIdList.isEmpty()) {
+//        JoinerEntity joiner1 = new JoinerEntity();
+//        String joiner1TagId = joinersTagIdList.get(0);
+//        joiner1.setTagId(joiner1TagId);
+//        this.joinersList.set(0, joiner1);
+//        // TODO verify if joiner2 is null ??
+//        JoinerEntity joiner2 = new JoinerEntity();
+//        String joiner2TagId = joinersTagIdList.get(1);
+//        joiner2.setTagId(joiner2TagId);
+//        this.joinersList.set(1, joiner2);
+        }
+    }
     public int getId() {
         return id;
     }
@@ -294,21 +304,21 @@ public class JointEntity {
         this.processSpecificationProcedure = processSpecificationProcedure;
     }
 
-    public JoinerEntity getJoiner1() {
-        return joiner1;
-    }
-
-    public void setJoiner1(JoinerEntity joiner1) {
-        this.joiner1 = joiner1;
-    }
-
-    public JoinerEntity getJoiner2() {
-        return joiner2;
-    }
-
-    public void setJoiner2(JoinerEntity joiner2) {
-        this.joiner2 = joiner2;
-    }
+//    public JoinerEntity getJoiner1() {
+//        return joiner1;
+//    }
+//
+//    public void setJoiner1(JoinerEntity joiner1) {
+//        this.joiner1 = joiner1;
+//    }
+//
+//    public JoinerEntity getJoiner2() {
+//        return joiner2;
+//    }
+//
+//    public void setJoiner2(JoinerEntity joiner2) {
+//        this.joiner2 = joiner2;
+//    }
 
     public Date getDate() {
         return date;
@@ -364,5 +374,13 @@ public class JointEntity {
 
     public void setPostWeldHeatTreatment(PostWeldHeatTreatmentEntity postWeldHeatTreatment) {
         this.postWeldHeatTreatment = postWeldHeatTreatment;
+    }
+
+    public Set<JoinerEntity> getJoinersList() {
+        return joinersList;
+    }
+
+    public void setJoinersList(Set<JoinerEntity> joinersList) {
+        this.joinersList = joinersList;
     }
 }

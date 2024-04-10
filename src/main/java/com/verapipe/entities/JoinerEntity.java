@@ -3,7 +3,10 @@ package com.verapipe.entities;
 import com.verapipe.dto.Joiner;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "joiner")
@@ -35,8 +38,8 @@ public class JoinerEntity {
     private JointDesignEntity jointDesign;
     @ManyToOne(fetch = FetchType.EAGER)
     private FusionProcessEntity fusionProcess;
-    @ManyToMany(mappedBy = "joiners", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<JointEntity> jointsList;
+    @ManyToMany(mappedBy = "joinersList")
+    private Set<JointEntity> jointsList;
 
     public JoinerEntity() {
     }
@@ -62,6 +65,8 @@ public class JoinerEntity {
         this.fusionProcess = new FusionProcessEntity();
         String fusionProcessName = joiner.getFusionProcessName();
         this.fusionProcess.setName(fusionProcessName);
+//        this.jointsList = new ArrayList<>();
+        this.jointsList = new HashSet<>();
     }
 
     public int getId() {
@@ -160,11 +165,11 @@ public class JoinerEntity {
         this.fusionProcess = fusionProcess;
     }
 
-    public List<JointEntity> getJointsList() {
+    public Set<JointEntity> getJointsList() {
         return jointsList;
     }
 
-    public void setJointsList(List<JointEntity> jointsList) {
+    public void setJointsList(Set<JointEntity> jointsList) {
         this.jointsList = jointsList;
     }
 }
