@@ -13,6 +13,7 @@ public class FillerMaterialCertificateEntity {
     private int id;
     @Column(name = "heat_number", unique = true, nullable = false)
     private String heatNum;
+    @Lob
     @Column(name = "certificate_file", unique = false, nullable = true)
     private byte[] certificateFile;
     @ManyToOne(fetch = FetchType.EAGER)

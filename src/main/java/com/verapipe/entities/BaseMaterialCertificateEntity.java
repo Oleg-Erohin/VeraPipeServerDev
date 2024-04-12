@@ -15,6 +15,7 @@ public class BaseMaterialCertificateEntity {
     private String heatNum;
     @Column(name = "lot_number", unique = true, nullable = false)
     private String lotNum;
+    @Lob
     @Column(name = "certificate_file", unique = false, nullable = true)
     private byte[] certificateFile;
     @ManyToOne(fetch = FetchType.EAGER)

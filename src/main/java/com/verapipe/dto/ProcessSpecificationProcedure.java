@@ -7,8 +7,8 @@ import java.util.Arrays;
 public class ProcessSpecificationProcedure {
     private int id;
     private String name;
-    private Byte[] procedureFile;
-    private Byte[] processQualificationRecordFile;
+    private byte[] procedureFile;
+    private byte[] processQualificationRecordFile;
     private String jointDesign;
     private String baseMaterial1;
     private String baseMaterial2;
@@ -29,7 +29,7 @@ public class ProcessSpecificationProcedure {
     public ProcessSpecificationProcedure() {
     }
 
-    public ProcessSpecificationProcedure(String name, Byte[] procedureFile, Byte[] processQualificationRecordFile, String jointDesign, String baseMaterial1, String baseMaterial2, String fusionProcess, String fillerMaterial1, String fillerMaterial2, String standardCode, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, Float diameterMmMin, Float diameterMmMax, Float diameterInchMin, Float diameterInchMax, ThicknessUOM thicknessUom, Float thicknessMmMin, Float thicknessMmMax) {
+    public ProcessSpecificationProcedure(String name, byte[] procedureFile, byte[] processQualificationRecordFile, String jointDesign, String baseMaterial1, String baseMaterial2, String fusionProcess, String fillerMaterial1, String fillerMaterial2, String standardCode, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, Float diameterMmMin, Float diameterMmMax, Float diameterInchMin, Float diameterInchMax, ThicknessUOM thicknessUom, Float thicknessMmMin, Float thicknessMmMax) {
         this.name = name;
         this.procedureFile = procedureFile;
         this.processQualificationRecordFile = processQualificationRecordFile;
@@ -51,7 +51,7 @@ public class ProcessSpecificationProcedure {
         this.thicknessMmMax = thicknessMmMax;
     }
 
-    public ProcessSpecificationProcedure(int id, String name, Byte[] procedureFile, Byte[] processQualificationRecordFile, String jointDesign, String baseMaterial1, String baseMaterial2, String fusionProcess, String fillerMaterial1, String fillerMaterial2, String standardCode, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, Float diameterMmMin, Float diameterMmMax, Float diameterInchMin, Float diameterInchMax, ThicknessUOM thicknessUom, Float thicknessMmMin, Float thicknessMmMax) {
+    public ProcessSpecificationProcedure(int id, String name, byte[] procedureFile, byte[] processQualificationRecordFile, String jointDesign, String baseMaterial1, String baseMaterial2, String fusionProcess, String fillerMaterial1, String fillerMaterial2, String standardCode, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, Float diameterMmMin, Float diameterMmMax, Float diameterInchMin, Float diameterInchMax, ThicknessUOM thicknessUom, Float thicknessMmMin, Float thicknessMmMax) {
         this.id = id;
         this.name = name;
         this.procedureFile = procedureFile;
@@ -90,19 +90,19 @@ public class ProcessSpecificationProcedure {
         this.name = name;
     }
 
-    public Byte[] getProcedureFile() {
+    public byte[] getProcedureFile() {
         return procedureFile;
     }
 
-    public void setProcedureFile(Byte[] procedureFile) {
+    public void setProcedureFile(byte[] procedureFile) {
         this.procedureFile = procedureFile;
     }
 
-    public Byte[] getProcessQualificationRecordFile() {
+    public byte[] getProcessQualificationRecordFile() {
         return processQualificationRecordFile;
     }
 
-    public void setProcessQualificationRecordFile(Byte[] processQualificationRecordFile) {
+    public void setProcessQualificationRecordFile(byte[] processQualificationRecordFile) {
         this.processQualificationRecordFile = processQualificationRecordFile;
     }
 

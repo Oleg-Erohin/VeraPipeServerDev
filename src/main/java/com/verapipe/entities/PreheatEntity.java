@@ -14,6 +14,7 @@ public class PreheatEntity {
     private int id;
     @Column(name = "name", unique = true, nullable = false)
     private String name;
+    @Lob
     @Column(name = "file", unique = true, nullable = true)
     private byte[] file;
     @Column(name = "date", unique = false, nullable = false)

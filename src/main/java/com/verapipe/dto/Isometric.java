@@ -15,11 +15,12 @@ public class Isometric {
     private int sheets;
     private List<Coordinates> coordinatesInPid;
     private boolean isApproved;
+    private String comments;
 
     public Isometric() {
     }
 
-    public Isometric(String name, String pidName, List<Integer> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved) {
+    public Isometric(String name, String pidName, List<Integer> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
         this.name = name;
         PidName = pidName;
         PidSheets = pidSheets;
@@ -29,9 +30,10 @@ public class Isometric {
         this.sheets = sheets;
         this.coordinatesInPid = coordinatesInPid;
         this.isApproved = isApproved;
+        this.comments = comments;
     }
 
-    public Isometric(int id, String name, String pidName, List<Integer> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved) {
+    public Isometric(int id, String name, String pidName, List<Integer> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
         this.id = id;
         this.name = name;
         PidName = pidName;
@@ -42,6 +44,7 @@ public class Isometric {
         this.sheets = sheets;
         this.coordinatesInPid = coordinatesInPid;
         this.isApproved = isApproved;
+        this.comments = comments;
     }
 
     public int getId() {
@@ -124,6 +127,14 @@ public class Isometric {
         isApproved = approved;
     }
 
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
     @Override
     public String toString() {
         return "Isometric{" +
@@ -137,6 +148,7 @@ public class Isometric {
                 ", sheets=" + sheets +
                 ", coordinatesInPid=" + coordinatesInPid +
                 ", isApproved=" + isApproved +
+                ", comments='" + comments + '\'' +
                 '}';
     }
 }

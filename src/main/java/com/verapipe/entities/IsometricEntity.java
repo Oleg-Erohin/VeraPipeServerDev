@@ -29,6 +29,8 @@ public class IsometricEntity {
     private String coordinatesInPid;
     @Column(name = "is_approved", unique = false,  nullable = false)
     private boolean isApproved;
+    @Column(name = "comments", unique = false, nullable = true, columnDefinition="TEXT")
+    private String comments;
     @ManyToMany(mappedBy = "isometricDrawingsList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    private List<PidEntity> pidsList;
     private Set<PidEntity> pidsList;
@@ -50,6 +52,7 @@ public class IsometricEntity {
         this.coordinatesInPid = isometric.getCoordinatesInPid().toString();
         this.isApproved = isometric.isApproved();
         this.pidsList = new HashSet<>();
+        this.comments = isometric.getComments();
     }
 
     public int getId() {
@@ -138,5 +141,13 @@ public class IsometricEntity {
 
     public void setTestPacksList(List<PressureTestPackageEntity> testPacksList) {
         this.testPacksList = testPacksList;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }

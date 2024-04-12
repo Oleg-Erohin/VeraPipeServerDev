@@ -3,9 +3,7 @@ package com.verapipe.entities;
 import com.verapipe.dto.Joiner;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,6 +14,7 @@ public class JoinerEntity {
     private int id;
     @Column(name = "tag_id", unique = true, nullable = false)
     private String tagId;
+    @Lob
     @Column(name = "certificate", nullable = false)
     private byte[] certificate;
     @Column(name = "certified_diameter_min_mm", unique = false, nullable = true)

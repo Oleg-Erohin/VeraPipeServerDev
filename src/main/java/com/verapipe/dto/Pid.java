@@ -10,25 +10,28 @@ public class Pid {
     private String revision;
     private Date date;
     private int sheets;
+    private String comments;
 
     public Pid() {
     }
 
-    public Pid(String name, byte[] file, String revision, Date date, int sheets) {
+    public Pid(String name, byte[] file, String revision, Date date, int sheets, String comments) {
         this.name = name;
         this.file = file;
         this.revision = revision;
         this.date = date;
         this.sheets = sheets;
+        this.comments = comments;
     }
 
-    public Pid(int id, String name, byte[] file, String revision, Date date, int sheets) {
+    public Pid(int id, String name, byte[] file, String revision, Date date, int sheets, String comments) {
         this.id = id;
         this.name = name;
         this.file = file;
         this.revision = revision;
         this.date = date;
         this.sheets = sheets;
+        this.comments = comments;
     }
 
     public int getId() {
@@ -79,6 +82,14 @@ public class Pid {
         this.sheets = sheets;
     }
 
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
     @Override
     public String toString() {
         return "Pid{" +
@@ -88,6 +99,7 @@ public class Pid {
                 ", revision='" + revision + '\'' +
                 ", date=" + date +
                 ", sheets=" + sheets +
+                ", comments='" + comments + '\'' +
                 '}';
     }
 }

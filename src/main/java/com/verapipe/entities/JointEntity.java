@@ -27,6 +27,8 @@ public class JointEntity {
     private Float diameterInch;
     @Column(name = "fitting_description_1", unique = false, nullable = false)
     private String fittingDescription1;
+    @Column(name = "comments", unique = false, nullable = true, columnDefinition="TEXT")
+    private String comments;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "base_material_type_1")
     private BaseMaterialTypeEntity baseMaterialType1;
@@ -62,16 +64,16 @@ public class JointEntity {
             inverseJoinColumns = @JoinColumn(name = "joiners_list_id")
     )
     private Set<JoinerEntity> joinersList;
-    @Column(name = "date", unique = false, nullable = false)
+    @Column(name = "date", unique = false, nullable = true)
     private Date date;
-    @Column(name = "is_fitup_done", unique = false, nullable = false)
+    @Column(name = "is_fitup_done", unique = false, nullable = true)
     private boolean isFitUpDone;
-    @Column(name = "is_visual_inspection_done", unique = false, nullable = false)
+    @Column(name = "is_visual_inspection_done", unique = false, nullable = true)
     private boolean isVisualInspectionDone;
     @ManyToOne(fetch = FetchType.EAGER)
     private NdtReportEntity ndtReport;
-    @Column(name = "is_ndt_passed", unique = false, nullable = false)
-    private boolean isNdtPassed;
+    @Column(name = "is_ndt_passed", unique = false, nullable = true)
+    private Boolean isNdtPassed;
     @ManyToOne(fetch = FetchType.EAGER)
     private PreheatEntity preheat;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -137,6 +139,7 @@ public class JointEntity {
         this.postWeldHeatTreatment = new PostWeldHeatTreatmentEntity();
         String postWeldHeatTreatmentName = joint.getPostWeldHeatTreatmentName();
         this.postWeldHeatTreatment.setName(postWeldHeatTreatmentName);
+        this.comments = joint.getComments();
     }
 
     private void initiateJoinersList(List<String> joinersTagIdList) {
@@ -382,5 +385,13 @@ public class JointEntity {
 
     public void setJoinersList(Set<JoinerEntity> joinersList) {
         this.joinersList = joinersList;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }

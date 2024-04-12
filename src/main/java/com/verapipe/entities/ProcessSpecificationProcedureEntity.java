@@ -16,10 +16,10 @@ public class ProcessSpecificationProcedureEntity {
     private String name;
     @Lob
     @Column(name = "procedure_file", unique = true, nullable = true)
-    private Byte[] procedureFile;
+    private byte[] procedureFile;
     @Lob
     @Column(name = "procedure_qualification_record_file", unique = false, nullable = true)
-    private Byte[] processQualificationRecordFile;
+    private byte[] processQualificationRecordFile;
     @Column(name = "is_preheat_required", unique = false, nullable = false)
     private boolean isPreheatRequired;
     @Column(name = "is_post_weld_heat_treatment_required", unique = false, nullable = false)
@@ -119,19 +119,19 @@ public class ProcessSpecificationProcedureEntity {
         this.name = name;
     }
 
-    public Byte[] getProcedureFile() {
+    public byte[] getProcedureFile() {
         return procedureFile;
     }
 
-    public void setProcedureFile(Byte[] procedureFile) {
+    public void setProcedureFile(byte[] procedureFile) {
         this.procedureFile = procedureFile;
     }
 
-    public Byte[] getProcessQualificationRecordFile() {
+    public byte[] getProcessQualificationRecordFile() {
         return processQualificationRecordFile;
     }
 
-    public void setProcessQualificationRecordFile(Byte[] processQualificationRecordFile) {
+    public void setProcessQualificationRecordFile(byte[] processQualificationRecordFile) {
         this.processQualificationRecordFile = processQualificationRecordFile;
     }
 

@@ -25,6 +25,8 @@ public class PidEntity {
     private Date date;
     @Column(name = "sheets", unique = false, nullable = false)
     private int sheets;
+    @Column(name = "comments", unique = false, nullable = true, columnDefinition="TEXT")
+    private String comments;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "Pid_Isometric_list",
@@ -48,6 +50,7 @@ public class PidEntity {
         this.date = pid.getDate();
         this.sheets = pid.getSheets();
         this.isometricDrawingsList = new HashSet<>();
+        this.comments = pid.getComments();
     }
 
     public int getId() {
@@ -120,5 +123,13 @@ public class PidEntity {
 
     public void setPressureTestPackagesList(List<PressureTestPackageEntity> pressureTestPackagesList) {
         this.pressureTestPackagesList = pressureTestPackagesList;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }
