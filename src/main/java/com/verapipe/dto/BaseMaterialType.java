@@ -1,5 +1,7 @@
 package com.verapipe.dto;
 
+import com.verapipe.entities.BaseMaterialTypeEntity;
+
 public class BaseMaterialType {
     private int id;
     private String name;
@@ -14,6 +16,11 @@ public class BaseMaterialType {
     public BaseMaterialType(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public BaseMaterialType(BaseMaterialTypeEntity baseMaterialTypeEntity) {
+        this.id = baseMaterialTypeEntity.getId();
+        this.name = baseMaterialTypeEntity.getName();
     }
 
     public int getId() {

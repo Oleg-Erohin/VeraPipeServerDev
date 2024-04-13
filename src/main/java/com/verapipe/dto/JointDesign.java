@@ -1,5 +1,7 @@
 package com.verapipe.dto;
 
+import com.verapipe.entities.JointDesignEntity;
+
 public class JointDesign {
     private int id;
     private String name;
@@ -14,6 +16,11 @@ public class JointDesign {
     public JointDesign(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public JointDesign(JointDesignEntity jointDesignEntity) {
+        this.id = jointDesignEntity.getId();
+        this.name = jointDesignEntity.getName();
     }
 
     public int getId() {

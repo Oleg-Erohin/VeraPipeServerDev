@@ -1,5 +1,6 @@
 package com.verapipe.dto;
 
+import com.verapipe.entities.ProcessSpecificationProcedureEntity;
 import com.verapipe.enums.ThicknessUOM;
 
 import java.util.Arrays;
@@ -72,6 +73,29 @@ public class ProcessSpecificationProcedure {
         this.thicknessUom = thicknessUom;
         this.thicknessMmMin = thicknessMmMin;
         this.thicknessMmMax = thicknessMmMax;
+    }
+
+    public ProcessSpecificationProcedure(ProcessSpecificationProcedureEntity processSpecificationProcedureEntity) {
+        this.id = processSpecificationProcedureEntity.getId();
+        this.name = processSpecificationProcedureEntity.getName();
+        this.procedureFile = processSpecificationProcedureEntity.getProcedureFile();
+        this.processQualificationRecordFile = processSpecificationProcedureEntity.getProcessQualificationRecordFile();
+        this.jointDesign = processSpecificationProcedureEntity.getJointDesign().getName();
+        this.baseMaterial1 = processSpecificationProcedureEntity.getBaseMaterial1().getName();
+        this.baseMaterial2 = processSpecificationProcedureEntity.getBaseMaterial2().getName();
+        this.fusionProcess = processSpecificationProcedureEntity.getFusionProcess().getName();
+        this.fillerMaterial1 = processSpecificationProcedureEntity.getFillerMaterial1().getName();
+        this.fillerMaterial2 = processSpecificationProcedureEntity.getFillerMaterial2().getName();
+        this.standardCode = processSpecificationProcedureEntity.getStandardCode().getName();
+        this.isPreheatRequired = processSpecificationProcedureEntity.isPreheatRequired();
+        this.isPostWeldHeatTreatmentRequired = processSpecificationProcedureEntity.isPostWeldHeatTreatmentRequired();
+        this.diameterMmMin = processSpecificationProcedureEntity.getDiameterMmMin();
+        this.diameterMmMax = processSpecificationProcedureEntity.getDiameterMmMax();
+        this.diameterInchMin = processSpecificationProcedureEntity.getDiameterInchMin();
+        this.diameterInchMax = processSpecificationProcedureEntity.getDiameterInchMax();
+        this.thicknessUom = processSpecificationProcedureEntity.getThicknessUom();
+        this.thicknessMmMin = processSpecificationProcedureEntity.getThicknessMmMin();
+        this.thicknessMmMax = processSpecificationProcedureEntity.getThicknessMmMax();
     }
 
     public int getId() {

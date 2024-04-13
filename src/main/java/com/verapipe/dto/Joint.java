@@ -1,7 +1,14 @@
 package com.verapipe.dto;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.verapipe.entities.JointEntity;
+import com.verapipe.entities.JoinerEntity;
+
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Joint {
     private int id;
@@ -98,6 +105,46 @@ public class Joint {
         this.postWeldHeatTreatmentName = postWeldHeatTreatmentName;
         this.comments = comments;
     }
+
+    public Joint(JointEntity jointEntity) throws JsonProcessingException {
+        this.id = jointEntity.getId();
+        this.number = jointEntity.getNumber();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        this.coordinatesOnIsometric = objectMapper.readValue(jointEntity.getCoordinatesOnIsometric(), new TypeReference<Coordinates>(){});
+
+        this.pidName = jointEntity.getPid().getName();
+        this.isometricName = jointEntity.getIsometric().getName();
+        this.sheetOnIsometric = jointEntity.getSheetOnIsometric();
+        this.diameterMm = jointEntity.getDiameterMm();
+        this.diameterInch = jointEntity.getDiameterInch();
+        this.fittingDescription1 = jointEntity.getFittingDescription1();
+        this.baseMaterialTypeName1 = jointEntity.getBaseMaterialType1().getName();
+        this.baseMaterialHeatNum1 = jointEntity.getBaseMaterialCertificate1().getHeatNum();
+        this.fittingDescription2 = jointEntity.getFittingDescription2();
+        this.baseMaterialTypeName2 = jointEntity.getBaseMaterialType2().getName();
+        this.baseMaterialHeatNum2 = jointEntity.getBaseMaterialCertificate2().getHeatNum();
+        this.fillerMaterialTypeName1 = jointEntity.getFillerMaterialType1().getName();
+        this.fillerMaterialHeatNum1 = jointEntity.getFillerMaterialCertificate1().getHeatNum();
+        this.fillerMaterialTypeName2 = jointEntity.getFillerMaterialType2().getName();
+        this.fillerMaterialHeatNum2 = jointEntity.getFillerMaterialCertificate2().getHeatNum();
+        this.processSpecificationProcedureName = jointEntity.getProcessSpecificationProcedure().getName();
+
+        this.joinersTagIdList = jointEntity.getJoinersList().stream()
+                .map(JoinerEntity::getTagId)
+                .map(String::valueOf)
+                .collect(Collectors.toList());
+
+        this.date = jointEntity.getDate();
+        this.isFitUpDone = jointEntity.isFitUpDone();
+        this.isVisualInspectionDone = jointEntity.isVisualInspectionDone();
+        this.ndtReportName = jointEntity.getNdtReport().getName();
+        this.isNdtPassed = jointEntity.isNdtPassed();
+        this.preheatName = jointEntity.getPreheat().getName();
+        this.postWeldHeatTreatmentName = jointEntity.getPostWeldHeatTreatment().getName();
+        this.comments = jointEntity.getComments();
+    }
+
 
     public int getId() {
         return id;

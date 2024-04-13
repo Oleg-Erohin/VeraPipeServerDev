@@ -1,5 +1,7 @@
 package com.verapipe.dto;
 
+import com.verapipe.entities.NdtTypeEntity;
+
 public class NdtType {
     private int id;
     private String name;
@@ -14,6 +16,11 @@ public class NdtType {
     public NdtType(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public NdtType(NdtTypeEntity ndtTypeEntity) {
+        this.id = ndtTypeEntity.getId();
+        this.name = ndtTypeEntity.getName();
     }
 
     public int getId() {

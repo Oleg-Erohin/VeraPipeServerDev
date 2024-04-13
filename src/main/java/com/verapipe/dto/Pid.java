@@ -1,5 +1,7 @@
 package com.verapipe.dto;
 
+import com.verapipe.entities.PidEntity;
+
 import java.util.Arrays;
 import java.util.Date;
 
@@ -32,6 +34,16 @@ public class Pid {
         this.date = date;
         this.sheets = sheets;
         this.comments = comments;
+    }
+
+    public Pid(PidEntity pidEntity) {
+        this.id = pidEntity.getId();
+        this.name = pidEntity.getName();
+        this.file = pidEntity.getFile();
+        this.revision = pidEntity.getRevision();
+        this.date = pidEntity.getDate();
+        this.sheets = pidEntity.getSheets();
+        this.comments = pidEntity.getComments();
     }
 
     public int getId() {

@@ -1,8 +1,16 @@
 package com.verapipe.dto;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.verapipe.entities.IsometricEntity;
+import com.verapipe.entities.PidEntity;
+import com.verapipe.entities.PressureTestPackageEntity;
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PressureTestPackage {
     private int id;
@@ -33,6 +41,27 @@ public class PressureTestPackage {
         this.coordinatesInPidsList = coordinatesInPidsList;
         this.testReport = testReport;
         this.date = date;
+    }
+
+    public PressureTestPackage(PressureTestPackageEntity pressureTestPackageEntity) throws JsonProcessingException {
+        this.id = pressureTestPackageEntity.getId();
+        this.name = pressureTestPackageEntity.getName();
+
+        List<PidEntity> pidsList = pressureTestPackageEntity.getPidsList();
+        this.pidNames = pidsList.stream()
+                .map(PidEntity::getName)
+                .collect(Collectors.toList());
+
+        List<IsometricEntity> isometricsList = pressureTestPackageEntity.getIsometricsList();
+        this.pidNames = isometricsList.stream()
+                .map(IsometricEntity::getName)
+                .collect(Collectors.toList());
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        this.coordinatesInPidsList = objectMapper.readValue(pressureTestPackageEntity.getCoordinatesInPids(), new TypeReference<List<Coordinates>>(){});
+
+        this.testReport = pressureTestPackageEntity.getTestReport();
+        this.date = pressureTestPackageEntity.getDate();
     }
 
     public int getId() {

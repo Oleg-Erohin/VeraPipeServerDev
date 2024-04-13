@@ -1,5 +1,7 @@
 package com.verapipe.dto;
 
+import com.verapipe.entities.FillerMaterialTypeEntity;
+
 public class FillerMaterialType {
     private int id;
     private String name;
@@ -14,6 +16,11 @@ public class FillerMaterialType {
     public FillerMaterialType(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public FillerMaterialType(FillerMaterialTypeEntity fillerMaterialTypeEntity) {
+        this.id = fillerMaterialTypeEntity.getId();
+        this.name = fillerMaterialTypeEntity.getName();
     }
 
     public int getId() {

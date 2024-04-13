@@ -1,13 +1,21 @@
 package com.verapipe.dto;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.verapipe.entities.IsometricEntity;
+import com.verapipe.entities.PidEntity;
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Isometric {
     private int id;
     private String name;
-    private String PidName;
+    private String[] PidNames;
     private List<Integer> PidSheets;
     private byte[] file;
     private String revision;
@@ -20,10 +28,10 @@ public class Isometric {
     public Isometric() {
     }
 
-    public Isometric(String name, String pidName, List<Integer> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
+    public Isometric(String name, String[] PidNames, List<Integer> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
         this.name = name;
-        PidName = pidName;
-        PidSheets = pidSheets;
+        this.PidNames = PidNames;
+        this.PidSheets = pidSheets;
         this.file = file;
         this.revision = revision;
         this.date = date;
@@ -33,11 +41,11 @@ public class Isometric {
         this.comments = comments;
     }
 
-    public Isometric(int id, String name, String pidName, List<Integer> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
+    public Isometric(int id, String name, String[] PidNames, List<Integer> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
         this.id = id;
         this.name = name;
-        PidName = pidName;
-        PidSheets = pidSheets;
+        this.PidNames = PidNames;
+        this.PidSheets = pidSheets;
         this.file = file;
         this.revision = revision;
         this.date = date;
@@ -45,6 +53,32 @@ public class Isometric {
         this.coordinatesInPid = coordinatesInPid;
         this.isApproved = isApproved;
         this.comments = comments;
+    }
+
+    public Isometric(IsometricEntity isometricEntity) throws JsonProcessingException {
+        this.id = isometricEntity.getId();
+        this.name = isometricEntity.getName();
+
+        Set<PidEntity> pidsList = isometricEntity.getPidsList();
+        this.PidNames = pidsList.stream()
+                .map(PidEntity::getName)
+                .toArray(String[]::new);
+
+        List<Integer> pidSheets = pidsList.stream()
+                .map(PidEntity::getSheets)
+                .collect(Collectors.toList());
+        this.PidSheets = pidSheets;
+
+        this.file = isometricEntity.getFile();
+        this.revision = isometricEntity.getRevision();
+        this.date = isometricEntity.getDate();
+        this.sheets = isometricEntity.getSheets();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        this.coordinatesInPid = objectMapper.readValue(isometricEntity.getCoordinatesInPid(), new TypeReference<List<Coordinates>>(){});
+
+        this.isApproved = isometricEntity.isApproved();
+        this.comments = isometricEntity.getComments();
     }
 
     public int getId() {
@@ -63,12 +97,12 @@ public class Isometric {
         this.name = name;
     }
 
-    public String getPidName() {
-        return PidName;
+    public String[] getPidName() {
+        return PidNames;
     }
 
-    public void setPidName(String pidName) {
-        PidName = pidName;
+    public void setPidName(String[] pidName) {
+        PidNames = pidName;
     }
 
     public List<Integer> getPidSheets() {
@@ -140,7 +174,7 @@ public class Isometric {
         return "Isometric{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", PidName='" + PidName + '\'' +
+                ", PidNames='" + PidNames + '\'' +
                 ", PidSheets=" + PidSheets +
                 ", file=" + Arrays.toString(file) +
                 ", revision='" + revision + '\'' +

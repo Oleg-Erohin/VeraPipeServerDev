@@ -1,5 +1,7 @@
 package com.verapipe.dto;
 
+import com.verapipe.entities.NdtReportEntity;
+
 import java.util.Arrays;
 import java.util.Date;
 
@@ -15,7 +17,7 @@ public class NdtReport {
 
     public NdtReport(String name, String ndtType, byte[] file, Date date) {
         this.name = name;
-        NdtType = ndtType;
+        this.NdtType = ndtType;
         this.file = file;
         this.date = date;
     }
@@ -23,9 +25,17 @@ public class NdtReport {
     public NdtReport(int id, String name, String ndtType, byte[] file, Date date) {
         this.id = id;
         this.name = name;
-        NdtType = ndtType;
+        this.NdtType = ndtType;
         this.file = file;
         this.date = date;
+    }
+
+    public NdtReport(NdtReportEntity ndtReportEntity) {
+        this.id = ndtReportEntity.getId();
+        this.name = ndtReportEntity.getName();
+        this.NdtType = ndtReportEntity.getNdtType().getName();
+        this.file = ndtReportEntity.getFile();
+        this.date = ndtReportEntity.getDate();
     }
 
     public int getId() {

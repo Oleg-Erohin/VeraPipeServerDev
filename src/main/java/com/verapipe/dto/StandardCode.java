@@ -1,5 +1,7 @@
 package com.verapipe.dto;
 
+import com.verapipe.entities.StandardCodeEntity;
+
 public class StandardCode {
     private int id;
     private String name;
@@ -14,6 +16,11 @@ public class StandardCode {
     public StandardCode(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public StandardCode(StandardCodeEntity standardCodeEntity) {
+        this.id = standardCodeEntity.getId();
+        this.name = standardCodeEntity.getName();
     }
 
     public int getId() {

@@ -1,5 +1,7 @@
 package com.verapipe.dto;
 
+import com.verapipe.entities.FusionProcessEntity;
+
 public class FusionProcess {
     private int id;
     private String name;
@@ -14,6 +16,11 @@ public class FusionProcess {
     public FusionProcess(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public FusionProcess(FusionProcessEntity fusionProcessEntity) {
+        this.id = fusionProcessEntity.getId();
+        this.name = fusionProcessEntity.getName();
     }
 
     public int getId() {

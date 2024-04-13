@@ -1,5 +1,7 @@
 package com.verapipe.dto;
 
+import com.verapipe.entities.PostWeldHeatTreatmentEntity;
+
 import java.util.Arrays;
 import java.util.Date;
 
@@ -26,6 +28,14 @@ public class PostWeldHeatTreatment {
         this.processSpecificationProcedureName = processSpecificationProcedureName;
         this.file = file;
         this.date = date;
+    }
+
+    public PostWeldHeatTreatment(PostWeldHeatTreatmentEntity postWeldHeatTreatmentEntity) {
+        this.id = postWeldHeatTreatmentEntity.getId();
+        this.name = postWeldHeatTreatmentEntity.getName();
+        this.processSpecificationProcedureName = postWeldHeatTreatmentEntity.getProcessSpecificationProcedure().getName();
+        this.file = postWeldHeatTreatmentEntity.getFile();
+        this.date = postWeldHeatTreatmentEntity.getDate();
     }
 
     public int getId() {

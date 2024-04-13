@@ -1,5 +1,7 @@
 package com.verapipe.entities;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.verapipe.dto.Joint;
 
 import javax.persistence.*;
@@ -82,10 +84,11 @@ public class JointEntity {
     public JointEntity() {
     }
 
-    public JointEntity(Joint joint) {
+    public JointEntity(Joint joint) throws JsonProcessingException {
         this.id = joint.getId();
         this.number = joint.getNumber();
-        this.coordinatesOnIsometric = joint.getCoordinatesOnIsometric().toString();
+        ObjectMapper objectMapper = new ObjectMapper();
+        this.coordinatesOnIsometric = objectMapper.writeValueAsString(joint.getCoordinatesOnIsometric());
         this.pid = new PidEntity();
         String pidName = joint.getPidName();
         this.pid.setName(pidName);

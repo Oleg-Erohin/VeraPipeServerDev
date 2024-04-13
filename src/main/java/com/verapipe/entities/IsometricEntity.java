@@ -1,5 +1,7 @@
 package com.verapipe.entities;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.verapipe.dto.Isometric;
 
 import javax.persistence.*;
@@ -42,14 +44,15 @@ public class IsometricEntity {
     public IsometricEntity() {
     }
 
-    public IsometricEntity(Isometric isometric) {
+    public IsometricEntity(Isometric isometric) throws JsonProcessingException {
         this.id = isometric.getId();
         this.name = isometric.getName();
         this.file = isometric.getFile();
         this.revision = isometric.getRevision();
         this.date = isometric.getDate();
         this.sheets = isometric.getSheets();
-        this.coordinatesInPid = isometric.getCoordinatesInPid().toString();
+        ObjectMapper objectMapper = new ObjectMapper();
+        this.coordinatesInPid = objectMapper.writeValueAsString(isometric.getCoordinatesInPid());
         this.isApproved = isometric.isApproved();
         this.pidsList = new HashSet<>();
         this.comments = isometric.getComments();

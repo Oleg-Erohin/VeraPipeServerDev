@@ -1,5 +1,7 @@
 package com.verapipe.dto;
 
+import com.verapipe.entities.PreheatEntity;
+
 import java.util.Arrays;
 import java.util.Date;
 
@@ -26,6 +28,14 @@ public class Preheat {
         this.processSpecificationProcedureName = processSpecificationProcedureName;
         this.file = file;
         this.date = date;
+    }
+
+    public Preheat(PreheatEntity preheatEntity) {
+        this.id = preheatEntity.getId();
+        this.name = preheatEntity.getName();
+        this.processSpecificationProcedureName = preheatEntity.getProcessSpecificationProcedure().getName();
+        this.file = preheatEntity.getFile();
+        this.date = preheatEntity.getDate();
     }
 
     public int getId() {

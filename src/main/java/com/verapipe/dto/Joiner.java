@@ -1,5 +1,7 @@
 package com.verapipe.dto;
 
+import com.verapipe.entities.JoinerEntity;
+
 import java.util.Arrays;
 
 public class Joiner {
@@ -46,6 +48,21 @@ public class Joiner {
         this.baseMaterialTypeName2 = baseMaterialTypeName2;
         this.jointDesignName = jointDesignName;
         this.fusionProcessName = fusionProcessName;
+    }
+
+    public Joiner(JoinerEntity joinerEntity) {
+        this.id = joinerEntity.getId();
+        this.tagId = joinerEntity.getTagId();
+        this.certificate = joinerEntity.getCertificate();
+        this.certifiedDiameterMinMm = joinerEntity.getCertifiedDiameterMinMm();
+        this.certifiedDiameterMaxMm = joinerEntity.getCertifiedDiameterMaxMm();
+        this.certifiedDiameterMinInch = joinerEntity.getCertifiedDiameterMinInch();
+        this.certifiedDiameterMaxInch = joinerEntity.getCertifiedDiameterMaxInch();
+        this.maxDepositedMaterial = joinerEntity.getMaxDepositedMaterial();
+        this.baseMaterialTypeName1 = joinerEntity.getBaseMaterialType1().getName();
+        this.baseMaterialTypeName2 = joinerEntity.getBaseMaterialType2().getName();
+        this.jointDesignName = joinerEntity.getJointDesign().getName();
+        this.fusionProcessName = joinerEntity.getFusionProcess().getName();
     }
 
     public int getId() {

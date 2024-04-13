@@ -1,5 +1,7 @@
 package com.verapipe.entities;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.verapipe.dto.PressureTestPackage;
 
 import javax.persistence.*;
@@ -29,7 +31,7 @@ public class PressureTestPackageEntity {
     public PressureTestPackageEntity() {
     }
 
-    public PressureTestPackageEntity(PressureTestPackage pressureTestPackage) {
+    public PressureTestPackageEntity(PressureTestPackage pressureTestPackage) throws JsonProcessingException {
         this.id = pressureTestPackage.getId();
         this.name = pressureTestPackage.getName();
         List<String> pidNames = pressureTestPackage.getPidNames();
@@ -44,7 +46,8 @@ public class PressureTestPackageEntity {
             tempIsometricEntity.setName(isometricName);
             this.isometricsList.add(tempIsometricEntity);
         }
-        this.coordinatesInPids = pressureTestPackage.getCoordinatesInPidsList().toString();
+        ObjectMapper objectMapper = new ObjectMapper();
+        this.coordinatesInPids = objectMapper.writeValueAsString(pressureTestPackage.getCoordinatesInPidsList());
         this.testReport = pressureTestPackage.getTestReport();
         this.date = pressureTestPackage.getDate();
     }

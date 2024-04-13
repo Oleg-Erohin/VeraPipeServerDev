@@ -1,5 +1,7 @@
 package com.verapipe.dto;
 
+import com.verapipe.entities.BaseMaterialCertificateEntity;
+
 import java.util.Arrays;
 
 public class BaseMaterialCertificate {
@@ -25,6 +27,14 @@ public class BaseMaterialCertificate {
         this.lotNum = lotNum;
         this.file = file;
         this.materialTypeName = materialTypeName;
+    }
+
+    public BaseMaterialCertificate(BaseMaterialCertificateEntity baseMaterialCertificateEntity) {
+        this.id = baseMaterialCertificateEntity.getId();
+        this.heatNum = baseMaterialCertificateEntity.getHeatNum();
+        this.lotNum = baseMaterialCertificateEntity.getLotNum();
+        this.file = baseMaterialCertificateEntity.getCertificateFile();
+        this.materialTypeName = baseMaterialCertificateEntity.getBaseMaterialType().getName();
     }
 
     public int getId() {
