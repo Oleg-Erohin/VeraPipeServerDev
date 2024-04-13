@@ -39,24 +39,17 @@ public class JointEntity {
     private BaseMaterialCertificateEntity baseMaterialCertificate1;
     @Column(name = "fitting_description_2", unique = false, nullable = false)
     private String fittingDescription2;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "base_material_type_2")
-    private BaseMaterialTypeEntity baseMaterialType2;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "base_material_certificate_2")
-    private BaseMaterialCertificateEntity baseMaterialCertificate2;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "filler_material_type_1")
-    private FillerMaterialTypeEntity fillerMaterialType1;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "filler_material_certificate_1")
-    private FillerMaterialCertificateEntity fillerMaterialCertificate1;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "filler_material_type_2")
-    private FillerMaterialTypeEntity fillerMaterialType2;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "filler_material_certificate_2")
-    private FillerMaterialCertificateEntity fillerMaterialCertificate2;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<BaseMaterialTypeEntity> baseMaterialTypeList;
+    // TODO to make validation that only 2 objects in baseMaterialCertificateList
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<BaseMaterialCertificateEntity> baseMaterialCertificateList;
+    // TODO to make validation that only 2 objects in fillerMaterialTypeList
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<FillerMaterialTypeEntity>fillerMaterialTypeList;
+    // TODO to make validation that only 2 objects in fillerMaterialCertificateList
+    @ManyToMany
+    private Set<FillerMaterialCertificateEntity> fillerMaterialCertificateList;
     @ManyToOne(fetch = FetchType.EAGER)
     private ProcessSpecificationProcedureEntity processSpecificationProcedure;
     @ManyToMany
@@ -99,36 +92,20 @@ public class JointEntity {
         this.diameterMm = joint.getDiameterMm();
         this.diameterInch = joint.getDiameterInch();
         this.fittingDescription1 = joint.getFittingDescription1();
-        this.baseMaterialType1 = new BaseMaterialTypeEntity();
-        String baseMaterialTypeName1 = joint.getBaseMaterialTypeName1();
-        this.baseMaterialType1.setName(baseMaterialTypeName1);
-        this.baseMaterialCertificate1 = new BaseMaterialCertificateEntity();
-        String baseMaterialHeatNum1 = joint.getBaseMaterialHeatNum1();
-        this.baseMaterialCertificate1.setHeatNum(baseMaterialHeatNum1);
+        this.baseMaterialTypeList = new HashSet<>();
+        initializeBaseMaterialTypeListWithValues(joint);
+        this.baseMaterialCertificateList = new HashSet<>();
+        initializeBaseMaterialCertificateListWithValues(joint);
         this.fittingDescription2 = joint.getFittingDescription2();
-        this.baseMaterialType2 = new BaseMaterialTypeEntity();
-        String baseMaterialTypeName2 = joint.getBaseMaterialTypeName2();
-        this.baseMaterialType2.setName(baseMaterialTypeName2);
-        this.baseMaterialCertificate2 = new BaseMaterialCertificateEntity();
-        String baseMaterialHeatNum2 = joint.getBaseMaterialHeatNum2();
-        this.baseMaterialCertificate2.setHeatNum(baseMaterialHeatNum2);
-        this.fillerMaterialType1 = new FillerMaterialTypeEntity();
-        String fillerMaterialTypeName1 = joint.getFillerMaterialTypeName1();
-        this.fillerMaterialType1.setName(fillerMaterialTypeName1);
-        this.fillerMaterialCertificate1 = new FillerMaterialCertificateEntity();
-        String fillerMaterialHeatNum1 = joint.getFillerMaterialHeatNum1();
-        this.fillerMaterialCertificate1.setHeatNum(fillerMaterialHeatNum1);
-        this.fillerMaterialType2 = new FillerMaterialTypeEntity();
-        String fillerMaterialTypeName2 = joint.getFillerMaterialTypeName2();
-        this.fillerMaterialType2.setName(fillerMaterialTypeName2);
-        this.fillerMaterialCertificate2 = new FillerMaterialCertificateEntity();
-        String fillerMaterialHeatNum2 = joint.getFillerMaterialHeatNum2();
-        this.fillerMaterialCertificate2.setHeatNum(fillerMaterialHeatNum2);
+        this.fillerMaterialTypeList = new HashSet<>();
+        initializeFillerMaterialTypeListWithValues(joint);
+        this.fillerMaterialCertificateList = new HashSet<>();
+        initializeFillerMaterialCertificateListWithValues(joint);
         this.processSpecificationProcedure = new ProcessSpecificationProcedureEntity();
         String processSpecificationProcedureName = joint.getProcessSpecificationProcedureName();
         this.processSpecificationProcedure.setName(processSpecificationProcedureName);
         this.joinersList = new HashSet<>();
-        initiateJoinersList(joint.getJoinersTagIdList());
+        initializeJoinersList(joint.getJoinersTagIdList());
         this.date = joint.getDate();
         this.isFitUpDone = joint.isFitUpDone();
         this.isVisualInspectionDone = joint.isVisualInspectionDone();
@@ -145,7 +122,51 @@ public class JointEntity {
         this.comments = joint.getComments();
     }
 
-    private void initiateJoinersList(List<String> joinersTagIdList) {
+    private void initializeBaseMaterialCertificateListWithValues(Joint joint) {
+        BaseMaterialCertificateEntity baseMaterialCertificate1 = new BaseMaterialCertificateEntity();
+        BaseMaterialCertificateEntity baseMaterialCertificate2 = new BaseMaterialCertificateEntity();
+        String baseMaterialHeatNum1 = joint.getBaseMaterialHeatNum1();
+        String baseMaterialHeatNum2 = joint.getBaseMaterialHeatNum2();
+        baseMaterialCertificate1.setHeatNum(baseMaterialHeatNum1);
+        baseMaterialCertificate2.setHeatNum(baseMaterialHeatNum2);
+        this.baseMaterialCertificateList.add(baseMaterialCertificate1);
+        this.baseMaterialCertificateList.add(baseMaterialCertificate2);
+    }
+
+    private void initializeFillerMaterialCertificateListWithValues(Joint joint) {
+        FillerMaterialCertificateEntity fillerMaterialCertificate1 = new FillerMaterialCertificateEntity();
+        FillerMaterialCertificateEntity fillerMaterialCertificate2 = new FillerMaterialCertificateEntity();
+        String fillerMaterialHeatNum1 = joint.getFillerMaterialHeatNum1();
+        String fillerMaterialHeatNum2 = joint.getFillerMaterialHeatNum2();
+        fillerMaterialCertificate1.setHeatNum(fillerMaterialHeatNum1);
+        fillerMaterialCertificate2.setHeatNum(fillerMaterialHeatNum2);
+        this.fillerMaterialCertificateList.add(fillerMaterialCertificate1);
+        this.fillerMaterialCertificateList.add(fillerMaterialCertificate2);
+    }
+
+    private void initializeBaseMaterialTypeListWithValues(Joint joint) {
+        BaseMaterialTypeEntity baseMaterialType1 = new BaseMaterialTypeEntity();
+        BaseMaterialTypeEntity baseMaterialType2 = new BaseMaterialTypeEntity();
+        String baseMaterialTypeName1 = joint.getBaseMaterialTypeName1();
+        String baseMaterialTypeName2 = joint.getBaseMaterialTypeName2();
+        baseMaterialType1.setName(baseMaterialTypeName1);
+        baseMaterialType2.setName(baseMaterialTypeName2);
+        this.baseMaterialTypeList.add(baseMaterialType1);
+        this.baseMaterialTypeList.add(baseMaterialType2);
+    }
+
+    private void initializeFillerMaterialTypeListWithValues(Joint joint) {
+        FillerMaterialTypeEntity fillerMaterialType1 = new FillerMaterialTypeEntity();
+        FillerMaterialTypeEntity fillerMaterialType2 = new FillerMaterialTypeEntity();
+        String fillerMaterialTypeName1 = joint.getFillerMaterialTypeName1();
+        String fillerMaterialTypeName2 = joint.getFillerMaterialTypeName2();
+        fillerMaterialType1.setName(fillerMaterialTypeName1);
+        fillerMaterialType2.setName(fillerMaterialTypeName2);
+        this.fillerMaterialTypeList.add(fillerMaterialType1);
+        this.fillerMaterialTypeList.add(fillerMaterialType2);
+    }
+
+    private void initializeJoinersList(List<String> joinersTagIdList) {
         if (!joinersTagIdList.isEmpty()) {
 //        JoinerEntity joiner1 = new JoinerEntity();
 //        String joiner1TagId = joinersTagIdList.get(0);
@@ -230,22 +251,6 @@ public class JointEntity {
         this.fittingDescription1 = fittingDescription1;
     }
 
-    public BaseMaterialTypeEntity getBaseMaterialType1() {
-        return baseMaterialType1;
-    }
-
-    public void setBaseMaterialType1(BaseMaterialTypeEntity baseMaterialType1) {
-        this.baseMaterialType1 = baseMaterialType1;
-    }
-
-    public BaseMaterialCertificateEntity getBaseMaterialCertificate1() {
-        return baseMaterialCertificate1;
-    }
-
-    public void setBaseMaterialCertificate1(BaseMaterialCertificateEntity baseMaterialCertificate1) {
-        this.baseMaterialCertificate1 = baseMaterialCertificate1;
-    }
-
     public String getFittingDescription2() {
         return fittingDescription2;
     }
@@ -254,52 +259,36 @@ public class JointEntity {
         this.fittingDescription2 = fittingDescription2;
     }
 
-    public BaseMaterialTypeEntity getBaseMaterialType2() {
-        return baseMaterialType2;
+    public Set<BaseMaterialCertificateEntity> getBaseMaterialCertificateList() {
+        return baseMaterialCertificateList;
     }
 
-    public void setBaseMaterialType2(BaseMaterialTypeEntity baseMaterialType2) {
-        this.baseMaterialType2 = baseMaterialType2;
+    public void setBaseMaterialCertificateList(Set<BaseMaterialCertificateEntity> baseMaterialCertificateList) {
+        this.baseMaterialCertificateList = baseMaterialCertificateList;
     }
 
-    public BaseMaterialCertificateEntity getBaseMaterialCertificate2() {
-        return baseMaterialCertificate2;
+    public Set<FillerMaterialTypeEntity> getFillerMaterialTypeList() {
+        return fillerMaterialTypeList;
     }
 
-    public void setBaseMaterialCertificate2(BaseMaterialCertificateEntity baseMaterialCertificate2) {
-        this.baseMaterialCertificate2 = baseMaterialCertificate2;
+    public Set<BaseMaterialTypeEntity> getBaseMaterialTypeList() {
+        return baseMaterialTypeList;
     }
 
-    public FillerMaterialTypeEntity getFillerMaterialType1() {
-        return fillerMaterialType1;
+    public void setBaseMaterialTypeList(Set<BaseMaterialTypeEntity> baseMaterialTypeList) {
+        this.baseMaterialTypeList = baseMaterialTypeList;
     }
 
-    public void setFillerMaterialType1(FillerMaterialTypeEntity fillerMaterialType1) {
-        this.fillerMaterialType1 = fillerMaterialType1;
+    public void setFillerMaterialTypeList(Set<FillerMaterialTypeEntity> fillerMaterialTypeList) {
+        this.fillerMaterialTypeList = fillerMaterialTypeList;
     }
 
-    public FillerMaterialCertificateEntity getFillerMaterialCertificate1() {
-        return fillerMaterialCertificate1;
+    public Set<FillerMaterialCertificateEntity> getFillerMaterialCertificateList() {
+        return fillerMaterialCertificateList;
     }
 
-    public void setFillerMaterialCertificate1(FillerMaterialCertificateEntity fillerMaterialCertificate1) {
-        this.fillerMaterialCertificate1 = fillerMaterialCertificate1;
-    }
-
-    public FillerMaterialTypeEntity getFillerMaterialType2() {
-        return fillerMaterialType2;
-    }
-
-    public void setFillerMaterialType2(FillerMaterialTypeEntity fillerMaterialType2) {
-        this.fillerMaterialType2 = fillerMaterialType2;
-    }
-
-    public FillerMaterialCertificateEntity getFillerMaterialCertificate2() {
-        return fillerMaterialCertificate2;
-    }
-
-    public void setFillerMaterialCertificate2(FillerMaterialCertificateEntity fillerMaterialCertificate2) {
-        this.fillerMaterialCertificate2 = fillerMaterialCertificate2;
+    public void setFillerMaterialCertificateList(Set<FillerMaterialCertificateEntity> fillerMaterialCertificateList) {
+        this.fillerMaterialCertificateList = fillerMaterialCertificateList;
     }
 
     public ProcessSpecificationProcedureEntity getProcessSpecificationProcedure() {
@@ -309,22 +298,6 @@ public class JointEntity {
     public void setProcessSpecificationProcedure(ProcessSpecificationProcedureEntity processSpecificationProcedure) {
         this.processSpecificationProcedure = processSpecificationProcedure;
     }
-
-//    public JoinerEntity getJoiner1() {
-//        return joiner1;
-//    }
-//
-//    public void setJoiner1(JoinerEntity joiner1) {
-//        this.joiner1 = joiner1;
-//    }
-//
-//    public JoinerEntity getJoiner2() {
-//        return joiner2;
-//    }
-//
-//    public void setJoiner2(JoinerEntity joiner2) {
-//        this.joiner2 = joiner2;
-//    }
 
     public Date getDate() {
         return date;

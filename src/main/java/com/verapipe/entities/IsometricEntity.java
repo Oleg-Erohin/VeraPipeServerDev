@@ -34,12 +34,11 @@ public class IsometricEntity {
     @Column(name = "comments", unique = false, nullable = true, columnDefinition="TEXT")
     private String comments;
     @ManyToMany(mappedBy = "isometricDrawingsList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<PidEntity> pidsList;
     private Set<PidEntity> pidsList;
     @OneToMany(mappedBy = "isometric", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<JointEntity> jointsList;
     @ManyToMany(mappedBy = "isometricsList", fetch = FetchType.LAZY)
-    private List<PressureTestPackageEntity> testPacksList;
+    private Set<PressureTestPackageEntity> testPacksList;
 
     public IsometricEntity() {
     }
@@ -138,11 +137,11 @@ public class IsometricEntity {
         this.jointsList = jointsList;
     }
 
-    public List<PressureTestPackageEntity> getTestPacksList() {
+    public Set<PressureTestPackageEntity> getTestPacksList() {
         return testPacksList;
     }
 
-    public void setTestPacksList(List<PressureTestPackageEntity> testPacksList) {
+    public void setTestPacksList(Set<PressureTestPackageEntity> testPacksList) {
         this.testPacksList = testPacksList;
     }
 

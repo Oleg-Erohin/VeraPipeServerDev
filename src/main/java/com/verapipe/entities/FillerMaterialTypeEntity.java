@@ -4,6 +4,7 @@ import com.verapipe.dto.FillerMaterialType;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "filler_material_type")
@@ -13,12 +14,12 @@ public class FillerMaterialTypeEntity {
     private int id;
     @Column(name = "name", unique = true, nullable = false)
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ProcessSpecificationProcedureEntity> processSpecificationProceduresList;
+    @ManyToMany(mappedBy = "fillerMaterialTypeList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<ProcessSpecificationProcedureEntity> processSpecificationProceduresList;
     @OneToMany(mappedBy = "fillerMaterialType", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<FillerMaterialCertificateEntity> fillerMaterialCertificatesList;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<JointEntity> JointsList;
+    @ManyToMany(mappedBy = "fillerMaterialTypeList",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<JointEntity> JointsList;
 
     public FillerMaterialTypeEntity() {
     }
@@ -44,11 +45,11 @@ public class FillerMaterialTypeEntity {
         this.name = name;
     }
 
-    public List<ProcessSpecificationProcedureEntity> getProcessSpecificationProceduresList() {
+    public Set<ProcessSpecificationProcedureEntity> getProcessSpecificationProceduresList() {
         return processSpecificationProceduresList;
     }
 
-    public void setProcessSpecificationProceduresList(List<ProcessSpecificationProcedureEntity> processSpecificationProceduresList) {
+    public void setProcessSpecificationProceduresList(Set<ProcessSpecificationProcedureEntity> processSpecificationProceduresList) {
         this.processSpecificationProceduresList = processSpecificationProceduresList;
     }
 
@@ -60,11 +61,11 @@ public class FillerMaterialTypeEntity {
         this.fillerMaterialCertificatesList = fillerMaterialCertificatesList;
     }
 
-    public List<JointEntity> getJointsList() {
+    public Set<JointEntity> getJointsList() {
         return JointsList;
     }
 
-    public void setJointsList(List<JointEntity> jointsList) {
+    public void setJointsList(Set<JointEntity> jointsList) {
         JointsList = jointsList;
     }
 }

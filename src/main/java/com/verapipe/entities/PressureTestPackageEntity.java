@@ -7,6 +7,7 @@ import com.verapipe.dto.PressureTestPackage;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "pressure_test_package")
@@ -17,9 +18,14 @@ public class PressureTestPackageEntity {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
     @ManyToMany(fetch = FetchType.LAZY)
-    private List<PidEntity> pidsList;
+    @JoinTable(
+            name = "pid_pressure_test_Package_list",
+            joinColumns = @JoinColumn(name = "pressure_test_package_id"),
+            inverseJoinColumns = @JoinColumn(name = "pid_id")
+    )
+    private Set<PidEntity> pidsList;
     @ManyToMany(fetch = FetchType.LAZY)
-    private List<IsometricEntity> isometricsList;
+    private Set<IsometricEntity> isometricsList;
     @Column(name = "coordinates", unique = true, nullable = true)
     private String coordinatesInPids;
     @Lob
@@ -68,19 +74,19 @@ public class PressureTestPackageEntity {
         this.name = name;
     }
 
-    public List<PidEntity> getPidsList() {
+    public Set<PidEntity> getPidsList() {
         return pidsList;
     }
 
-    public void setPidsList(List<PidEntity> pidsList) {
+    public void setPidsList(Set<PidEntity> pidsList) {
         this.pidsList = pidsList;
     }
 
-    public List<IsometricEntity> getIsometricsList() {
+    public Set<IsometricEntity> getIsometricsList() {
         return isometricsList;
     }
 
-    public void setIsometricsList(List<IsometricEntity> isometricsList) {
+    public void setIsometricsList(Set<IsometricEntity> isometricsList) {
         this.isometricsList = isometricsList;
     }
 

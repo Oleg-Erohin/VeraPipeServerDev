@@ -37,7 +37,7 @@ public class PidEntity {
     @OneToMany(mappedBy = "pid", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<JointEntity> JointsList;
     @ManyToMany(mappedBy = "pidsList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<PressureTestPackageEntity> pressureTestPackagesList;
+    private Set<PressureTestPackageEntity> pressureTestPackagesList;
 
     public PidEntity() {
     }
@@ -50,6 +50,7 @@ public class PidEntity {
         this.date = pid.getDate();
         this.sheets = pid.getSheets();
         this.isometricDrawingsList = new HashSet<>();
+        this.pressureTestPackagesList = new HashSet<>();
         this.comments = pid.getComments();
     }
 
@@ -117,11 +118,11 @@ public class PidEntity {
         JointsList = jointsList;
     }
 
-    public List<PressureTestPackageEntity> getPressureTestPackagesList() {
+    public Set<PressureTestPackageEntity> getPressureTestPackagesList() {
         return pressureTestPackagesList;
     }
 
-    public void setPressureTestPackagesList(List<PressureTestPackageEntity> pressureTestPackagesList) {
+    public void setPressureTestPackagesList(Set<PressureTestPackageEntity> pressureTestPackagesList) {
         this.pressureTestPackagesList = pressureTestPackagesList;
     }
 

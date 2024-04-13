@@ -4,3 +4,4 @@
 
 - Test findAll and findById for all the resources
 - Add "@RequestHeader(value = "Authorization") String token" and validate user type in any add, update and delete function on controller
+- Rethinking about mapped-by (create the foreign key, what can be stand on it's own and what should be deleted if the first is deleted)

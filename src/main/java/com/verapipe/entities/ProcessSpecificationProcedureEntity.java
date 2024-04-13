@@ -4,7 +4,9 @@ import com.verapipe.dto.ProcessSpecificationProcedure;
 import com.verapipe.enums.ThicknessUOM;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "process_specification_procedure")
@@ -40,20 +42,12 @@ public class ProcessSpecificationProcedureEntity {
     private Float thicknessMmMax;
     @ManyToOne(fetch = FetchType.EAGER)
     private JointDesignEntity jointDesign;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "base_material_type_1")
-    private BaseMaterialTypeEntity baseMaterial1;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "base_material_type_2")
-    private BaseMaterialTypeEntity baseMaterial2;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<BaseMaterialTypeEntity> baseMaterialTypeList;
     @ManyToOne(fetch = FetchType.EAGER)
     private FusionProcessEntity fusionProcess;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "filler_material_type_1")
-    private FillerMaterialTypeEntity fillerMaterial1;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "filler_material_type_2")
-    private FillerMaterialTypeEntity fillerMaterial2;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<FillerMaterialTypeEntity> fillerMaterialTypeList;
     @ManyToOne(fetch = FetchType.EAGER)
     private StandardCodeEntity standardCode;
     @OneToMany(mappedBy = "processSpecificationProcedure", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -83,24 +77,38 @@ public class ProcessSpecificationProcedureEntity {
         this.jointDesign = new JointDesignEntity();
         String jointDesignName = processSpecificationProcedure.getJointDesign();
         this.jointDesign.setName(jointDesignName);
-        this.baseMaterial1 = new BaseMaterialTypeEntity();
-        String baseMaterialName1 = processSpecificationProcedure.getBaseMaterial1();
-        this.baseMaterial1.setName(baseMaterialName1);
-        this.baseMaterial2 = new BaseMaterialTypeEntity();
-        String baseMaterialName2 = processSpecificationProcedure.getBaseMaterial2();
-        this.baseMaterial2.setName(baseMaterialName2);
+        this.baseMaterialTypeList = new HashSet<>();
+        initializeBaseMaterialListWithValues(processSpecificationProcedure);
         this.fusionProcess = new FusionProcessEntity();
         String fusionProcessName = processSpecificationProcedure.getFusionProcess();
         this.fusionProcess.setName(fusionProcessName);
-        this.fillerMaterial1 = new FillerMaterialTypeEntity();
-        String fillerMaterialName1 = processSpecificationProcedure.getFillerMaterial1();
-        this.fillerMaterial1.setName(fillerMaterialName1);
-        this.fillerMaterial2 = new FillerMaterialTypeEntity();
-        String fillerMaterialName2 = processSpecificationProcedure.getFillerMaterial2();
-        this.fillerMaterial2.setName(fillerMaterialName2);
+        this.fillerMaterialTypeList = new HashSet<>();
+        initializeFillerMaterialTypeListWithValues(processSpecificationProcedure);
         this.standardCode = new StandardCodeEntity();
         String standardCodeName = processSpecificationProcedure.getStandardCode();
         this.standardCode.setName(standardCodeName);
+    }
+
+    private void initializeFillerMaterialTypeListWithValues(ProcessSpecificationProcedure processSpecificationProcedure) {
+        FillerMaterialTypeEntity fillerMaterial1 = new FillerMaterialTypeEntity();
+        FillerMaterialTypeEntity fillerMaterial2 = new FillerMaterialTypeEntity();
+        String fillerMaterialName1 = processSpecificationProcedure.getFillerMaterial1();
+        String fillerMaterialName2 = processSpecificationProcedure.getFillerMaterial2();
+        fillerMaterial1.setName(fillerMaterialName1);
+        fillerMaterial2.setName(fillerMaterialName2);
+        this.fillerMaterialTypeList.add(fillerMaterial1);
+        this.fillerMaterialTypeList.add(fillerMaterial2);
+    }
+
+    private void initializeBaseMaterialListWithValues(ProcessSpecificationProcedure processSpecificationProcedure) {
+        BaseMaterialTypeEntity baseMaterial1 = new BaseMaterialTypeEntity();
+        BaseMaterialTypeEntity baseMaterial2 = new BaseMaterialTypeEntity();
+        String baseMaterialName1 = processSpecificationProcedure.getBaseMaterial1();
+        String baseMaterialName2 = processSpecificationProcedure.getBaseMaterial2();
+        baseMaterial1.setName(baseMaterialName1);
+        baseMaterial2.setName(baseMaterialName2);
+        this.baseMaterialTypeList.add(baseMaterial1);
+        this.baseMaterialTypeList.add(baseMaterial2);
     }
 
     public int getId() {
@@ -215,20 +223,12 @@ public class ProcessSpecificationProcedureEntity {
         this.jointDesign = jointDesign;
     }
 
-    public BaseMaterialTypeEntity getBaseMaterial1() {
-        return baseMaterial1;
+    public Set<BaseMaterialTypeEntity> getBaseMaterialTypeList() {
+        return baseMaterialTypeList;
     }
 
-    public void setBaseMaterial1(BaseMaterialTypeEntity baseMaterial1) {
-        this.baseMaterial1 = baseMaterial1;
-    }
-
-    public BaseMaterialTypeEntity getBaseMaterial2() {
-        return baseMaterial2;
-    }
-
-    public void setBaseMaterial2(BaseMaterialTypeEntity baseMaterial2) {
-        this.baseMaterial2 = baseMaterial2;
+    public void setBaseMaterialTypeList(Set<BaseMaterialTypeEntity> baseMaterialTypeList) {
+        this.baseMaterialTypeList = baseMaterialTypeList;
     }
 
     public FusionProcessEntity getFusionProcess() {
@@ -239,20 +239,12 @@ public class ProcessSpecificationProcedureEntity {
         this.fusionProcess = fusionProcess;
     }
 
-    public FillerMaterialTypeEntity getFillerMaterial1() {
-        return fillerMaterial1;
+    public Set<FillerMaterialTypeEntity> getFillerMaterialTypeList() {
+        return fillerMaterialTypeList;
     }
 
-    public void setFillerMaterial1(FillerMaterialTypeEntity fillerMaterial1) {
-        this.fillerMaterial1 = fillerMaterial1;
-    }
-
-    public FillerMaterialTypeEntity getFillerMaterial2() {
-        return fillerMaterial2;
-    }
-
-    public void setFillerMaterial2(FillerMaterialTypeEntity fillerMaterial2) {
-        this.fillerMaterial2 = fillerMaterial2;
+    public void setFillerMaterialTypeList(Set<FillerMaterialTypeEntity> fillerMaterialTypeList) {
+        this.fillerMaterialTypeList = fillerMaterialTypeList;
     }
 
     public StandardCodeEntity getStandardCode() {

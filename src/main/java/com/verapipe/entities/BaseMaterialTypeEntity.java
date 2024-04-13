@@ -4,6 +4,7 @@ import com.verapipe.dto.BaseMaterialType;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "base_material_type")
@@ -13,14 +14,14 @@ public class BaseMaterialTypeEntity {
     private int id;
     @Column(name = "name", unique = true, nullable = false)
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ProcessSpecificationProcedureEntity> processSpecificationProceduresList;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<JoinerEntity> joinerList;
+    @OneToMany(mappedBy = "baseMaterialTypeList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<ProcessSpecificationProcedureEntity> processSpecificationProceduresList;
+    @ManyToMany(mappedBy = "baseMaterialTypeList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<JoinerEntity> joinerList;
     @OneToMany(mappedBy = "baseMaterialType", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<BaseMaterialCertificateEntity> baseMaterialCertificatesList;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<JointEntity> JointsList;
+    @ManyToMany(mappedBy = "baseMaterialTypeList",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<JointEntity> JointsList;
 
     public BaseMaterialTypeEntity() {
     }
@@ -46,19 +47,19 @@ public class BaseMaterialTypeEntity {
         this.name = name;
     }
 
-    public List<ProcessSpecificationProcedureEntity> getProcessSpecificationProceduresList() {
+    public Set<ProcessSpecificationProcedureEntity> getProcessSpecificationProceduresList() {
         return processSpecificationProceduresList;
     }
 
-    public void setProcessSpecificationProceduresList(List<ProcessSpecificationProcedureEntity> processSpecificationProceduresList) {
+    public void setProcessSpecificationProceduresList(Set<ProcessSpecificationProcedureEntity> processSpecificationProceduresList) {
         this.processSpecificationProceduresList = processSpecificationProceduresList;
     }
 
-    public List<JoinerEntity> getJoinerList() {
+    public Set<JoinerEntity> getJoinerList() {
         return joinerList;
     }
 
-    public void setJoinerList(List<JoinerEntity> joinerList) {
+    public void setJoinerList(Set<JoinerEntity> joinerList) {
         this.joinerList = joinerList;
     }
 
@@ -70,11 +71,11 @@ public class BaseMaterialTypeEntity {
         this.baseMaterialCertificatesList = baseMaterialCertificatesList;
     }
 
-    public List<JointEntity> getJointsList() {
+    public Set<JointEntity> getJointsList() {
         return JointsList;
     }
 
-    public void setJointsList(List<JointEntity> jointsList) {
+    public void setJointsList(Set<JointEntity> jointsList) {
         JointsList = jointsList;
     }
 }

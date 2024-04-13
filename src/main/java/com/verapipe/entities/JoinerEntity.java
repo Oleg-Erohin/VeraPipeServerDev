@@ -27,12 +27,9 @@ public class JoinerEntity {
     private Float certifiedDiameterMaxInch;
     @Column(name = "max_deposited_material", unique = false, nullable = true)
     private Float maxDepositedMaterial;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "base_material_type_1")
-    private BaseMaterialTypeEntity baseMaterialType1;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "base_material_type_2")
-    private BaseMaterialTypeEntity baseMaterialType2;
+    // TODO to make validation that only 2 objects in baseMaterialTypeList
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<BaseMaterialTypeEntity> baseMaterialTypeList;
     @ManyToOne(fetch = FetchType.EAGER)
     private JointDesignEntity jointDesign;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -52,20 +49,26 @@ public class JoinerEntity {
         this.certifiedDiameterMinInch = joiner.getCertifiedDiameterMinInch();
         this.certifiedDiameterMaxInch = joiner.getCertifiedDiameterMaxInch();
         this.maxDepositedMaterial = joiner.getMaxDepositedMaterial();
-        this.baseMaterialType1 = new BaseMaterialTypeEntity();
-        String baseMaterialTypeName1 = joiner.getBaseMaterialTypeName1();
-        this.baseMaterialType1.setName(baseMaterialTypeName1);
-        this.baseMaterialType2 = new BaseMaterialTypeEntity();
-        String baseMaterialTypeName2 = joiner.getBaseMaterialTypeName2();
-        this.baseMaterialType2.setName(baseMaterialTypeName2);
+        this.baseMaterialTypeList = new HashSet<>();
+        initializeBaseMaterialTypeListWithValues(joiner);
         this.jointDesign = new JointDesignEntity();
         String jointDesignName = joiner.getJointDesignName();
         this.jointDesign.setName(jointDesignName);
         this.fusionProcess = new FusionProcessEntity();
         String fusionProcessName = joiner.getFusionProcessName();
         this.fusionProcess.setName(fusionProcessName);
-//        this.jointsList = new ArrayList<>();
         this.jointsList = new HashSet<>();
+    }
+
+    private void initializeBaseMaterialTypeListWithValues(Joiner joiner) {
+        BaseMaterialTypeEntity baseMaterialType1 = new BaseMaterialTypeEntity();
+        BaseMaterialTypeEntity baseMaterialType2 = new BaseMaterialTypeEntity();
+        String baseMaterialTypeName1 = joiner.getBaseMaterialTypeName1();
+        String baseMaterialTypeName2 = joiner.getBaseMaterialTypeName2();
+        baseMaterialType1.setName(baseMaterialTypeName1);
+        baseMaterialType2.setName(baseMaterialTypeName2);
+        this.baseMaterialTypeList.add(baseMaterialType1);
+        this.baseMaterialTypeList.add(baseMaterialType2);
     }
 
     public int getId() {
@@ -132,20 +135,12 @@ public class JoinerEntity {
         this.maxDepositedMaterial = maxDepositedMaterial;
     }
 
-    public BaseMaterialTypeEntity getBaseMaterialType1() {
-        return baseMaterialType1;
+    public Set<BaseMaterialTypeEntity> getBaseMaterialTypeList() {
+        return baseMaterialTypeList;
     }
 
-    public void setBaseMaterialType1(BaseMaterialTypeEntity baseMaterialType1) {
-        this.baseMaterialType1 = baseMaterialType1;
-    }
-
-    public BaseMaterialTypeEntity getBaseMaterialType2() {
-        return baseMaterialType2;
-    }
-
-    public void setBaseMaterialType2(BaseMaterialTypeEntity baseMaterialType2) {
-        this.baseMaterialType2 = baseMaterialType2;
+    public void setBaseMaterialTypeList(Set<BaseMaterialTypeEntity> baseMaterialTypeList) {
+        this.baseMaterialTypeList = baseMaterialTypeList;
     }
 
     public JointDesignEntity getJointDesign() {

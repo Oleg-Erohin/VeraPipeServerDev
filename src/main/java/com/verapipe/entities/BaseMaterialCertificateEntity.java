@@ -4,6 +4,7 @@ import com.verapipe.dto.BaseMaterialCertificate;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "base_material_certificate")
@@ -20,8 +21,8 @@ public class BaseMaterialCertificateEntity {
     private byte[] certificateFile;
     @ManyToOne(fetch = FetchType.EAGER)
     private BaseMaterialTypeEntity baseMaterialType;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<JointEntity> jointsList;
+    @ManyToMany(mappedBy = "baseMaterialCertificateList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<JointEntity> jointsList;
 
     public BaseMaterialCertificateEntity() {
     }
@@ -76,11 +77,7 @@ public class BaseMaterialCertificateEntity {
         this.baseMaterialType = baseMaterialType;
     }
 
-    public List<JointEntity> getJointsList() {
-        return jointsList;
-    }
-
-    public void setJointsList(List<JointEntity> jointsList) {
+    public void setJointsList(Set<JointEntity> jointsList) {
         this.jointsList = jointsList;
     }
 }
