@@ -6,17 +6,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.verapipe.entities.IsometricEntity;
 import com.verapipe.entities.PidEntity;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class Isometric {
     private int id;
     private String name;
-    private String[] PidNames;
-    private List<Integer> PidSheets;
+    private List<String> PidNames;
+    private List<Integer> pidSheets;
     private byte[] file;
     private String revision;
     private Date date;
@@ -28,10 +24,10 @@ public class Isometric {
     public Isometric() {
     }
 
-    public Isometric(String name, String[] PidNames, List<Integer> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
+    public Isometric(String name, List<String> PidNames, List<Integer> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
         this.name = name;
         this.PidNames = PidNames;
-        this.PidSheets = pidSheets;
+        this.pidSheets = pidSheets;
         this.file = file;
         this.revision = revision;
         this.date = date;
@@ -41,11 +37,11 @@ public class Isometric {
         this.comments = comments;
     }
 
-    public Isometric(int id, String name, String[] PidNames, List<Integer> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
+    public Isometric(int id, String name, List<String> PidNames, List<Integer> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
         this.id = id;
         this.name = name;
         this.PidNames = PidNames;
-        this.PidSheets = pidSheets;
+        this.pidSheets = pidSheets;
         this.file = file;
         this.revision = revision;
         this.date = date;
@@ -59,15 +55,20 @@ public class Isometric {
         this.id = isometricEntity.getId();
         this.name = isometricEntity.getName();
 
-        Set<PidEntity> pidsList = isometricEntity.getPidsList();
-        this.PidNames = pidsList.stream()
-                .map(PidEntity::getName)
-                .toArray(String[]::new);
+        List<PidEntity> pidEntityList = new ArrayList<>();
+        pidEntityList.addAll(isometricEntity.getPidsList());
 
-        List<Integer> pidSheets = pidsList.stream()
-                .map(PidEntity::getSheets)
-                .collect(Collectors.toList());
-        this.PidSheets = pidSheets;
+        List<String> pidsNames = new ArrayList<>();
+        for (PidEntity pidEntity : pidEntityList) {
+            pidsNames.add(pidEntity.getName());
+        }
+        this.PidNames = pidsNames;
+
+        List<Integer> pidSheets = new ArrayList<>();
+        for (PidEntity pidEntity : pidEntityList) {
+            pidSheets.add(pidEntity.getSheets());
+        }
+        this.pidSheets = pidSheets;
 
         this.file = isometricEntity.getFile();
         this.revision = isometricEntity.getRevision();
@@ -97,20 +98,20 @@ public class Isometric {
         this.name = name;
     }
 
-    public String[] getPidName() {
+    public List<String> getPidName() {
         return PidNames;
     }
 
-    public void setPidName(String[] pidName) {
+    public void setPidName(List<String> pidName) {
         PidNames = pidName;
     }
 
     public List<Integer> getPidSheets() {
-        return PidSheets;
+        return pidSheets;
     }
 
     public void setPidSheets(List<Integer> pidSheets) {
-        PidSheets = pidSheets;
+        this.pidSheets = pidSheets;
     }
 
     public byte[] getFile() {
@@ -175,7 +176,7 @@ public class Isometric {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", PidNames='" + PidNames + '\'' +
-                ", PidSheets=" + PidSheets +
+                ", PidSheets=" + pidSheets +
                 ", file=" + Arrays.toString(file) +
                 ", revision='" + revision + '\'' +
                 ", date=" + date +

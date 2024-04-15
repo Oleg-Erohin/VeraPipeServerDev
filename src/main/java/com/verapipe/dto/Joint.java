@@ -3,12 +3,11 @@ package com.verapipe.dto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.verapipe.entities.JointEntity;
-import com.verapipe.entities.JoinerEntity;
+import com.verapipe.entities.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Joint {
     private int id;
@@ -30,7 +29,7 @@ public class Joint {
     private String fillerMaterialTypeName2;
     private String fillerMaterialHeatNum2;
     private String processSpecificationProcedureName;
-//    private String joinerTagId1;
+    //    private String joinerTagId1;
 //    private String joinerTagId2;
     private List<String> joinersTagIdList;
     private Date date;
@@ -45,7 +44,7 @@ public class Joint {
     public Joint() {
     }
 
-    public Joint(int number, Coordinates coordinatesOnIsometric, String pidName, String isometricName, int sheetOnIsometric, Float diameterMm, Float diameterInch, String fittingDescription1, String baseMaterialTypeName1, String baseMaterialHeatNum1, String fittingDescription2, String baseMaterialTypeName2, String baseMaterialHeatNum2, String fillerMaterialTypeName1, String fillerMaterialHeatNum1, String fillerMaterialTypeName2, String fillerMaterialHeatNum2, String processSpecificationProcedureName,List<String> joinersTagIdList, Date date, boolean isFitUpDone, boolean isVisualInspectionDone, String ndtReportName, boolean isNdtPassed, String preheatName, String postWeldHeatTreatmentName, String comments) {
+    public Joint(int number, Coordinates coordinatesOnIsometric, String pidName, String isometricName, int sheetOnIsometric, Float diameterMm, Float diameterInch, String fittingDescription1, String baseMaterialTypeName1, String baseMaterialHeatNum1, String fittingDescription2, String baseMaterialTypeName2, String baseMaterialHeatNum2, String fillerMaterialTypeName1, String fillerMaterialHeatNum1, String fillerMaterialTypeName2, String fillerMaterialHeatNum2, String processSpecificationProcedureName, List<String> joinersTagIdList, Date date, boolean isFitUpDone, boolean isVisualInspectionDone, String ndtReportName, boolean isNdtPassed, String preheatName, String postWeldHeatTreatmentName, String comments) {
         this.number = number;
         this.coordinatesOnIsometric = coordinatesOnIsometric;
         this.pidName = pidName;
@@ -111,7 +110,8 @@ public class Joint {
         this.number = jointEntity.getNumber();
 
         ObjectMapper objectMapper = new ObjectMapper();
-        this.coordinatesOnIsometric = objectMapper.readValue(jointEntity.getCoordinatesOnIsometric(), new TypeReference<Coordinates>(){});
+        this.coordinatesOnIsometric = objectMapper.readValue(jointEntity.getCoordinatesOnIsometric(), new TypeReference<Coordinates>() {
+        });
 
         this.pidName = jointEntity.getPid().getName();
         this.isometricName = jointEntity.getIsometric().getName();
@@ -119,21 +119,38 @@ public class Joint {
         this.diameterMm = jointEntity.getDiameterMm();
         this.diameterInch = jointEntity.getDiameterInch();
         this.fittingDescription1 = jointEntity.getFittingDescription1();
-        this.baseMaterialTypeName1 = jointEntity.getBaseMaterialType1().getName();
-        this.baseMaterialHeatNum1 = jointEntity.getBaseMaterialCertificate1().getHeatNum();
         this.fittingDescription2 = jointEntity.getFittingDescription2();
-        this.baseMaterialTypeName2 = jointEntity.getBaseMaterialType2().getName();
-        this.baseMaterialHeatNum2 = jointEntity.getBaseMaterialCertificate2().getHeatNum();
-        this.fillerMaterialTypeName1 = jointEntity.getFillerMaterialType1().getName();
-        this.fillerMaterialHeatNum1 = jointEntity.getFillerMaterialCertificate1().getHeatNum();
-        this.fillerMaterialTypeName2 = jointEntity.getFillerMaterialType2().getName();
-        this.fillerMaterialHeatNum2 = jointEntity.getFillerMaterialCertificate2().getHeatNum();
+
+        List<BaseMaterialTypeEntity> baseMaterialTypesEntityList = new ArrayList<>();
+        baseMaterialTypesEntityList.addAll(jointEntity.getBaseMaterialTypeList());
+        this.baseMaterialTypeName1 = baseMaterialTypesEntityList.get(0).getName();
+        this.baseMaterialTypeName2 = baseMaterialTypesEntityList.get(1).getName();
+
+        List<BaseMaterialCertificateEntity> baseMaterialCertificatesEntityList = new ArrayList<>();
+        baseMaterialCertificatesEntityList.addAll(jointEntity.getBaseMaterialCertificateList());
+        this.baseMaterialHeatNum1 = baseMaterialCertificatesEntityList.get(0).getHeatNum();
+        this.baseMaterialHeatNum2 = baseMaterialCertificatesEntityList.get(1).getHeatNum();
+
+        List<FillerMaterialTypeEntity> fillerMaterialTypeEntityList = new ArrayList<>();
+        fillerMaterialTypeEntityList.addAll(jointEntity.getFillerMaterialTypeList());
+        this.fillerMaterialTypeName1 = fillerMaterialTypeEntityList.get(0).getName();
+        this.fillerMaterialTypeName2 = fillerMaterialTypeEntityList.get(1).getName();
+
+        List<FillerMaterialCertificateEntity> fillerMaterialCertificateEntityList = new ArrayList<>();
+        fillerMaterialCertificateEntityList.addAll(jointEntity.getFillerMaterialCertificateList());
+        this.fillerMaterialHeatNum1 = fillerMaterialCertificateEntityList.get(0).getHeatNum();
+        this.fillerMaterialHeatNum2 = fillerMaterialCertificateEntityList.get(1).getHeatNum();
+
         this.processSpecificationProcedureName = jointEntity.getProcessSpecificationProcedure().getName();
 
-        this.joinersTagIdList = jointEntity.getJoinersList().stream()
-                .map(JoinerEntity::getTagId)
-                .map(String::valueOf)
-                .collect(Collectors.toList());
+        List<JoinerEntity> joinerEntityList = new ArrayList<>();
+        joinerEntityList.addAll(jointEntity.getJoinersList());
+
+        List<String> joinersTagIdList = new ArrayList<>();
+        for (JoinerEntity joinerEntity : joinerEntityList) {
+            joinersTagIdList.add(joinerEntity.getTagId());
+        }
+        this.joinersTagIdList = joinersTagIdList;
 
         this.date = jointEntity.getDate();
         this.isFitUpDone = jointEntity.isFitUpDone();

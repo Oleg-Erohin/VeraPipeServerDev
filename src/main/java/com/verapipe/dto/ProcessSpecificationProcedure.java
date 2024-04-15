@@ -1,9 +1,13 @@
 package com.verapipe.dto;
 
+import com.verapipe.entities.BaseMaterialTypeEntity;
+import com.verapipe.entities.FillerMaterialTypeEntity;
 import com.verapipe.entities.ProcessSpecificationProcedureEntity;
 import com.verapipe.enums.ThicknessUOM;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ProcessSpecificationProcedure {
     private int id;
@@ -81,11 +85,19 @@ public class ProcessSpecificationProcedure {
         this.procedureFile = processSpecificationProcedureEntity.getProcedureFile();
         this.processQualificationRecordFile = processSpecificationProcedureEntity.getProcessQualificationRecordFile();
         this.jointDesign = processSpecificationProcedureEntity.getJointDesign().getName();
-        this.baseMaterial1 = processSpecificationProcedureEntity.getBaseMaterial1().getName();
-        this.baseMaterial2 = processSpecificationProcedureEntity.getBaseMaterial2().getName();
+
+        List<BaseMaterialTypeEntity> baseMaterialTypeEntityList = new ArrayList<>();
+        baseMaterialTypeEntityList.addAll(processSpecificationProcedureEntity.getBaseMaterialTypeList());
+        this.baseMaterial1 = baseMaterialTypeEntityList.get(0).getName();
+        this.baseMaterial2 = baseMaterialTypeEntityList.get(1).getName();
+
         this.fusionProcess = processSpecificationProcedureEntity.getFusionProcess().getName();
-        this.fillerMaterial1 = processSpecificationProcedureEntity.getFillerMaterial1().getName();
-        this.fillerMaterial2 = processSpecificationProcedureEntity.getFillerMaterial2().getName();
+
+        List<FillerMaterialTypeEntity> fillerMaterialTypeEntityList = new ArrayList<>();
+        fillerMaterialTypeEntityList.addAll(processSpecificationProcedureEntity.getFillerMaterialTypeList());
+        this.fillerMaterial1 = fillerMaterialTypeEntityList.get(0).getName();
+        this.fillerMaterial2 = fillerMaterialTypeEntityList.get(1).getName();
+
         this.standardCode = processSpecificationProcedureEntity.getStandardCode().getName();
         this.isPreheatRequired = processSpecificationProcedureEntity.isPreheatRequired();
         this.isPostWeldHeatTreatmentRequired = processSpecificationProcedureEntity.isPostWeldHeatTreatmentRequired();

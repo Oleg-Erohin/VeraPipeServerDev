@@ -3,7 +3,6 @@ package com.verapipe.entities;
 import com.verapipe.dto.BaseMaterialCertificate;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity

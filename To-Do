@@ -1,7 +1,8 @@
-- Convert coordinates to string in entities and make constructors in entities and DTOs convert between string and list of coordinates
-- Change all entities constructors to receive ID instead of names
-- Change hash function to Entities which are "Set" in other entities
+- Get list of links (ManyToMany). Oleg to decide "Main" for each - Aviad
+- Read about Cascade types to determine each cascade - Oleg
+- Modify DTO constructors, per example in entities by Aviad - Oleg
+- Change hash function to Entities which are "Set" in other entities - Aviad
 
 - Test findAll and findById for all the resources
 - Add "@RequestHeader(value = "Authorization") String token" and validate user type in any add, update and delete function on controller
-- Rethinking about mapped-by (create the foreign key, what can be stand on it's own and what should be deleted if the first is deleted)
+- Add error handling (ErrorBean DTO, ErrorType Enum, Error handler class, ApplicationError class)

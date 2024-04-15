@@ -7,10 +7,10 @@ import com.verapipe.entities.IsometricEntity;
 import com.verapipe.entities.PidEntity;
 import com.verapipe.entities.PressureTestPackageEntity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PressureTestPackage {
     private int id;
@@ -47,15 +47,21 @@ public class PressureTestPackage {
         this.id = pressureTestPackageEntity.getId();
         this.name = pressureTestPackageEntity.getName();
 
-        List<PidEntity> pidsList = pressureTestPackageEntity.getPidsList();
-        this.pidNames = pidsList.stream()
-                .map(PidEntity::getName)
-                .collect(Collectors.toList());
+        List<PidEntity> pidEntityList = new ArrayList<>();
+        pidEntityList.addAll(pressureTestPackageEntity.getPidsList());
+        List<String> pidNames = new ArrayList<>();
+        for(PidEntity pidEntity : pidEntityList){
+            pidNames.add(pidEntity.getName());
+        }
+        this.pidNames = pidNames;
 
-        List<IsometricEntity> isometricsList = pressureTestPackageEntity.getIsometricsList();
-        this.pidNames = isometricsList.stream()
-                .map(IsometricEntity::getName)
-                .collect(Collectors.toList());
+        List<IsometricEntity> isometricEntityList = new ArrayList<>();
+        isometricEntityList.addAll(pressureTestPackageEntity.getIsometricsList());
+        List<String> isometricNames = new ArrayList<>();
+        for(IsometricEntity isometricEntity : isometricEntityList){
+            isometricNames.add(isometricEntity.getName());
+        }
+        this.isometricNames = isometricNames;
 
         ObjectMapper objectMapper = new ObjectMapper();
         this.coordinatesInPidsList = objectMapper.readValue(pressureTestPackageEntity.getCoordinatesInPids(), new TypeReference<List<Coordinates>>(){});
