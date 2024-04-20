@@ -18,11 +18,6 @@ public class PressureTestPackageEntity {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "pid_pressure_test_Package_list",
-            joinColumns = @JoinColumn(name = "pressure_test_package_id"),
-            inverseJoinColumns = @JoinColumn(name = "pid_id")
-    )
     private Set<PidEntity> pidsList;
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<IsometricEntity> isometricsList;

@@ -27,12 +27,7 @@ public class PidEntity {
     private int sheets;
     @Column(name = "comments", unique = false, nullable = true, columnDefinition="TEXT")
     private String comments;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "Pid_Isometric_list",
-            joinColumns = @JoinColumn(name = "Pid_id"),
-            inverseJoinColumns = @JoinColumn(name = "Isometric_id")
-    )
+    @ManyToMany(mappedBy = "pidsList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<IsometricEntity> isometricDrawingsList;
     @OneToMany(mappedBy = "pid", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<JointEntity> JointsList;

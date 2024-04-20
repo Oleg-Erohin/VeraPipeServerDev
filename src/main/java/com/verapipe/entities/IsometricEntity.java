@@ -33,7 +33,7 @@ public class IsometricEntity {
     private boolean isApproved;
     @Column(name = "comments", unique = false, nullable = true, columnDefinition="TEXT")
     private String comments;
-    @ManyToMany(mappedBy = "isometricDrawingsList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<PidEntity> pidsList;
     @OneToMany(mappedBy = "isometric", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<JointEntity> jointsList;

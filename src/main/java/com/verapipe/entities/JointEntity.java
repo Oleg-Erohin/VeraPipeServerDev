@@ -52,12 +52,7 @@ public class JointEntity {
     private Set<FillerMaterialCertificateEntity> fillerMaterialCertificateList;
     @ManyToOne(fetch = FetchType.EAGER)
     private ProcessSpecificationProcedureEntity processSpecificationProcedure;
-    @ManyToMany
-    @JoinTable(
-            name = "joint_joiners_list",
-            joinColumns = @JoinColumn(name = "joints_list_id"),
-            inverseJoinColumns = @JoinColumn(name = "joiners_list_id")
-    )
+    @ManyToMany(mappedBy = "jointsList")
     private Set<JoinerEntity> joinersList;
     @Column(name = "date", unique = false, nullable = true)
     private Date date;

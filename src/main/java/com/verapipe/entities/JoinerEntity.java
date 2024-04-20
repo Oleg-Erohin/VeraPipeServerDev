@@ -34,7 +34,7 @@ public class JoinerEntity {
     private JointDesignEntity jointDesign;
     @ManyToOne(fetch = FetchType.EAGER)
     private FusionProcessEntity fusionProcess;
-    @ManyToMany(mappedBy = "joinersList")
+    @ManyToMany
     private Set<JointEntity> jointsList;
 
     public JoinerEntity() {

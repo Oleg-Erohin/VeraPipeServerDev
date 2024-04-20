@@ -1,0 +1,105 @@
+package com.verapipe.logic;
+
+import com.verapipe.dal.IIsometricDal;
+import com.verapipe.dto.Isometric;
+import com.verapipe.entities.IsometricEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class IsometricLogic {
+    private IIsometricDal isometricDal;
+
+    @Autowired
+    public IsometricLogic(IIsometricDal isometricDal) {
+        this.isometricDal = isometricDal;
+    }
+
+    public int add(Isometric isometric) throws Exception {
+        validations(isometric);
+        IsometricEntity isometricEntity = new IsometricEntity(isometric);
+        try {
+            isometricEntity = this.isometricDal.save(isometricEntity);
+        } catch (Exception e) {
+//          TODO throw new ApplicationException
+            throw new Exception(e.getMessage());
+        }
+        int addedIsometricId = isometricEntity.getId();
+        return addedIsometricId;
+    }
+
+    public void update(Isometric isometric) throws Exception {
+        validations(isometric);
+        IsometricEntity sentIsometricEntity = new IsometricEntity(isometric);
+        IsometricEntity receivedIsometricEntity;
+        try {
+            receivedIsometricEntity = this.isometricDal.save(sentIsometricEntity);
+        } catch (Exception e) {
+//          TODO throw new ApplicationException
+            throw new Exception(e.getMessage());
+        }
+        // Validate sent entity and return entity from DB are equals
+        if (!sentIsometricEntity.equals(receivedIsometricEntity)) {
+//            TODO throw new ApplicationException
+            throw new Exception();
+        }
+    }
+
+    public void delete(int id) throws Exception {
+        if (!isIsometricExist(id)) {
+//            TODO throw new ApplicationException
+        }
+        try {
+            this.isometricDal.deleteById(id);
+        } catch (Exception e) {
+//            TODO throw new ApplicationException
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    public Isometric getById(int id) throws Exception {
+        Optional<IsometricEntity> isometricEntity;
+        try {
+            isometricEntity = this.isometricDal.findById(id);
+        } catch (Exception e) {
+//            TODO throw new ApplicationException
+            throw new Exception(e.getMessage());
+        }
+        if (isometricEntity.isEmpty()) {
+//            TODO throw new ApplicationException
+            throw new Exception("Isometric not found");
+        }
+        Isometric isometric = new Isometric(isometricEntity.get());
+        return isometric;
+    }
+
+    public List<Isometric> getAll() throws Exception {
+        Iterable<IsometricEntity> isometricEntities = this.isometricDal.findAll();
+        List<Isometric> isometrics = new ArrayList<>();
+        // Check if the findAll method returned a value
+        if (!isometricEntities.iterator().hasNext()) {
+//          TODO throw new ApplicationException
+            throw new Exception("Isometrics list is empty");
+        }
+        // Convert Iterable to List
+        for (IsometricEntity isometricEntity : isometricEntities
+        ) {
+            Isometric isometric = new Isometric(isometricEntity);
+            isometrics.add(isometric);
+        }
+        return isometrics;
+    }
+
+
+    private void validations(Isometric isometric) throws Exception {
+//      TODO Create validations
+    }
+
+    private boolean isIsometricExist(int id) {
+        return this.isometricDal.existsById(id);
+    }
+}

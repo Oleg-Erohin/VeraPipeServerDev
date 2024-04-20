@@ -1,0 +1,105 @@
+package com.verapipe.logic;
+
+import com.verapipe.dal.INdtReportDal;
+import com.verapipe.dto.NdtReport;
+import com.verapipe.entities.NdtReportEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class NdtReportLogic {
+    private INdtReportDal ndtReportDal;
+
+    @Autowired
+    public NdtReportLogic(INdtReportDal ndtReportDal) {
+        this.ndtReportDal = ndtReportDal;
+    }
+
+    public int add(NdtReport ndtReport) throws Exception {
+        validations(ndtReport);
+        NdtReportEntity ndtReportEntity = new NdtReportEntity(ndtReport);
+        try {
+            ndtReportEntity = this.ndtReportDal.save(ndtReportEntity);
+        } catch (Exception e) {
+//          TODO throw new ApplicationException
+            throw new Exception(e.getMessage());
+        }
+        int addedNdtReportId = ndtReportEntity.getId();
+        return addedNdtReportId;
+    }
+
+    public void update(NdtReport ndtReport) throws Exception {
+        validations(ndtReport);
+        NdtReportEntity sentNdtReportEntity = new NdtReportEntity(ndtReport);
+        NdtReportEntity receivedNdtReportEntity;
+        try {
+            receivedNdtReportEntity = this.ndtReportDal.save(sentNdtReportEntity);
+        } catch (Exception e) {
+//          TODO throw new ApplicationException
+            throw new Exception(e.getMessage());
+        }
+        // Validate sent entity and return entity from DB are equals
+        if (!sentNdtReportEntity.equals(receivedNdtReportEntity)) {
+//            TODO throw new ApplicationException
+            throw new Exception();
+        }
+    }
+
+    public void delete(int id) throws Exception {
+        if (!isNdtReportExist(id)) {
+//            TODO throw new ApplicationException
+        }
+        try {
+            this.ndtReportDal.deleteById(id);
+        } catch (Exception e) {
+//            TODO throw new ApplicationException
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    public NdtReport getById(int id) throws Exception {
+        Optional<NdtReportEntity> ndtReportEntity;
+        try {
+            ndtReportEntity = this.ndtReportDal.findById(id);
+        } catch (Exception e) {
+//            TODO throw new ApplicationException
+            throw new Exception(e.getMessage());
+        }
+        if (ndtReportEntity.isEmpty()) {
+//            TODO throw new ApplicationException
+            throw new Exception("Ndt Report not found");
+        }
+        NdtReport ndtReport = new NdtReport(ndtReportEntity.get());
+        return ndtReport;
+    }
+
+    public List<NdtReport> getAll() throws Exception {
+        Iterable<NdtReportEntity> ndtReportEntities = this.ndtReportDal.findAll();
+        List<NdtReport> ndtReports = new ArrayList<>();
+        // Check if the findAll method returned a value
+        if (!ndtReportEntities.iterator().hasNext()) {
+//          TODO throw new ApplicationException
+            throw new Exception("Ndt Report list is empty");
+        }
+        // Convert Iterable to List
+        for (NdtReportEntity ndtReportEntity : ndtReportEntities
+        ) {
+            NdtReport ndtReport = new NdtReport(ndtReportEntity);
+            ndtReports.add(ndtReport);
+        }
+        return ndtReports;
+    }
+
+
+    private void validations(NdtReport ndtReport) throws Exception {
+//      TODO Create validations
+    }
+
+    private boolean isNdtReportExist(int id) {
+        return this.ndtReportDal.existsById(id);
+    }
+}

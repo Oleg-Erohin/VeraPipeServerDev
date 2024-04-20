@@ -1,8 +1,12 @@
-- Get list of links (ManyToMany). Oleg to decide "Main" for each - Aviad
-- Read about Cascade types to determine each cascade - Oleg
-- Modify DTO constructors, per example in entities by Aviad - Oleg
-- Change hash function to Entities which are "Set" in other entities - Aviad
 
+- Read about Cascade types to determine each cascade - Oleg
+- Change hash function to Entities which are "Set" in other entities - Aviad
 - Test findAll and findById for all the resources
 - Add "@RequestHeader(value = "Authorization") String token" and validate user type in any add, update and delete function on controller
 - Add error handling (ErrorBean DTO, ErrorType Enum, Error handler class, ApplicationError class)
+
+
+Done:
+- Get list of links (ManyToMany). Oleg to decide "Main" for each - Aviad
+- Modify DTO constructors, per example in entities by Aviad - Oleg
+- Create Dal, Logic, Controller to all Entities - Aviad
