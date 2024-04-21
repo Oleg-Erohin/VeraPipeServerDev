@@ -1,9 +1,13 @@
+Important:
+- Read about Cascade types and orphanRemoval = true to determine each cascade - Oleg + Aviad
+- Add validations to logics - Oleg
+- Read about PagingAndSortingRepository - Aviad
+- Add error handling (ErrorBean DTO, ErrorType Enum, Error handler class, ApplicationError class) - Aviad
 
-- Read about Cascade types to determine each cascade - Oleg
-- Change hash function to Entities which are "Set" in other entities - Aviad
-- Test findAll and findById for all the resources
+
+To Do Later:
 - Add "@RequestHeader(value = "Authorization") String token" and validate user type in any add, update and delete function on controller
-- Add error handling (ErrorBean DTO, ErrorType Enum, Error handler class, ApplicationError class)
+- Change hash function to Entities which are "Set" in other entities
 
 
 Done:
