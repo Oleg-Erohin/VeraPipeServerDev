@@ -1,9 +1,13 @@
 package com.verapipe.logic;
 
+import com.verapipe.consts.Consts;
 import com.verapipe.dal.IPidDal;
 import com.verapipe.dto.Pid;
 import com.verapipe.entities.PidEntity;
+import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -73,12 +77,13 @@ public class PidLogic {
 //            TODO throw new ApplicationException
             throw new Exception("Pid not found");
         }
-        Pid pid= new Pid(pidEntity.get());
+        Pid pid = new Pid(pidEntity.get());
         return pid;
     }
 
+    @Cacheable(cacheNames = "PidsCache", key = "#root.methodName")
     public List<Pid> getAll() throws Exception {
-        Iterable<PidEntity> pidEntities= this.pidDal.findAll();
+        Iterable<PidEntity> pidEntities = this.pidDal.findAll();
         List<Pid> pids = new ArrayList<>();
         // Check if the findAll method returned a value
         if (!pidEntities.iterator().hasNext()) {
@@ -95,7 +100,20 @@ public class PidLogic {
     }
 
     private void validations(Pid pid) throws Exception {
-//      TODO Create validations
+        validatePidName(pid.getName());
+//        validatePidFile(pid.getFile());
+        validatePidRevision(pid.getRevision());
+//        validatePidDate(pid.getDate());
+//        validatePidSheets(pid.getSheets());
+//        validatePidComments(pid.getComments());
+    }
+
+    private void validatePidRevision(String revision) throws ApplicationException {
+        CommonValidations.validateStringLength(revision, Consts.revisionLengthMin, Consts.revisionLengthMax);
+    }
+
+    private void validatePidName(String name) throws ApplicationException {
+        CommonValidations.validateStringLength(name, Consts.resourceNameLengthMin, Consts.resourceNameLengthMax);
     }
 
     private boolean isPidExist(int id) {

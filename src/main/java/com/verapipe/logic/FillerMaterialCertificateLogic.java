@@ -1,8 +1,11 @@
 package com.verapipe.logic;
 
+import com.verapipe.consts.Consts;
 import com.verapipe.dal.IFillerMaterialCertificateDal;
 import com.verapipe.dto.FillerMaterialCertificate;
 import com.verapipe.entities.FillerMaterialCertificateEntity;
+import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +25,9 @@ public class FillerMaterialCertificateLogic {
     public int add(FillerMaterialCertificate fillerMaterialCertificate) throws Exception {
         validations(fillerMaterialCertificate);
         FillerMaterialCertificateEntity fillerMaterialCertificateEntity = new FillerMaterialCertificateEntity(fillerMaterialCertificate);
-        try{
+        try {
             fillerMaterialCertificateEntity = this.fillerMaterialCertificateDal.save(fillerMaterialCertificateEntity);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
 //          TODO throw new ApplicationException
             throw new Exception(e.getMessage());
         }
@@ -82,13 +84,13 @@ public class FillerMaterialCertificateLogic {
         Iterable<FillerMaterialCertificateEntity> fillerMaterialCertificateEntities = this.fillerMaterialCertificateDal.findAll();
         List<FillerMaterialCertificate> fillerMaterialCertificates = new ArrayList<>();
         // Check if the findAll method returned a value
-        if (!fillerMaterialCertificateEntities.iterator().hasNext()){
+        if (!fillerMaterialCertificateEntities.iterator().hasNext()) {
 //          TODO throw new ApplicationException
             throw new Exception("Filler Material Certificate list is empty");
         }
         // Convert Iterable to List
-        for (FillerMaterialCertificateEntity fillerMaterialCertificateEntity: fillerMaterialCertificateEntities
-             ) {
+        for (FillerMaterialCertificateEntity fillerMaterialCertificateEntity : fillerMaterialCertificateEntities
+        ) {
             FillerMaterialCertificate fillerMaterialCertificate = new FillerMaterialCertificate(fillerMaterialCertificateEntity);
             fillerMaterialCertificates.add(fillerMaterialCertificate);
         }
@@ -97,7 +99,17 @@ public class FillerMaterialCertificateLogic {
 
 
     private void validations(FillerMaterialCertificate fillerMaterialCertificate) throws Exception {
-//      TODO Create validations
+        validateFillerMaterialCertificateHeatNum(fillerMaterialCertificate.getHeatNum());
+//        validateFillerMaterialCertificateFile(fillerMaterialCertificate.getFile());
+        validateFillerMaterialCertificateMaterialTypeName(fillerMaterialCertificate.getMaterialTypeName());
+    }
+
+    private void validateFillerMaterialCertificateMaterialTypeName(String materialTypeName) throws Exception {
+        CommonValidations.validateIsExistInFillerMaterialTypes(materialTypeName);
+    }
+
+    private void validateFillerMaterialCertificateHeatNum(String heatNum) throws ApplicationException {
+        CommonValidations.validateStringLength(heatNum, Consts.resourceNameLengthMin, Consts.resourceNameLengthMax);
     }
 
     private boolean isFillerMaterialCertificateExist(int id) {

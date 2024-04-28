@@ -1,9 +1,13 @@
 package com.verapipe.logic;
 
+import com.verapipe.consts.Consts;
 import com.verapipe.dal.IFillerMaterialTypeDal;
 import com.verapipe.dto.FillerMaterialType;
 import com.verapipe.entities.FillerMaterialTypeEntity;
+import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,14 +24,12 @@ public class FillerMaterialTypeLogic {
     }
 
 
-
-    public int add (FillerMaterialType fillerMaterialType) throws Exception {
+    public int add(FillerMaterialType fillerMaterialType) throws Exception {
         validations(fillerMaterialType);
         FillerMaterialTypeEntity fillerMaterialTypeEntity = new FillerMaterialTypeEntity(fillerMaterialType);
-        try{
+        try {
             fillerMaterialTypeEntity = this.fillerMaterialTypeDal.save(fillerMaterialTypeEntity);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
 //          TODO throw new ApplicationException
             throw new Exception(e.getMessage());
         }
@@ -35,7 +37,7 @@ public class FillerMaterialTypeLogic {
         return addedFillerMaterialTypeId;
     }
 
-    public void update (FillerMaterialType fillerMaterialType) throws Exception {
+    public void update(FillerMaterialType fillerMaterialType) throws Exception {
         validations(fillerMaterialType);
         FillerMaterialTypeEntity sentFillerMaterialTypeEntity = new FillerMaterialTypeEntity(fillerMaterialType);
         FillerMaterialTypeEntity receivedFillerMaterialTypeEntity;
@@ -52,7 +54,7 @@ public class FillerMaterialTypeLogic {
         }
     }
 
-    public void delete (int id) throws Exception {
+    public void delete(int id) throws Exception {
         if (!isFillerMaterialTypeExist(id)) {
 //            TODO throw new ApplicationException
         }
@@ -80,17 +82,18 @@ public class FillerMaterialTypeLogic {
         return fillerMaterialType;
     }
 
+    @Cacheable(cacheNames = "fillerMaterialTypesCache", key = "#root.methodName")
     public List<FillerMaterialType> getAll() throws Exception {
         Iterable<FillerMaterialTypeEntity> fillerMaterialTypeEntities = this.fillerMaterialTypeDal.findAll();
         List<FillerMaterialType> fillerMaterialTypes = new ArrayList<>();
         // Check if the findAll method returned a value
-        if (!fillerMaterialTypeEntities.iterator().hasNext()){
+        if (!fillerMaterialTypeEntities.iterator().hasNext()) {
 //          TODO throw new ApplicationException
             throw new Exception("Filler Material Type list is empty");
         }
         // Convert Iterable to List
-        for (FillerMaterialTypeEntity fillerMaterialTypeEntity: fillerMaterialTypeEntities
-             ) {
+        for (FillerMaterialTypeEntity fillerMaterialTypeEntity : fillerMaterialTypeEntities
+        ) {
             FillerMaterialType fillerMaterialType = new FillerMaterialType(fillerMaterialTypeEntity);
             fillerMaterialTypes.add(fillerMaterialType);
         }
@@ -99,7 +102,11 @@ public class FillerMaterialTypeLogic {
 
 
     private void validations(FillerMaterialType fillerMaterialType) throws Exception {
-//      TODO Create validations
+        validateFillerMaterialTypeName(fillerMaterialType.getName());
+    }
+
+    private void validateFillerMaterialTypeName(String name) throws ApplicationException {
+        CommonValidations.validateStringLength(name, Consts.resourceNameLengthMin, Consts.resourceNameLengthMax);
     }
 
     private boolean isFillerMaterialTypeExist(int id) {

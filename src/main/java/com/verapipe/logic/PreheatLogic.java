@@ -1,8 +1,11 @@
 package com.verapipe.logic;
 
+import com.verapipe.consts.Consts;
 import com.verapipe.dal.IPreheatDal;
 import com.verapipe.dto.Preheat;
 import com.verapipe.entities.PreheatEntity;
+import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -73,12 +76,12 @@ public class PreheatLogic {
 //            TODO throw new ApplicationException
             throw new Exception("Preheat not found");
         }
-        Preheat preheat= new Preheat(preheatEntity.get());
+        Preheat preheat = new Preheat(preheatEntity.get());
         return preheat;
     }
 
     public List<Preheat> getAll() throws Exception {
-        Iterable<PreheatEntity> preheatEntities= this.preheatDal.findAll();
+        Iterable<PreheatEntity> preheatEntities = this.preheatDal.findAll();
         List<Preheat> preheats = new ArrayList<>();
         // Check if the findAll method returned a value
         if (!preheatEntities.iterator().hasNext()) {
@@ -86,7 +89,7 @@ public class PreheatLogic {
             throw new Exception("Preheat list is empty");
         }
         // Convert Iterable to List
-        for (PreheatEntity preheatEntity: preheatEntities
+        for (PreheatEntity preheatEntity : preheatEntities
         ) {
             Preheat preheat = new Preheat(preheatEntity);
             preheats.add(preheat);
@@ -95,7 +98,18 @@ public class PreheatLogic {
     }
 
     private void validations(Preheat preheat) throws Exception {
-//      TODO Create validations
+        validatePreheatName(preheat.getName());
+        validatePreheatProcessSpecificationProcedure(preheat.getProcessSpecificationProcedureName());
+//        validatePreheatFile(preheat.getFile());
+//        validatePreheatDate(preheat.getDate());
+    }
+
+    private void validatePreheatProcessSpecificationProcedure(String processSpecificationProcedureName) throws Exception {
+        CommonValidations.validateIsExistInProcessSpecificationProcedures(processSpecificationProcedureName);
+    }
+
+    private void validatePreheatName(String name) throws ApplicationException {
+        CommonValidations.validateStringLength(name, Consts.resourceNameLengthMin, Consts.resourceNameLengthMax);
     }
 
     private boolean isPreheatExist(int id) {

@@ -67,33 +67,33 @@ public class ProcessSpecificationProcedureEntity {
         this.processQualificationRecordFile = processSpecificationProcedure.getProcessQualificationRecordFile();
         this.isPreheatRequired = processSpecificationProcedure.isPreheatRequired();
         this.isPostWeldHeatTreatmentRequired = processSpecificationProcedure.isPostWeldHeatTreatmentRequired();
-        this.diameterMmMin = processSpecificationProcedure.getDiameterMmMin();
-        this.diameterMmMax = processSpecificationProcedure.getDiameterMmMax();
-        this.diameterInchMin = processSpecificationProcedure.getDiameterInchMin();
-        this.diameterInchMax = processSpecificationProcedure.getDiameterInchMax();
+        this.diameterMmMin = processSpecificationProcedure.getDiameterMinMm();
+        this.diameterMmMax = processSpecificationProcedure.getDiameterMaxMm();
+        this.diameterInchMin = processSpecificationProcedure.getDiameterMinInch();
+        this.diameterInchMax = processSpecificationProcedure.getDiameterMaxInch();
         this.thicknessUom = processSpecificationProcedure.getThicknessUom();
-        this.thicknessMmMin = processSpecificationProcedure.getThicknessMmMin();
-        this.thicknessMmMax = processSpecificationProcedure.getThicknessMmMax();
+        this.thicknessMmMin = processSpecificationProcedure.getThicknessMinMm();
+        this.thicknessMmMax = processSpecificationProcedure.getThicknessMaxMm();
         this.jointDesign = new JointDesignEntity();
-        String jointDesignName = processSpecificationProcedure.getJointDesign();
+        String jointDesignName = processSpecificationProcedure.getJointDesignName();
         this.jointDesign.setName(jointDesignName);
         this.baseMaterialTypeList = new HashSet<>();
         initializeBaseMaterialListWithValues(processSpecificationProcedure);
         this.fusionProcess = new FusionProcessEntity();
-        String fusionProcessName = processSpecificationProcedure.getFusionProcess();
+        String fusionProcessName = processSpecificationProcedure.getFusionProcessName();
         this.fusionProcess.setName(fusionProcessName);
         this.fillerMaterialTypeList = new HashSet<>();
         initializeFillerMaterialTypeListWithValues(processSpecificationProcedure);
         this.standardCode = new StandardCodeEntity();
-        String standardCodeName = processSpecificationProcedure.getStandardCode();
+        String standardCodeName = processSpecificationProcedure.getStandardCodeName();
         this.standardCode.setName(standardCodeName);
     }
 
     private void initializeFillerMaterialTypeListWithValues(ProcessSpecificationProcedure processSpecificationProcedure) {
         FillerMaterialTypeEntity fillerMaterial1 = new FillerMaterialTypeEntity();
         FillerMaterialTypeEntity fillerMaterial2 = new FillerMaterialTypeEntity();
-        String fillerMaterialName1 = processSpecificationProcedure.getFillerMaterial1();
-        String fillerMaterialName2 = processSpecificationProcedure.getFillerMaterial2();
+        String fillerMaterialName1 = processSpecificationProcedure.getFillerMaterialName1();
+        String fillerMaterialName2 = processSpecificationProcedure.getFillerMaterialName2();
         fillerMaterial1.setName(fillerMaterialName1);
         fillerMaterial2.setName(fillerMaterialName2);
         this.fillerMaterialTypeList.add(fillerMaterial1);
@@ -103,8 +103,8 @@ public class ProcessSpecificationProcedureEntity {
     private void initializeBaseMaterialListWithValues(ProcessSpecificationProcedure processSpecificationProcedure) {
         BaseMaterialTypeEntity baseMaterial1 = new BaseMaterialTypeEntity();
         BaseMaterialTypeEntity baseMaterial2 = new BaseMaterialTypeEntity();
-        String baseMaterialName1 = processSpecificationProcedure.getBaseMaterial1();
-        String baseMaterialName2 = processSpecificationProcedure.getBaseMaterial2();
+        String baseMaterialName1 = processSpecificationProcedure.getBaseMaterialName1();
+        String baseMaterialName2 = processSpecificationProcedure.getBaseMaterialName2();
         baseMaterial1.setName(baseMaterialName1);
         baseMaterial2.setName(baseMaterialName2);
         this.baseMaterialTypeList.add(baseMaterial1);

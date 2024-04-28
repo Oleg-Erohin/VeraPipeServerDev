@@ -1,11 +1,13 @@
 package com.verapipe.logic;
 
+import com.verapipe.consts.Consts;
 import com.verapipe.dal.IFusionProcessDal;
-import com.verapipe.dto.FillerMaterialType;
 import com.verapipe.dto.FusionProcess;
-import com.verapipe.entities.FillerMaterialTypeEntity;
 import com.verapipe.entities.FusionProcessEntity;
+import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -79,6 +81,7 @@ public class FusionProcessLogic {
         return fusionProcess;
     }
 
+    @Cacheable(cacheNames = "fusionProcessesCache", key = "#root.methodName")
     public List<FusionProcess> getAll() throws Exception {
         Iterable<FusionProcessEntity> fusionProcessEntities = this.fusionProcessDal.findAll();
         List<FusionProcess> fusionProcesses = new ArrayList<>();
@@ -98,7 +101,11 @@ public class FusionProcessLogic {
 
 
     private void validations(FusionProcess fusionProcess) throws Exception {
-//      TODO Create validations
+        validateFusionProcessName(fusionProcess.getName());
+    }
+
+    private void validateFusionProcessName(String name) throws ApplicationException {
+        CommonValidations.validateStringLength(name, Consts.resourceNameLengthMin, Consts.resourceNameLengthMax);
     }
 
     private boolean isFusionProcessExist(int id) {

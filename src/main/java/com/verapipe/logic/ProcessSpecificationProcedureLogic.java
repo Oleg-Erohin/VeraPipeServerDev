@@ -1,9 +1,13 @@
 package com.verapipe.logic;
 
+import com.verapipe.consts.Consts;
 import com.verapipe.dal.IProcessSpecificationProcedureDal;
 import com.verapipe.dto.ProcessSpecificationProcedure;
 import com.verapipe.entities.ProcessSpecificationProcedureEntity;
+import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -77,8 +81,9 @@ public class ProcessSpecificationProcedureLogic {
         return processSpecificationProcedure;
     }
 
+    @Cacheable(cacheNames = "processSpecificationProceduresCache", key = "#root.methodName")
     public List<ProcessSpecificationProcedure> getAll() throws Exception {
-        Iterable<ProcessSpecificationProcedureEntity> processSpecificationProcedureEntities= this.processSpecificationProcedureDal.findAll();
+        Iterable<ProcessSpecificationProcedureEntity> processSpecificationProcedureEntities = this.processSpecificationProcedureDal.findAll();
         List<ProcessSpecificationProcedure> processSpecificationProcedures = new ArrayList<>();
         // Check if the findAll method returned a value
         if (!processSpecificationProcedureEntities.iterator().hasNext()) {
@@ -86,16 +91,58 @@ public class ProcessSpecificationProcedureLogic {
             throw new Exception("Process Specification Procedure list is empty");
         }
         // Convert Iterable to List
-        for (ProcessSpecificationProcedureEntity processSpecificationProcedureEntity: processSpecificationProcedureEntities
+        for (ProcessSpecificationProcedureEntity processSpecificationProcedureEntity : processSpecificationProcedureEntities
         ) {
-            ProcessSpecificationProcedure processSpecificationProcedure= new ProcessSpecificationProcedure(processSpecificationProcedureEntity);
+            ProcessSpecificationProcedure processSpecificationProcedure = new ProcessSpecificationProcedure(processSpecificationProcedureEntity);
             processSpecificationProcedures.add(processSpecificationProcedure);
         }
         return processSpecificationProcedures;
     }
 
     private void validations(ProcessSpecificationProcedure processSpecificationProcedure) throws Exception {
-//      TODO Create validations
+        validateProcessSpecificationProcedureName(processSpecificationProcedure.getName());
+//        validateProcessSpecificationProcedureFile(processSpecificationProcedure.getProcedureFile());
+//        validateProcessSpecificationProcedureQualificationRecordFile(processSpecificationProcedure.getProcessQualificationRecordFile());
+        validateProcessSpecificationProcedureJointDesign(processSpecificationProcedure.getJointDesignName());
+        validateProcessSpecificationProcedureBaseMaterial(processSpecificationProcedure.getBaseMaterialName1());
+        validateProcessSpecificationProcedureBaseMaterial(processSpecificationProcedure.getBaseMaterialName2());
+        validateProcessSpecificationProcedureFusionProcess(processSpecificationProcedure.getFusionProcessName());
+        validateProcessSpecificationProcedureFillerMaterial(processSpecificationProcedure.getFillerMaterialName1());
+        validateProcessSpecificationProcedureFillerMaterial(processSpecificationProcedure.getFillerMaterialName2());
+//        validateProcessSpecificationProcedureStandardCode(processSpecificationProcedure.getStandardCodeName());
+//        validateProcessSpecificationProcedureIsPreheatRequired(processSpecificationProcedure.isPreheatRequired());
+//        validateProcessSpecificationProcedureIsPostWeldHeatTreatmentRequired(processSpecificationProcedure.isPostWeldHeatTreatmentRequired());
+        validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMinMm());
+        validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMaxMm());
+        validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMinInch());
+        validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMaxInch());
+//        validateProcessSpecificationProcedureThicknessUom(processSpecificationProcedure.getThicknessUom());
+        validateNumberInputNotNegative(processSpecificationProcedure.getThicknessMinMm());
+        validateNumberInputNotNegative(processSpecificationProcedure.getThicknessMaxMm());
+    }
+
+    private void validateProcessSpecificationProcedureFusionProcess(String fusionProcessName) throws Exception {
+        CommonValidations.validateIsExistInFusionProcesses(fusionProcessName);
+    }
+
+    private void validateProcessSpecificationProcedureJointDesign(String jointDesignName) throws Exception {
+        CommonValidations.validateIsExistInJointDesigns(jointDesignName);
+    }
+
+    private void validateProcessSpecificationProcedureFillerMaterial(String fillerMaterialName) throws Exception {
+        CommonValidations.validateIsExistInFillerMaterialTypes(fillerMaterialName);
+    }
+
+    private void validateProcessSpecificationProcedureBaseMaterial(String baseMaterialName) throws Exception {
+        CommonValidations.validateIsExistInBaseMaterialTypes(baseMaterialName);
+    }
+
+    private void validateNumberInputNotNegative(Float number) throws ApplicationException {
+        CommonValidations.validateNotNegative(number);
+    }
+
+    private void validateProcessSpecificationProcedureName(String name) throws ApplicationException {
+        CommonValidations.validateStringLength(name, Consts.resourceNameLengthMin, Consts.resourceNameLengthMax);
     }
 
     private boolean isProcessSpecificationProcedureExist(int id) {

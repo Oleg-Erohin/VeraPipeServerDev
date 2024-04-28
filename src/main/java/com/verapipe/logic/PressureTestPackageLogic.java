@@ -1,8 +1,11 @@
 package com.verapipe.logic;
 
+import com.verapipe.consts.Consts;
 import com.verapipe.dal.IPressureTestPackageDal;
 import com.verapipe.dto.PressureTestPackage;
 import com.verapipe.entities.PressureTestPackageEntity;
+import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -78,7 +81,7 @@ public class PressureTestPackageLogic {
     }
 
     public List<PressureTestPackage> getAll() throws Exception {
-        Iterable<PressureTestPackageEntity> pressureTestPackageEntities= this.pressureTestPackageDal.findAll();
+        Iterable<PressureTestPackageEntity> pressureTestPackageEntities = this.pressureTestPackageDal.findAll();
         List<PressureTestPackage> pressureTestPackages = new ArrayList<>();
         // Check if the findAll method returned a value
         if (!pressureTestPackageEntities.iterator().hasNext()) {
@@ -86,16 +89,31 @@ public class PressureTestPackageLogic {
             throw new Exception("Pressure Test Package list is empty");
         }
         // Convert Iterable to List
-        for (PressureTestPackageEntity pressureTestPackageEntity: pressureTestPackageEntities
+        for (PressureTestPackageEntity pressureTestPackageEntity : pressureTestPackageEntities
         ) {
-            PressureTestPackage pressureTestPackage= new PressureTestPackage(pressureTestPackageEntity);
+            PressureTestPackage pressureTestPackage = new PressureTestPackage(pressureTestPackageEntity);
             pressureTestPackages.add(pressureTestPackage);
         }
         return pressureTestPackages;
     }
 
     private void validations(PressureTestPackage pressureTestPackage) throws Exception {
-//      TODO Create validations
+        validatePressureTestPackageName(pressureTestPackage.getName());
+        validatePressureTestPackagePids(pressureTestPackage.getPidNames());
+//        validatePressureTestPackageIsometrics(pressureTestPackage.getIsometricNames());
+//        validatePressureTestPackageCoordinatesInPids(pressureTestPackage.getCoordinatesInPidsList());
+//        validatePressureTestPackageReportFile(pressureTestPackage.getTestReport());
+//        validatePressureTestPackageDate(pressureTestPackage.getDate());
+    }
+
+    private void validatePressureTestPackagePids(List<String> pidNames) throws Exception {
+        for (String pidName : pidNames) {
+            CommonValidations.validateIsExistInPids(pidName);
+        }
+    }
+
+    private void validatePressureTestPackageName(String name) throws ApplicationException {
+        CommonValidations.validateStringLength(name, Consts.resourceNameLengthMin, Consts.resourceNameLengthMax);
     }
 
     private boolean isPressureTestPackageExist(int id) {

@@ -1,8 +1,11 @@
 package com.verapipe.logic;
 
+import com.verapipe.consts.Consts;
 import com.verapipe.dal.IJoinerDal;
 import com.verapipe.dto.Joiner;
 import com.verapipe.entities.JoinerEntity;
+import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -96,7 +99,37 @@ public class JoinerLogic {
 
 
     private void validations(Joiner joiner) throws Exception {
-//      TODO Create validations
+        validateJoinerTagId(joiner.getTagId());
+//        validateJoinerCertificateFile(joiner.getCertificate());
+        validateNumberInputNotNegative(joiner.getCertifiedDiameterMinMm());
+        validateNumberInputNotNegative(joiner.getCertifiedDiameterMaxMm());
+        validateNumberInputNotNegative(joiner.getCertifiedDiameterMinInch());
+        validateNumberInputNotNegative(joiner.getCertifiedDiameterMaxInch());
+        validateNumberInputNotNegative(joiner.getMaxDepositedMaterial());
+        validateJoinerBaseMaterialType(joiner.getBaseMaterialTypeName1());
+        validateJoinerBaseMaterialType(joiner.getBaseMaterialTypeName2());
+        validateJoinerJointDesign(joiner.getJointDesignName());
+        validateJoinerFusionProcess(joiner.getFusionProcessName());
+    }
+
+    private void validateJoinerFusionProcess(String fusionProcessName) throws Exception {
+        CommonValidations.validateIsExistInFusionProcesses(fusionProcessName);
+    }
+
+    private void validateJoinerJointDesign(String jointDesignName) throws Exception {
+        CommonValidations.validateIsExistInJointDesigns(jointDesignName);
+    }
+
+    private void validateJoinerBaseMaterialType(String baseMaterialTypeName) throws Exception {
+        CommonValidations.validateIsExistInBaseMaterialTypes(baseMaterialTypeName);
+    }
+
+    private void validateNumberInputNotNegative(Float number) throws ApplicationException {
+        CommonValidations.validateNotNegative(number);
+    }
+
+    private void validateJoinerTagId(String tagId) throws ApplicationException {
+        CommonValidations.validateStringLength(tagId, Consts.joinerTagIdLengthMin, Consts.joinerTagIdLengthMax);
     }
 
     private boolean isJoinerExist(int id) {

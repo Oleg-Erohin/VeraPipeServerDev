@@ -1,8 +1,11 @@
 package com.verapipe.logic;
 
+import com.verapipe.consts.Consts;
 import com.verapipe.dal.IIsometricDal;
 import com.verapipe.dto.Isometric;
 import com.verapipe.entities.IsometricEntity;
+import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -96,7 +99,30 @@ public class IsometricLogic {
 
 
     private void validations(Isometric isometric) throws Exception {
-//      TODO Create validations
+        validateIsometricName(isometric.getName());
+        validateIsometricPidNames(isometric.getPidNames());
+//        validateIsometricPidSheets(isometric.getPidSheets());
+//        validateIsometricFile(isometric.getFile());
+        validateIsometricRevision(isometric.getRevision());
+//        validateIsometricDate(isometric.getDate());
+//        validateIsometricSheets(isometric.getSheets());
+//        validateIsometricCoordinatesInPid(isometric.getCoordinatesInPid());
+//        validateIsometricIsApproves(isometric.isApproved());
+//        validateIsometricComments(isometric.getComments());
+    }
+
+    private void validateIsometricPidNames(List<String> pidNames) throws Exception {
+        for (String pidName : pidNames) {
+            CommonValidations.validateIsExistInPids(pidName);
+        }
+    }
+
+    private void validateIsometricRevision(String revision) throws ApplicationException {
+        CommonValidations.validateStringLength(revision, Consts.revisionLengthMin, Consts.revisionLengthMax);
+    }
+
+    private void validateIsometricName(String name) throws ApplicationException {
+        CommonValidations.validateStringLength(name, Consts.resourceNameLengthMin, Consts.resourceNameLengthMax);
     }
 
     private boolean isIsometricExist(int id) {

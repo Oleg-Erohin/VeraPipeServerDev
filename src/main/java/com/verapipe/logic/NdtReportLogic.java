@@ -1,8 +1,11 @@
 package com.verapipe.logic;
 
+import com.verapipe.consts.Consts;
 import com.verapipe.dal.INdtReportDal;
 import com.verapipe.dto.NdtReport;
 import com.verapipe.entities.NdtReportEntity;
+import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -96,7 +99,14 @@ public class NdtReportLogic {
 
 
     private void validations(NdtReport ndtReport) throws Exception {
-//      TODO Create validations
+        validateNdtReportName(ndtReport.getName());
+//        validateNdtReportNdtType(ndtReport.getNdtTypeName());
+//        validateNdtReportFile(ndtReport.getFile());
+//        validateNdtReportDate(ndtReport.getDate());
+    }
+
+    private void validateNdtReportName(String name) throws ApplicationException {
+        CommonValidations.validateStringLength(name, Consts.resourceNameLengthMin, Consts.resourceNameLengthMax);
     }
 
     private boolean isNdtReportExist(int id) {

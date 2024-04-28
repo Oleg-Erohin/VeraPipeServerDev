@@ -11,7 +11,7 @@ import java.util.*;
 public class Isometric {
     private int id;
     private String name;
-    private List<String> PidNames;
+    private List<String> pidNames;
     private List<Integer> pidSheets;
     private byte[] file;
     private String revision;
@@ -24,9 +24,9 @@ public class Isometric {
     public Isometric() {
     }
 
-    public Isometric(String name, List<String> PidNames, List<Integer> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
+    public Isometric(String name, List<String> pidNames, List<Integer> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
         this.name = name;
-        this.PidNames = PidNames;
+        this.pidNames = pidNames;
         this.pidSheets = pidSheets;
         this.file = file;
         this.revision = revision;
@@ -37,10 +37,10 @@ public class Isometric {
         this.comments = comments;
     }
 
-    public Isometric(int id, String name, List<String> PidNames, List<Integer> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
+    public Isometric(int id, String name, List<String> pidNames, List<Integer> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
         this.id = id;
         this.name = name;
-        this.PidNames = PidNames;
+        this.pidNames = pidNames;
         this.pidSheets = pidSheets;
         this.file = file;
         this.revision = revision;
@@ -62,7 +62,7 @@ public class Isometric {
         for (PidEntity pidEntity : pidEntityList) {
             pidsNames.add(pidEntity.getName());
         }
-        this.PidNames = pidsNames;
+        this.pidNames = pidsNames;
 
         List<Integer> pidSheets = new ArrayList<>();
         for (PidEntity pidEntity : pidEntityList) {
@@ -98,12 +98,12 @@ public class Isometric {
         this.name = name;
     }
 
-    public List<String> getPidName() {
-        return PidNames;
+    public List<String> getPidNames() {
+        return pidNames;
     }
 
-    public void setPidName(List<String> pidName) {
-        PidNames = pidName;
+    public void setPidNames(List<String> pidNames) {
+        this.pidNames = pidNames;
     }
 
     public List<Integer> getPidSheets() {
@@ -175,7 +175,7 @@ public class Isometric {
         return "Isometric{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", PidNames='" + PidNames + '\'' +
+                ", pidNames='" + pidNames + '\'' +
                 ", PidSheets=" + pidSheets +
                 ", file=" + Arrays.toString(file) +
                 ", revision='" + revision + '\'' +

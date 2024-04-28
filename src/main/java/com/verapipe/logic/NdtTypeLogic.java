@@ -1,8 +1,11 @@
 package com.verapipe.logic;
 
+import com.verapipe.consts.Consts;
 import com.verapipe.dal.INdtTypeDal;
 import com.verapipe.dto.NdtType;
 import com.verapipe.entities.NdtTypeEntity;
+import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -73,7 +76,7 @@ public class NdtTypeLogic {
 //            TODO throw new ApplicationException
             throw new Exception("Ndt Type not found");
         }
-        NdtType ndtType= new NdtType(ndtTypeEntity.get());
+        NdtType ndtType = new NdtType(ndtTypeEntity.get());
         return ndtType;
     }
 
@@ -88,14 +91,18 @@ public class NdtTypeLogic {
         // Convert Iterable to List
         for (NdtTypeEntity ndtTypeEntity : ndtTypeEntities
         ) {
-            NdtType ndtType= new NdtType(ndtTypeEntity);
+            NdtType ndtType = new NdtType(ndtTypeEntity);
             ndtTypes.add(ndtType);
         }
         return ndtTypes;
     }
 
     private void validations(NdtType ndtType) throws Exception {
-//      TODO Create validations
+        validateNdtTypeName(ndtType.getName());
+    }
+
+    private void validateNdtTypeName(String name) throws ApplicationException {
+        CommonValidations.validateStringLength(name, Consts.resourceNameLengthMin, Consts.resourceNameLengthMax);
     }
 
     private boolean isNdtTypeExist(int id) {

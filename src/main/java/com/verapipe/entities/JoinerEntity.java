@@ -12,10 +12,10 @@ public class JoinerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "tag_id", unique = true, nullable = false)
+    @Column(name = "tag_id", unique = false, nullable = false)
     private String tagId;
     @Lob
-    @Column(name = "certificate", nullable = false)
+    @Column(name = "certificate", unique = false, nullable = false)
     private byte[] certificate;
     @Column(name = "certified_diameter_min_mm", unique = false, nullable = true)
     private Float certifiedDiameterMinMm;

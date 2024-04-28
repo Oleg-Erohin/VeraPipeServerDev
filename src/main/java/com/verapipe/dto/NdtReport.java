@@ -8,24 +8,24 @@ import java.util.Date;
 public class NdtReport {
     private int id;
     private String name;
-    private String NdtType;
+    private String NdtTypeName;
     private byte[] file;
     private Date date;
 
     public NdtReport() {
     }
 
-    public NdtReport(String name, String ndtType, byte[] file, Date date) {
+    public NdtReport(String name, String NdtTypeName, byte[] file, Date date) {
         this.name = name;
-        this.NdtType = ndtType;
+        this.NdtTypeName = NdtTypeName;
         this.file = file;
         this.date = date;
     }
 
-    public NdtReport(int id, String name, String ndtType, byte[] file, Date date) {
+    public NdtReport(int id, String name, String NdtTypeName, byte[] file, Date date) {
         this.id = id;
         this.name = name;
-        this.NdtType = ndtType;
+        this.NdtTypeName = NdtTypeName;
         this.file = file;
         this.date = date;
     }
@@ -33,7 +33,7 @@ public class NdtReport {
     public NdtReport(NdtReportEntity ndtReportEntity) {
         this.id = ndtReportEntity.getId();
         this.name = ndtReportEntity.getName();
-        this.NdtType = ndtReportEntity.getNdtType().getName();
+        this.NdtTypeName = ndtReportEntity.getNdtType().getName();
         this.file = ndtReportEntity.getFile();
         this.date = ndtReportEntity.getDate();
     }
@@ -54,12 +54,12 @@ public class NdtReport {
         this.name = name;
     }
 
-    public String getNdtType() {
-        return NdtType;
+    public String getNdtTypeName() {
+        return NdtTypeName;
     }
 
-    public void setNdtType(String ndtType) {
-        NdtType = ndtType;
+    public void setNdtTypeName(String NdtTypeName) {
+        this.NdtTypeName = NdtTypeName;
     }
 
     public byte[] getFile() {
@@ -83,7 +83,7 @@ public class NdtReport {
         return "NdtReport{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", NdtType='" + NdtType + '\'' +
+                ", NdtTypeName='" + NdtTypeName + '\'' +
                 ", file=" + Arrays.toString(file) +
                 ", date=" + date +
                 '}';

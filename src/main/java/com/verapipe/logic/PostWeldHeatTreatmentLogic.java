@@ -1,8 +1,11 @@
 package com.verapipe.logic;
 
+import com.verapipe.consts.Consts;
 import com.verapipe.dal.IPostWeldHeatTreatmentDal;
 import com.verapipe.dto.PostWeldHeatTreatment;
 import com.verapipe.entities.PostWeldHeatTreatmentEntity;
+import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -95,7 +98,18 @@ public class PostWeldHeatTreatmentLogic {
     }
 
     private void validations(PostWeldHeatTreatment postWeldHeatTreatment) throws Exception {
-//      TODO Create validations
+        validatePostWeldHeatTreatmentName(postWeldHeatTreatment.getName());
+        validatePostWeldHeatTreatmentProcessSpecificationProcedure(postWeldHeatTreatment.getProcessSpecificationProcedureName());
+//        validatePostWeldHeatTreatmentFile(postWeldHeatTreatment.getFile());
+//        validatePostWeldHeatTreatmentDate(postWeldHeatTreatment.getDate());
+    }
+
+    private void validatePostWeldHeatTreatmentProcessSpecificationProcedure(String processSpecificationProcedureName) throws Exception {
+        CommonValidations.validateIsExistInProcessSpecificationProcedures(processSpecificationProcedureName);
+    }
+
+    private void validatePostWeldHeatTreatmentName(String name) throws ApplicationException {
+        CommonValidations.validateStringLength(name, Consts.resourceNameLengthMin, Consts.resourceNameLengthMax);
     }
 
     private boolean isPostWeldHeatTreatmentExist(int id) {

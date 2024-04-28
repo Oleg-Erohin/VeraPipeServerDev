@@ -1,9 +1,13 @@
 package com.verapipe.logic;
 
+import com.verapipe.consts.Consts;
 import com.verapipe.dal.IBaseMaterialTypeDal;
 import com.verapipe.dto.BaseMaterialType;
 import com.verapipe.entities.BaseMaterialTypeEntity;
+import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,13 +23,12 @@ public class BaseMaterialTypeLogic {
         this.baseMaterialTypeDal = baseMaterialTypeDal;
     }
 
-    public int add (BaseMaterialType baseMaterialType) throws Exception {
+    public int add(BaseMaterialType baseMaterialType) throws Exception {
         validations(baseMaterialType);
         BaseMaterialTypeEntity baseMaterialTypeEntity = new BaseMaterialTypeEntity(baseMaterialType);
-        try{
+        try {
             baseMaterialTypeEntity = this.baseMaterialTypeDal.save(baseMaterialTypeEntity);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
 //          TODO throw new ApplicationException
             throw new Exception(e.getMessage());
         }
@@ -33,7 +36,7 @@ public class BaseMaterialTypeLogic {
         return addedBaseMaterialTypeId;
     }
 
-    public void update (BaseMaterialType baseMaterialType) throws Exception {
+    public void update(BaseMaterialType baseMaterialType) throws Exception {
         validations(baseMaterialType);
         BaseMaterialTypeEntity sentBaseMaterialTypeEntity = new BaseMaterialTypeEntity(baseMaterialType);
         BaseMaterialTypeEntity receivedBaseMaterialTypeEntity;
@@ -50,7 +53,7 @@ public class BaseMaterialTypeLogic {
         }
     }
 
-    public void delete (int id) throws Exception {
+    public void delete(int id) throws Exception {
         if (!isBaseMaterialTypeExist(id)) {
 //            TODO throw new ApplicationException
         }
@@ -78,17 +81,18 @@ public class BaseMaterialTypeLogic {
         return baseMaterialType;
     }
 
+    @Cacheable(cacheNames = "baseMaterialTypesCache", key = "#root.methodName")
     public List<BaseMaterialType> getAll() throws Exception {
         Iterable<BaseMaterialTypeEntity> baseMaterialTypeEntities = this.baseMaterialTypeDal.findAll();
         List<BaseMaterialType> baseMaterialTypes = new ArrayList<>();
         // Check if the findAll method returned a value
-        if (!baseMaterialTypeEntities.iterator().hasNext()){
+        if (!baseMaterialTypeEntities.iterator().hasNext()) {
 //          TODO throw new ApplicationException
             throw new Exception("Base Material Type list is empty");
         }
         // Convert Iterable to List
-        for (BaseMaterialTypeEntity baseMaterialTypeEntity: baseMaterialTypeEntities
-             ) {
+        for (BaseMaterialTypeEntity baseMaterialTypeEntity : baseMaterialTypeEntities
+        ) {
             BaseMaterialType baseMaterialType = new BaseMaterialType(baseMaterialTypeEntity);
             baseMaterialTypes.add(baseMaterialType);
         }
@@ -97,7 +101,11 @@ public class BaseMaterialTypeLogic {
 
 
     private void validations(BaseMaterialType baseMaterialType) throws Exception {
-//      TODO Create validations
+        validateBaseMaterialTypeName(baseMaterialType.getName());
+    }
+
+    private void validateBaseMaterialTypeName(String name) throws ApplicationException {
+        CommonValidations.validateStringLength(name, Consts.resourceNameLengthMin, Consts.resourceNameLengthMax);
     }
 
     private boolean isBaseMaterialTypeExist(int id) {

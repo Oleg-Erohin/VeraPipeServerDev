@@ -1,9 +1,13 @@
 package com.verapipe.logic;
 
+import com.verapipe.consts.Consts;
 import com.verapipe.dal.IJointDesignDal;
 import com.verapipe.dto.JointDesign;
 import com.verapipe.entities.JointDesignEntity;
+import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -77,6 +81,7 @@ public class JointDesignLogic {
         return jointDesign;
     }
 
+    @Cacheable(cacheNames = "jointDesignsCache", key = "#root.methodName")
     public List<JointDesign> getAll() throws Exception {
         Iterable<JointDesignEntity> jointDesignEntities = this.jointDesignDal.findAll();
         List<JointDesign> jointDesigns = new ArrayList<>();
@@ -96,7 +101,11 @@ public class JointDesignLogic {
 
 
     private void validations(JointDesign jointDesign) throws Exception {
-//      TODO Create validations
+        validateJointDesignName(jointDesign.getName());
+    }
+
+    private void validateJointDesignName(String name) throws ApplicationException {
+        CommonValidations.validateStringLength(name, Consts.resourceNameLengthMin, Consts.resourceNameLengthMax);
     }
 
     private boolean isJointDesignExist(int id) {

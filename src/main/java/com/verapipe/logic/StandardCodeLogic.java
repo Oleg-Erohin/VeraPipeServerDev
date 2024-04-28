@@ -1,8 +1,11 @@
 package com.verapipe.logic;
 
+import com.verapipe.consts.Consts;
 import com.verapipe.dal.IStandardCodeDal;
 import com.verapipe.dto.StandardCode;
 import com.verapipe.entities.StandardCodeEntity;
+import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -78,7 +81,7 @@ public class StandardCodeLogic {
     }
 
     public List<StandardCode> getAll() throws Exception {
-        Iterable<StandardCodeEntity> standardCodeEntities= this.standardCodeDal.findAll();
+        Iterable<StandardCodeEntity> standardCodeEntities = this.standardCodeDal.findAll();
         List<StandardCode> standardCodes = new ArrayList<>();
         // Check if the findAll method returned a value
         if (!standardCodeEntities.iterator().hasNext()) {
@@ -86,7 +89,7 @@ public class StandardCodeLogic {
             throw new Exception("Standard Code list is empty");
         }
         // Convert Iterable to List
-        for (StandardCodeEntity standardCodeEntity: standardCodeEntities
+        for (StandardCodeEntity standardCodeEntity : standardCodeEntities
         ) {
             StandardCode standardCode = new StandardCode(standardCodeEntity);
             standardCodes.add(standardCode);
@@ -95,7 +98,11 @@ public class StandardCodeLogic {
     }
 
     private void validations(StandardCode standardCode) throws Exception {
-//      TODO Create validations
+        validateStandardCodeName(standardCode.getName());
+    }
+
+    private void validateStandardCodeName(String name) throws ApplicationException {
+        CommonValidations.validateStringLength(name, Consts.resourceNameLengthMin, Consts.resourceNameLengthMax);
     }
 
     private boolean isStandardCodeExist(int id) {

@@ -1,8 +1,11 @@
 package com.verapipe.logic;
 
+import com.verapipe.consts.Consts;
 import com.verapipe.dal.IJointDal;
 import com.verapipe.dto.Joint;
 import com.verapipe.entities.JointEntity;
+import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -96,7 +99,57 @@ public class JointLogic {
 
 
     private void validations(Joint joint) throws Exception {
-//      TODO Create validations
+//        validateJointNumber(joint.getNumber());
+//        validateJointCoordinatesOnIsometric(joint.getCoordinatesOnIsometric());
+        validateJointPid(joint.getPidName());
+//        validateJointIsometric(joint.getIsometricName());
+//        validateJointSheetOnIsometric(joint.getSheetOnIsometric());
+        validateNumberInputNotNegative(joint.getDiameterMm());
+        validateNumberInputNotNegative(joint.getDiameterInch());
+        validateJointFittingDescription(joint.getFittingDescription1());
+        validateJointBaseMaterialType(joint.getBaseMaterialTypeName1());
+//        validateJointBaseMaterialHeatNum1(joint.getBaseMaterialHeatNum1());
+        validateJointFittingDescription(joint.getFittingDescription2());
+        validateJointBaseMaterialType(joint.getBaseMaterialTypeName2());
+//        validateJointBaseMaterialHeatNum2(joint.getBaseMaterialHeatNum2());
+        validateJointFillerMaterialType(joint.getFillerMaterialTypeName1());
+//        validateJointFillerMaterialHeatNum1(joint.getFillerMaterialHeatNum1());
+        validateJointFillerMaterialType(joint.getFillerMaterialTypeName2());
+//        validateJointFillerMaterialHeatNum2(joint.getFillerMaterialHeatNum2());
+        validateJointProcessSpecificationProcedure(joint.getProcessSpecificationProcedureName());
+//        validateJointJoinerTagIds(joint.getJoinersTagIdList());
+//        validateJointDate(joint.getDate());
+//        validateJointIsFitUpDone(joint.isFitUpDone());
+//        validateJointIsVisualInspectionDone(joint.isVisualInspectionDone());
+//        validateJointNdtReport(joint.getNdtReportName());
+//        validateJointIsNdtPassed(joint.isNdtPassed());
+//        validateJointPreHeat(joint.getPreheatName());
+//        validateJointPostWeldHeatTreatment(joint.getPostWeldHeatTreatmentName());
+//        validateJointComments(joint.getComments());
+    }
+
+    private void validateJointProcessSpecificationProcedure(String processSpecificationProcedureName) throws Exception {
+        CommonValidations.validateIsExistInProcessSpecificationProcedures(processSpecificationProcedureName);
+    }
+
+    private void validateJointPid(String pidName) throws Exception {
+        CommonValidations.validateIsExistInPids(pidName);
+    }
+
+    private void validateJointFillerMaterialType(String fillerMaterialTypeName) throws Exception {
+        CommonValidations.validateIsExistInFillerMaterialTypes(fillerMaterialTypeName);
+    }
+
+    private void validateJointBaseMaterialType(String baseMaterialTypeName) throws Exception {
+        CommonValidations.validateIsExistInBaseMaterialTypes(baseMaterialTypeName);
+    }
+
+    private void validateNumberInputNotNegative(Float number) throws ApplicationException {
+        CommonValidations.validateNotNegative(number);
+    }
+
+    private void validateJointFittingDescription(String fittingDescription) throws ApplicationException {
+        CommonValidations.validateStringLength(fittingDescription, Consts.fittingDescriptionLengthMin, Consts.fittingDescriptionLengthMax);
     }
 
     private boolean isJointExist(int id) {

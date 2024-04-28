@@ -1,8 +1,11 @@
 package com.verapipe.logic;
 
+import com.verapipe.consts.Consts;
 import com.verapipe.dal.IBaseMaterialCertificateDal;
 import com.verapipe.dto.BaseMaterialCertificate;
 import com.verapipe.entities.BaseMaterialCertificateEntity;
+import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +22,12 @@ public class BaseMaterialCertificateLogic {
         this.baseMaterialCertificateDal = baseMaterialCertificateDal;
     }
 
-    public int add (BaseMaterialCertificate baseMaterialCertificate) throws Exception {
+    public int add(BaseMaterialCertificate baseMaterialCertificate) throws Exception {
         validations(baseMaterialCertificate);
         BaseMaterialCertificateEntity baseMaterialCertificateEntity = new BaseMaterialCertificateEntity(baseMaterialCertificate);
-        try{
+        try {
             baseMaterialCertificateEntity = this.baseMaterialCertificateDal.save(baseMaterialCertificateEntity);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
 //          TODO throw new ApplicationException
             throw new Exception(e.getMessage());
         }
@@ -33,7 +35,7 @@ public class BaseMaterialCertificateLogic {
         return addedBaseMaterialCertificateId;
     }
 
-    public void update (BaseMaterialCertificate baseMaterialCertificate) throws Exception {
+    public void update(BaseMaterialCertificate baseMaterialCertificate) throws Exception {
         validations(baseMaterialCertificate);
         BaseMaterialCertificateEntity sentBaseMaterialCertificateEntity = new BaseMaterialCertificateEntity(baseMaterialCertificate);
         BaseMaterialCertificateEntity receivedBaseMaterialCertificateEntity;
@@ -50,7 +52,7 @@ public class BaseMaterialCertificateLogic {
         }
     }
 
-    public void delete (int id) throws Exception {
+    public void delete(int id) throws Exception {
         if (!isBaseMaterialCertificateExist(id)) {
 //            TODO throw new ApplicationException
         }
@@ -82,13 +84,13 @@ public class BaseMaterialCertificateLogic {
         Iterable<BaseMaterialCertificateEntity> baseMaterialCertificateEntities = this.baseMaterialCertificateDal.findAll();
         List<BaseMaterialCertificate> baseMaterialCertificates = new ArrayList<>();
         // Check if the findAll method returned a value
-        if (!baseMaterialCertificateEntities.iterator().hasNext()){
+        if (!baseMaterialCertificateEntities.iterator().hasNext()) {
 //          TODO throw new ApplicationException
             throw new Exception("Base Material Certificate list is empty");
         }
         // Convert Iterable to List
-        for (BaseMaterialCertificateEntity baseMaterialCertificateEntity: baseMaterialCertificateEntities
-             ) {
+        for (BaseMaterialCertificateEntity baseMaterialCertificateEntity : baseMaterialCertificateEntities
+        ) {
             BaseMaterialCertificate baseMaterialCertificate = new BaseMaterialCertificate(baseMaterialCertificateEntity);
             baseMaterialCertificates.add(baseMaterialCertificate);
         }
@@ -97,7 +99,18 @@ public class BaseMaterialCertificateLogic {
 
 
     private void validations(BaseMaterialCertificate baseMaterialCertificate) throws Exception {
-//      TODO Create validations
+        validateBaseMaterialCertificateHeatOrLotNum(baseMaterialCertificate.getHeatNum());
+        validateBaseMaterialCertificateHeatOrLotNum(baseMaterialCertificate.getLotNum());
+//        validateBaseMaterialCertificateFile(baseMaterialCertificate.getFile());
+        validateBaseMaterialCertificateMaterialTypeName(baseMaterialCertificate.getMaterialTypeName());
+    }
+
+    private void validateBaseMaterialCertificateMaterialTypeName(String materialTypeName) throws Exception {
+        CommonValidations.validateIsExistInBaseMaterialTypes(materialTypeName);
+    }
+
+    private void validateBaseMaterialCertificateHeatOrLotNum(String heatOrLotNum) throws ApplicationException {
+        CommonValidations.validateStringLength(heatOrLotNum, Consts.resourceNameLengthMin, Consts.resourceNameLengthMax);
     }
 
     private boolean isBaseMaterialCertificateExist(int id) {

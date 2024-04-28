@@ -33,7 +33,7 @@ public class NdtReportEntity {
         this.file = ndtReport.getFile();
         this.date = ndtReport.getDate();
         this.ndtType = new NdtTypeEntity();
-        String ndtTypeName = ndtReport.getNdtType();
+        String ndtTypeName = ndtReport.getNdtTypeName();
         this.ndtType.setName(ndtTypeName);
     }
 
