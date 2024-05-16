@@ -3,7 +3,9 @@ package com.verapipe.logic;
 import com.verapipe.consts.Consts;
 import com.verapipe.dal.IProcessSpecificationProcedureDal;
 import com.verapipe.dto.ProcessSpecificationProcedure;
+import com.verapipe.dto.StandardCode;
 import com.verapipe.entities.ProcessSpecificationProcedureEntity;
+import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +19,12 @@ import java.util.Optional;
 @Service
 public class ProcessSpecificationProcedureLogic {
     private IProcessSpecificationProcedureDal processSpecificationProcedureDal;
+    private StandardCodeLogic standardCodeLogic;
 
     @Autowired
-    public ProcessSpecificationProcedureLogic(IProcessSpecificationProcedureDal processSpecificationProcedureDal) {
+    public ProcessSpecificationProcedureLogic(IProcessSpecificationProcedureDal processSpecificationProcedureDal, StandardCodeLogic standardCodeLogic) {
         this.processSpecificationProcedureDal = processSpecificationProcedureDal;
+        this.standardCodeLogic = standardCodeLogic;
     }
 
     public int add(ProcessSpecificationProcedure processSpecificationProcedure) throws Exception {
@@ -109,7 +113,7 @@ public class ProcessSpecificationProcedureLogic {
         validateProcessSpecificationProcedureFusionProcess(processSpecificationProcedure.getFusionProcessName());
         validateProcessSpecificationProcedureFillerMaterial(processSpecificationProcedure.getFillerMaterialName1());
         validateProcessSpecificationProcedureFillerMaterial(processSpecificationProcedure.getFillerMaterialName2());
-//        validateProcessSpecificationProcedureStandardCode(processSpecificationProcedure.getStandardCodeName());
+        validateProcessSpecificationProcedureStandardCode(processSpecificationProcedure.getStandardCodeName());
 //        validateProcessSpecificationProcedureIsPreheatRequired(processSpecificationProcedure.isPreheatRequired());
 //        validateProcessSpecificationProcedureIsPostWeldHeatTreatmentRequired(processSpecificationProcedure.isPostWeldHeatTreatmentRequired());
         validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMinMm());
@@ -119,6 +123,17 @@ public class ProcessSpecificationProcedureLogic {
 //        validateProcessSpecificationProcedureThicknessUom(processSpecificationProcedure.getThicknessUom());
         validateNumberInputNotNegative(processSpecificationProcedure.getThicknessMinMm());
         validateNumberInputNotNegative(processSpecificationProcedure.getThicknessMaxMm());
+    }
+
+    private void validateProcessSpecificationProcedureStandardCode(String standardCodeName) throws Exception {
+        List<StandardCode> standardCodes =  standardCodeLogic.getAll();
+
+        for (StandardCode standardCode : standardCodes){
+            if (standardCode.getName().equals(standardCodeName)){
+                return;
+            }
+        }
+        throw new ApplicationException(ErrorType.STANDARD_DOES_NOT_EXIST);
     }
 
     private void validateProcessSpecificationProcedureFusionProcess(String fusionProcessName) throws Exception {

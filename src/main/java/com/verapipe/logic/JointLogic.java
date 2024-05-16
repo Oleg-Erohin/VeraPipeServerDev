@@ -2,8 +2,9 @@ package com.verapipe.logic;
 
 import com.verapipe.consts.Consts;
 import com.verapipe.dal.IJointDal;
-import com.verapipe.dto.Joint;
+import com.verapipe.dto.*;
 import com.verapipe.entities.JointEntity;
+import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,18 @@ import java.util.Optional;
 @Service
 public class JointLogic {
     private IJointDal jointDal;
+    private NdtReportLogic ndtReportLogic;
+    private PreheatLogic preheatLogic;
+    private PostWeldHeatTreatmentLogic postWeldHeatTreatmentLogic;
+    private JoinerLogic joinerLogic;
 
     @Autowired
-    public JointLogic(IJointDal jointDal) {
+    public JointLogic(IJointDal jointDal, NdtReportLogic ndtReportLogic, PreheatLogic preheatLogic, PostWeldHeatTreatmentLogic postWeldHeatTreatmentLogic, JoinerLogic joinerLogic) {
         this.jointDal = jointDal;
+        this.ndtReportLogic = ndtReportLogic;
+        this.preheatLogic = preheatLogic;
+        this.postWeldHeatTreatmentLogic = postWeldHeatTreatmentLogic;
+        this.joinerLogic = joinerLogic;
     }
 
     public int add(Joint joint) throws Exception {
@@ -102,30 +111,96 @@ public class JointLogic {
 //        validateJointNumber(joint.getNumber());
 //        validateJointCoordinatesOnIsometric(joint.getCoordinatesOnIsometric());
         validateJointPid(joint.getPidName());
-//        validateJointIsometric(joint.getIsometricName());
+        validateJointIsometric(joint.getIsometricName());
 //        validateJointSheetOnIsometric(joint.getSheetOnIsometric());
         validateNumberInputNotNegative(joint.getDiameterMm());
         validateNumberInputNotNegative(joint.getDiameterInch());
         validateJointFittingDescription(joint.getFittingDescription1());
         validateJointBaseMaterialType(joint.getBaseMaterialTypeName1());
-//        validateJointBaseMaterialHeatNum1(joint.getBaseMaterialHeatNum1());
+        validateJointBaseMaterialHeatNum(joint.getBaseMaterialHeatNum1());
         validateJointFittingDescription(joint.getFittingDescription2());
         validateJointBaseMaterialType(joint.getBaseMaterialTypeName2());
-//        validateJointBaseMaterialHeatNum2(joint.getBaseMaterialHeatNum2());
+        validateJointBaseMaterialHeatNum(joint.getBaseMaterialHeatNum2());
         validateJointFillerMaterialType(joint.getFillerMaterialTypeName1());
-//        validateJointFillerMaterialHeatNum1(joint.getFillerMaterialHeatNum1());
+        validateJointFillerMaterialHeatNum(joint.getFillerMaterialHeatNum1());
         validateJointFillerMaterialType(joint.getFillerMaterialTypeName2());
-//        validateJointFillerMaterialHeatNum2(joint.getFillerMaterialHeatNum2());
+        validateJointFillerMaterialHeatNum(joint.getFillerMaterialHeatNum2());
         validateJointProcessSpecificationProcedure(joint.getProcessSpecificationProcedureName());
-//        validateJointJoinerTagIds(joint.getJoinersTagIdList());
+        validateJointJoinerTagIds(joint.getJoinersTagIdList());
 //        validateJointDate(joint.getDate());
 //        validateJointIsFitUpDone(joint.isFitUpDone());
 //        validateJointIsVisualInspectionDone(joint.isVisualInspectionDone());
-//        validateJointNdtReport(joint.getNdtReportName());
+        validateJointNdtReport(joint.getNdtReportName());
 //        validateJointIsNdtPassed(joint.isNdtPassed());
-//        validateJointPreHeat(joint.getPreheatName());
-//        validateJointPostWeldHeatTreatment(joint.getPostWeldHeatTreatmentName());
+        validateJointPreHeat(joint.getPreheatName());
+        validateJointPostWeldHeatTreatment(joint.getPostWeldHeatTreatmentName());
 //        validateJointComments(joint.getComments());
+    }
+
+    private void validateJointJoinerTagIds(List<String> joinersTagIdList) throws Exception {
+        if (joinersTagIdList.size() > 2) {
+            throw new ApplicationException(ErrorType.TOO_MANY_JOINER_TAGS);
+        }
+
+        for (int i = 0; i < joinersTagIdList.size(); i++) {
+            validateIsExistInJoinerTagIds(joinersTagIdList.get(i));
+        }
+    }
+
+    private void validateIsExistInJoinerTagIds(String joinerTagId) throws Exception {
+        List<Joiner> joiners = joinerLogic.getAll();
+
+        for (Joiner joiner : joiners){
+            if (joiner.getTagId().equals(joinerTagId)){
+                return;
+            }
+        }
+        throw new ApplicationException(ErrorType.JOINER_DOES_NOT_EXIST);
+    }
+
+    private void validateJointPostWeldHeatTreatment(String postWeldHeatTreatmentName) throws Exception {
+        List<PostWeldHeatTreatment> postWeldHeatTreatments = postWeldHeatTreatmentLogic.getAll();
+
+        for (PostWeldHeatTreatment postWeldHeatTreatment : postWeldHeatTreatments) {
+            if (postWeldHeatTreatment.getName().equals(postWeldHeatTreatmentName)) {
+                return;
+            }
+        }
+        throw new ApplicationException(ErrorType.POST_WELD_HEAT_TREATMENT_DOES_NOT_EXIST);
+    }
+
+    private void validateJointPreHeat(String preheatName) throws Exception {
+        List<Preheat> preheats = preheatLogic.getAll();
+
+        for (Preheat preheat : preheats) {
+            if (preheat.getName().equals(preheatName)) {
+                return;
+            }
+        }
+        throw new ApplicationException(ErrorType.PREHEAT_DOES_NOT_EXIST);
+    }
+
+    private void validateJointNdtReport(String ndtReportName) throws Exception {
+        List<NdtReport> ndtReports = ndtReportLogic.getAll();
+
+        for (NdtReport ndtReport : ndtReports) {
+            if (ndtReport.getName().equals(ndtReportName)) {
+                return;
+            }
+        }
+        throw new ApplicationException(ErrorType.NDT_REPORT_DOES_NOT_EXIST);
+    }
+
+    private void validateJointFillerMaterialHeatNum(String fillerMaterialHeatNum) throws Exception {
+        CommonValidations.validateIsExistInFillerMaterialCertificates(fillerMaterialHeatNum);
+    }
+
+    private void validateJointBaseMaterialHeatNum(String baseMaterialHeatNum) throws Exception {
+        CommonValidations.validateIsExistInBaseMaterialCertificates(baseMaterialHeatNum);
+    }
+
+    private void validateJointIsometric(String isometricName) throws Exception {
+        CommonValidations.validateIsExistInIsometrics(isometricName);
     }
 
     private void validateJointProcessSpecificationProcedure(String processSpecificationProcedureName) throws Exception {

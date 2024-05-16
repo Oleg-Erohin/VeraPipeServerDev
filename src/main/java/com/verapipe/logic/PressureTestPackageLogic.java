@@ -100,10 +100,16 @@ public class PressureTestPackageLogic {
     private void validations(PressureTestPackage pressureTestPackage) throws Exception {
         validatePressureTestPackageName(pressureTestPackage.getName());
         validatePressureTestPackagePids(pressureTestPackage.getPidNames());
-//        validatePressureTestPackageIsometrics(pressureTestPackage.getIsometricNames());
+        validatePressureTestPackageIsometrics(pressureTestPackage.getIsometricNames());
 //        validatePressureTestPackageCoordinatesInPids(pressureTestPackage.getCoordinatesInPidsList());
 //        validatePressureTestPackageReportFile(pressureTestPackage.getTestReport());
 //        validatePressureTestPackageDate(pressureTestPackage.getDate());
+    }
+
+    private void validatePressureTestPackageIsometrics(List<String> isometricNames) throws Exception {
+        for (String isometricName : isometricNames) {
+            CommonValidations.validateIsExistInIsometrics(isometricName);
+        }
     }
 
     private void validatePressureTestPackagePids(List<String> pidNames) throws Exception {

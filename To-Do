@@ -5,13 +5,12 @@ Important:
 - Add cache to "get all" functions of basic parameters - Oleg
 - Find out how to create a full list with fitting thickness
 
-
 To Do Later:
 - Should all double variables be "List" or separate items in DTO? (Currently uncertain in Joint)
 - Add "@RequestHeader(value = "Authorization") String token" and validate user type in any add, update and delete function on controller
 - Change hash function to Entities which are "Set" in other entities
 - Ensure comments include line breaks
-
+- For all validations which are "isExist" but not mandatory field - Find alternative to throwing error
 
 Done:
 - Get list of links (ManyToMany). Oleg to decide "Main" for each - Aviad

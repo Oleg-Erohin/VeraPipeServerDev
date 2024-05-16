@@ -3,7 +3,9 @@ package com.verapipe.logic;
 import com.verapipe.consts.Consts;
 import com.verapipe.dal.INdtReportDal;
 import com.verapipe.dto.NdtReport;
+import com.verapipe.dto.NdtType;
 import com.verapipe.entities.NdtReportEntity;
+import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +18,12 @@ import java.util.Optional;
 @Service
 public class NdtReportLogic {
     private INdtReportDal ndtReportDal;
+    private NdtTypeLogic ndtTypeLogic;
 
     @Autowired
-    public NdtReportLogic(INdtReportDal ndtReportDal) {
+    public NdtReportLogic(INdtReportDal ndtReportDal, NdtTypeLogic ndtTypeLogic) {
         this.ndtReportDal = ndtReportDal;
+        this.ndtTypeLogic = ndtTypeLogic;
     }
 
     public int add(NdtReport ndtReport) throws Exception {
@@ -100,9 +104,20 @@ public class NdtReportLogic {
 
     private void validations(NdtReport ndtReport) throws Exception {
         validateNdtReportName(ndtReport.getName());
-//        validateNdtReportNdtType(ndtReport.getNdtTypeName());
+        validateNdtReportNdtType(ndtReport.getNdtTypeName());
 //        validateNdtReportFile(ndtReport.getFile());
 //        validateNdtReportDate(ndtReport.getDate());
+    }
+
+    private void validateNdtReportNdtType(String ndtTypeName) throws Exception {
+        List<NdtType> ndtTypes =  ndtTypeLogic.getAll();
+
+        for (NdtType ndtType : ndtTypes){
+            if (ndtType.getName().equals(ndtTypeName)){
+                return;
+            }
+        }
+        throw new ApplicationException(ErrorType.NDT_TYPE_DOES_NOT_EXIST);
     }
 
     private void validateNdtReportName(String name) throws ApplicationException {

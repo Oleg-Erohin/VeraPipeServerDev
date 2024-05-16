@@ -10,7 +10,17 @@ public enum ErrorType {
     JOINT_DESIGN_DOES_NOT_EXIST(807, "The joint design does not exist in existing joint designs", false),
     FUSION_PROCESS_DOES_NOT_EXIST(808, "The fusion process does not exist in existing fusion processes", false),
     PROCESS_SPECIFICATION_PROCEDURE_DOES_NOT_EXIST(809, "The process specification procedure does not exist in existing process specification procedures", false),
-    PID_DOES_NOT_EXIST(810, "The P&ID does not exist in existing P&IDs", false);
+    PID_DOES_NOT_EXIST(810, "The P&ID does not exist in existing P&IDs", false),
+    ISOMETRIC_DOES_NOT_EXIST(811, "The isometric does not exist in existing isometrics", false),
+    BASE_MATERIAL_CERTIFICATE_DOES_NOT_EXIST(812, "The base material certificate does not exist in existing base material certificates", false),
+    FILLER_MATERIAL_CERTIFICATE_DOES_NOT_EXIST(813, "The filler material certificate does not exist in existing filler material certificates", false),
+    STANDARD_DOES_NOT_EXIST(814, "The standard/code does not exist in existing standards/codes", false),
+    NDT_TYPE_DOES_NOT_EXIST(815, "The NDT type does not exist in existing NDT types", false),
+    NDT_REPORT_DOES_NOT_EXIST(816, "The NDT report does not exist in existing NDT reports", false),
+    PREHEAT_DOES_NOT_EXIST(817, "The preheat does not exist in existing preheats", false),
+    POST_WELD_HEAT_TREATMENT_DOES_NOT_EXIST(818, "The post weld heat treatment does not exist in existing post weld heat treatments", false),
+    TOO_MANY_JOINER_TAGS(819, "There are too many joiners in the joiners list for this joint", false),
+    JOINER_DOES_NOT_EXIST(820, "The joiner does not exist in existing joiners", false);
 
     private int errorNum;
     private String errorMessage;

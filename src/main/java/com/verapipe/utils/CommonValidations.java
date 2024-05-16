@@ -15,6 +15,9 @@ public class CommonValidations {
     private static FusionProcessLogic fusionProcessLogic;
     private static ProcessSpecificationProcedureLogic processSpecificationProcedureLogic;
     private static PidLogic pidLogic;
+    private static IsometricLogic isometricLogic;
+    private static BaseMaterialCertificateLogic baseMaterialCertificateLogic;
+    private static FillerMaterialCertificateLogic fillerMaterialCertificateLogic;
 
     public static void validateStringLength(String string, int min, int max) throws ApplicationException {
         if (string.length() < min) {
@@ -39,7 +42,6 @@ public class CommonValidations {
                 return;
             }
         }
-
         throw new ApplicationException(ErrorType.BASE_MATERIAL_TYPE_DOES_NOT_EXIST);
     }
 
@@ -51,7 +53,6 @@ public class CommonValidations {
                 return;
             }
         }
-
         throw new ApplicationException(ErrorType.FILLER_MATERIAL_TYPE_DOES_NOT_EXIST);
     }
 
@@ -63,7 +64,6 @@ public class CommonValidations {
                 return;
             }
         }
-
         throw new ApplicationException(ErrorType.JOINT_DESIGN_DOES_NOT_EXIST);
     }
 
@@ -75,7 +75,6 @@ public class CommonValidations {
                 return;
             }
         }
-
         throw new ApplicationException(ErrorType.FUSION_PROCESS_DOES_NOT_EXIST);
     }
 
@@ -87,19 +86,51 @@ public class CommonValidations {
                 return;
             }
         }
-
         throw new ApplicationException(ErrorType.PROCESS_SPECIFICATION_PROCEDURE_DOES_NOT_EXIST);
     }
 
-    public static void validateIsExistInPids(String PidName) throws Exception {
+    public static void validateIsExistInPids(String pidName) throws Exception {
         List<Pid> allPids =  pidLogic.getAll();
 
         for (Pid pid : allPids){
-            if (pid.getName().equals(PidName)){
+            if (pid.getName().equals(pidName)){
                 return;
             }
         }
-
         throw new ApplicationException(ErrorType.PID_DOES_NOT_EXIST);
     }
+
+    public static void validateIsExistInIsometrics(String isometricName) throws Exception {
+        List<Isometric> allIsometrics =  isometricLogic.getAll();
+
+        for (Isometric isometric : allIsometrics){
+            if (isometric.getName().equals(isometricName)){
+                return;
+            }
+        }
+        throw new ApplicationException(ErrorType.ISOMETRIC_DOES_NOT_EXIST);
+    }
+
+    public static void validateIsExistInBaseMaterialCertificates(String baseMaterialCertificateHeatNum) throws Exception {
+        List<BaseMaterialCertificate> allBaseMaterialCertificates =  baseMaterialCertificateLogic.getAll();
+
+        for (BaseMaterialCertificate baseMaterialCertificate : allBaseMaterialCertificates){
+            if (baseMaterialCertificate.getHeatNum().equals(baseMaterialCertificateHeatNum)){
+                return;
+            }
+        }
+        throw new ApplicationException(ErrorType.BASE_MATERIAL_CERTIFICATE_DOES_NOT_EXIST);
+    }
+
+    public static void validateIsExistInFillerMaterialCertificates(String fillerMaterialCertificateHeatNum) throws Exception {
+        List<FillerMaterialCertificate> allFillerMaterialCertificates =  fillerMaterialCertificateLogic.getAll();
+
+        for (FillerMaterialCertificate fillerMaterialCertificate : allFillerMaterialCertificates){
+            if (fillerMaterialCertificate.getHeatNum().equals(fillerMaterialCertificateHeatNum)){
+                return;
+            }
+        }
+        throw new ApplicationException(ErrorType.FILLER_MATERIAL_CERTIFICATE_DOES_NOT_EXIST);
+    }
+
 }
