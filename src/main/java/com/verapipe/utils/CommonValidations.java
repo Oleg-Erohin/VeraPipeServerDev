@@ -1,5 +1,6 @@
 package com.verapipe.utils;
 
+import com.verapipe.consts.Consts;
 import com.verapipe.dto.*;
 import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
@@ -133,4 +134,11 @@ public class CommonValidations {
         throw new ApplicationException(ErrorType.FILLER_MATERIAL_CERTIFICATE_DOES_NOT_EXIST);
     }
 
+
+    public static void validateFileMaxSize(byte[] file) throws Exception {
+        int fileSize = file.length;
+        if (fileSize > Consts.bytesIn20MB){
+            throw new ApplicationException(ErrorType.FILE_SIZE_EXCEED_MAX_SIZE);
+        }
+    }
 }

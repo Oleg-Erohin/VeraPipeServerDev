@@ -28,7 +28,7 @@ public class PressureTestPackageLogic {
         try {
             pressureTestPackageEntity = this.pressureTestPackageDal.save(pressureTestPackageEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
+//            TODO throw new ApplicationException
             throw new Exception(e.getMessage());
         }
         int addedPressureTestPackageId = pressureTestPackageEntity.getId();
@@ -102,8 +102,12 @@ public class PressureTestPackageLogic {
         validatePressureTestPackagePids(pressureTestPackage.getPidNames());
         validatePressureTestPackageIsometrics(pressureTestPackage.getIsometricNames());
 //        validatePressureTestPackageCoordinatesInPids(pressureTestPackage.getCoordinatesInPidsList());
-//        validatePressureTestPackageReportFile(pressureTestPackage.getTestReport());
+        validatePressureTestPackageReportFile(pressureTestPackage.getTestReport());
 //        validatePressureTestPackageDate(pressureTestPackage.getDate());
+    }
+
+    private void validatePressureTestPackageReportFile(byte[] testReport) throws Exception {
+        CommonValidations.validateFileMaxSize(testReport);
     }
 
     private void validatePressureTestPackageIsometrics(List<String> isometricNames) throws Exception {

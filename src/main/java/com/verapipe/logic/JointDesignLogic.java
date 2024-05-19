@@ -29,7 +29,7 @@ public class JointDesignLogic {
         try {
             jointDesignEntity = this.jointDesignDal.save(jointDesignEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
+//            TODO throw new ApplicationException
             throw new Exception(e.getMessage());
         }
         int addedJointDesignId = jointDesignEntity.getId();

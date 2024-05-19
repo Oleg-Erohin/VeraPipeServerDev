@@ -33,7 +33,7 @@ public class ProcessSpecificationProcedureLogic {
         try {
             processSpecificationProcedureEntity = this.processSpecificationProcedureDal.save(processSpecificationProcedureEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
+//            TODO throw new ApplicationException
             throw new Exception(e.getMessage());
         }
         int addedProcessSpecificationProcedureId = processSpecificationProcedureEntity.getId();
@@ -105,8 +105,8 @@ public class ProcessSpecificationProcedureLogic {
 
     private void validations(ProcessSpecificationProcedure processSpecificationProcedure) throws Exception {
         validateProcessSpecificationProcedureName(processSpecificationProcedure.getName());
-//        validateProcessSpecificationProcedureFile(processSpecificationProcedure.getProcedureFile());
-//        validateProcessSpecificationProcedureQualificationRecordFile(processSpecificationProcedure.getProcessQualificationRecordFile());
+        validateProcessSpecificationProcedureFile(processSpecificationProcedure.getProcedureFile());
+        validateProcessSpecificationProcedureQualificationRecordFile(processSpecificationProcedure.getProcessQualificationRecordFile());
         validateProcessSpecificationProcedureJointDesign(processSpecificationProcedure.getJointDesignName());
         validateProcessSpecificationProcedureBaseMaterial(processSpecificationProcedure.getBaseMaterialName1());
         validateProcessSpecificationProcedureBaseMaterial(processSpecificationProcedure.getBaseMaterialName2());
@@ -123,6 +123,14 @@ public class ProcessSpecificationProcedureLogic {
 //        validateProcessSpecificationProcedureThicknessUom(processSpecificationProcedure.getThicknessUom());
         validateNumberInputNotNegative(processSpecificationProcedure.getThicknessMinMm());
         validateNumberInputNotNegative(processSpecificationProcedure.getThicknessMaxMm());
+    }
+
+    private void validateProcessSpecificationProcedureQualificationRecordFile(byte[] processQualificationRecordFile) throws Exception {
+        CommonValidations.validateFileMaxSize(processQualificationRecordFile);
+    }
+
+    private void validateProcessSpecificationProcedureFile(byte[] procedureFile) throws Exception {
+        CommonValidations.validateFileMaxSize(procedureFile);
     }
 
     private void validateProcessSpecificationProcedureStandardCode(String standardCodeName) throws Exception {

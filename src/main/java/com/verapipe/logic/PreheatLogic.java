@@ -28,7 +28,7 @@ public class PreheatLogic {
         try {
             preheatEntity = this.preheatDal.save(preheatEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
+//            TODO throw new ApplicationException
             throw new Exception(e.getMessage());
         }
         int addedPreheatId = preheatEntity.getId();
@@ -100,8 +100,12 @@ public class PreheatLogic {
     private void validations(Preheat preheat) throws Exception {
         validatePreheatName(preheat.getName());
         validatePreheatProcessSpecificationProcedure(preheat.getProcessSpecificationProcedureName());
-//        validatePreheatFile(preheat.getFile());
+        validatePreheatFile(preheat.getFile());
 //        validatePreheatDate(preheat.getDate());
+    }
+
+    private void validatePreheatFile(byte[] file) throws Exception {
+        CommonValidations.validateFileMaxSize(file);
     }
 
     private void validatePreheatProcessSpecificationProcedure(String processSpecificationProcedureName) throws Exception {

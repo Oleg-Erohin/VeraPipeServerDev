@@ -14,5 +14,7 @@ public class Consts {
     public final static int fittingDescriptionLengthMin = 3;
     public final static int fittingDescriptionLengthMax = 50;
 
+    public final static int bytesIn20MB = 20971520;
+
 //    public final static String JWT_KEY = "awskjd haskdh kasdh askudy saclawefy efcb239r7013 nsc ]98@!$!@#%R!(@E* !@( Usdlcfh wiqeuyd ";
 }

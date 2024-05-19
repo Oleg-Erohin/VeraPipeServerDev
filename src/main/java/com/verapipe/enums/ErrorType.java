@@ -1,5 +1,7 @@
 package com.verapipe.enums;
 
+import com.verapipe.consts.Consts;
+
 public enum ErrorType {
     GENERAL_ERROR(801, "An error has occurred while running", true),
     TEXT_TOO_LONG(802, "Text entered is too long", false),
@@ -20,7 +22,9 @@ public enum ErrorType {
     PREHEAT_DOES_NOT_EXIST(817, "The preheat does not exist in existing preheats", false),
     POST_WELD_HEAT_TREATMENT_DOES_NOT_EXIST(818, "The post weld heat treatment does not exist in existing post weld heat treatments", false),
     TOO_MANY_JOINER_TAGS(819, "There are too many joiners in the joiners list for this joint", false),
-    JOINER_DOES_NOT_EXIST(820, "The joiner does not exist in existing joiners", false);
+    JOINER_DOES_NOT_EXIST(820, "The joiner does not exist in existing joiners", false),
+    FILE_SIZE_EXCEED_MAX_SIZE(821, "The file size exceed the max size of " + Consts.bytesIn20MB /1048576 + "MB",false);
+
 
     private int errorNum;
     private String errorMessage;

@@ -37,7 +37,7 @@ public class JointLogic {
         try {
             jointEntity = this.jointDal.save(jointEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
+//            TODO throw new ApplicationException
             throw new Exception(e.getMessage());
         }
         int addedJointId = jointEntity.getId();

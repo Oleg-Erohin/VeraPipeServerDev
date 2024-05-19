@@ -42,7 +42,7 @@ public class FillerMaterialCertificateLogic {
         try {
             receivedFillerMaterialCertificateEntity = this.fillerMaterialCertificateDal.save(sentFillerMaterialCertificateEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
+//            TODO throw new ApplicationException
             throw new Exception(e.getMessage());
         }
         // Validate sent entity and return entity from DB are equals
@@ -100,8 +100,12 @@ public class FillerMaterialCertificateLogic {
 
     private void validations(FillerMaterialCertificate fillerMaterialCertificate) throws Exception {
         validateFillerMaterialCertificateHeatNum(fillerMaterialCertificate.getHeatNum());
-//        validateFillerMaterialCertificateFile(fillerMaterialCertificate.getFile());
+        validateFillerMaterialCertificateFile(fillerMaterialCertificate.getFile());
         validateFillerMaterialCertificateMaterialTypeName(fillerMaterialCertificate.getMaterialTypeName());
+    }
+
+    private void validateFillerMaterialCertificateFile(byte[] file) throws Exception {
+        CommonValidations.validateFileMaxSize(file);
     }
 
     private void validateFillerMaterialCertificateMaterialTypeName(String materialTypeName) throws Exception {

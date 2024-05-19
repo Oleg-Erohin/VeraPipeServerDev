@@ -28,7 +28,7 @@ public class PostWeldHeatTreatmentLogic {
         try {
             postWeldHeatTreatmentEntity = this.postWeldHeatTreatmentDal.save(postWeldHeatTreatmentEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
+//            TODO throw new ApplicationException
             throw new Exception(e.getMessage());
         }
         int addedPostWeldHeatTreatmentId = postWeldHeatTreatmentEntity.getId();
@@ -100,8 +100,12 @@ public class PostWeldHeatTreatmentLogic {
     private void validations(PostWeldHeatTreatment postWeldHeatTreatment) throws Exception {
         validatePostWeldHeatTreatmentName(postWeldHeatTreatment.getName());
         validatePostWeldHeatTreatmentProcessSpecificationProcedure(postWeldHeatTreatment.getProcessSpecificationProcedureName());
-//        validatePostWeldHeatTreatmentFile(postWeldHeatTreatment.getFile());
+        validatePostWeldHeatTreatmentFile(postWeldHeatTreatment.getFile());
 //        validatePostWeldHeatTreatmentDate(postWeldHeatTreatment.getDate());
+    }
+
+    private void validatePostWeldHeatTreatmentFile(byte[] file) throws Exception {
+        CommonValidations.validateFileMaxSize(file);
     }
 
     private void validatePostWeldHeatTreatmentProcessSpecificationProcedure(String processSpecificationProcedureName) throws Exception {

@@ -32,7 +32,7 @@ public class NdtReportLogic {
         try {
             ndtReportEntity = this.ndtReportDal.save(ndtReportEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
+//            TODO throw new ApplicationException
             throw new Exception(e.getMessage());
         }
         int addedNdtReportId = ndtReportEntity.getId();
@@ -105,8 +105,12 @@ public class NdtReportLogic {
     private void validations(NdtReport ndtReport) throws Exception {
         validateNdtReportName(ndtReport.getName());
         validateNdtReportNdtType(ndtReport.getNdtTypeName());
-//        validateNdtReportFile(ndtReport.getFile());
+        validateNdtReportFile(ndtReport.getFile());
 //        validateNdtReportDate(ndtReport.getDate());
+    }
+
+    private void validateNdtReportFile(byte[] file) throws Exception {
+        CommonValidations.validateFileMaxSize(file);
     }
 
     private void validateNdtReportNdtType(String ndtTypeName) throws Exception {

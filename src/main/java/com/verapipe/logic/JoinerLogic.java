@@ -100,7 +100,7 @@ public class JoinerLogic {
 
     private void validations(Joiner joiner) throws Exception {
         validateJoinerTagId(joiner.getTagId());
-//        validateJoinerCertificateFile(joiner.getCertificate());
+        validateJoinerCertificateFile(joiner.getCertificate());
         validateNumberInputNotNegative(joiner.getCertifiedDiameterMinMm());
         validateNumberInputNotNegative(joiner.getCertifiedDiameterMaxMm());
         validateNumberInputNotNegative(joiner.getCertifiedDiameterMinInch());
@@ -110,6 +110,10 @@ public class JoinerLogic {
         validateJoinerBaseMaterialType(joiner.getBaseMaterialTypeName2());
         validateJoinerJointDesign(joiner.getJointDesignName());
         validateJoinerFusionProcess(joiner.getFusionProcessName());
+    }
+
+    private void validateJoinerCertificateFile(byte[] certificate) throws Exception {
+        CommonValidations.validateFileMaxSize(certificate);
     }
 
     private void validateJoinerFusionProcess(String fusionProcessName) throws Exception {

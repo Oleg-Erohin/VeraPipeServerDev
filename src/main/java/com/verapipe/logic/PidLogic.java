@@ -29,7 +29,7 @@ public class PidLogic {
         try {
             pidEntity = this.pidDal.save(pidEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
+//            TODO throw new ApplicationException
             throw new Exception(e.getMessage());
         }
         int addedPidId = pidEntity.getId();
@@ -101,11 +101,15 @@ public class PidLogic {
 
     private void validations(Pid pid) throws Exception {
         validatePidName(pid.getName());
-//        validatePidFile(pid.getFile());
+        validatePidFile(pid.getFile());
         validatePidRevision(pid.getRevision());
 //        validatePidDate(pid.getDate());
 //        validatePidSheets(pid.getSheets());
 //        validatePidComments(pid.getComments());
+    }
+
+    private void validatePidFile(byte[] file) throws Exception {
+        CommonValidations.validateFileMaxSize(file);
     }
 
     private void validatePidRevision(String revision) throws ApplicationException {

@@ -28,7 +28,7 @@ public class IsometricLogic {
         try {
             isometricEntity = this.isometricDal.save(isometricEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
+//            TODO throw new ApplicationException
             throw new Exception(e.getMessage());
         }
         int addedIsometricId = isometricEntity.getId();
@@ -102,13 +102,17 @@ public class IsometricLogic {
         validateIsometricName(isometric.getName());
         validateIsometricPidNames(isometric.getPidNames());
 //        validateIsometricPidSheets(isometric.getPidSheets());
-//        validateIsometricFile(isometric.getFile());
+        validateIsometricFile(isometric.getFile());
         validateIsometricRevision(isometric.getRevision());
 //        validateIsometricDate(isometric.getDate());
 //        validateIsometricSheets(isometric.getSheets());
 //        validateIsometricCoordinatesInPid(isometric.getCoordinatesInPid());
 //        validateIsometricIsApproves(isometric.isApproved());
 //        validateIsometricComments(isometric.getComments());
+    }
+
+    private void validateIsometricFile(byte[] file) throws Exception {
+        CommonValidations.validateFileMaxSize(file);
     }
 
     private void validateIsometricPidNames(List<String> pidNames) throws Exception {
