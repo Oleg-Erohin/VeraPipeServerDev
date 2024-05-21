@@ -1,8 +1,8 @@
 package com.verapipe.dal;
 
 import com.verapipe.entities.JoinerEntity;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface IJoinerDal extends CrudRepository<JoinerEntity,Integer> {
+public interface IJoinerDal extends PagingAndSortingRepository<JoinerEntity,Integer> {
 
 }
