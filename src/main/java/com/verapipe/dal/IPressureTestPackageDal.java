@@ -1,8 +1,8 @@
 package com.verapipe.dal;
 
 import com.verapipe.entities.PressureTestPackageEntity;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface IPressureTestPackageDal extends CrudRepository<PressureTestPackageEntity,Integer> {
+public interface IPressureTestPackageDal extends PagingAndSortingRepository<PressureTestPackageEntity,Integer> {
 
 }
