@@ -11,11 +11,11 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class App {
     public static void main(String[] args) throws ApplicationException {
         SpringApplication.run(App.class, args);
-        initializeDataInDb();
+//        initializeDataInDb();
     }
 
     private static void initializeDataInDb() throws ApplicationException {
         PipeWallThicknessLogic pipeWallThicknessLogic = new PipeWallThicknessLogic();
-//        pipeWallThicknessLogic.initializePipeWallThicknessTable();
+        pipeWallThicknessLogic.initializePipeWallThicknessTable();
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 @Service
@@ -19,23 +20,27 @@ public class PipeWallThicknessLogic {
 
     @PostConstruct
     public void initializePipeWallThicknessTable() throws ApplicationException {
-        try {
-            loadCsvData();
-        } catch (Exception e) {
-            throw new ApplicationException(ErrorType.GENERAL_ERROR, "An error occurred while trying to load data to the pipe wall thickness table", e);
+        Iterable<PipeWallThicknessEntity> pipeWallThicknessEntities = this.pipeWallThicknessDal.findAll();
+        if(!pipeWallThicknessEntities.iterator().hasNext()){
+            try {
+                loadCsvData();
+            } catch (Exception e) {
+                throw new ApplicationException(ErrorType.GENERAL_ERROR, "An error occurred while trying to load data to the pipe wall thickness table", e);
+            }
         }
     }
 
     public void loadCsvData() throws Exception {
-//        try (CSVReader reader = new CSVReader(new FileReader("src/main/java/com/verapipe/utils/PipeWallThicknessTable.csv"))) {
-        try (CSVReader reader = new CSVReader(new InputStreamReader(getClass().getResourceAsStream("/PipeWallThicknessTable.csv")))) {
+        InputStream inputStream = getClass().getResourceAsStream("/PipeWallThicknessData.csv");
+
+        try (CSVReader reader = new CSVReader(new InputStreamReader(inputStream))) {
             String[] line;
             reader.readNext(); // skip header
             while ((line = reader.readNext()) != null) {
                 PipeWallThicknessEntity entity = new PipeWallThicknessEntity();
                 entity.setNominalDiameterInch(line[0]);
-                entity.setOdInch(Float.parseFloat(line[1]));
-                entity.setOdMm(Float.parseFloat(line[2]));
+                entity.setOdInch(parseNullableFloat(line[1]));
+                entity.setOdMm(parseNullableFloat(line[2]));
                 entity.setSch10(parseNullableFloat(line[3]));
                 entity.setSch20(parseNullableFloat(line[4]));
                 entity.setSch30(parseNullableFloat(line[5]));
@@ -60,6 +65,9 @@ public class PipeWallThicknessLogic {
     }
 
     private Float parseNullableFloat(String value) {
-        return (value == null || value.isEmpty()) ? null : Float.parseFloat(value);
+        if (value == null || value.isEmpty()){
+            return null;
+        }
+        return Float.valueOf(value);
     }
 }

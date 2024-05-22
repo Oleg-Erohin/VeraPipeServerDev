@@ -11,43 +11,43 @@ public class PipeWallThicknessEntity {
     @Column(name = "nominal_diameter_inch", unique = true, nullable = false)
     private String nominalDiameterInch;
     @Column(name = "od_inch", unique = false, nullable = false)
-    private float odInch;
+    private Float odInch;
     @Column(name = "od_mm", unique = false, nullable = false)
-    private float odMm;
+    private Float odMm;
     @Column(name = "sch_10", unique = false, nullable = true)
-    private float sch10;
+    private Float sch10;
     @Column(name = "sch_20", unique = false, nullable = true)
-    private float sch20;
+    private Float sch20;
     @Column(name = "sch_30", unique = false, nullable = true)
-    private float sch30;
+    private Float sch30;
     @Column(name = "sch_std", unique = false, nullable = true)
-    private float schStd;
+    private Float schStd;
     @Column(name = "sch_40", unique = false, nullable = true)
-    private float sch40;
+    private Float sch40;
     @Column(name = "sch_60", unique = false, nullable = true)
-    private float sch60;
+    private Float sch60;
     @Column(name = "sch_xs", unique = false, nullable = true)
-    private float schXs;
+    private Float schXs;
     @Column(name = "sch_80", unique = false, nullable = true)
-    private float sch80;
+    private Float sch80;
     @Column(name = "sch_100", unique = false, nullable = true)
-    private float sch100;
+    private Float sch100;
     @Column(name = "sch_120", unique = false, nullable = true)
-    private float sch120;
+    private Float sch120;
     @Column(name = "sch_140", unique = false, nullable = true)
-    private float sch140;
+    private Float sch140;
     @Column(name = "sch_160", unique = false, nullable = true)
-    private float sch160;
+    private Float sch160;
     @Column(name = "sch_XXS", unique = false, nullable = true)
-    private float schXxs;
+    private Float schXxs;
     @Column(name = "sch_5S", unique = false, nullable = true)
-    private float sch5S;
+    private Float sch5S;
     @Column(name = "sch_10S", unique = false, nullable = true)
-    private float sch10S;
+    private Float sch10S;
     @Column(name = "sch_40S", unique = false, nullable = true)
-    private float sch40S;
+    private Float sch40S;
     @Column(name = "sch_80S", unique = false, nullable = true)
-    private float sch80S;
+    private Float sch80S;
 
     public PipeWallThicknessEntity() {
     }
@@ -68,155 +68,155 @@ public class PipeWallThicknessEntity {
         this.nominalDiameterInch = nominalDiameterInch;
     }
 
-    public float getOdInch() {
+    public Float getOdInch() {
         return odInch;
     }
 
-    public void setOdInch(float odInch) {
+    public void setOdInch(Float odInch) {
         this.odInch = odInch;
     }
 
-    public float getOdMm() {
+    public Float getOdMm() {
         return odMm;
     }
 
-    public void setOdMm(float odMm) {
+    public void setOdMm(Float odMm) {
         this.odMm = odMm;
     }
 
-    public float getSch10() {
+    public Float getSch10() {
         return sch10;
     }
 
-    public void setSch10(float sch10) {
+    public void setSch10(Float sch10) {
         this.sch10 = sch10;
     }
 
-    public float getSch20() {
+    public Float getSch20() {
         return sch20;
     }
 
-    public void setSch20(float sch20) {
+    public void setSch20(Float sch20) {
         this.sch20 = sch20;
     }
 
-    public float getSch30() {
+    public Float getSch30() {
         return sch30;
     }
 
-    public void setSch30(float sch30) {
+    public void setSch30(Float sch30) {
         this.sch30 = sch30;
     }
 
-    public float getSchStd() {
+    public Float getSchStd() {
         return schStd;
     }
 
-    public void setSchStd(float schStd) {
+    public void setSchStd(Float schStd) {
         this.schStd = schStd;
     }
 
-    public float getSch40() {
+    public Float getSch40() {
         return sch40;
     }
 
-    public void setSch40(float sch40) {
+    public void setSch40(Float sch40) {
         this.sch40 = sch40;
     }
 
-    public float getSch60() {
+    public Float getSch60() {
         return sch60;
     }
 
-    public void setSch60(float sch60) {
+    public void setSch60(Float sch60) {
         this.sch60 = sch60;
     }
 
-    public float getSchXs() {
+    public Float getSchXs() {
         return schXs;
     }
 
-    public void setSchXs(float schXs) {
+    public void setSchXs(Float schXs) {
         this.schXs = schXs;
     }
 
-    public float getSch80() {
+    public Float getSch80() {
         return sch80;
     }
 
-    public void setSch80(float sch80) {
+    public void setSch80(Float sch80) {
         this.sch80 = sch80;
     }
 
-    public float getSch100() {
+    public Float getSch100() {
         return sch100;
     }
 
-    public void setSch100(float sch100) {
+    public void setSch100(Float sch100) {
         this.sch100 = sch100;
     }
 
-    public float getSch120() {
+    public Float getSch120() {
         return sch120;
     }
 
-    public void setSch120(float sch120) {
+    public void setSch120(Float sch120) {
         this.sch120 = sch120;
     }
 
-    public float getSch140() {
+    public Float getSch140() {
         return sch140;
     }
 
-    public void setSch140(float sch140) {
+    public void setSch140(Float sch140) {
         this.sch140 = sch140;
     }
 
-    public float getSch160() {
+    public Float getSch160() {
         return sch160;
     }
 
-    public void setSch160(float sch160) {
+    public void setSch160(Float sch160) {
         this.sch160 = sch160;
     }
 
-    public float getSchXxs() {
+    public Float getSchXxs() {
         return schXxs;
     }
 
-    public void setSchXxs(float schXxs) {
+    public void setSchXxs(Float schXxs) {
         this.schXxs = schXxs;
     }
 
-    public float getSch5S() {
+    public Float getSch5S() {
         return sch5S;
     }
 
-    public void setSch5S(float sch5S) {
+    public void setSch5S(Float sch5S) {
         this.sch5S = sch5S;
     }
 
-    public float getSch10S() {
+    public Float getSch10S() {
         return sch10S;
     }
 
-    public void setSch10S(float sch10S) {
+    public void setSch10S(Float sch10S) {
         this.sch10S = sch10S;
     }
 
-    public float getSch40S() {
+    public Float getSch40S() {
         return sch40S;
     }
 
-    public void setSch40S(float sch40S) {
+    public void setSch40S(Float sch40S) {
         this.sch40S = sch40S;
     }
 
-    public float getSch80S() {
+    public Float getSch80S() {
         return sch80S;
     }
 
-    public void setSch80S(float sch80S) {
+    public void setSch80S(Float sch80S) {
         this.sch80S = sch80S;
     }
 }
