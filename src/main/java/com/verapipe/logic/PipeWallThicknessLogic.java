@@ -15,8 +15,12 @@ import java.io.InputStreamReader;
 @Service
 public class PipeWallThicknessLogic {
 
-    @Autowired
     private IPipeWallThicknessDal pipeWallThicknessDal;
+
+    @Autowired
+    public PipeWallThicknessLogic(IPipeWallThicknessDal pipeWallThicknessDal) {
+        this.pipeWallThicknessDal = pipeWallThicknessDal;
+    }
 
     @PostConstruct
     public void initializePipeWallThicknessTable() throws ApplicationException {
