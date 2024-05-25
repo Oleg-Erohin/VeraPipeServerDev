@@ -4,6 +4,7 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.IPidDal;
 import com.verapipe.dto.Pid;
 import com.verapipe.entities.PidEntity;
+import com.verapipe.enums.FileTypes;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -103,12 +105,18 @@ public class PidLogic {
         validatePidName(pid.getName());
         validatePidFile(pid.getFile());
         validatePidRevision(pid.getRevision());
-//        validatePidDate(pid.getDate());
+        validatePidDate(pid.getDate());
 //        validatePidSheets(pid.getSheets());
 //        validatePidComments(pid.getComments());
     }
 
+    private void validatePidDate(Date date) throws Exception {
+        CommonValidations.validateDateAndTimeIsNotLaterThanCurrentDateAndTime(date);
+
+    }
+
     private void validatePidFile(byte[] file) throws Exception {
+        CommonValidations.validateFileType(file, FileTypes.PDF);
         CommonValidations.validateFileMaxSize(file);
     }
 

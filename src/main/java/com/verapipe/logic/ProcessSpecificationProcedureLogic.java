@@ -6,6 +6,7 @@ import com.verapipe.dto.ProcessSpecificationProcedure;
 import com.verapipe.dto.StandardCode;
 import com.verapipe.entities.ProcessSpecificationProcedureEntity;
 import com.verapipe.enums.ErrorType;
+import com.verapipe.enums.FileTypes;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,10 +127,12 @@ public class ProcessSpecificationProcedureLogic {
     }
 
     private void validateProcessSpecificationProcedureQualificationRecordFile(byte[] processQualificationRecordFile) throws Exception {
+        CommonValidations.validateFileType(processQualificationRecordFile, FileTypes.PDF);
         CommonValidations.validateFileMaxSize(processQualificationRecordFile);
     }
 
     private void validateProcessSpecificationProcedureFile(byte[] procedureFile) throws Exception {
+        CommonValidations.validateFileType(procedureFile, FileTypes.PDF);
         CommonValidations.validateFileMaxSize(procedureFile);
     }
 

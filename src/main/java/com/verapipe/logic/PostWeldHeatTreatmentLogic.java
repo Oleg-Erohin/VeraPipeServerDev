@@ -4,12 +4,14 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.IPostWeldHeatTreatmentDal;
 import com.verapipe.dto.PostWeldHeatTreatment;
 import com.verapipe.entities.PostWeldHeatTreatmentEntity;
+import com.verapipe.enums.FileTypes;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -101,10 +103,15 @@ public class PostWeldHeatTreatmentLogic {
         validatePostWeldHeatTreatmentName(postWeldHeatTreatment.getName());
         validatePostWeldHeatTreatmentProcessSpecificationProcedure(postWeldHeatTreatment.getProcessSpecificationProcedureName());
         validatePostWeldHeatTreatmentFile(postWeldHeatTreatment.getFile());
-//        validatePostWeldHeatTreatmentDate(postWeldHeatTreatment.getDate());
+        validatePostWeldHeatTreatmentDate(postWeldHeatTreatment.getDate());
+    }
+
+    private void validatePostWeldHeatTreatmentDate(Date date) throws Exception {
+        CommonValidations.validateDateAndTimeIsNotLaterThanCurrentDateAndTime(date);
     }
 
     private void validatePostWeldHeatTreatmentFile(byte[] file) throws Exception {
+        CommonValidations.validateFileType(file, FileTypes.PDF);
         CommonValidations.validateFileMaxSize(file);
     }
 

@@ -4,12 +4,14 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.IPressureTestPackageDal;
 import com.verapipe.dto.PressureTestPackage;
 import com.verapipe.entities.PressureTestPackageEntity;
+import com.verapipe.enums.FileTypes;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -103,10 +105,15 @@ public class PressureTestPackageLogic {
         validatePressureTestPackageIsometrics(pressureTestPackage.getIsometricNames());
 //        validatePressureTestPackageCoordinatesInPids(pressureTestPackage.getCoordinatesInPidsList());
         validatePressureTestPackageReportFile(pressureTestPackage.getTestReport());
-//        validatePressureTestPackageDate(pressureTestPackage.getDate());
+        validatePressureTestPackageDate(pressureTestPackage.getDate());
+    }
+
+    private void validatePressureTestPackageDate(Date date) throws Exception {
+        CommonValidations.validateDateAndTimeIsNotLaterThanCurrentDateAndTime(date);
     }
 
     private void validatePressureTestPackageReportFile(byte[] testReport) throws Exception {
+        CommonValidations.validateFileType(testReport, FileTypes.PDF);
         CommonValidations.validateFileMaxSize(testReport);
     }
 

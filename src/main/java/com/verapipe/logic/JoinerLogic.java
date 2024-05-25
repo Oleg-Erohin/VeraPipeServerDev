@@ -4,6 +4,7 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.IJoinerDal;
 import com.verapipe.dto.Joiner;
 import com.verapipe.entities.JoinerEntity;
+import com.verapipe.enums.FileTypes;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,6 +114,7 @@ public class JoinerLogic {
     }
 
     private void validateJoinerCertificateFile(byte[] certificate) throws Exception {
+        CommonValidations.validateFileType(certificate, FileTypes.PDF);
         CommonValidations.validateFileMaxSize(certificate);
     }
 

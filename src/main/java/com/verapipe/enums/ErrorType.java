@@ -23,7 +23,9 @@ public enum ErrorType {
     POST_WELD_HEAT_TREATMENT_DOES_NOT_EXIST(818, "The post weld heat treatment does not exist in existing post weld heat treatments", false),
     TOO_MANY_JOINER_TAGS(819, "There are too many joiners in the joiners list for this joint", false),
     JOINER_DOES_NOT_EXIST(820, "The joiner does not exist in existing joiners", false),
-    FILE_SIZE_EXCEED_MAX_SIZE(821, "The file size exceed the max size of " + Consts.bytesIn20MB /1048576 + "MB",false);
+    FILE_SIZE_EXCEED_MAX_SIZE(821, "The file size exceed the max size of " + Consts.bytesIn20MB /1048576 + "MB",false),
+    DATE_AND_TIME_IS_LATER_THAN_CURRENT_DATE_AND_TIME(822, "The date is later than today, change date for today or earlier", false),
+    FILE_TYPE_IS_NOT_ALLOW(823, "The file type is not allow", false);
 
 
     private int errorNum;

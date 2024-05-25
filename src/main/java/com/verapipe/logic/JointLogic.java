@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -127,7 +128,7 @@ public class JointLogic {
         validateJointFillerMaterialHeatNum(joint.getFillerMaterialHeatNum2());
         validateJointProcessSpecificationProcedure(joint.getProcessSpecificationProcedureName());
         validateJointJoinerTagIds(joint.getJoinersTagIdList());
-//        validateJointDate(joint.getDate());
+        validateJointDate(joint.getDate());
 //        validateJointIsFitUpDone(joint.isFitUpDone());
 //        validateJointIsVisualInspectionDone(joint.isVisualInspectionDone());
         validateJointNdtReport(joint.getNdtReportName());
@@ -135,6 +136,10 @@ public class JointLogic {
         validateJointPreHeat(joint.getPreheatName());
         validateJointPostWeldHeatTreatment(joint.getPostWeldHeatTreatmentName());
 //        validateJointComments(joint.getComments());
+    }
+
+    private void validateJointDate(Date date) throws Exception {
+        CommonValidations.validateDateAndTimeIsNotLaterThanCurrentDateAndTime(date);
     }
 
     private void validateJointJoinerTagIds(List<String> joinersTagIdList) throws Exception {

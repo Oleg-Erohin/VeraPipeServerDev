@@ -4,12 +4,14 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.IPreheatDal;
 import com.verapipe.dto.Preheat;
 import com.verapipe.entities.PreheatEntity;
+import com.verapipe.enums.FileTypes;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -101,10 +103,15 @@ public class PreheatLogic {
         validatePreheatName(preheat.getName());
         validatePreheatProcessSpecificationProcedure(preheat.getProcessSpecificationProcedureName());
         validatePreheatFile(preheat.getFile());
-//        validatePreheatDate(preheat.getDate());
+        validatePreheatDate(preheat.getDate());
+    }
+
+    private void validatePreheatDate(Date date) throws Exception {
+        CommonValidations.validateDateAndTimeIsNotLaterThanCurrentDateAndTime(date);
     }
 
     private void validatePreheatFile(byte[] file) throws Exception {
+        CommonValidations.validateFileType(file, FileTypes.PDF);
         CommonValidations.validateFileMaxSize(file);
     }
 

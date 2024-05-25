@@ -4,6 +4,7 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.IBaseMaterialCertificateDal;
 import com.verapipe.dto.BaseMaterialCertificate;
 import com.verapipe.entities.BaseMaterialCertificateEntity;
+import com.verapipe.enums.FileTypes;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,6 +107,7 @@ public class BaseMaterialCertificateLogic {
     }
 
     private void validateBaseMaterialCertificateFile(byte[] file) throws Exception {
+        CommonValidations.validateFileType(file, FileTypes.PDF);
         CommonValidations.validateFileMaxSize(file);
     }
 

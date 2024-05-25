@@ -4,12 +4,14 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.IIsometricDal;
 import com.verapipe.dto.Isometric;
 import com.verapipe.entities.IsometricEntity;
+import com.verapipe.enums.FileTypes;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -104,14 +106,19 @@ public class IsometricLogic {
 //        validateIsometricPidSheets(isometric.getPidSheets());
         validateIsometricFile(isometric.getFile());
         validateIsometricRevision(isometric.getRevision());
-//        validateIsometricDate(isometric.getDate());
+        validateIsometricDate(isometric.getDate());
 //        validateIsometricSheets(isometric.getSheets());
 //        validateIsometricCoordinatesInPid(isometric.getCoordinatesInPid());
 //        validateIsometricIsApproves(isometric.isApproved());
 //        validateIsometricComments(isometric.getComments());
     }
 
+    private void validateIsometricDate(Date date) throws Exception {
+        CommonValidations.validateDateAndTimeIsNotLaterThanCurrentDateAndTime(date);
+    }
+
     private void validateIsometricFile(byte[] file) throws Exception {
+        CommonValidations.validateFileType(file, FileTypes.PDF);
         CommonValidations.validateFileMaxSize(file);
     }
 
