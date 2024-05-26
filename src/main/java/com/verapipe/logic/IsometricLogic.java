@@ -18,10 +18,12 @@ import java.util.Optional;
 @Service
 public class IsometricLogic {
     private IIsometricDal isometricDal;
+    private PidLogic pidLogic;
 
     @Autowired
-    public IsometricLogic(IIsometricDal isometricDal) {
+    public IsometricLogic(IIsometricDal isometricDal, PidLogic pidLogic) {
         this.isometricDal = isometricDal;
+        this.pidLogic = pidLogic;
     }
 
     public int add(Isometric isometric) throws Exception {
@@ -103,7 +105,7 @@ public class IsometricLogic {
     private void validations(Isometric isometric) throws Exception {
         validateIsometricName(isometric.getName());
         validateIsometricPidNames(isometric.getPidNames());
-//        validateIsometricPidSheets(isometric.getPidSheets());
+//        validateIsometricPidSheets(isometric.getPidNames(), isometric.getPidSheets());
         validateIsometricFile(isometric.getFile());
         validateIsometricRevision(isometric.getRevision());
         validateIsometricDate(isometric.getDate());
@@ -116,6 +118,10 @@ public class IsometricLogic {
     private void validateIsometricDate(Date date) throws Exception {
         CommonValidations.validateDateIsNotLaterThanCurrentDate(date);
     }
+
+//    private void validateIsometricPidSheets(List<String> pidNames, List<Integer> pidSheets) {
+//
+//    }
 
     private void validateIsometricFile(byte[] file) throws Exception {
         CommonValidations.validateFileType(file, FileTypes.PDF);

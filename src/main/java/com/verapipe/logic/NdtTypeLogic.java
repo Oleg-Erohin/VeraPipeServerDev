@@ -7,6 +7,7 @@ import com.verapipe.entities.NdtTypeEntity;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -80,6 +81,7 @@ public class NdtTypeLogic {
         return ndtType;
     }
 
+    @Cacheable(cacheNames = "ndtTypeCache", key = "#root.methodName")
     public List<NdtType> getAll() throws Exception {
         Iterable<NdtTypeEntity> ndtTypeEntities = this.ndtTypeDal.findAll();
         List<NdtType> ndtTypes = new ArrayList<>();

@@ -1,7 +1,7 @@
 package com.verapipe.dal;
 
 import com.verapipe.entities.PipeWallThicknessEntity;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface IPipeWallThicknessDal extends CrudRepository<PipeWallThicknessEntity, Integer> {
+public interface IPipeWallThicknessDal extends PagingAndSortingRepository<PipeWallThicknessEntity, Integer> {
 }

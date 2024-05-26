@@ -22,8 +22,9 @@ public class CacheConfig {
         cacheManager.setCacheNames(Arrays.asList("fillerMaterialTypesCache"));
         cacheManager.setCacheNames(Arrays.asList("jointDesignsCache"));
         cacheManager.setCacheNames(Arrays.asList("fusionProcessesCache"));
+        cacheManager.setCacheNames(Arrays.asList("ndtTypeCache"));
+        cacheManager.setCacheNames(Arrays.asList("standardCodeCache"));
         cacheManager.setCacheNames(Arrays.asList("processSpecificationProceduresCache"));
-        cacheManager.setCacheNames(Arrays.asList("PidsCache"));
 
         return cacheManager;
     }

@@ -8,7 +8,6 @@ import com.verapipe.enums.FileTypes;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -83,7 +82,6 @@ public class PidLogic {
         return pid;
     }
 
-    @Cacheable(cacheNames = "PidsCache", key = "#root.methodName")
     public List<Pid> getAll() throws Exception {
         Iterable<PidEntity> pidEntities = this.pidDal.findAll();
         List<Pid> pids = new ArrayList<>();

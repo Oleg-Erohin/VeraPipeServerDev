@@ -7,6 +7,7 @@ import com.verapipe.entities.StandardCodeEntity;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -80,6 +81,7 @@ public class StandardCodeLogic {
         return standardCode;
     }
 
+    @Cacheable(cacheNames = "standardCodeCache", key = "#root.methodName")
     public List<StandardCode> getAll() throws Exception {
         Iterable<StandardCodeEntity> standardCodeEntities = this.standardCodeDal.findAll();
         List<StandardCode> standardCodes = new ArrayList<>();
