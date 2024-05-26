@@ -145,7 +145,7 @@ public class CommonValidations {
         }
     }
 
-    public static void validateDateAndTimeIsNotLaterThanCurrentDateAndTime(Date date) throws Exception {
+    public static void validateDateIsNotLaterThanCurrentDate(Date date) throws Exception {
         Date currentDate = new Date();
         if (date.after(currentDate)){
             throw new ApplicationException(ErrorType.DATE_AND_TIME_IS_LATER_THAN_CURRENT_DATE_AND_TIME);

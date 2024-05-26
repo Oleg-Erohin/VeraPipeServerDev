@@ -114,7 +114,7 @@ public class IsometricLogic {
     }
 
     private void validateIsometricDate(Date date) throws Exception {
-        CommonValidations.validateDateAndTimeIsNotLaterThanCurrentDateAndTime(date);
+        CommonValidations.validateDateIsNotLaterThanCurrentDate(date);
     }
 
     private void validateIsometricFile(byte[] file) throws Exception {

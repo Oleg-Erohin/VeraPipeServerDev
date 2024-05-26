@@ -139,7 +139,7 @@ public class JointLogic {
     }
 
     private void validateJointDate(Date date) throws Exception {
-        CommonValidations.validateDateAndTimeIsNotLaterThanCurrentDateAndTime(date);
+        CommonValidations.validateDateIsNotLaterThanCurrentDate(date);
     }
 
     private void validateJointJoinerTagIds(List<String> joinersTagIdList) throws Exception {

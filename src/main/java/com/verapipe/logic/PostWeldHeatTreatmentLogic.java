@@ -107,7 +107,7 @@ public class PostWeldHeatTreatmentLogic {
     }
 
     private void validatePostWeldHeatTreatmentDate(Date date) throws Exception {
-        CommonValidations.validateDateAndTimeIsNotLaterThanCurrentDateAndTime(date);
+        CommonValidations.validateDateIsNotLaterThanCurrentDate(date);
     }
 
     private void validatePostWeldHeatTreatmentFile(byte[] file) throws Exception {

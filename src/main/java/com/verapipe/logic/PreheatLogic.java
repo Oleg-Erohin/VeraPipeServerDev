@@ -107,7 +107,7 @@ public class PreheatLogic {
     }
 
     private void validatePreheatDate(Date date) throws Exception {
-        CommonValidations.validateDateAndTimeIsNotLaterThanCurrentDateAndTime(date);
+        CommonValidations.validateDateIsNotLaterThanCurrentDate(date);
     }
 
     private void validatePreheatFile(byte[] file) throws Exception {

@@ -109,7 +109,7 @@ public class PressureTestPackageLogic {
     }
 
     private void validatePressureTestPackageDate(Date date) throws Exception {
-        CommonValidations.validateDateAndTimeIsNotLaterThanCurrentDateAndTime(date);
+        CommonValidations.validateDateIsNotLaterThanCurrentDate(date);
     }
 
     private void validatePressureTestPackageReportFile(byte[] testReport) throws Exception {

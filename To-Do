@@ -1,7 +1,5 @@
 Important:
 - Add validations to logics - Oleg + Aviad
-- Change all dals to PagingAndSortingRepository - Aviad
-- Find how to validate file type - Aviad
 - Add cache to "get all" functions of basic parameters - Oleg
 - Find out how to create a full list with fitting thickness
 
@@ -19,3 +17,5 @@ Done:
 - Create Dal, Logic, Controller to all Entities - Aviad
 - Add error handling (ErrorBean DTO, ErrorType Enum, Error handler class, ApplicationError class)
 - Read about Cascade types and orphanRemoval = true to determine each cascade - Oleg + Aviad
+- Find how to validate file type - Aviad
+- Change all dals to PagingAndSortingRepository - Aviad

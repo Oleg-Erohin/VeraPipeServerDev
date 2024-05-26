@@ -112,7 +112,7 @@ public class NdtReportLogic {
     }
 
     private void validateNdtReportDate(Date date) throws Exception {
-        CommonValidations.validateDateAndTimeIsNotLaterThanCurrentDateAndTime(date);
+        CommonValidations.validateDateIsNotLaterThanCurrentDate(date);
     }
 
     private void validateNdtReportFile(byte[] file) throws Exception {

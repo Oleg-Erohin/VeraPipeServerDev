@@ -111,7 +111,7 @@ public class PidLogic {
     }
 
     private void validatePidDate(Date date) throws Exception {
-        CommonValidations.validateDateAndTimeIsNotLaterThanCurrentDateAndTime(date);
+        CommonValidations.validateDateIsNotLaterThanCurrentDate(date);
 
     }
 
