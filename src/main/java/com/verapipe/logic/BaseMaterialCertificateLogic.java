@@ -101,7 +101,9 @@ public class BaseMaterialCertificateLogic {
 
     private void validations(BaseMaterialCertificate baseMaterialCertificate) throws Exception {
         validateBaseMaterialCertificateHeatOrLotNum(baseMaterialCertificate.getHeatNum());
-        validateBaseMaterialCertificateHeatOrLotNum(baseMaterialCertificate.getLotNum());
+        if (baseMaterialCertificate.getLotNum() != null) {
+            validateBaseMaterialCertificateHeatOrLotNum(baseMaterialCertificate.getLotNum());
+        }
         validateBaseMaterialCertificateFile(baseMaterialCertificate.getFile());
         validateBaseMaterialCertificateMaterialTypeName(baseMaterialCertificate.getMaterialTypeName());
     }

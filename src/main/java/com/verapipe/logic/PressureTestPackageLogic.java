@@ -101,11 +101,21 @@ public class PressureTestPackageLogic {
 
     private void validations(PressureTestPackage pressureTestPackage) throws Exception {
         validatePressureTestPackageName(pressureTestPackage.getName());
-        validatePressureTestPackagePids(pressureTestPackage.getPidNames());
-        validatePressureTestPackageIsometrics(pressureTestPackage.getIsometricNames());
+        if (pressureTestPackage.getPidNames() != null) {
+            validatePressureTestPackagePids(pressureTestPackage.getPidNames());
+        }
+        if (pressureTestPackage.getIsometricNames() != null) {
+            validatePressureTestPackageIsometrics(pressureTestPackage.getIsometricNames());
+        }
+        if (pressureTestPackage.getCoordinatesInPidsList() != null) {
 //        validatePressureTestPackageCoordinatesInPids(pressureTestPackage.getCoordinatesInPidsList());
-        validatePressureTestPackageReportFile(pressureTestPackage.getTestReport());
-        validatePressureTestPackageDate(pressureTestPackage.getDate());
+        }
+        if (pressureTestPackage.getTestReport() != null) {
+            validatePressureTestPackageReportFile(pressureTestPackage.getTestReport());
+        }
+        if (pressureTestPackage.getDate() != null) {
+            validatePressureTestPackageDate(pressureTestPackage.getDate());
+        }
     }
 
     private void validatePressureTestPackageDate(Date date) throws Exception {

@@ -105,7 +105,9 @@ public class PidLogic {
         validatePidRevision(pid.getRevision());
         validatePidDate(pid.getDate());
 //        validatePidSheets(pid.getSheets());
+        if (pid.getComments() != null) {
 //        validatePidComments(pid.getComments());
+        }
     }
 
     private void validatePidDate(Date date) throws Exception {

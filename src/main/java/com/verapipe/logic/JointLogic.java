@@ -114,28 +114,70 @@ public class JointLogic {
         validateJointPid(joint.getPidName());
         validateJointIsometric(joint.getIsometricName());
 //        validateJointSheetOnIsometric(joint.getSheetOnIsometric());
-        validateNumberInputNotNegative(joint.getDiameterMm());
-        validateNumberInputNotNegative(joint.getDiameterInch());
+        if (joint.getDiameterMm() != null) {
+            validateNumberInputNotNegative(joint.getDiameterMm());
+
+        }
+        if (joint.getDiameterInch() != null) {
+            validateNumberInputNotNegative(joint.getDiameterInch());
+
+        }
         validateJointFittingDescription(joint.getFittingDescription1());
-        validateJointBaseMaterialType(joint.getBaseMaterialTypeName1());
-        validateJointBaseMaterialHeatNum(joint.getBaseMaterialHeatNum1());
+        if (joint.getBaseMaterialTypeName1() != null) {
+            validateJointBaseMaterialType(joint.getBaseMaterialTypeName1());
+        }
+        if (joint.getBaseMaterialHeatNum1() != null) {
+            validateJointBaseMaterialHeatNum(joint.getBaseMaterialHeatNum1());
+        }
         validateJointFittingDescription(joint.getFittingDescription2());
-        validateJointBaseMaterialType(joint.getBaseMaterialTypeName2());
-        validateJointBaseMaterialHeatNum(joint.getBaseMaterialHeatNum2());
-        validateJointFillerMaterialType(joint.getFillerMaterialTypeName1());
-        validateJointFillerMaterialHeatNum(joint.getFillerMaterialHeatNum1());
-        validateJointFillerMaterialType(joint.getFillerMaterialTypeName2());
-        validateJointFillerMaterialHeatNum(joint.getFillerMaterialHeatNum2());
-        validateJointProcessSpecificationProcedure(joint.getProcessSpecificationProcedureName());
-        validateJointJoinerTagIds(joint.getJoinersTagIdList());
-        validateJointDate(joint.getDate());
+        if (joint.getBaseMaterialTypeName2() != null) {
+            validateJointBaseMaterialType(joint.getBaseMaterialTypeName2());
+        }
+        if (joint.getBaseMaterialHeatNum2() != null) {
+            validateJointBaseMaterialHeatNum(joint.getBaseMaterialHeatNum2());
+        }
+        if (joint.getFillerMaterialTypeName1() != null) {
+            validateJointFillerMaterialType(joint.getFillerMaterialTypeName1());
+        }
+        if (joint.getFillerMaterialHeatNum1() != null) {
+            validateJointFillerMaterialHeatNum(joint.getFillerMaterialHeatNum1());
+        }
+        if (joint.getFillerMaterialTypeName2() != null) {
+            validateJointFillerMaterialType(joint.getFillerMaterialTypeName2());
+        }
+        if (joint.getFillerMaterialHeatNum2() != null) {
+            validateJointFillerMaterialHeatNum(joint.getFillerMaterialHeatNum2());
+        }
+        if (joint.getProcessSpecificationProcedureName() != null) {
+            validateJointProcessSpecificationProcedure(joint.getProcessSpecificationProcedureName());
+        }
+        if (joint.getJoinersTagIdList() != null) {
+            validateJointJoinerTagIds(joint.getJoinersTagIdList());
+        }
+        if (joint.getDate() != null) {
+            validateJointDate(joint.getDate());
+        }
+        if (joint.isFitUpDone()) {
 //        validateJointIsFitUpDone(joint.isFitUpDone());
+        }
+        if (joint.isVisualInspectionDone()) {
 //        validateJointIsVisualInspectionDone(joint.isVisualInspectionDone());
-        validateJointNdtReport(joint.getNdtReportName());
+        }
+        if (joint.getNdtReportName() != null) {
+            validateJointNdtReport(joint.getNdtReportName());
+        }
+        if (joint.isNdtPassed()) {
 //        validateJointIsNdtPassed(joint.isNdtPassed());
-        validateJointPreHeat(joint.getPreheatName());
-        validateJointPostWeldHeatTreatment(joint.getPostWeldHeatTreatmentName());
+        }
+        if (joint.getPreheatName() != null) {
+            validateJointPreHeat(joint.getPreheatName());
+        }
+        if (joint.getPostWeldHeatTreatmentName() != null) {
+            validateJointPostWeldHeatTreatment(joint.getPostWeldHeatTreatmentName());
+        }
+        if (joint.getComments() != null) {
 //        validateJointComments(joint.getComments());
+        }
     }
 
     private void validateJointDate(Date date) throws Exception {
@@ -155,8 +197,8 @@ public class JointLogic {
     private void validateIsExistInJoinerTagIds(String joinerTagId) throws Exception {
         List<Joiner> joiners = joinerLogic.getAll();
 
-        for (Joiner joiner : joiners){
-            if (joiner.getTagId().equals(joinerTagId)){
+        for (Joiner joiner : joiners) {
+            if (joiner.getTagId().equals(joinerTagId)) {
                 return;
             }
         }

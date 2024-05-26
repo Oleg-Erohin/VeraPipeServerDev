@@ -104,15 +104,23 @@ public class IsometricLogic {
 
     private void validations(Isometric isometric) throws Exception {
         validateIsometricName(isometric.getName());
-        validateIsometricPidNames(isometric.getPidNames());
+        if (isometric.getPidNames() != null) {
+            validateIsometricPidNames(isometric.getPidNames());
+            if (isometric.getPidSheets() != null) {
 //        validateIsometricPidSheets(isometric.getPidNames(), isometric.getPidSheets());
+            }
+        }
         validateIsometricFile(isometric.getFile());
         validateIsometricRevision(isometric.getRevision());
         validateIsometricDate(isometric.getDate());
 //        validateIsometricSheets(isometric.getSheets());
+        if (isometric.getCoordinatesInPid() != null) {
 //        validateIsometricCoordinatesInPid(isometric.getCoordinatesInPid());
+        }
 //        validateIsometricIsApproves(isometric.isApproved());
+        if (isometric.getComments() != null) {
 //        validateIsometricComments(isometric.getComments());
+        }
     }
 
     private void validateIsometricDate(Date date) throws Exception {

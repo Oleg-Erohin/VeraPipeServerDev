@@ -107,23 +107,39 @@ public class ProcessSpecificationProcedureLogic {
     private void validations(ProcessSpecificationProcedure processSpecificationProcedure) throws Exception {
         validateProcessSpecificationProcedureName(processSpecificationProcedure.getName());
         validateProcessSpecificationProcedureFile(processSpecificationProcedure.getProcedureFile());
-        validateProcessSpecificationProcedureQualificationRecordFile(processSpecificationProcedure.getProcessQualificationRecordFile());
+        if (processSpecificationProcedure.getProcessQualificationRecordFile() != null) {
+            validateProcessSpecificationProcedureQualificationRecordFile(processSpecificationProcedure.getProcessQualificationRecordFile());
+        }
         validateProcessSpecificationProcedureJointDesign(processSpecificationProcedure.getJointDesignName());
         validateProcessSpecificationProcedureBaseMaterial(processSpecificationProcedure.getBaseMaterialName1());
-        validateProcessSpecificationProcedureBaseMaterial(processSpecificationProcedure.getBaseMaterialName2());
+        if (processSpecificationProcedure.getBaseMaterialName2() != null) {
+            validateProcessSpecificationProcedureBaseMaterial(processSpecificationProcedure.getBaseMaterialName2());
+        }
         validateProcessSpecificationProcedureFusionProcess(processSpecificationProcedure.getFusionProcessName());
         validateProcessSpecificationProcedureFillerMaterial(processSpecificationProcedure.getFillerMaterialName1());
-        validateProcessSpecificationProcedureFillerMaterial(processSpecificationProcedure.getFillerMaterialName2());
+        if (processSpecificationProcedure.getFillerMaterialName2() != null) {
+            validateProcessSpecificationProcedureFillerMaterial(processSpecificationProcedure.getFillerMaterialName2());
+        }
         validateProcessSpecificationProcedureStandardCode(processSpecificationProcedure.getStandardCodeName());
 //        validateProcessSpecificationProcedureIsPreheatRequired(processSpecificationProcedure.isPreheatRequired());
 //        validateProcessSpecificationProcedureIsPostWeldHeatTreatmentRequired(processSpecificationProcedure.isPostWeldHeatTreatmentRequired());
-        validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMinMm());
-        validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMaxMm());
-        validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMinInch());
-        validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMaxInch());
+        if (processSpecificationProcedure.getDiameterMinMm() != null) {
+            validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMinMm());
+        }
+        if (processSpecificationProcedure.getDiameterMaxMm() != null) {
+            validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMaxMm());
+        }
+        if (processSpecificationProcedure.getDiameterMinInch() != null) {
+            validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMinInch());
+        }
+        if (processSpecificationProcedure.getDiameterMaxInch() != null) {
+            validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMaxInch());
+        }
 //        validateProcessSpecificationProcedureThicknessUom(processSpecificationProcedure.getThicknessUom());
         validateNumberInputNotNegative(processSpecificationProcedure.getThicknessMinMm());
-        validateNumberInputNotNegative(processSpecificationProcedure.getThicknessMaxMm());
+        if (processSpecificationProcedure.getThicknessMaxMm() != null) {
+            validateNumberInputNotNegative(processSpecificationProcedure.getThicknessMaxMm());
+        }
     }
 
     private void validateProcessSpecificationProcedureQualificationRecordFile(byte[] processQualificationRecordFile) throws Exception {
@@ -137,10 +153,10 @@ public class ProcessSpecificationProcedureLogic {
     }
 
     private void validateProcessSpecificationProcedureStandardCode(String standardCodeName) throws Exception {
-        List<StandardCode> standardCodes =  standardCodeLogic.getAll();
+        List<StandardCode> standardCodes = standardCodeLogic.getAll();
 
-        for (StandardCode standardCode : standardCodes){
-            if (standardCode.getName().equals(standardCodeName)){
+        for (StandardCode standardCode : standardCodes) {
+            if (standardCode.getName().equals(standardCodeName)) {
                 return;
             }
         }

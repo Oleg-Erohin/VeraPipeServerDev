@@ -2,8 +2,6 @@ Important:
 - Add validations to logics - Oleg + Aviad
     - Resolve sheets validations: Sheets should not be list of Integers,
     due to the possibility of several sheets per P&ID, and several P&Ids per isometric - Oleg
-    - For all validations which are "isExist" but not mandatory field - Find
-    alternative to throwing error (if null - return. in not - continue validation) - Oleg
     - Add validations for Set values to not be more than allowed quantity - Aviad
 - To decide Cascade types - Aviad
 - Add exception in all logics (per marked "TODO")
@@ -13,15 +11,17 @@ To Do Later:
 - Change hash function to Entities which are "Set" in other entities - remove files from hashing and possibly other irrelevant data
 - Ensure comments include line breaks
 - Add functions in Dal to retrieve all without files, add cache to the function once without file
+- Add thickness to joint. If imperial - selected from table. If metric - manual input
 
 Done:
-- Should all double variables be "List" or separate items in DTO? (Currently uncertain in Joint) - Resolved Many to Many
+- Should all double variables be "List" or separate items in DTO? (Currently uncertain in Joint) - Resolved Many to Many - Aviad
 - Get list of links (ManyToMany). Oleg to decide "Main" for each - Aviad
 - Modify DTO constructors, per example in entities by Aviad - Oleg
 - Create Dal, Logic, Controller to all Entities - Aviad
-- Add error handling (ErrorBean DTO, ErrorType Enum, Error handler class, ApplicationError class)
+- Add error handling (ErrorBean DTO, ErrorType Enum, Error handler class, ApplicationError class) - Oleg
 - Read about Cascade types and orphanRemoval = true to determine each cascade - Oleg + Aviad
-- Find out how to create a full list with fitting thickness
+- Find out how to create a full list with fitting thickness - Oleg
 - Find how to validate file type - Aviad
 - Change all dals to PagingAndSortingRepository - Aviad
 - Add cache to "get all" functions of basic parameters - Oleg
+- For all validations which are "isExist" but not mandatory field - Find alternative to throwing error (if null - return. in not - continue validation) - Oleg

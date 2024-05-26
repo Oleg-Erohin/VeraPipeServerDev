@@ -102,13 +102,23 @@ public class JoinerLogic {
     private void validations(Joiner joiner) throws Exception {
         validateJoinerTagId(joiner.getTagId());
         validateJoinerCertificateFile(joiner.getCertificate());
-        validateNumberInputNotNegative(joiner.getCertifiedDiameterMinMm());
-        validateNumberInputNotNegative(joiner.getCertifiedDiameterMaxMm());
-        validateNumberInputNotNegative(joiner.getCertifiedDiameterMinInch());
-        validateNumberInputNotNegative(joiner.getCertifiedDiameterMaxInch());
+        if (joiner.getCertifiedDiameterMinMm() != null) {
+            validateNumberInputNotNegative(joiner.getCertifiedDiameterMinMm());
+        }
+        if (joiner.getCertifiedDiameterMaxMm() != null) {
+            validateNumberInputNotNegative(joiner.getCertifiedDiameterMaxMm());
+        }
+        if (joiner.getCertifiedDiameterMinInch() != null) {
+            validateNumberInputNotNegative(joiner.getCertifiedDiameterMinInch());
+        }
+        if (joiner.getCertifiedDiameterMaxInch() != null) {
+            validateNumberInputNotNegative(joiner.getCertifiedDiameterMaxInch());
+        }
         validateNumberInputNotNegative(joiner.getMaxDepositedMaterial());
         validateJoinerBaseMaterialType(joiner.getBaseMaterialTypeName1());
-        validateJoinerBaseMaterialType(joiner.getBaseMaterialTypeName2());
+        if (joiner.getBaseMaterialTypeName2() != null) {
+            validateJoinerBaseMaterialType(joiner.getBaseMaterialTypeName2());
+        }
         validateJoinerJointDesign(joiner.getJointDesignName());
         validateJoinerFusionProcess(joiner.getFusionProcessName());
     }
