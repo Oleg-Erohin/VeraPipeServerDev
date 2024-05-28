@@ -3,6 +3,7 @@ package com.verapipe.logic;
 import com.verapipe.consts.Consts;
 import com.verapipe.dal.IIsometricDal;
 import com.verapipe.dto.Isometric;
+import com.verapipe.dto.Pid;
 import com.verapipe.entities.IsometricEntity;
 import com.verapipe.enums.FileTypes;
 import com.verapipe.exceptions.ApplicationException;
@@ -10,10 +11,7 @@ import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class IsometricLogic {
@@ -107,7 +105,7 @@ public class IsometricLogic {
         if (isometric.getPidNames() != null) {
             validateIsometricPidNames(isometric.getPidNames());
             if (isometric.getPidSheets() != null) {
-//        validateIsometricPidSheets(isometric.getPidNames(), isometric.getPidSheets());
+                validateIsometricPidSheets(isometric.getPidNames(), isometric.getPidSheets());
             }
         }
         validateIsometricFile(isometric.getFile());
@@ -127,9 +125,33 @@ public class IsometricLogic {
         CommonValidations.validateDateIsNotLaterThanCurrentDate(date);
     }
 
-//    private void validateIsometricPidSheets(List<String> pidNames, List<Integer> pidSheets) {
-//
-//    }
+    private void validateIsometricPidSheets(List<String> pidNames, Map<String, List<Integer>> pidSheets) throws Exception {
+        for (String pidName : pidSheets.keySet()) {
+            if (!pidNames.contains(pidName)) {
+//          TODO throw new ApplicationException
+                throw new Exception("Mismatch with reference between P&ID name and sheets");
+            }
+        }
+
+        List<Pid> allPids = pidLogic.getAll();
+        List<Pid> pidsRelatedToCurrentIsometric = new ArrayList<>();
+
+        for (Pid pid : allPids) {
+            if (pidNames.contains(pid.getName())) {
+                pidsRelatedToCurrentIsometric.add(pid);
+            }
+        }
+
+        for (Pid pid : pidsRelatedToCurrentIsometric) {
+            List<Integer> currentSheets = pidSheets.get(pid.getName());
+            for (Integer sheet : currentSheets) {
+                if (sheet < 0 || sheet > pid.getSheets()) {
+//          TODO throw new ApplicationException
+                    throw new Exception("Sheet numbers do not match the sheets of the P&ID");
+                }
+            }
+        }
+    }
 
     private void validateIsometricFile(byte[] file) throws Exception {
         CommonValidations.validateFileType(file, FileTypes.PDF);

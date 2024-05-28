@@ -22,14 +22,16 @@ public class JointLogic {
     private PreheatLogic preheatLogic;
     private PostWeldHeatTreatmentLogic postWeldHeatTreatmentLogic;
     private JoinerLogic joinerLogic;
+    private IsometricLogic isometricLogic;
 
     @Autowired
-    public JointLogic(IJointDal jointDal, NdtReportLogic ndtReportLogic, PreheatLogic preheatLogic, PostWeldHeatTreatmentLogic postWeldHeatTreatmentLogic, JoinerLogic joinerLogic) {
+    public JointLogic(IJointDal jointDal, NdtReportLogic ndtReportLogic, PreheatLogic preheatLogic, PostWeldHeatTreatmentLogic postWeldHeatTreatmentLogic, JoinerLogic joinerLogic, IsometricLogic isometricLogic) {
         this.jointDal = jointDal;
         this.ndtReportLogic = ndtReportLogic;
         this.preheatLogic = preheatLogic;
         this.postWeldHeatTreatmentLogic = postWeldHeatTreatmentLogic;
         this.joinerLogic = joinerLogic;
+        this.isometricLogic = isometricLogic;
     }
 
     public int add(Joint joint) throws Exception {
@@ -113,7 +115,7 @@ public class JointLogic {
 //        validateJointCoordinatesOnIsometric(joint.getCoordinatesOnIsometric());
         validateJointPid(joint.getPidName());
         validateJointIsometric(joint.getIsometricName());
-//        validateJointSheetOnIsometric(joint.getSheetOnIsometric());
+        validateJointSheetOnIsometric(joint.getIsometricName(), joint.getSheetOnIsometric());
         if (joint.getDiameterMm() != null) {
             validateNumberInputNotNegative(joint.getDiameterMm());
 
@@ -177,6 +179,24 @@ public class JointLogic {
         }
         if (joint.getComments() != null) {
 //        validateJointComments(joint.getComments());
+        }
+    }
+
+    private void validateJointSheetOnIsometric(String isometricName, int sheetOnIsometric) throws Exception {
+        List<Isometric> allIsometrics = isometricLogic.getAll();
+        Isometric isometric = null;
+
+        while (isometric == null) {
+            for (Isometric currentIsometric : allIsometrics) {
+                if (currentIsometric.getName().equals(isometricName)) {
+                    isometric = currentIsometric;
+                }
+            }
+        }
+
+        if (isometric.getSheets() < 0 || isometric.getSheets() > sheetOnIsometric) {
+            //          TODO throw new ApplicationException
+            throw new Exception("Sheet number does not match the sheets of the isometric");
         }
     }
 

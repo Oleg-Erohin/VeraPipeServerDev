@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.verapipe.dto.Isometric;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "isometric")
@@ -31,6 +28,8 @@ public class IsometricEntity {
     private String coordinatesInPid;
     @Column(name = "is_approved", unique = false,  nullable = false)
     private boolean isApproved;
+    @Column(name = "pid_sheets", unique = false, nullable = true)
+    private Map<String, List<Integer>> pidSheets;
     @Column(name = "comments", unique = false, nullable = true, columnDefinition="TEXT")
     private String comments;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -54,6 +53,7 @@ public class IsometricEntity {
         this.coordinatesInPid = objectMapper.writeValueAsString(isometric.getCoordinatesInPid());
         this.isApproved = isometric.isApproved();
         this.pidsList = new HashSet<>();
+        this.pidSheets = isometric.getPidSheets();
         this.comments = isometric.getComments();
     }
 
@@ -151,5 +151,13 @@ public class IsometricEntity {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public Map<String, List<Integer>> getPidSheets() {
+        return pidSheets;
+    }
+
+    public void setPidSheets(Map<String, List<Integer>> pidSheets) {
+        this.pidSheets = pidSheets;
     }
 }

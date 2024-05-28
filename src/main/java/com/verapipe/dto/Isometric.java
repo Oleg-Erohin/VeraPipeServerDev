@@ -12,7 +12,7 @@ public class Isometric {
     private int id;
     private String name;
     private List<String> pidNames;
-    private List<Integer> pidSheets;
+    private Map<String, List<Integer>> pidSheets;
     private byte[] file;
     private String revision;
     private Date date;
@@ -24,7 +24,7 @@ public class Isometric {
     public Isometric() {
     }
 
-    public Isometric(String name, List<String> pidNames, List<Integer> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
+    public Isometric(String name, List<String> pidNames, Map<String, List<Integer>> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
         this.name = name;
         this.pidNames = pidNames;
         this.pidSheets = pidSheets;
@@ -37,7 +37,7 @@ public class Isometric {
         this.comments = comments;
     }
 
-    public Isometric(int id, String name, List<String> pidNames, List<Integer> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
+    public Isometric(int id, String name, List<String> pidNames, Map<String, List<Integer>> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
         this.id = id;
         this.name = name;
         this.pidNames = pidNames;
@@ -64,11 +64,7 @@ public class Isometric {
         }
         this.pidNames = pidsNames;
 
-        List<Integer> pidSheets = new ArrayList<>();
-        for (PidEntity pidEntity : pidEntityList) {
-            pidSheets.add(pidEntity.getSheets());
-        }
-        this.pidSheets = pidSheets;
+        this.pidSheets = isometricEntity.getPidSheets();
 
         this.file = isometricEntity.getFile();
         this.revision = isometricEntity.getRevision();
@@ -106,11 +102,11 @@ public class Isometric {
         this.pidNames = pidNames;
     }
 
-    public List<Integer> getPidSheets() {
+    public Map<String, List<Integer>> getPidSheets() {
         return pidSheets;
     }
 
-    public void setPidSheets(List<Integer> pidSheets) {
+    public void setPidSheets(Map<String, List<Integer>> pidSheets) {
         this.pidSheets = pidSheets;
     }
 
