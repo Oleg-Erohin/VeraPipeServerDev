@@ -118,11 +118,9 @@ public class JointLogic {
         validateJointSheetOnIsometric(joint.getIsometricName(), joint.getSheetOnIsometric());
         if (joint.getDiameterMm() != null) {
             validateNumberInputNotNegative(joint.getDiameterMm());
-
         }
         if (joint.getDiameterInch() != null) {
             validateNumberInputNotNegative(joint.getDiameterInch());
-
         }
         validateJointFittingDescription(joint.getFittingDescription1());
         if (joint.getBaseMaterialTypeName1() != null) {

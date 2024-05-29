@@ -10,7 +10,7 @@ To Do Later:
 - Ensure comments include line breaks
 - Add functions in Dal to retrieve all without files, add cache to the function once without file
 - Add thickness to joint. If imperial - selected from table. If metric - manual input
-- In IsometricsDal make a function to retreive only 1 based on name (not ID). This ill make the validateJointSheetOnIsometric in JointLogic not retrieve all the isometrics for no reason
+- In IsometricsDal make a function to retreive only 1 based on name (not ID). This ill make the validateJointSheetOnIsometric in JointLogic not retrieve all the isometrics for no reason (Use PagingAndSortingRepository)
 
 Done:
 - Should all double variables be "List" or separate items in DTO? (Currently uncertain in Joint) - Resolved Many to Many - Aviad

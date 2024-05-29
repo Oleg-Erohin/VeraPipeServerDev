@@ -3,6 +3,7 @@ package com.verapipe.entities;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.verapipe.dto.Isometric;
+import com.verapipe.utils.MapConverter;
 
 import javax.persistence.*;
 import java.util.*;
@@ -29,6 +30,7 @@ public class IsometricEntity {
     @Column(name = "is_approved", unique = false,  nullable = false)
     private boolean isApproved;
     @Column(name = "pid_sheets", unique = false, nullable = true)
+    @Convert(converter = MapConverter.class)
     private Map<String, List<Integer>> pidSheets;
     @Column(name = "comments", unique = false, nullable = true, columnDefinition="TEXT")
     private String comments;

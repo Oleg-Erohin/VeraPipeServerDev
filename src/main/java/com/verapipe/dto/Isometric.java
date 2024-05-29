@@ -4,14 +4,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.verapipe.entities.IsometricEntity;
-import com.verapipe.entities.PidEntity;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 public class Isometric {
     private int id;
     private String name;
-    private List<String> pidNames;
+//    private List<String> pidNames;
     private Map<String, List<Integer>> pidSheets;
     private byte[] file;
     private String revision;
@@ -26,7 +28,7 @@ public class Isometric {
 
     public Isometric(String name, List<String> pidNames, Map<String, List<Integer>> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
         this.name = name;
-        this.pidNames = pidNames;
+//        this.pidNames = pidNames;
         this.pidSheets = pidSheets;
         this.file = file;
         this.revision = revision;
@@ -40,7 +42,7 @@ public class Isometric {
     public Isometric(int id, String name, List<String> pidNames, Map<String, List<Integer>> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
         this.id = id;
         this.name = name;
-        this.pidNames = pidNames;
+//        this.pidNames = pidNames;
         this.pidSheets = pidSheets;
         this.file = file;
         this.revision = revision;
@@ -55,14 +57,14 @@ public class Isometric {
         this.id = isometricEntity.getId();
         this.name = isometricEntity.getName();
 
-        List<PidEntity> pidEntityList = new ArrayList<>();
-        pidEntityList.addAll(isometricEntity.getPidsList());
-
-        List<String> pidsNames = new ArrayList<>();
-        for (PidEntity pidEntity : pidEntityList) {
-            pidsNames.add(pidEntity.getName());
-        }
-        this.pidNames = pidsNames;
+//        List<PidEntity> pidEntityList = new ArrayList<>();
+//        pidEntityList.addAll(isometricEntity.getPidsList());
+//
+//        List<String> pidsNames = new ArrayList<>();
+//        for (PidEntity pidEntity : pidEntityList) {
+//            pidsNames.add(pidEntity.getName());
+//        }
+//        this.pidNames = pidsNames;
 
         this.pidSheets = isometricEntity.getPidSheets();
 
@@ -94,13 +96,13 @@ public class Isometric {
         this.name = name;
     }
 
-    public List<String> getPidNames() {
-        return pidNames;
-    }
-
-    public void setPidNames(List<String> pidNames) {
-        this.pidNames = pidNames;
-    }
+//    public List<String> getPidNames() {
+//        return pidNames;
+//    }
+//
+//    public void setPidNames(List<String> pidNames) {
+//        this.pidNames = pidNames;
+//    }
 
     public Map<String, List<Integer>> getPidSheets() {
         return pidSheets;
@@ -171,7 +173,7 @@ public class Isometric {
         return "Isometric{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", pidNames='" + pidNames + '\'' +
+//                ", pidNames='" + pidNames + '\'' +
                 ", PidSheets=" + pidSheets +
                 ", file=" + Arrays.toString(file) +
                 ", revision='" + revision + '\'' +

@@ -102,12 +102,13 @@ public class IsometricLogic {
 
     private void validations(Isometric isometric) throws Exception {
         validateIsometricName(isometric.getName());
-        if (isometric.getPidNames() != null) {
-            validateIsometricPidNames(isometric.getPidNames());
+//        if (isometric.getPidNames() != null) {
+//            validateIsometricPidNames(isometric.getPidNames());
             if (isometric.getPidSheets() != null) {
-                validateIsometricPidSheets(isometric.getPidNames(), isometric.getPidSheets());
+//                validateIsometricPidSheets(isometric.getPidNames(), isometric.getPidSheets());
+                validateIsometricPidSheets(isometric.getPidSheets());
             }
-        }
+//        }
         validateIsometricFile(isometric.getFile());
         validateIsometricRevision(isometric.getRevision());
         validateIsometricDate(isometric.getDate());
@@ -125,19 +126,21 @@ public class IsometricLogic {
         CommonValidations.validateDateIsNotLaterThanCurrentDate(date);
     }
 
-    private void validateIsometricPidSheets(List<String> pidNames, Map<String, List<Integer>> pidSheets) throws Exception {
-        for (String pidName : pidSheets.keySet()) {
-            if (!pidNames.contains(pidName)) {
-//          TODO throw new ApplicationException
-                throw new Exception("Mismatch with reference between P&ID name and sheets");
-            }
-        }
+    //    private void validateIsometricPidSheets(List<String> pidNames, Map<String, List<Integer>> pidSheets) throws Exception {
+    private void validateIsometricPidSheets(Map<String, List<Integer>> pidSheets) throws Exception {
+//        for (String pidName : pidSheets.keySet()) {
+//            if (!pidNames.contains(pidName)) {
+////          TODO throw new ApplicationException
+//                throw new Exception("Mismatch with reference between P&ID name and sheets");
+//            }
+//        }
 
         List<Pid> allPids = pidLogic.getAll();
         List<Pid> pidsRelatedToCurrentIsometric = new ArrayList<>();
 
         for (Pid pid : allPids) {
-            if (pidNames.contains(pid.getName())) {
+//            if (pidNames.contains(pid.getName())) {
+            if (pidSheets.keySet().contains(pid.getName())) {
                 pidsRelatedToCurrentIsometric.add(pid);
             }
         }
