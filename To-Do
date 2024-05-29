@@ -1,4 +1,5 @@
 Important:
+- Create new resource "File" with resourceName (String), resourceType (Enum), file (byte[]) and move all files management to new table, incl. validations
 - Add validations to logics - Oleg + Aviad
     - Add validations for Set values to not be more than allowed quantity - Aviad
 - To decide Cascade types - Aviad
@@ -8,9 +9,8 @@ To Do Later:
 - Add "@RequestHeader(value = "Authorization") String token" and validate user type in any add, update and delete function on controller
 - Change hash function to Entities which are "Set" in other entities - remove files from hashing and possibly other irrelevant data
 - Ensure comments include line breaks
-- Add functions in Dal to retrieve all without files, add cache to the function once without file
 - Add thickness to joint. If imperial - selected from table. If metric - manual input
-- In IsometricsDal make a function to retreive only 1 based on name (not ID). This ill make the validateJointSheetOnIsometric in JointLogic not retrieve all the isometrics for no reason (Use PagingAndSortingRepository)
+- DTO to not have List/Set variables (Separate to "1" & "2")
 
 Done:
 - Should all double variables be "List" or separate items in DTO? (Currently uncertain in Joint) - Resolved Many to Many - Aviad
