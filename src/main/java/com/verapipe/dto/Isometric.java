@@ -5,7 +5,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.verapipe.entities.IsometricEntity;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -13,9 +12,7 @@ import java.util.Map;
 public class Isometric {
     private int id;
     private String name;
-//    private List<String> pidNames;
-    private Map<String, List<Integer>> pidSheets;
-    private byte[] file;
+    private Map<String, List<Integer>> pidsAndSheets;
     private String revision;
     private Date date;
     private int sheets;
@@ -26,11 +23,9 @@ public class Isometric {
     public Isometric() {
     }
 
-    public Isometric(String name, List<String> pidNames, Map<String, List<Integer>> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
+    public Isometric(String name, Map<String, List<Integer>> pidsAndSheets, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
         this.name = name;
-//        this.pidNames = pidNames;
-        this.pidSheets = pidSheets;
-        this.file = file;
+        this.pidsAndSheets = pidsAndSheets;
         this.revision = revision;
         this.date = date;
         this.sheets = sheets;
@@ -39,12 +34,10 @@ public class Isometric {
         this.comments = comments;
     }
 
-    public Isometric(int id, String name, List<String> pidNames, Map<String, List<Integer>> pidSheets, byte[] file, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
+    public Isometric(int id, String name, Map<String, List<Integer>> pidsAndSheets, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
         this.id = id;
         this.name = name;
-//        this.pidNames = pidNames;
-        this.pidSheets = pidSheets;
-        this.file = file;
+        this.pidsAndSheets = pidsAndSheets;
         this.revision = revision;
         this.date = date;
         this.sheets = sheets;
@@ -57,18 +50,8 @@ public class Isometric {
         this.id = isometricEntity.getId();
         this.name = isometricEntity.getName();
 
-//        List<PidEntity> pidEntityList = new ArrayList<>();
-//        pidEntityList.addAll(isometricEntity.getPidsList());
-//
-//        List<String> pidsNames = new ArrayList<>();
-//        for (PidEntity pidEntity : pidEntityList) {
-//            pidsNames.add(pidEntity.getName());
-//        }
-//        this.pidNames = pidsNames;
+        this.pidsAndSheets = isometricEntity.getPidSheets();
 
-        this.pidSheets = isometricEntity.getPidSheets();
-
-        this.file = isometricEntity.getFile();
         this.revision = isometricEntity.getRevision();
         this.date = isometricEntity.getDate();
         this.sheets = isometricEntity.getSheets();
@@ -96,28 +79,12 @@ public class Isometric {
         this.name = name;
     }
 
-//    public List<String> getPidNames() {
-//        return pidNames;
-//    }
-//
-//    public void setPidNames(List<String> pidNames) {
-//        this.pidNames = pidNames;
-//    }
-
     public Map<String, List<Integer>> getPidSheets() {
-        return pidSheets;
+        return pidsAndSheets;
     }
 
     public void setPidSheets(Map<String, List<Integer>> pidSheets) {
-        this.pidSheets = pidSheets;
-    }
-
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
+        this.pidsAndSheets = pidSheets;
     }
 
     public String getRevision() {
@@ -174,8 +141,7 @@ public class Isometric {
                 "id=" + id +
                 ", name='" + name + '\'' +
 //                ", pidNames='" + pidNames + '\'' +
-                ", PidSheets=" + pidSheets +
-                ", file=" + Arrays.toString(file) +
+                ", pidsAndSheets=" + pidsAndSheets +
                 ", revision='" + revision + '\'' +
                 ", date=" + date +
                 ", sheets=" + sheets +

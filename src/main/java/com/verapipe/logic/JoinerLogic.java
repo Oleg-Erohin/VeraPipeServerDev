@@ -4,7 +4,6 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.IJoinerDal;
 import com.verapipe.dto.Joiner;
 import com.verapipe.entities.JoinerEntity;
-import com.verapipe.enums.FileTypes;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,7 +100,6 @@ public class JoinerLogic {
 
     private void validations(Joiner joiner) throws Exception {
         validateJoinerTagId(joiner.getTagId());
-        validateJoinerCertificateFile(joiner.getCertificate());
         if (joiner.getCertifiedDiameterMinMm() != null) {
             validateNumberInputNotNegative(joiner.getCertifiedDiameterMinMm());
         }
@@ -121,11 +119,6 @@ public class JoinerLogic {
         }
         validateJoinerJointDesign(joiner.getJointDesignName());
         validateJoinerFusionProcess(joiner.getFusionProcessName());
-    }
-
-    private void validateJoinerCertificateFile(byte[] certificate) throws Exception {
-        CommonValidations.validateFileType(certificate, FileTypes.PDF);
-        CommonValidations.validateFileMaxSize(certificate);
     }
 
     private void validateJoinerFusionProcess(String fusionProcessName) throws Exception {

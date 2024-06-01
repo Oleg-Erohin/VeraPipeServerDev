@@ -14,9 +14,6 @@ public class NdtReportEntity {
     private int id;
     @Column(name = "name", unique = true, nullable = false)
     private String name;
-    @Lob
-    @Column(name = "file", unique = true, nullable = true)
-    private byte[] file;
     @Column(name = "date", unique = false, nullable = false)
     private Date date;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -30,7 +27,6 @@ public class NdtReportEntity {
     public NdtReportEntity(NdtReport ndtReport) {
         this.id = ndtReport.getId();
         this.name = ndtReport.getName();
-        this.file = ndtReport.getFile();
         this.date = ndtReport.getDate();
         this.ndtType = new NdtTypeEntity();
         String ndtTypeName = ndtReport.getNdtTypeName();
@@ -51,14 +47,6 @@ public class NdtReportEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
     }
 
     public Date getDate() {

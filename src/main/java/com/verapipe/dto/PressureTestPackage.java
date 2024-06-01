@@ -8,7 +8,6 @@ import com.verapipe.entities.PidEntity;
 import com.verapipe.entities.PressureTestPackageEntity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -18,28 +17,25 @@ public class PressureTestPackage {
     private List<String> pidNames;
     private List<String> isometricNames;
     private List<Coordinates> coordinatesInPidsList;
-    private byte[] testReport;
     private Date date;
 
     public PressureTestPackage() {
     }
 
-    public PressureTestPackage(String name, List<String> pidNames, List<String> isometricNames, List<Coordinates> coordinatesInPidsList, byte[] testReport, Date date) {
+    public PressureTestPackage(String name, List<String> pidNames, List<String> isometricNames, List<Coordinates> coordinatesInPidsList, Date date) {
         this.name = name;
         this.pidNames = pidNames;
         this.isometricNames = isometricNames;
         this.coordinatesInPidsList = coordinatesInPidsList;
-        this.testReport = testReport;
         this.date = date;
     }
 
-    public PressureTestPackage(int id, String name, List<String> pidNames, List<String> isometricNames, List<Coordinates> coordinatesInPidsList, byte[] testReport, Date date) {
+    public PressureTestPackage(int id, String name, List<String> pidNames, List<String> isometricNames, List<Coordinates> coordinatesInPidsList, Date date) {
         this.id = id;
         this.name = name;
         this.pidNames = pidNames;
         this.isometricNames = isometricNames;
         this.coordinatesInPidsList = coordinatesInPidsList;
-        this.testReport = testReport;
         this.date = date;
     }
 
@@ -66,7 +62,6 @@ public class PressureTestPackage {
         ObjectMapper objectMapper = new ObjectMapper();
         this.coordinatesInPidsList = objectMapper.readValue(pressureTestPackageEntity.getCoordinatesInPids(), new TypeReference<List<Coordinates>>(){});
 
-        this.testReport = pressureTestPackageEntity.getTestReport();
         this.date = pressureTestPackageEntity.getDate();
     }
 
@@ -110,14 +105,6 @@ public class PressureTestPackage {
         this.coordinatesInPidsList = coordinatesInPidsList;
     }
 
-    public byte[] getTestReport() {
-        return testReport;
-    }
-
-    public void setTestReport(byte[] testReport) {
-        this.testReport = testReport;
-    }
-
     public Date getDate() {
         return date;
     }
@@ -134,7 +121,6 @@ public class PressureTestPackage {
                 ", pidNames=" + pidNames +
                 ", isometricNames=" + isometricNames +
                 ", coordinatesInPidsList=" + coordinatesInPidsList +
-                ", testReport=" + Arrays.toString(testReport) +
                 ", date=" + date +
                 '}';
     }

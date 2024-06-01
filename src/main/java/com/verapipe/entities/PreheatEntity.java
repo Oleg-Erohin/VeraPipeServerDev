@@ -14,9 +14,6 @@ public class PreheatEntity {
     private int id;
     @Column(name = "name", unique = true, nullable = false)
     private String name;
-    @Lob
-    @Column(name = "file", unique = true, nullable = true)
-    private byte[] file;
     @Column(name = "date", unique = false, nullable = false)
     private Date date;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -30,7 +27,6 @@ public class PreheatEntity {
     public PreheatEntity(Preheat preheat) {
         this.id = preheat.getId();
         this.name = preheat.getName();
-        this.file = preheat.getFile();
         this.date = preheat.getDate();
         this.processSpecificationProcedure = new ProcessSpecificationProcedureEntity();
         String processSpecificationProcedureName = preheat.getProcessSpecificationProcedureName();
@@ -51,14 +47,6 @@ public class PreheatEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
     }
 
     public Date getDate() {

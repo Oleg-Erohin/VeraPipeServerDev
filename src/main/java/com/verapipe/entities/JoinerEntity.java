@@ -14,9 +14,6 @@ public class JoinerEntity {
     private int id;
     @Column(name = "tag_id", unique = false, nullable = false)
     private String tagId;
-    @Lob
-    @Column(name = "certificate", unique = false, nullable = false)
-    private byte[] certificate;
     @Column(name = "certified_diameter_min_mm", unique = false, nullable = true)
     private Float certifiedDiameterMinMm;
     @Column(name = "certified_diameter_max_mm", unique = false, nullable = true)
@@ -43,7 +40,6 @@ public class JoinerEntity {
     public JoinerEntity(Joiner joiner) {
         this.id = joiner.getId();
         this.tagId = joiner.getTagId();
-        this.certificate = joiner.getCertificate();
         this.certifiedDiameterMinMm = joiner.getCertifiedDiameterMinMm();
         this.certifiedDiameterMaxMm = joiner.getCertifiedDiameterMaxMm();
         this.certifiedDiameterMinInch = joiner.getCertifiedDiameterMinInch();
@@ -85,14 +81,6 @@ public class JoinerEntity {
 
     public void setTagId(String tagId) {
         this.tagId = tagId;
-    }
-
-    public byte[] getCertificate() {
-        return certificate;
-    }
-
-    public void setCertificate(byte[] certificate) {
-        this.certificate = certificate;
     }
 
     public Float getCertifiedDiameterMinMm() {

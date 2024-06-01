@@ -2,13 +2,11 @@ package com.verapipe.dto;
 
 import com.verapipe.entities.PidEntity;
 
-import java.util.Arrays;
 import java.util.Date;
 
 public class Pid {
     private int id;
     private String name;
-    private byte[] file;
     private String revision;
     private Date date;
     private int sheets;
@@ -17,19 +15,17 @@ public class Pid {
     public Pid() {
     }
 
-    public Pid(String name, byte[] file, String revision, Date date, int sheets, String comments) {
+    public Pid(String name, String revision, Date date, int sheets, String comments) {
         this.name = name;
-        this.file = file;
         this.revision = revision;
         this.date = date;
         this.sheets = sheets;
         this.comments = comments;
     }
 
-    public Pid(int id, String name, byte[] file, String revision, Date date, int sheets, String comments) {
+    public Pid(int id, String name, String revision, Date date, int sheets, String comments) {
         this.id = id;
         this.name = name;
-        this.file = file;
         this.revision = revision;
         this.date = date;
         this.sheets = sheets;
@@ -39,7 +35,6 @@ public class Pid {
     public Pid(PidEntity pidEntity) {
         this.id = pidEntity.getId();
         this.name = pidEntity.getName();
-        this.file = pidEntity.getFile();
         this.revision = pidEntity.getRevision();
         this.date = pidEntity.getDate();
         this.sheets = pidEntity.getSheets();
@@ -60,14 +55,6 @@ public class Pid {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
     }
 
     public String getRevision() {
@@ -107,7 +94,6 @@ public class Pid {
         return "Pid{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", file=" + Arrays.toString(file) +
                 ", revision='" + revision + '\'' +
                 ", date=" + date +
                 ", sheets=" + sheets +

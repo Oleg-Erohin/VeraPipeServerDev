@@ -25,8 +25,7 @@ public enum ErrorType {
     JOINER_DOES_NOT_EXIST(820, "The joiner does not exist in existing joiners", false),
     FILE_SIZE_EXCEED_MAX_SIZE(821, "The file size exceed the max size of " + Consts.bytesIn20MB /1048576 + "MB",false),
     DATE_AND_TIME_IS_LATER_THAN_CURRENT_DATE_AND_TIME(822, "The date is later than today, change date for today or earlier", false),
-    FILE_TYPE_IS_NOT_ALLOW(823, "The file type is not allow", false);
-
+    FILE_EXTENSION_IS_NOT_ALLOWED(823, "The file extension is not allowed", false);
 
     private int errorNum;
     private String errorMessage;

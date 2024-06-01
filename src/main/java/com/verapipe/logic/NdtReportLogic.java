@@ -6,7 +6,6 @@ import com.verapipe.dto.NdtReport;
 import com.verapipe.dto.NdtType;
 import com.verapipe.entities.NdtReportEntity;
 import com.verapipe.enums.ErrorType;
-import com.verapipe.enums.FileTypes;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,17 +106,11 @@ public class NdtReportLogic {
     private void validations(NdtReport ndtReport) throws Exception {
         validateNdtReportName(ndtReport.getName());
         validateNdtReportNdtType(ndtReport.getNdtTypeName());
-        validateNdtReportFile(ndtReport.getFile());
         validateNdtReportDate(ndtReport.getDate());
     }
 
     private void validateNdtReportDate(Date date) throws Exception {
         CommonValidations.validateDateIsNotLaterThanCurrentDate(date);
-    }
-
-    private void validateNdtReportFile(byte[] file) throws Exception {
-        CommonValidations.validateFileType(file, FileTypes.PDF);
-        CommonValidations.validateFileMaxSize(file);
     }
 
     private void validateNdtReportNdtType(String ndtTypeName) throws Exception {

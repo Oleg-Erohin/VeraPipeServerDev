@@ -16,12 +16,6 @@ public class ProcessSpecificationProcedureEntity {
     private int id;
     @Column(name = "name", unique = true, nullable = false)
     private String name;
-    @Lob
-    @Column(name = "procedure_file", unique = true, nullable = true)
-    private byte[] procedureFile;
-    @Lob
-    @Column(name = "procedure_qualification_record_file", unique = false, nullable = true)
-    private byte[] processQualificationRecordFile;
     @Column(name = "is_preheat_required", unique = false, nullable = false)
     private boolean isPreheatRequired;
     @Column(name = "is_post_weld_heat_treatment_required", unique = false, nullable = false)
@@ -63,8 +57,6 @@ public class ProcessSpecificationProcedureEntity {
     public ProcessSpecificationProcedureEntity(ProcessSpecificationProcedure processSpecificationProcedure) {
         this.id = processSpecificationProcedure.getId();
         this.name = processSpecificationProcedure.getName();
-        this.procedureFile = processSpecificationProcedure.getProcedureFile();
-        this.processQualificationRecordFile = processSpecificationProcedure.getProcessQualificationRecordFile();
         this.isPreheatRequired = processSpecificationProcedure.isPreheatRequired();
         this.isPostWeldHeatTreatmentRequired = processSpecificationProcedure.isPostWeldHeatTreatmentRequired();
         this.diameterMmMin = processSpecificationProcedure.getDiameterMinMm();
@@ -125,22 +117,6 @@ public class ProcessSpecificationProcedureEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public byte[] getProcedureFile() {
-        return procedureFile;
-    }
-
-    public void setProcedureFile(byte[] procedureFile) {
-        this.procedureFile = procedureFile;
-    }
-
-    public byte[] getProcessQualificationRecordFile() {
-        return processQualificationRecordFile;
-    }
-
-    public void setProcessQualificationRecordFile(byte[] processQualificationRecordFile) {
-        this.processQualificationRecordFile = processQualificationRecordFile;
     }
 
     public boolean isPreheatRequired() {

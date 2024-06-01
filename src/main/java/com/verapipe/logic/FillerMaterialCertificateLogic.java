@@ -4,7 +4,6 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.IFillerMaterialCertificateDal;
 import com.verapipe.dto.FillerMaterialCertificate;
 import com.verapipe.entities.FillerMaterialCertificateEntity;
-import com.verapipe.enums.FileTypes;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,13 +100,7 @@ public class FillerMaterialCertificateLogic {
 
     private void validations(FillerMaterialCertificate fillerMaterialCertificate) throws Exception {
         validateFillerMaterialCertificateHeatNum(fillerMaterialCertificate.getHeatNum());
-        validateFillerMaterialCertificateFile(fillerMaterialCertificate.getFile());
         validateFillerMaterialCertificateMaterialTypeName(fillerMaterialCertificate.getMaterialTypeName());
-    }
-
-    private void validateFillerMaterialCertificateFile(byte[] file) throws Exception {
-        CommonValidations.validateFileType(file, FileTypes.PDF);
-        CommonValidations.validateFileMaxSize(file);
     }
 
     private void validateFillerMaterialCertificateMaterialTypeName(String materialTypeName) throws Exception {

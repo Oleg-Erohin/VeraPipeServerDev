@@ -2,31 +2,27 @@ package com.verapipe.dto;
 
 import com.verapipe.entities.PostWeldHeatTreatmentEntity;
 
-import java.util.Arrays;
 import java.util.Date;
 
 public class PostWeldHeatTreatment {
     private int id;
     private String name;
     private String processSpecificationProcedureName;
-    private byte[] file;
     private Date date;
 
     public PostWeldHeatTreatment() {
     }
 
-    public PostWeldHeatTreatment(String name, String processSpecificationProcedureName, byte[] file, Date date) {
+    public PostWeldHeatTreatment(String name, String processSpecificationProcedureName, Date date) {
         this.name = name;
         this.processSpecificationProcedureName = processSpecificationProcedureName;
-        this.file = file;
         this.date = date;
     }
 
-    public PostWeldHeatTreatment(int id, String name, String processSpecificationProcedureName, byte[] file, Date date) {
+    public PostWeldHeatTreatment(int id, String name, String processSpecificationProcedureName, Date date) {
         this.id = id;
         this.name = name;
         this.processSpecificationProcedureName = processSpecificationProcedureName;
-        this.file = file;
         this.date = date;
     }
 
@@ -34,7 +30,6 @@ public class PostWeldHeatTreatment {
         this.id = postWeldHeatTreatmentEntity.getId();
         this.name = postWeldHeatTreatmentEntity.getName();
         this.processSpecificationProcedureName = postWeldHeatTreatmentEntity.getProcessSpecificationProcedure().getName();
-        this.file = postWeldHeatTreatmentEntity.getFile();
         this.date = postWeldHeatTreatmentEntity.getDate();
     }
 
@@ -62,14 +57,6 @@ public class PostWeldHeatTreatment {
         this.processSpecificationProcedureName = processSpecificationProcedureName;
     }
 
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
-    }
-
     public Date getDate() {
         return date;
     }
@@ -84,7 +71,6 @@ public class PostWeldHeatTreatment {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", processSpecificationProcedureName='" + processSpecificationProcedureName + '\'' +
-                ", file=" + Arrays.toString(file) +
                 ", date=" + date +
                 '}';
     }

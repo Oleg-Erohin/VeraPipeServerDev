@@ -16,9 +16,6 @@ public class PidEntity {
     private int id;
     @Column(name = "name", unique = true, nullable = false)
     private String name;
-    @Lob
-    @Column(name = "file", unique = true, nullable = false)
-    private byte[] file;
     @Column(name = "revision", unique = false, nullable = false)
     private String revision;
     @Column(name = "date", unique = false, nullable = false)
@@ -40,7 +37,6 @@ public class PidEntity {
     public PidEntity(Pid pid) {
         this.id = pid.getId();
         this.name = pid.getName();
-        this.file = pid.getFile();
         this.revision = pid.getRevision();
         this.date = pid.getDate();
         this.sheets = pid.getSheets();
@@ -63,14 +59,6 @@ public class PidEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
     }
 
     public String getRevision() {

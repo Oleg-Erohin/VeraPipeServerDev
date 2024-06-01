@@ -23,9 +23,6 @@ public class PressureTestPackageEntity {
     private Set<IsometricEntity> isometricsList;
     @Column(name = "coordinates", unique = true, nullable = true)
     private String coordinatesInPids;
-    @Lob
-    @Column(name = "test_report", unique = true, nullable = false)
-    private byte[] testReport;
     @Column(name = "date", nullable = false)
     private Date date;
 
@@ -49,7 +46,6 @@ public class PressureTestPackageEntity {
         }
         ObjectMapper objectMapper = new ObjectMapper();
         this.coordinatesInPids = objectMapper.writeValueAsString(pressureTestPackage.getCoordinatesInPidsList());
-        this.testReport = pressureTestPackage.getTestReport();
         this.date = pressureTestPackage.getDate();
     }
 
@@ -91,14 +87,6 @@ public class PressureTestPackageEntity {
 
     public void setCoordinatesInPids(String coordinatesInPids) {
         this.coordinatesInPids = coordinatesInPids;
-    }
-
-    public byte[] getTestReport() {
-        return testReport;
-    }
-
-    public void setTestReport(byte[] testReport) {
-        this.testReport = testReport;
     }
 
     public Date getDate() {

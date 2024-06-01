@@ -2,31 +2,27 @@ package com.verapipe.dto;
 
 import com.verapipe.entities.PreheatEntity;
 
-import java.util.Arrays;
 import java.util.Date;
 
 public class Preheat {
     private int id;
     private String name;
     private String processSpecificationProcedureName;
-    private byte[] file;
     private Date date;
 
     public Preheat() {
     }
 
-    public Preheat(String name, String processSpecificationProcedureName, byte[] file, Date date) {
+    public Preheat(String name, String processSpecificationProcedureName, Date date) {
         this.name = name;
         this.processSpecificationProcedureName = processSpecificationProcedureName;
-        this.file = file;
         this.date = date;
     }
 
-    public Preheat(int id, String name, String processSpecificationProcedureName, byte[] file, Date date) {
+    public Preheat(int id, String name, String processSpecificationProcedureName, Date date) {
         this.id = id;
         this.name = name;
         this.processSpecificationProcedureName = processSpecificationProcedureName;
-        this.file = file;
         this.date = date;
     }
 
@@ -34,7 +30,6 @@ public class Preheat {
         this.id = preheatEntity.getId();
         this.name = preheatEntity.getName();
         this.processSpecificationProcedureName = preheatEntity.getProcessSpecificationProcedure().getName();
-        this.file = preheatEntity.getFile();
         this.date = preheatEntity.getDate();
     }
 
@@ -62,14 +57,6 @@ public class Preheat {
         this.processSpecificationProcedureName = processSpecificationProcedureName;
     }
 
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
-    }
-
     public Date getDate() {
         return date;
     }
@@ -84,7 +71,6 @@ public class Preheat {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", processSpecificationProcedureName='" + processSpecificationProcedureName + '\'' +
-                ", file=" + Arrays.toString(file) +
                 ", date=" + date +
                 '}';
     }

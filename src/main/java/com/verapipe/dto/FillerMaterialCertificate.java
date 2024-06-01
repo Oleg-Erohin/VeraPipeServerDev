@@ -2,34 +2,28 @@ package com.verapipe.dto;
 
 import com.verapipe.entities.FillerMaterialCertificateEntity;
 
-import java.util.Arrays;
-
 public class FillerMaterialCertificate {
     private int id;
     private String heatNum;
-    private byte[] file;
     private String materialTypeName;
 
     public FillerMaterialCertificate() {
     }
 
-    public FillerMaterialCertificate(String heatNum, byte[] file, String materialTypeName) {
+    public FillerMaterialCertificate(String heatNum, String materialTypeName) {
         this.heatNum = heatNum;
-        this.file = file;
         this.materialTypeName = materialTypeName;
     }
 
     public FillerMaterialCertificate(int id, String heatNum, byte[] file, String materialTypeName) {
         this.id = id;
         this.heatNum = heatNum;
-        this.file = file;
         this.materialTypeName = materialTypeName;
     }
 
     public FillerMaterialCertificate(FillerMaterialCertificateEntity fillerMaterialCertificateEntity) {
         this.id = fillerMaterialCertificateEntity.getId();
         this.heatNum = fillerMaterialCertificateEntity.getHeatNum();
-        this.file = fillerMaterialCertificateEntity.getCertificateFile();
         this.materialTypeName = fillerMaterialCertificateEntity.getFillerMaterialType().getName();
     }
 
@@ -49,14 +43,6 @@ public class FillerMaterialCertificate {
         this.heatNum = heatNum;
     }
 
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
-    }
-
     public String getMaterialTypeName() {
         return materialTypeName;
     }
@@ -70,7 +56,6 @@ public class FillerMaterialCertificate {
         return "FillerMaterialCertificate{" +
                 "id=" + id +
                 ", heatNum='" + heatNum + '\'' +
-                ", file=" + Arrays.toString(file) +
                 ", materialTypeName='" + materialTypeName + '\'' +
                 '}';
     }

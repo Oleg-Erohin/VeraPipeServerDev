@@ -6,7 +6,6 @@ import com.verapipe.dto.ProcessSpecificationProcedure;
 import com.verapipe.dto.StandardCode;
 import com.verapipe.entities.ProcessSpecificationProcedureEntity;
 import com.verapipe.enums.ErrorType;
-import com.verapipe.enums.FileTypes;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,10 +105,6 @@ public class ProcessSpecificationProcedureLogic {
 
     private void validations(ProcessSpecificationProcedure processSpecificationProcedure) throws Exception {
         validateProcessSpecificationProcedureName(processSpecificationProcedure.getName());
-        validateProcessSpecificationProcedureFile(processSpecificationProcedure.getProcedureFile());
-        if (processSpecificationProcedure.getProcessQualificationRecordFile() != null) {
-            validateProcessSpecificationProcedureQualificationRecordFile(processSpecificationProcedure.getProcessQualificationRecordFile());
-        }
         validateProcessSpecificationProcedureJointDesign(processSpecificationProcedure.getJointDesignName());
         validateProcessSpecificationProcedureBaseMaterial(processSpecificationProcedure.getBaseMaterialName1());
         if (processSpecificationProcedure.getBaseMaterialName2() != null) {
@@ -140,16 +135,6 @@ public class ProcessSpecificationProcedureLogic {
         if (processSpecificationProcedure.getThicknessMaxMm() != null) {
             validateNumberInputNotNegative(processSpecificationProcedure.getThicknessMaxMm());
         }
-    }
-
-    private void validateProcessSpecificationProcedureQualificationRecordFile(byte[] processQualificationRecordFile) throws Exception {
-        CommonValidations.validateFileType(processQualificationRecordFile, FileTypes.PDF);
-        CommonValidations.validateFileMaxSize(processQualificationRecordFile);
-    }
-
-    private void validateProcessSpecificationProcedureFile(byte[] procedureFile) throws Exception {
-        CommonValidations.validateFileType(procedureFile, FileTypes.PDF);
-        CommonValidations.validateFileMaxSize(procedureFile);
     }
 
     private void validateProcessSpecificationProcedureStandardCode(String standardCodeName) throws Exception {

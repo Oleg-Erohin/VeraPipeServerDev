@@ -1,5 +1,5 @@
 Important:
-- Create new resource "File" with resourceName (String), resourceType (Enum), file (byte[]) and move all files management to new table, incl. validations
+- Link "File" resource with other resources ("OneToOne" or other in entity, boolean in DTO?)
 - Add validations to logics - Oleg + Aviad
     - Add validations for Set values to not be more than allowed quantity - Aviad
 - To decide Cascade types - Aviad
@@ -25,3 +25,4 @@ Done:
 - Add cache to "get all" functions of basic parameters - Oleg
 - For all validations which are "isExist" but not mandatory field - Find alternative to throwing error (if null - return. in not - continue validation) - Oleg
 - Resolve sheets validations: Sheets should not be list of Integers, due to the possibility of several sheets per P&ID, and several P&Ids per isometric - Oleg
+- Create new resource "File" with resourceName (String), resourceType (Enum), file (byte[]) and move all files management to new table, incl. validations - Oleg

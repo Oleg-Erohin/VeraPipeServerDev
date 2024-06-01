@@ -13,9 +13,6 @@ public class FillerMaterialCertificateEntity {
     private int id;
     @Column(name = "heat_number", unique = true, nullable = false)
     private String heatNum;
-    @Lob
-    @Column(name = "certificate_file", unique = false, nullable = true)
-    private byte[] certificateFile;
     @ManyToOne(fetch = FetchType.EAGER)
     private FillerMaterialTypeEntity fillerMaterialType;
     @OneToMany(mappedBy = "fillerMaterialCertificateList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -27,7 +24,6 @@ public class FillerMaterialCertificateEntity {
     public FillerMaterialCertificateEntity(FillerMaterialCertificate fillerMaterialCertificate) {
         this.id = fillerMaterialCertificate.getId();
         this.heatNum = fillerMaterialCertificate.getHeatNum();
-        this.certificateFile = fillerMaterialCertificate.getFile();
         this.fillerMaterialType = new FillerMaterialTypeEntity();
         String fillerMaterialTypeName = fillerMaterialCertificate.getMaterialTypeName();
         this.fillerMaterialType.setName(fillerMaterialTypeName);
@@ -47,14 +43,6 @@ public class FillerMaterialCertificateEntity {
 
     public void setHeatNum(String heatNum) {
         this.heatNum = heatNum;
-    }
-
-    public byte[] getCertificateFile() {
-        return certificateFile;
-    }
-
-    public void setCertificateFile(byte[] certificateFile) {
-        this.certificateFile = certificateFile;
     }
 
     public FillerMaterialTypeEntity getFillerMaterialType() {

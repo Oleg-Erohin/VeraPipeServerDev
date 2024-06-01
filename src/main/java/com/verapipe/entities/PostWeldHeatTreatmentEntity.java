@@ -14,9 +14,6 @@ public class PostWeldHeatTreatmentEntity {
     private int id;
     @Column(name = "name", unique = true, nullable = false)
     private String name;
-    @Lob
-    @Column(name = "file", unique = true, nullable = true)
-    private byte[] file;
     @Column(name = "date", unique = false, nullable = false)
     private Date date;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -30,7 +27,6 @@ public class PostWeldHeatTreatmentEntity {
     public PostWeldHeatTreatmentEntity(PostWeldHeatTreatment postWeldHeatTreatment) {
         this.id = postWeldHeatTreatment.getId();
         this.name = postWeldHeatTreatment.getName();
-        this.file = postWeldHeatTreatment.getFile();
         this.date = postWeldHeatTreatment.getDate();
         this.processSpecificationProcedure = new ProcessSpecificationProcedureEntity();
         String processSpecificationProcedureName = postWeldHeatTreatment.getProcessSpecificationProcedureName();
@@ -51,14 +47,6 @@ public class PostWeldHeatTreatmentEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
     }
 
     public Date getDate() {

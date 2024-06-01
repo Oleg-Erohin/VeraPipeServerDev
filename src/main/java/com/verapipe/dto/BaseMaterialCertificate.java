@@ -2,30 +2,25 @@ package com.verapipe.dto;
 
 import com.verapipe.entities.BaseMaterialCertificateEntity;
 
-import java.util.Arrays;
-
 public class BaseMaterialCertificate {
     private int id;
     private String heatNum;
     private String lotNum;
-    private byte[] file;
     private String materialTypeName;
 
     public BaseMaterialCertificate() {
     }
 
-    public BaseMaterialCertificate(String heatNum, String lotNum, byte[] file, String materialTypeName) {
+    public BaseMaterialCertificate(String heatNum, String lotNum, String materialTypeName) {
         this.heatNum = heatNum;
         this.lotNum = lotNum;
-        this.file = file;
         this.materialTypeName = materialTypeName;
     }
 
-    public BaseMaterialCertificate(int id, String heatNum, String lotNum, byte[] file, String materialTypeName) {
+    public BaseMaterialCertificate(int id, String heatNum, String lotNum, String materialTypeName) {
         this.id = id;
         this.heatNum = heatNum;
         this.lotNum = lotNum;
-        this.file = file;
         this.materialTypeName = materialTypeName;
     }
 
@@ -33,7 +28,6 @@ public class BaseMaterialCertificate {
         this.id = baseMaterialCertificateEntity.getId();
         this.heatNum = baseMaterialCertificateEntity.getHeatNum();
         this.lotNum = baseMaterialCertificateEntity.getLotNum();
-        this.file = baseMaterialCertificateEntity.getCertificateFile();
         this.materialTypeName = baseMaterialCertificateEntity.getBaseMaterialType().getName();
     }
 
@@ -61,13 +55,6 @@ public class BaseMaterialCertificate {
         this.lotNum = lotNum;
     }
 
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
-    }
 
     public String getMaterialTypeName() {
         return materialTypeName;
@@ -83,7 +70,6 @@ public class BaseMaterialCertificate {
                 "id=" + id +
                 ", heatNum='" + heatNum + '\'' +
                 ", lotNum='" + lotNum + '\'' +
-                ", file=" + Arrays.toString(file) +
                 ", materialTypeName='" + materialTypeName + '\'' +
                 '}';
     }

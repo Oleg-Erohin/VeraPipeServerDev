@@ -4,13 +4,11 @@ import com.verapipe.entities.BaseMaterialTypeEntity;
 import com.verapipe.entities.JoinerEntity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Joiner {
     private int id;
     private String tagId;
-    private byte[] certificate;
     private Float certifiedDiameterMinMm;
     private Float certifiedDiameterMaxMm;
     private Float certifiedDiameterMinInch;
@@ -24,9 +22,8 @@ public class Joiner {
     public Joiner() {
     }
 
-    public Joiner(String tagId, byte[] certificate, Float certifiedDiameterMinMm, Float certifiedDiameterMaxMm, Float certifiedDiameterMinInch, Float certifiedDiameterMaxInch, Float maxDepositedMaterial, String baseMaterialTypeName1, String baseMaterialTypeName2, String jointDesignName, String fusionProcessName) {
+    public Joiner(String tagId, Float certifiedDiameterMinMm, Float certifiedDiameterMaxMm, Float certifiedDiameterMinInch, Float certifiedDiameterMaxInch, Float maxDepositedMaterial, String baseMaterialTypeName1, String baseMaterialTypeName2, String jointDesignName, String fusionProcessName) {
         this.tagId = tagId;
-        this.certificate = certificate;
         this.certifiedDiameterMinMm = certifiedDiameterMinMm;
         this.certifiedDiameterMaxMm = certifiedDiameterMaxMm;
         this.certifiedDiameterMinInch = certifiedDiameterMinInch;
@@ -38,10 +35,9 @@ public class Joiner {
         this.fusionProcessName = fusionProcessName;
     }
 
-    public Joiner(int id, String tagId, byte[] certificate, Float certifiedDiameterMinMm, Float certifiedDiameterMaxMm, Float certifiedDiameterMinInch, Float certifiedDiameterMaxInch, Float maxDepositedMaterial, String baseMaterialTypeName1, String baseMaterialTypeName2, String jointDesignName, String fusionProcessName) {
+    public Joiner(int id, String tagId, Float certifiedDiameterMinMm, Float certifiedDiameterMaxMm, Float certifiedDiameterMinInch, Float certifiedDiameterMaxInch, Float maxDepositedMaterial, String baseMaterialTypeName1, String baseMaterialTypeName2, String jointDesignName, String fusionProcessName) {
         this.id = id;
         this.tagId = tagId;
-        this.certificate = certificate;
         this.certifiedDiameterMinMm = certifiedDiameterMinMm;
         this.certifiedDiameterMaxMm = certifiedDiameterMaxMm;
         this.certifiedDiameterMinInch = certifiedDiameterMinInch;
@@ -56,7 +52,6 @@ public class Joiner {
     public Joiner(JoinerEntity joinerEntity) {
         this.id = joinerEntity.getId();
         this.tagId = joinerEntity.getTagId();
-        this.certificate = joinerEntity.getCertificate();
         this.certifiedDiameterMinMm = joinerEntity.getCertifiedDiameterMinMm();
         this.certifiedDiameterMaxMm = joinerEntity.getCertifiedDiameterMaxMm();
         this.certifiedDiameterMinInch = joinerEntity.getCertifiedDiameterMinInch();
@@ -86,14 +81,6 @@ public class Joiner {
 
     public void setTagId(String tagId) {
         this.tagId = tagId;
-    }
-
-    public byte[] getCertificate() {
-        return certificate;
-    }
-
-    public void setCertificate(byte[] certificate) {
-        this.certificate = certificate;
     }
 
     public Float getCertifiedDiameterMinMm() {
@@ -173,7 +160,6 @@ public class Joiner {
         return "Joiner{" +
                 "id=" + id +
                 ", tagId='" + tagId + '\'' +
-                ", certificate=" + Arrays.toString(certificate) +
                 ", certifiedDiameterMinMm=" + certifiedDiameterMinMm +
                 ", certifiedDiameterMaxMm=" + certifiedDiameterMaxMm +
                 ", certifiedDiameterMinInch=" + certifiedDiameterMinInch +

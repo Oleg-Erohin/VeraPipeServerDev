@@ -16,9 +16,6 @@ public class IsometricEntity {
     private int id;
     @Column(name = "name", unique = true, nullable = false)
     private String name;
-    @Lob
-    @Column(name = "file", unique = true, nullable = false)
-    private byte[] file;
     @Column(name = "revision", unique = false, nullable = false)
     private String revision;
     @Column(name = "date", unique = false, nullable = false)
@@ -47,7 +44,6 @@ public class IsometricEntity {
     public IsometricEntity(Isometric isometric) throws JsonProcessingException {
         this.id = isometric.getId();
         this.name = isometric.getName();
-        this.file = isometric.getFile();
         this.revision = isometric.getRevision();
         this.date = isometric.getDate();
         this.sheets = isometric.getSheets();
@@ -73,14 +69,6 @@ public class IsometricEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
     }
 
     public String getRevision() {

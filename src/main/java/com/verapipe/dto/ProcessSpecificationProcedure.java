@@ -6,14 +6,11 @@ import com.verapipe.entities.ProcessSpecificationProcedureEntity;
 import com.verapipe.enums.ThicknessUOM;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ProcessSpecificationProcedure {
     private int id;
     private String name;
-    private byte[] procedureFile;
-    private byte[] processQualificationRecordFile;
     private String jointDesignName;
     private String baseMaterialName1;
     private String baseMaterialName2;
@@ -34,10 +31,8 @@ public class ProcessSpecificationProcedure {
     public ProcessSpecificationProcedure() {
     }
 
-    public ProcessSpecificationProcedure(String name, byte[] procedureFile, byte[] processQualificationRecordFile, String jointDesignName, String baseMaterialName1, String baseMaterialName2, String fusionProcessName, String fillerMaterialName1, String fillerMaterialName2, String standardCodeName, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, Float diameterMinMm, Float diameterMaxMm, Float diameterMinInch, Float diameterMaxInch, ThicknessUOM thicknessUom, Float thicknessMinMm, Float thicknessMaxMm) {
+    public ProcessSpecificationProcedure(String name, String jointDesignName, String baseMaterialName1, String baseMaterialName2, String fusionProcessName, String fillerMaterialName1, String fillerMaterialName2, String standardCodeName, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, Float diameterMinMm, Float diameterMaxMm, Float diameterMinInch, Float diameterMaxInch, ThicknessUOM thicknessUom, Float thicknessMinMm, Float thicknessMaxMm) {
         this.name = name;
-        this.procedureFile = procedureFile;
-        this.processQualificationRecordFile = processQualificationRecordFile;
         this.jointDesignName = jointDesignName;
         this.baseMaterialName1 = baseMaterialName1;
         this.baseMaterialName2 = baseMaterialName2;
@@ -56,11 +51,9 @@ public class ProcessSpecificationProcedure {
         this.thicknessMaxMm = thicknessMaxMm;
     }
 
-    public ProcessSpecificationProcedure(int id, String name, byte[] procedureFile, byte[] processQualificationRecordFile, String jointDesignName, String baseMaterialName1, String baseMaterialName2, String fusionProcessName, String fillerMaterialName1, String fillerMaterialName2, String standardCodeName, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, Float diameterMinMm, Float diameterMaxMm, Float diameterMinInch, Float diameterMaxInch, ThicknessUOM thicknessUom, Float thicknessMinMm, Float thicknessMaxMm) {
+    public ProcessSpecificationProcedure(int id, String name, String jointDesignName, String baseMaterialName1, String baseMaterialName2, String fusionProcessName, String fillerMaterialName1, String fillerMaterialName2, String standardCodeName, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, Float diameterMinMm, Float diameterMaxMm, Float diameterMinInch, Float diameterMaxInch, ThicknessUOM thicknessUom, Float thicknessMinMm, Float thicknessMaxMm) {
         this.id = id;
         this.name = name;
-        this.procedureFile = procedureFile;
-        this.processQualificationRecordFile = processQualificationRecordFile;
         this.jointDesignName = jointDesignName;
         this.baseMaterialName1 = baseMaterialName1;
         this.baseMaterialName2 = baseMaterialName2;
@@ -82,8 +75,6 @@ public class ProcessSpecificationProcedure {
     public ProcessSpecificationProcedure(ProcessSpecificationProcedureEntity processSpecificationProcedureEntity) {
         this.id = processSpecificationProcedureEntity.getId();
         this.name = processSpecificationProcedureEntity.getName();
-        this.procedureFile = processSpecificationProcedureEntity.getProcedureFile();
-        this.processQualificationRecordFile = processSpecificationProcedureEntity.getProcessQualificationRecordFile();
         this.jointDesignName = processSpecificationProcedureEntity.getJointDesign().getName();
 
         List<BaseMaterialTypeEntity> baseMaterialTypeEntityList = new ArrayList<>();
@@ -124,22 +115,6 @@ public class ProcessSpecificationProcedure {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public byte[] getProcedureFile() {
-        return procedureFile;
-    }
-
-    public void setProcedureFile(byte[] procedureFile) {
-        this.procedureFile = procedureFile;
-    }
-
-    public byte[] getProcessQualificationRecordFile() {
-        return processQualificationRecordFile;
-    }
-
-    public void setProcessQualificationRecordFile(byte[] processQualificationRecordFile) {
-        this.processQualificationRecordFile = processQualificationRecordFile;
     }
 
     public String getJointDesignName() {
@@ -275,8 +250,6 @@ public class ProcessSpecificationProcedure {
         return "ProcessSpecificationProcedure{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", procedureFile=" + Arrays.toString(procedureFile) +
-                ", processQualificationRecordFile=" + Arrays.toString(processQualificationRecordFile) +
                 ", jointDesignName='" + jointDesignName + '\'' +
                 ", baseMaterialName1='" + baseMaterialName1 + '\'' +
                 ", baseMaterialName2='" + baseMaterialName2 + '\'' +
