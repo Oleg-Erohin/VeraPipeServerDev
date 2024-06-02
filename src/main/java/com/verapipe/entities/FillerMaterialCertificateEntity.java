@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "filler_material_certificate")
+@Table(name = "filler_material_certificates")
 public class FillerMaterialCertificateEntity {
     @Id
     @GeneratedValue

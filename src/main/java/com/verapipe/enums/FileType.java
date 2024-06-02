@@ -1,17 +1,17 @@
 package com.verapipe.enums;
 
 public enum FileType {
-    BASE_MATERIAL_CERTIFICATE("Base Material Certificate"),
-    FILLER_MATERIAL_CERTIFICATE("Filler Material Certificate"),
+    BASE_MATERIAL_CERTIFICATE("BaseMaterialCertificate"),
+    FILLER_MATERIAL_CERTIFICATE("FillerMaterialCertificate"),
     ISOMETRIC("Isometric"),
     JOINER("Joiner"),
-    NDT_REPORT("NDT Report"),
-    PID("P&ID"),
-    POST_WELD_HEAT_TREATMENT("Post Weld Heat Treatment"),
+    NDT_REPORT("NdtReport"),
+    PID("Pid"),
+    POST_WELD_HEAT_TREATMENT("PostWeldHeatTreatment"),
     PREHEAT("Preheat"),
-    PRESSURE_TEST_PACKAGE("Pressure Test Package"),
-    PROCESS_SPECIFICATION_PROCEDURE("Process Specification Procedure"),
-    PROCESS_QUALIFICATION_RECORD("Process Qualification Record");
+    PRESSURE_TEST_PACKAGE("PressureTestPackage"),
+    PROCESS_SPECIFICATION_PROCEDURE("ProcessSpecificationProcedure"),
+    PROCESS_QUALIFICATION_RECORD("ProcessQualificationRecord");
 
     private String fileType;
 

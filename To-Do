@@ -1,16 +1,22 @@
 Important:
-- Link "File" resource with other resources ("OneToOne" or other in entity, boolean in DTO?)
 - Add validations to logics - Oleg + Aviad
-    - Add validations for Set values to not be more than allowed quantity - Aviad  ??? (we validate the dto that don't have Set)
 - To decide Cascade types - Aviad
-- Add exception in all logics (per marked "TODO")
+- Add exception in all logics (per marked "TODO") - Aviad
+- Add controller for File - Oleg
+- DTO to not have List/Set variables (Separate to "1" & "2") - Oleg
 
 To Do Later:
 - Add "@RequestHeader(value = "Authorization") String token" and validate user type in any add, update and delete function on controller
 - Change hash function to Entities which are "Set" in other entities - remove files from hashing and possibly other irrelevant data
 - Ensure comments include line breaks
 - Add thickness to joint. If imperial - selected from table. If metric - manual input
-- DTO to not have List/Set variables (Separate to "1" & "2")
+- Revision validation in File: check that does not exist in previous revisions. For update - Ensure current revision remains.
+
+
+
+
+
+
 
 Done:
 - Should all double variables be "List" or separate items in DTO? (Currently uncertain in Joint) - Resolved Many to Many - Aviad
