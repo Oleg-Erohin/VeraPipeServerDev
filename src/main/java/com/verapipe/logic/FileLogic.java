@@ -31,8 +31,7 @@ public class FileLogic {
         try {
             fileEntity = this.fileDal.save(fileEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FILE_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
         int addedFileId = fileEntity.getId();
         return addedFileId;
@@ -41,29 +40,21 @@ public class FileLogic {
     public void update(File file) throws Exception {
         validations(file);
         FileEntity sentFileEntity = new FileEntity(file);
-        FileEntity receivedFileEntity;
         try {
-            receivedFileEntity = this.fileDal.save(sentFileEntity);
+            this.fileDal.save(sentFileEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
-        }
-        // Validate sent entity and return entity from DB are equals
-        if (!sentFileEntity.equals(receivedFileEntity)) {
-//            TODO throw new ApplicationException
-            throw new Exception();
+            throw new ApplicationException(ErrorType.FILE_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
     }
 
     public void delete(int id) throws Exception {
         if (!isFileExist(id)) {
-//            TODO throw new ApplicationException
+            throw new ApplicationException(ErrorType.FILE_DOES_NOT_EXIST);
         }
         try {
             this.fileDal.deleteById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_FILE);
         }
     }
 
@@ -72,30 +63,28 @@ public class FileLogic {
         try {
             fileEntity = this.fileDal.findById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FILE_COULD_NOT_BE_FOUND);
         }
         if (fileEntity.isEmpty()) {
-//            TODO throw new ApplicationException
-            throw new Exception("File not found");
+            throw new ApplicationException(ErrorType.FILE_DOES_NOT_EXIST);
         }
         File file = new File(fileEntity.get());
         return file;
     }
 
     public List<File> getAll() throws Exception {
-        Iterable<FileEntity> fileEntities = this.fileDal.findAll();
+        Iterable<FileEntity> fileEntities;
         List<File> files = new ArrayList<>();
-        // Check if the findAll method returned a value
-        if (!fileEntities.iterator().hasNext()) {
-//          TODO throw new ApplicationException
-            throw new Exception("File list is empty");
-        }
-        // Convert Iterable to List
-        for (FileEntity fileEntity : fileEntities
-        ) {
-            File file = new File(fileEntity);
-            files.add(file);
+        try{
+            fileEntities = this.fileDal.findAll();
+            // Convert Iterable to List
+            for (FileEntity fileEntity : fileEntities
+            ) {
+                File file = new File(fileEntity);
+                files.add(file);
+            }
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.FILE_COULD_NOT_BE_FOUND);
         }
         return files;
     }

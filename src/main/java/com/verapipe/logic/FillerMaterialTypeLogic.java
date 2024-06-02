@@ -4,6 +4,7 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.IFillerMaterialTypeDal;
 import com.verapipe.dto.FillerMaterialType;
 import com.verapipe.entities.FillerMaterialTypeEntity;
+import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,7 @@ public class FillerMaterialTypeLogic {
         try {
             fillerMaterialTypeEntity = this.fillerMaterialTypeDal.save(fillerMaterialTypeEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FILLER_MATERIAL_TYPE_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
         int addedFillerMaterialTypeId = fillerMaterialTypeEntity.getId();
         return addedFillerMaterialTypeId;
@@ -40,29 +40,21 @@ public class FillerMaterialTypeLogic {
     public void update(FillerMaterialType fillerMaterialType) throws Exception {
         validations(fillerMaterialType);
         FillerMaterialTypeEntity sentFillerMaterialTypeEntity = new FillerMaterialTypeEntity(fillerMaterialType);
-        FillerMaterialTypeEntity receivedFillerMaterialTypeEntity;
         try {
-            receivedFillerMaterialTypeEntity = this.fillerMaterialTypeDal.save(sentFillerMaterialTypeEntity);
+            this.fillerMaterialTypeDal.save(sentFillerMaterialTypeEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
-        }
-        // Validate sent entity and return entity from DB are equals
-        if (!sentFillerMaterialTypeEntity.equals(receivedFillerMaterialTypeEntity)) {
-//            TODO throw new ApplicationException
-            throw new Exception();
+            throw new ApplicationException(ErrorType.FILLER_MATERIAL_TYPE_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
     }
 
     public void delete(int id) throws Exception {
         if (!isFillerMaterialTypeExist(id)) {
-//            TODO throw new ApplicationException
+            throw new ApplicationException(ErrorType.FILLER_MATERIAL_TYPE_DOES_NOT_EXIST);
         }
         try {
             this.fillerMaterialTypeDal.deleteById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_FILLER_MATERIAL_TYPE);
         }
     }
 
@@ -71,12 +63,10 @@ public class FillerMaterialTypeLogic {
         try {
             fillerMaterialTypeEntity = this.fillerMaterialTypeDal.findById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FILLER_MATERIAL_TYPE_COULD_NOT_BE_FOUND);
         }
         if (fillerMaterialTypeEntity.isEmpty()) {
-//            TODO throw new ApplicationException
-            throw new Exception("Filler material type not found");
+            throw new ApplicationException(ErrorType.FILLER_MATERIAL_TYPE_DOES_NOT_EXIST);
         }
         FillerMaterialType fillerMaterialType = new FillerMaterialType(fillerMaterialTypeEntity.get());
         return fillerMaterialType;
@@ -84,18 +74,18 @@ public class FillerMaterialTypeLogic {
 
     @Cacheable(cacheNames = "fillerMaterialTypesCache", key = "#root.methodName")
     public List<FillerMaterialType> getAll() throws Exception {
-        Iterable<FillerMaterialTypeEntity> fillerMaterialTypeEntities = this.fillerMaterialTypeDal.findAll();
+        Iterable<FillerMaterialTypeEntity> fillerMaterialTypeEntities;
         List<FillerMaterialType> fillerMaterialTypes = new ArrayList<>();
-        // Check if the findAll method returned a value
-        if (!fillerMaterialTypeEntities.iterator().hasNext()) {
-//          TODO throw new ApplicationException
-            throw new Exception("Filler Material Type list is empty");
-        }
-        // Convert Iterable to List
-        for (FillerMaterialTypeEntity fillerMaterialTypeEntity : fillerMaterialTypeEntities
-        ) {
-            FillerMaterialType fillerMaterialType = new FillerMaterialType(fillerMaterialTypeEntity);
-            fillerMaterialTypes.add(fillerMaterialType);
+        try{
+            fillerMaterialTypeEntities = this.fillerMaterialTypeDal.findAll();
+            // Convert Iterable to List
+            for (FillerMaterialTypeEntity fillerMaterialTypeEntity : fillerMaterialTypeEntities
+            ) {
+                FillerMaterialType fillerMaterialType = new FillerMaterialType(fillerMaterialTypeEntity);
+                fillerMaterialTypes.add(fillerMaterialType);
+            }
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.FILLER_MATERIAL_TYPE_COULD_NOT_BE_FOUND);
         }
         return fillerMaterialTypes;
     }

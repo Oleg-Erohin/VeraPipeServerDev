@@ -1,7 +1,7 @@
 Important:
 - Link "File" resource with other resources ("OneToOne" or other in entity, boolean in DTO?)
 - Add validations to logics - Oleg + Aviad
-    - Add validations for Set values to not be more than allowed quantity - Aviad
+    - Add validations for Set values to not be more than allowed quantity - Aviad  ??? (we validate the dto that don't have Set)
 - To decide Cascade types - Aviad
 - Add exception in all logics (per marked "TODO")
 

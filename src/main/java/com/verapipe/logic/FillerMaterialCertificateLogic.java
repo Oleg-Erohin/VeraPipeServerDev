@@ -4,6 +4,7 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.IFillerMaterialCertificateDal;
 import com.verapipe.dto.FillerMaterialCertificate;
 import com.verapipe.entities.FillerMaterialCertificateEntity;
+import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,7 @@ public class FillerMaterialCertificateLogic {
         try {
             fillerMaterialCertificateEntity = this.fillerMaterialCertificateDal.save(fillerMaterialCertificateEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FILLER_MATERIAL_CERTIFICATE_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
         int addedFillerMaterialCertificateId = fillerMaterialCertificateEntity.getId();
         return addedFillerMaterialCertificateId;
@@ -38,29 +38,21 @@ public class FillerMaterialCertificateLogic {
     public void update(FillerMaterialCertificate fillerMaterialCertificate) throws Exception {
         validations(fillerMaterialCertificate);
         FillerMaterialCertificateEntity sentFillerMaterialCertificateEntity = new FillerMaterialCertificateEntity(fillerMaterialCertificate);
-        FillerMaterialCertificateEntity receivedFillerMaterialCertificateEntity;
         try {
-            receivedFillerMaterialCertificateEntity = this.fillerMaterialCertificateDal.save(sentFillerMaterialCertificateEntity);
+            this.fillerMaterialCertificateDal.save(sentFillerMaterialCertificateEntity);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
-        }
-        // Validate sent entity and return entity from DB are equals
-        if (!sentFillerMaterialCertificateEntity.equals(receivedFillerMaterialCertificateEntity)) {
-//            TODO throw new ApplicationException
-            throw new Exception();
+            throw new ApplicationException(ErrorType.FILLER_MATERIAL_CERTIFICATE_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
     }
 
     public void delete(int id) throws Exception {
         if (!isFillerMaterialCertificateExist(id)) {
-//            TODO throw new ApplicationException
+            throw new ApplicationException(ErrorType.FILLER_MATERIAL_CERTIFICATE_DOES_NOT_EXIST);
         }
         try {
             this.fillerMaterialCertificateDal.deleteById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_FILLER_MATERIAL_CERTIFICATE);
         }
     }
 
@@ -69,30 +61,28 @@ public class FillerMaterialCertificateLogic {
         try {
             fillerMaterialCertificateEntity = this.fillerMaterialCertificateDal.findById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FILLER_MATERIAL_CERTIFICATE_COULD_NOT_BE_FOUND);
         }
         if (fillerMaterialCertificateEntity.isEmpty()) {
-//            TODO throw new ApplicationException
-            throw new Exception("Filler material certificate not found");
+            throw new ApplicationException(ErrorType.FILLER_MATERIAL_CERTIFICATE_DOES_NOT_EXIST);
         }
         FillerMaterialCertificate fillerMaterialCertificate = new FillerMaterialCertificate(fillerMaterialCertificateEntity.get());
         return fillerMaterialCertificate;
     }
 
     public List<FillerMaterialCertificate> getAll() throws Exception {
-        Iterable<FillerMaterialCertificateEntity> fillerMaterialCertificateEntities = this.fillerMaterialCertificateDal.findAll();
+        Iterable<FillerMaterialCertificateEntity> fillerMaterialCertificateEntities;
         List<FillerMaterialCertificate> fillerMaterialCertificates = new ArrayList<>();
-        // Check if the findAll method returned a value
-        if (!fillerMaterialCertificateEntities.iterator().hasNext()) {
-//          TODO throw new ApplicationException
-            throw new Exception("Filler Material Certificate list is empty");
-        }
-        // Convert Iterable to List
-        for (FillerMaterialCertificateEntity fillerMaterialCertificateEntity : fillerMaterialCertificateEntities
-        ) {
-            FillerMaterialCertificate fillerMaterialCertificate = new FillerMaterialCertificate(fillerMaterialCertificateEntity);
-            fillerMaterialCertificates.add(fillerMaterialCertificate);
+        try{
+            fillerMaterialCertificateEntities = this.fillerMaterialCertificateDal.findAll();
+            // Convert Iterable to List
+            for (FillerMaterialCertificateEntity fillerMaterialCertificateEntity : fillerMaterialCertificateEntities
+            ) {
+                FillerMaterialCertificate fillerMaterialCertificate = new FillerMaterialCertificate(fillerMaterialCertificateEntity);
+                fillerMaterialCertificates.add(fillerMaterialCertificate);
+            }
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.FILLER_MATERIAL_CERTIFICATE_COULD_NOT_BE_FOUND);
         }
         return fillerMaterialCertificates;
     }

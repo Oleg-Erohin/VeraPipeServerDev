@@ -4,6 +4,7 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.IBaseMaterialTypeDal;
 import com.verapipe.dto.BaseMaterialType;
 import com.verapipe.entities.BaseMaterialTypeEntity;
+import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,7 @@ public class BaseMaterialTypeLogic {
         try {
             baseMaterialTypeEntity = this.baseMaterialTypeDal.save(baseMaterialTypeEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.BASE_MATERIAL_TYPE_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
         int addedBaseMaterialTypeId = baseMaterialTypeEntity.getId();
         return addedBaseMaterialTypeId;
@@ -39,29 +39,21 @@ public class BaseMaterialTypeLogic {
     public void update(BaseMaterialType baseMaterialType) throws Exception {
         validations(baseMaterialType);
         BaseMaterialTypeEntity sentBaseMaterialTypeEntity = new BaseMaterialTypeEntity(baseMaterialType);
-        BaseMaterialTypeEntity receivedBaseMaterialTypeEntity;
         try {
-            receivedBaseMaterialTypeEntity = this.baseMaterialTypeDal.save(sentBaseMaterialTypeEntity);
+            this.baseMaterialTypeDal.save(sentBaseMaterialTypeEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
-        }
-        // Validate sent entity and return entity from DB are equals
-        if (!sentBaseMaterialTypeEntity.equals(receivedBaseMaterialTypeEntity)) {
-//            TODO throw new ApplicationException
-            throw new Exception();
+            throw new ApplicationException(ErrorType.BASE_MATERIAL_TYPE_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
     }
 
     public void delete(int id) throws Exception {
         if (!isBaseMaterialTypeExist(id)) {
-//            TODO throw new ApplicationException
+            throw new ApplicationException(ErrorType.BASE_MATERIAL_TYPE_DOES_NOT_EXIST);
         }
         try {
             this.baseMaterialTypeDal.deleteById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_BASE_MATERIAL_TYPE);
         }
     }
 
@@ -70,12 +62,10 @@ public class BaseMaterialTypeLogic {
         try {
             baseMaterialTypeEntity = this.baseMaterialTypeDal.findById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.BASE_MATERIAL_TYPE_COULD_NOT_BE_FOUND);
         }
         if (baseMaterialTypeEntity.isEmpty()) {
-//            TODO throw new ApplicationException
-            throw new Exception("Base Material Type not found");
+            throw new ApplicationException(ErrorType.BASE_MATERIAL_TYPE_DOES_NOT_EXIST);
         }
         BaseMaterialType baseMaterialType = new BaseMaterialType(baseMaterialTypeEntity.get());
         return baseMaterialType;
@@ -83,18 +73,18 @@ public class BaseMaterialTypeLogic {
 
     @Cacheable(cacheNames = "baseMaterialTypesCache", key = "#root.methodName")
     public List<BaseMaterialType> getAll() throws Exception {
-        Iterable<BaseMaterialTypeEntity> baseMaterialTypeEntities = this.baseMaterialTypeDal.findAll();
+        Iterable<BaseMaterialTypeEntity> baseMaterialTypeEntities;
         List<BaseMaterialType> baseMaterialTypes = new ArrayList<>();
-        // Check if the findAll method returned a value
-        if (!baseMaterialTypeEntities.iterator().hasNext()) {
-//          TODO throw new ApplicationException
-            throw new Exception("Base Material Type list is empty");
-        }
-        // Convert Iterable to List
-        for (BaseMaterialTypeEntity baseMaterialTypeEntity : baseMaterialTypeEntities
-        ) {
-            BaseMaterialType baseMaterialType = new BaseMaterialType(baseMaterialTypeEntity);
-            baseMaterialTypes.add(baseMaterialType);
+        try{
+            baseMaterialTypeEntities = this.baseMaterialTypeDal.findAll();
+            // Convert Iterable to List
+            for (BaseMaterialTypeEntity baseMaterialTypeEntity : baseMaterialTypeEntities
+            ) {
+                BaseMaterialType baseMaterialType = new BaseMaterialType(baseMaterialTypeEntity);
+                baseMaterialTypes.add(baseMaterialType);
+            }
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.BASE_MATERIAL_TYPE_COULD_NOT_BE_FOUND);
         }
         return baseMaterialTypes;
     }

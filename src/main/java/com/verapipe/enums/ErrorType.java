@@ -25,7 +25,30 @@ public enum ErrorType {
     JOINER_DOES_NOT_EXIST(820, "The joiner does not exist in existing joiners", false),
     FILE_SIZE_EXCEED_MAX_SIZE(821, "The file size exceed the max size of " + Consts.bytesIn20MB /1048576 + "MB",false),
     DATE_AND_TIME_IS_LATER_THAN_CURRENT_DATE_AND_TIME(822, "The date is later than today, change date for today or earlier", false),
-    FILE_EXTENSION_IS_NOT_ALLOWED(823, "The file extension is not allowed", false);
+    FILE_EXTENSION_IS_NOT_ALLOWED(823, "The file extension is not allowed", false),
+    BASE_MATERIAL_CERTIFICATE_COULD_NOT_BE_ADDED_OR_UPDATED(824,"Base material certificate could not be added or updated",false),
+    FAILED_TO_DELETE_BASE_MATERIAL_CERTIFICATE(825,"Failed to delete Base material certificate",false),
+    BASE_MATERIAL_CERTIFICATE_COULD_NOT_BE_FOUND(826,"Failed to get this base material certificate", false),
+    BASE_MATERIAL_TYPE_COULD_NOT_BE_ADDED_OR_UPDATED(827, "Base material type could not be added or updated",false),
+    FAILED_TO_DELETE_BASE_MATERIAL_TYPE(828,"Failed to delete Base material certificate",false),
+    BASE_MATERIAL_TYPE_COULD_NOT_BE_FOUND(829,"Failed to get this base material type", false),
+    FILE_COULD_NOT_BE_ADDED_OR_UPDATED(830,"File could not be added or updated",false),
+    FILE_DOES_NOT_EXIST(831, "The File does not exist in existing files", false),
+    FAILED_TO_DELETE_FILE(832,"Failed to delete base material certificate",false),
+    FILE_COULD_NOT_BE_FOUND(833,"Failed to get this file", false),
+    FILLER_MATERIAL_CERTIFICATE_COULD_NOT_BE_ADDED_OR_UPDATED(834, "Filler material certificate could not be added or updated",false),
+    FAILED_TO_DELETE_FILLER_MATERIAL_CERTIFICATE(835,"Failed to delete filler material certificate",false),
+    FILLER_MATERIAL_CERTIFICATE_COULD_NOT_BE_FOUND(836,"Failed to get this filler material certificate", false),
+    FILLER_MATERIAL_TYPE_COULD_NOT_BE_ADDED_OR_UPDATED(837, "Filler material type could not be added or updated",false),
+    FAILED_TO_DELETE_FILLER_MATERIAL_TYPE(838,"Failed to delete filler material type",false),
+    FILLER_MATERIAL_TYPE_COULD_NOT_BE_FOUND(839,"Failed to get this filler material type", false),
+
+
+
+
+
+    LIST_IS_FULL(000, "the list has reached it's maximum size", false);
+
 
     private int errorNum;
     private String errorMessage;

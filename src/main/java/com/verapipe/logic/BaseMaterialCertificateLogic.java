@@ -4,6 +4,7 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.IBaseMaterialCertificateDal;
 import com.verapipe.dto.BaseMaterialCertificate;
 import com.verapipe.entities.BaseMaterialCertificateEntity;
+import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,7 @@ public class BaseMaterialCertificateLogic {
         try {
             baseMaterialCertificateEntity = this.baseMaterialCertificateDal.save(baseMaterialCertificateEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.BASE_MATERIAL_CERTIFICATE_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
         int addedBaseMaterialCertificateId = baseMaterialCertificateEntity.getId();
         return addedBaseMaterialCertificateId;
@@ -38,29 +38,21 @@ public class BaseMaterialCertificateLogic {
     public void update(BaseMaterialCertificate baseMaterialCertificate) throws Exception {
         validations(baseMaterialCertificate);
         BaseMaterialCertificateEntity sentBaseMaterialCertificateEntity = new BaseMaterialCertificateEntity(baseMaterialCertificate);
-        BaseMaterialCertificateEntity receivedBaseMaterialCertificateEntity;
         try {
-            receivedBaseMaterialCertificateEntity = this.baseMaterialCertificateDal.save(sentBaseMaterialCertificateEntity);
+            this.baseMaterialCertificateDal.save(sentBaseMaterialCertificateEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
-        }
-        // Validate sent entity and return entity from DB are equals
-        if (!sentBaseMaterialCertificateEntity.equals(receivedBaseMaterialCertificateEntity)) {
-//            TODO throw new ApplicationException
-            throw new Exception();
+            throw new ApplicationException(ErrorType.BASE_MATERIAL_CERTIFICATE_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
     }
 
     public void delete(int id) throws Exception {
         if (!isBaseMaterialCertificateExist(id)) {
-//            TODO throw new ApplicationException
+            throw new ApplicationException(ErrorType.BASE_MATERIAL_CERTIFICATE_DOES_NOT_EXIST);
         }
         try {
             this.baseMaterialCertificateDal.deleteById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_BASE_MATERIAL_CERTIFICATE);
         }
     }
 
@@ -69,30 +61,28 @@ public class BaseMaterialCertificateLogic {
         try {
             baseMaterialCertificateEntity = this.baseMaterialCertificateDal.findById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.BASE_MATERIAL_CERTIFICATE_COULD_NOT_BE_FOUND);
         }
         if (baseMaterialCertificateEntity.isEmpty()) {
-//            TODO throw new ApplicationException
-            throw new Exception("Base Material Certificate not found");
+            throw new ApplicationException(ErrorType.BASE_MATERIAL_CERTIFICATE_DOES_NOT_EXIST);
         }
         BaseMaterialCertificate baseMaterialCertificate = new BaseMaterialCertificate(baseMaterialCertificateEntity.get());
         return baseMaterialCertificate;
     }
 
     public List<BaseMaterialCertificate> getAll() throws Exception {
-        Iterable<BaseMaterialCertificateEntity> baseMaterialCertificateEntities = this.baseMaterialCertificateDal.findAll();
+        Iterable<BaseMaterialCertificateEntity> baseMaterialCertificateEntities;
         List<BaseMaterialCertificate> baseMaterialCertificates = new ArrayList<>();
-        // Check if the findAll method returned a value
-        if (!baseMaterialCertificateEntities.iterator().hasNext()) {
-//          TODO throw new ApplicationException
-            throw new Exception("Base Material Certificate list is empty");
-        }
-        // Convert Iterable to List
-        for (BaseMaterialCertificateEntity baseMaterialCertificateEntity : baseMaterialCertificateEntities
-        ) {
-            BaseMaterialCertificate baseMaterialCertificate = new BaseMaterialCertificate(baseMaterialCertificateEntity);
-            baseMaterialCertificates.add(baseMaterialCertificate);
+        try {
+            baseMaterialCertificateEntities = this.baseMaterialCertificateDal.findAll();
+            // Convert Iterable to List
+            for (BaseMaterialCertificateEntity baseMaterialCertificateEntity : baseMaterialCertificateEntities
+            ) {
+                BaseMaterialCertificate baseMaterialCertificate = new BaseMaterialCertificate(baseMaterialCertificateEntity);
+                baseMaterialCertificates.add(baseMaterialCertificate);
+            }
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.BASE_MATERIAL_CERTIFICATE_COULD_NOT_BE_FOUND);
         }
         return baseMaterialCertificates;
     }
