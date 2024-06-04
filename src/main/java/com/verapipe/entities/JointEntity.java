@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.verapipe.dto.Joint;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "joint")
@@ -29,7 +31,7 @@ public class JointEntity {
     private Float diameterInch;
     @Column(name = "fitting_description_1", unique = false, nullable = false)
     private String fittingDescription1;
-    @Column(name = "comments", unique = false, nullable = true, columnDefinition="TEXT")
+    @Column(name = "comments", unique = false, nullable = true, columnDefinition = "TEXT")
     private String comments;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "base_material_type_1")
@@ -46,7 +48,7 @@ public class JointEntity {
     private Set<BaseMaterialCertificateEntity> baseMaterialCertificateList;
     // TODO to make validation that only 2 objects in fillerMaterialTypeList
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<FillerMaterialTypeEntity>fillerMaterialTypeList;
+    private Set<FillerMaterialTypeEntity> fillerMaterialTypeList;
     // TODO to make validation that only 2 objects in fillerMaterialCertificateList
     @ManyToMany
     private Set<FillerMaterialCertificateEntity> fillerMaterialCertificateList;
@@ -100,7 +102,7 @@ public class JointEntity {
         String processSpecificationProcedureName = joint.getProcessSpecificationProcedureName();
         this.processSpecificationProcedure.setName(processSpecificationProcedureName);
         this.joinersList = new HashSet<>();
-        initializeJoinersList(joint.getJoinersTagIdList());
+        initializeJoinersList(joint.getJoinerTagId1(), joint.getJoinerTagId2());
         this.date = joint.getDate();
         this.isFitUpDone = joint.isFitUpDone();
         this.isVisualInspectionDone = joint.isVisualInspectionDone();
@@ -161,8 +163,18 @@ public class JointEntity {
         this.fillerMaterialTypeList.add(fillerMaterialType2);
     }
 
-    private void initializeJoinersList(List<String> joinersTagIdList) {
-        if (!joinersTagIdList.isEmpty()) {
+    private void initializeJoinersList(String joinerTagId1, String joinerTagId2) {
+        JoinerEntity joiner1 = new JoinerEntity();
+        joiner1.setTagId(joinerTagId1);
+        this.joinersList.add(joiner1);
+
+        JoinerEntity joiner2 = new JoinerEntity();
+        joiner2.setTagId(joinerTagId2);
+        this.joinersList.add(joiner2);
+    }
+
+//    private void initializeJoinersList(List<String> joinersTagIdList) {
+//        if (!joinersTagIdList.isEmpty()) {
 //        JoinerEntity joiner1 = new JoinerEntity();
 //        String joiner1TagId = joinersTagIdList.get(0);
 //        joiner1.setTagId(joiner1TagId);
@@ -172,8 +184,9 @@ public class JointEntity {
 //        String joiner2TagId = joinersTagIdList.get(1);
 //        joiner2.setTagId(joiner2TagId);
 //        this.joinersList.set(1, joiner2);
-        }
-    }
+//        }
+//    }
+
     public int getId() {
         return id;
     }
