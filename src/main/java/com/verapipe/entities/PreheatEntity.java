@@ -18,7 +18,7 @@ public class PreheatEntity {
     private Date date;
     @ManyToOne(fetch = FetchType.EAGER)
     private ProcessSpecificationProcedureEntity processSpecificationProcedure;
-    @OneToMany(mappedBy = "preheat", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "preheat", fetch = FetchType.LAZY)
     private List<JointEntity> jointsList;
 
     public PreheatEntity() {

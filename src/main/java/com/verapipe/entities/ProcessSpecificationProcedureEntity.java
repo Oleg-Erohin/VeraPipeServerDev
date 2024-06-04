@@ -44,11 +44,11 @@ public class ProcessSpecificationProcedureEntity {
     private Set<FillerMaterialTypeEntity> fillerMaterialTypeList;
     @ManyToOne(fetch = FetchType.EAGER)
     private StandardCodeEntity standardCode;
-    @OneToMany(mappedBy = "processSpecificationProcedure", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "processSpecificationProcedure", fetch = FetchType.LAZY)
     private List<JointEntity> JointsList;
-    @OneToMany(mappedBy = "processSpecificationProcedure", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "processSpecificationProcedure", fetch = FetchType.LAZY)
     private List<PreheatEntity> PreheatReportsList;
-    @OneToMany(mappedBy = "processSpecificationProcedure", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "processSpecificationProcedure", fetch = FetchType.LAZY)
     private List<PostWeldHeatTreatmentEntity> PostWeldHeatTreatmentsList;
 
     public ProcessSpecificationProcedureEntity() {

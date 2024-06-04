@@ -15,7 +15,7 @@ public class FillerMaterialCertificateEntity {
     private String heatNum;
     @ManyToOne(fetch = FetchType.EAGER)
     private FillerMaterialTypeEntity fillerMaterialType;
-    @OneToMany(mappedBy = "fillerMaterialCertificateList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "fillerMaterialCertificateList", fetch = FetchType.LAZY)
     private List<JointEntity> JointsList;
 
     public FillerMaterialCertificateEntity() {

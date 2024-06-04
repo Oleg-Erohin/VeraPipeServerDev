@@ -31,9 +31,9 @@ public class IsometricEntity {
     private Map<String, List<Integer>> pidSheets;
     @Column(name = "comments", unique = false, nullable = true, columnDefinition="TEXT")
     private String comments;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<PidEntity> pidsList;
-    @OneToMany(mappedBy = "isometric", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "isometric", fetch = FetchType.LAZY)
     private List<JointEntity> jointsList;
     @ManyToMany(mappedBy = "isometricsList", fetch = FetchType.LAZY)
     private Set<PressureTestPackageEntity> testPacksList;

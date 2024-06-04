@@ -24,11 +24,11 @@ public class PidEntity {
     private int sheets;
     @Column(name = "comments", unique = false, nullable = true, columnDefinition="TEXT")
     private String comments;
-    @ManyToMany(mappedBy = "pidsList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "pidsList", fetch = FetchType.LAZY)
     private Set<IsometricEntity> isometricDrawingsList;
-    @OneToMany(mappedBy = "pid", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "pid", fetch = FetchType.LAZY)
     private List<JointEntity> JointsList;
-    @ManyToMany(mappedBy = "pidsList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "pidsList", fetch = FetchType.LAZY)
     private Set<PressureTestPackageEntity> pressureTestPackagesList;
 
     public PidEntity() {

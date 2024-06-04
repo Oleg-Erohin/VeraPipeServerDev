@@ -17,7 +17,7 @@ public class BaseMaterialCertificateEntity {
     private String lotNum;
     @ManyToOne(fetch = FetchType.EAGER)
     private BaseMaterialTypeEntity baseMaterialType;
-    @ManyToMany(mappedBy = "baseMaterialCertificateList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "baseMaterialCertificateList",  fetch = FetchType.LAZY)
     private Set<JointEntity> jointsList;
 
     public BaseMaterialCertificateEntity() {

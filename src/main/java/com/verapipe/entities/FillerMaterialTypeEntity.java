@@ -14,11 +14,11 @@ public class FillerMaterialTypeEntity {
     private int id;
     @Column(name = "name", unique = true, nullable = false)
     private String name;
-    @ManyToMany(mappedBy = "fillerMaterialTypeList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "fillerMaterialTypeList", fetch = FetchType.LAZY)
     private Set<ProcessSpecificationProcedureEntity> processSpecificationProceduresList;
-    @OneToMany(mappedBy = "fillerMaterialType", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "fillerMaterialType", cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<FillerMaterialCertificateEntity> fillerMaterialCertificatesList;
-    @ManyToMany(mappedBy = "fillerMaterialTypeList",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "fillerMaterialTypeList", fetch = FetchType.LAZY)
     private Set<JointEntity> JointsList;
 
     public FillerMaterialTypeEntity() {

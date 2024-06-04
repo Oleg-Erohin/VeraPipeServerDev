@@ -18,7 +18,7 @@ public class PostWeldHeatTreatmentEntity {
     private Date date;
     @ManyToOne(fetch = FetchType.EAGER)
     private ProcessSpecificationProcedureEntity processSpecificationProcedure;
-    @OneToMany(mappedBy = "postWeldHeatTreatment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "postWeldHeatTreatment", fetch = FetchType.LAZY)
     private List<JointEntity> jointsList;
 
     public PostWeldHeatTreatmentEntity() {
