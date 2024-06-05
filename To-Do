@@ -1,14 +1,11 @@
 Important:
-- Add validations to logics - Oleg + Aviad
-- To decide Cascade types - Aviad
+- Add validations to logics - Oleg
+    - Revision validation in File: check that does not exist in previous revisions - Oleg
 - Add exception in all logics (per marked "TODO") - Aviad
 
 To Do Later:
-- Add "@RequestHeader(value = "Authorization") String token" and validate user type in any add, update and delete function on controller
-- Change hash function to Entities which are "Set" in other entities - remove files from hashing and possibly other irrelevant data
 - Ensure comments include line breaks
 - Add thickness to joint. If imperial - selected from table. If metric - manual input
-- Revision validation in File: check that does not exist in previous revisions. For update - Ensure current revision remains.
 
 
 
@@ -32,3 +29,4 @@ Done:
 - Create new resource "File" with resourceName (String), resourceType (Enum), file (byte[]) and move all files management to new table, incl. validations - Oleg
 - Add controller for File - Oleg
 - DTO to not have List/Set variables (Separate to "1" & "2") - Oleg
+- To decide Cascade types - Aviad

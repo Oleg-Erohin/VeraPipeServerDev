@@ -4,9 +4,10 @@ import com.verapipe.dto.File;
 import com.verapipe.enums.FileType;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
-@Table(name="file")
+@Table(name = "file")
 public class FileEntity {
     @Id
     @GeneratedValue
@@ -20,6 +21,8 @@ public class FileEntity {
     @Lob
     @Column(name = "file", unique = false, nullable = false)
     private byte[] file;
+    @Column(name = "upload_date", unique = false, nullable = false)
+    private Date uploadDate;
 
     public FileEntity() {
     }
@@ -30,6 +33,7 @@ public class FileEntity {
         this.resourceName = file.getResourceName();
         this.revision = file.getRevision();
         this.file = file.getFile();
+        this.uploadDate = file.getUploadDate();
     }
 
     public int getId() {
@@ -70,5 +74,13 @@ public class FileEntity {
 
     public void setFile(byte[] file) {
         this.file = file;
+    }
+
+    public Date getUploadDate() {
+        return uploadDate;
+    }
+
+    public void setUploadDate(Date uploadDate) {
+        this.uploadDate = uploadDate;
     }
 }

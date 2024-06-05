@@ -58,7 +58,7 @@ public class FileLogic {
         }
     }
 
-    public File getById(int id) throws Exception {
+    public byte[] getById(int id) throws Exception {
         Optional<FileEntity> fileEntity;
         try {
             fileEntity = this.fileDal.findById(id);
@@ -69,7 +69,7 @@ public class FileLogic {
             throw new ApplicationException(ErrorType.FILE_DOES_NOT_EXIST);
         }
         File file = new File(fileEntity.get());
-        return file;
+        return file.getFile();
     }
 
     public List<File> getAll() throws Exception {
@@ -95,6 +95,7 @@ public class FileLogic {
 //        validateResourceName(file.getResourceName());
 //        validateRevision(file.getRevision());
         validateFile(file.getFile());
+//        validateUploadDate(file.getUploadDate());
     }
 
     private void validateFile(byte[] file) throws ApplicationException {

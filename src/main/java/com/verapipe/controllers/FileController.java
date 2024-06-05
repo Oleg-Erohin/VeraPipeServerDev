@@ -30,14 +30,8 @@ public class FileController {
         this.fileLogic.delete(id);
     }
 
-//    @GetMapping
-//    public List<File> getAll() throws Exception {
-//        return this.fileLogic.getAll();
-//    }
-
     @GetMapping("/{id}")
     public byte[] getById(@PathVariable("id") int id) throws Exception {
-        File file = this.fileLogic.getById(id);
-        return file.getFile();
+        return this.fileLogic.getById(id);
     }
 }

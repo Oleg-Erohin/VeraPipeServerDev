@@ -4,6 +4,7 @@ import com.verapipe.entities.FileEntity;
 import com.verapipe.enums.FileType;
 
 import java.util.Arrays;
+import java.util.Date;
 
 public class File {
     private int id;
@@ -11,6 +12,7 @@ public class File {
     private String resourceName;
     private String revision;
     private byte[] file;
+    private Date uploadDate;
 
     public File() {
     }
@@ -20,6 +22,7 @@ public class File {
         this.resourceName = resourceName;
         this.revision = revision;
         this.file = file;
+        this.uploadDate = new Date();
     }
 
     public File(int id, FileType fileType, String resourceName, String revision, byte[] file) {
@@ -36,6 +39,7 @@ public class File {
         this.resourceName = fileEntity.getResourceName();
         this.revision = fileEntity.getRevision();
         this.file = fileEntity.getFile();
+        this.uploadDate = fileEntity.getUploadDate();
     }
 
     public int getId() {
@@ -78,6 +82,14 @@ public class File {
         this.file = file;
     }
 
+    public Date getUploadDate() {
+        return uploadDate;
+    }
+
+    public void setUploadDate(Date uploadDate) {
+        this.uploadDate = uploadDate;
+    }
+
     @Override
     public String toString() {
         return "File{" +
@@ -86,6 +98,7 @@ public class File {
                 ", resourceName='" + resourceName + '\'' +
                 ", revision='" + revision + '\'' +
                 ", file=" + Arrays.toString(file) +
+                ", uploadDate=" + uploadDate +
                 '}';
     }
 }
