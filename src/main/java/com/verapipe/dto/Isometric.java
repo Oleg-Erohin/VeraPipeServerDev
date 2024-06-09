@@ -79,11 +79,11 @@ public class Isometric {
         this.name = name;
     }
 
-    public Map<String, List<Integer>> getPidSheets() {
+    public Map<String, List<Integer>> getPidsAndSheets() {
         return pidsAndSheets;
     }
 
-    public void setPidSheets(Map<String, List<Integer>> pidSheets) {
+    public void setPidsAndSheets(Map<String, List<Integer>> pidSheets) {
         this.pidsAndSheets = pidSheets;
     }
 

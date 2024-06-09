@@ -3,12 +3,9 @@ package com.verapipe.utils;
 import com.verapipe.consts.Consts;
 import com.verapipe.dto.*;
 import com.verapipe.enums.ErrorType;
-import com.verapipe.enums.FileExtension;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.logic.*;
-import org.apache.tika.Tika;
 
-import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -152,18 +149,18 @@ public class CommonValidations {
         }
     }
 
-    public static void validateFileType(byte[] file, FileExtension requireFileType) throws Exception {
-        String fileType = findFileType(file);
-        if (!fileType.equals(requireFileType.getFileExtension())){
-            throw new ApplicationException(ErrorType.FILE_EXTENSION_IS_NOT_ALLOWED);
-        }
-    }
-
-    private static String findFileType(byte[] file) {
-            String fileBase64Code =  Base64.getEncoder().encodeToString(file);
-            String fileExtension = new Tika().detect(fileBase64Code);
-            return fileExtension;
-    }
+//    public static void validateFileType(byte[] file, FileExtension requireFileType) throws Exception {
+//        String fileType = findFileType(file);
+//        if (!fileType.equals(requireFileType.getFileExtension())){
+//            throw new ApplicationException(ErrorType.FILE_EXTENSION_IS_NOT_ALLOWED);
+//        }
+//    }
+//
+//    private static String findFileType(byte[] file) {
+//            String fileBase64Code =  Base64.getEncoder().encodeToString(file);
+//            String fileExtension = new Tika().detect(fileBase64Code);
+//            return fileExtension;
+//    }
 
 //    public static void validateSetMaxSize(Set set, int maxSize) throws Exception {
 //        if (set.size() == maxSize){

@@ -51,7 +51,7 @@ public class IsometricEntity {
         this.coordinatesInPid = objectMapper.writeValueAsString(isometric.getCoordinatesInPid());
         this.isApproved = isometric.isApproved();
         this.pidsList = new HashSet<>();
-        this.pidSheets = isometric.getPidSheets();
+        this.pidSheets = isometric.getPidsAndSheets();
         this.comments = isometric.getComments();
     }
 

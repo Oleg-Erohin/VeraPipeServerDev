@@ -5,6 +5,7 @@ import com.verapipe.dal.IIsometricDal;
 import com.verapipe.dto.Isometric;
 import com.verapipe.dto.Pid;
 import com.verapipe.entities.IsometricEntity;
+import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,13 +102,11 @@ public class IsometricLogic {
 
     private void validations(Isometric isometric) throws Exception {
         validateIsometricName(isometric.getName());
-//        if (isometric.getPidNames() != null) {
-//            validateIsometricPidNames(isometric.getPidNames());
-            if (isometric.getPidSheets() != null) {
-//                validateIsometricPidSheets(isometric.getPidNames(), isometric.getPidSheets());
-                validateIsometricPidSheets(isometric.getPidSheets());
-            }
-//        }
+
+        if (isometric.getPidsAndSheets() != null) {
+            validateIsometricPidSheets(isometric.getPidsAndSheets());
+        }
+
         validateIsometricRevision(isometric.getRevision());
         validateIsometricDate(isometric.getDate());
 //        validateIsometricSheets(isometric.getSheets());
@@ -147,8 +146,7 @@ public class IsometricLogic {
             List<Integer> currentSheets = pidSheets.get(pid.getName());
             for (Integer sheet : currentSheets) {
                 if (sheet < 0 || sheet > pid.getSheets()) {
-//          TODO throw new ApplicationException
-                    throw new Exception("Sheet numbers do not match the sheets of the P&ID");
+                    throw new ApplicationException(ErrorType.SHEETS_DONT_MATCH_PID);
                 }
             }
         }

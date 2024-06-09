@@ -42,6 +42,9 @@ public enum ErrorType {
     FILLER_MATERIAL_TYPE_COULD_NOT_BE_ADDED_OR_UPDATED(837, "Filler material type could not be added or updated",false),
     FAILED_TO_DELETE_FILLER_MATERIAL_TYPE(838,"Failed to delete filler material type",false),
     FILLER_MATERIAL_TYPE_COULD_NOT_BE_FOUND(839,"Failed to get this filler material type", false),
+    REVISION_ALREADY_EXISTS(840, "This document already exists in current revision", false),
+    FILE_TYPE_DOES_NOT_EXIST(841, "The file type entered does not exist", false),
+    SHEETS_DONT_MATCH_PID(842, "Sheet numbers do not match the sheets of the P&ID", false),
 
 
 

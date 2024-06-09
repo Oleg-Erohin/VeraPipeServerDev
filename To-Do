@@ -1,11 +1,10 @@
 Important:
 - Add validations to logics - Oleg
-    - Revision validation in File: check that does not exist in previous revisions - Oleg
 - Add exception in all logics (per marked "TODO") - Aviad
 
 To Do Later:
 - Ensure comments include line breaks
-- Add thickness to joint. If imperial - selected from table. If metric - manual input
+- Add thickness to joint. If imperial - selected from table. If metric - manual input. Validate against joiner and PSP
 
 
 
@@ -30,3 +29,4 @@ Done:
 - Add controller for File - Oleg
 - DTO to not have List/Set variables (Separate to "1" & "2") - Oleg
 - To decide Cascade types - Aviad
+- Revision validation in File: check that does not exist in previous revisions - Oleg

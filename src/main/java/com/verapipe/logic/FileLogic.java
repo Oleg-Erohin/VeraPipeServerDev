@@ -6,15 +6,13 @@ import com.verapipe.dto.File;
 import com.verapipe.entities.FileEntity;
 import com.verapipe.enums.ErrorType;
 import com.verapipe.enums.FileExtension;
+import com.verapipe.enums.FileType;
 import com.verapipe.exceptions.ApplicationException;
 import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class FileLogic {
@@ -75,7 +73,7 @@ public class FileLogic {
     public List<File> getAll() throws Exception {
         Iterable<FileEntity> fileEntities;
         List<File> files = new ArrayList<>();
-        try{
+        try {
             fileEntities = this.fileDal.findAll();
             // Convert Iterable to List
             for (FileEntity fileEntity : fileEntities
@@ -91,11 +89,40 @@ public class FileLogic {
 
 
     private void validations(File file) throws Exception {
-//        validateFileType(file.getFileType());
-//        validateResourceName(file.getResourceName());
-//        validateRevision(file.getRevision());
+        validateFileType(file.getFileType());
+        validateResourceName(file.getFileType(), file.getResourceName());
+        validateRevision(file.getFileType(), file.getResourceName(), file.getRevision());
         validateFile(file.getFile());
-//        validateUploadDate(file.getUploadDate());
+        validateUploadDate(file.getUploadDate());
+    }
+
+    private void validateFileType(FileType currentFileType) throws ApplicationException {
+        for (FileType fileType : FileType.values()) {
+            if (fileType.name().equalsIgnoreCase(currentFileType.getFileType())) {
+                return;
+            }
+        }
+        throw new ApplicationException(ErrorType.FILE_TYPE_DOES_NOT_EXIST);
+    }
+
+    private void validateResourceName(FileType fileType, String resourceName) throws ApplicationException {
+        boolean doesFileExist = this.fileDal.doesFileExist();
+        if (!doesFileExist) {
+            throw new ApplicationException(ErrorType.FILE_DOES_NOT_EXIST);
+        }
+    }
+
+    private void validateUploadDate(Date uploadDate) throws ApplicationException {
+        if (uploadDate.after(new Date())) {
+            throw new ApplicationException(ErrorType.DATE_AND_TIME_IS_LATER_THAN_CURRENT_DATE_AND_TIME);
+        }
+    }
+
+    private void validateRevision(FileType fileType, String resourceName, String revision) throws ApplicationException {
+        boolean doesExistWithCurrentRevision = this.fileDal.doesExistWithCurrentRevision(fileType, resourceName, revision);
+        if (doesExistWithCurrentRevision) {
+            throw new ApplicationException(ErrorType.REVISION_ALREADY_EXISTS);
+        }
     }
 
     private void validateFile(byte[] file) throws ApplicationException {
@@ -105,20 +132,20 @@ public class FileLogic {
 
     public static void validateFileMaxSize(byte[] file) throws ApplicationException {
         int fileSize = file.length;
-        if (fileSize > Consts.bytesIn20MB){
+        if (fileSize > Consts.bytesIn20MB) {
             throw new ApplicationException(ErrorType.FILE_SIZE_EXCEED_MAX_SIZE);
         }
     }
 
     public static void validateFileExtension(byte[] file, FileExtension requireFileExtension) throws ApplicationException {
-        String fileExtension = findFileType(file);
-        if (!fileExtension.equals(requireFileExtension.getFileExtension())){
+        String fileExtension = findFileExtension(file);
+        if (!fileExtension.equals(requireFileExtension.getFileExtension())) {
             throw new ApplicationException(ErrorType.FILE_EXTENSION_IS_NOT_ALLOWED);
         }
     }
 
-    private static String findFileType(byte[] file) {
-        String fileBase64Code =  Base64.getEncoder().encodeToString(file);
+    private static String findFileExtension(byte[] file) {
+        String fileBase64Code = Base64.getEncoder().encodeToString(file);
         String fileExtension = new Tika().detect(fileBase64Code);
         return fileExtension;
     }

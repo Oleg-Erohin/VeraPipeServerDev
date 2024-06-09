@@ -151,8 +151,11 @@ public class JointLogic {
         if (joint.getProcessSpecificationProcedureName() != null) {
             validateJointProcessSpecificationProcedure(joint.getProcessSpecificationProcedureName());
         }
-        if (joint.getJoinersTagIdList() != null) {
-            validateJointJoinerTagIds(joint.getJoinersTagIdList());
+        if (joint.getJoinerTagId1() != null) {
+            validateJointJoinerTagId(joint.getJoinerTagId1());
+        }
+        if (joint.getJoinerTagId2() != null) {
+            validateJointJoinerTagId(joint.getJoinerTagId2());
         }
         if (joint.getDate() != null) {
             validateJointDate(joint.getDate());
@@ -202,14 +205,14 @@ public class JointLogic {
         CommonValidations.validateDateIsNotLaterThanCurrentDate(date);
     }
 
-    private void validateJointJoinerTagIds(List<String> joinersTagIdList) throws Exception {
-        if (joinersTagIdList.size() > 2) {
-            throw new ApplicationException(ErrorType.TOO_MANY_JOINER_TAGS);
+    private void validateJointJoinerTagId(String joinersTagId) throws Exception {
+        List <Joiner> allJoiners = this.joinerLogic.getAll();
+        for (Joiner joiner : allJoiners){
+            if (joiner.getTagId().equals(joinersTagId)){
+                return;
+            }
         }
-
-        for (int i = 0; i < joinersTagIdList.size(); i++) {
-            validateIsExistInJoinerTagIds(joinersTagIdList.get(i));
-        }
+        throw new ApplicationException(ErrorType.JOINER_DOES_NOT_EXIST);
     }
 
     private void validateIsExistInJoinerTagIds(String joinerTagId) throws Exception {
