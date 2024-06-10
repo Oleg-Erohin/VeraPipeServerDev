@@ -4,6 +4,7 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.IPostWeldHeatTreatmentDal;
 import com.verapipe.dto.PostWeldHeatTreatment;
 import com.verapipe.entities.PostWeldHeatTreatmentEntity;
+import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,7 @@ public class PostWeldHeatTreatmentLogic {
         try {
             postWeldHeatTreatmentEntity = this.postWeldHeatTreatmentDal.save(postWeldHeatTreatmentEntity);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.POST_WELD_HEAT_TREATMENT_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
         int addedPostWeldHeatTreatmentId = postWeldHeatTreatmentEntity.getId();
         return addedPostWeldHeatTreatmentId;
@@ -39,29 +39,21 @@ public class PostWeldHeatTreatmentLogic {
     public void update(PostWeldHeatTreatment postWeldHeatTreatment) throws Exception {
         validations(postWeldHeatTreatment);
         PostWeldHeatTreatmentEntity sentPostWeldHeatTreatmentEntity = new PostWeldHeatTreatmentEntity(postWeldHeatTreatment);
-        PostWeldHeatTreatmentEntity receivedPostWeldHeatTreatmentEntity;
         try {
-            receivedPostWeldHeatTreatmentEntity = this.postWeldHeatTreatmentDal.save(sentPostWeldHeatTreatmentEntity);
+            this.postWeldHeatTreatmentDal.save(sentPostWeldHeatTreatmentEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
-        }
-        // Validate sent entity and return entity from DB are equals
-        if (!sentPostWeldHeatTreatmentEntity.equals(receivedPostWeldHeatTreatmentEntity)) {
-//            TODO throw new ApplicationException
-            throw new Exception();
+            throw new ApplicationException(ErrorType.POST_WELD_HEAT_TREATMENT_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
     }
 
     public void delete(int id) throws Exception {
         if (!isPostWeldHeatTreatmentExist(id)) {
-//            TODO throw new ApplicationException
+            throw new ApplicationException(ErrorType.POST_WELD_HEAT_TREATMENT_DOES_NOT_EXIST);
         }
         try {
             this.postWeldHeatTreatmentDal.deleteById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_POST_WELD_HEAT_TREATMENT);
         }
     }
 
@@ -70,30 +62,28 @@ public class PostWeldHeatTreatmentLogic {
         try {
             postWeldHeatTreatmentEntity = this.postWeldHeatTreatmentDal.findById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.POST_WELD_HEAT_TREATMENT_COULD_NOT_BE_FOUND);
         }
         if (postWeldHeatTreatmentEntity.isEmpty()) {
-//            TODO throw new ApplicationException
-            throw new Exception("Post Weld Heat Treatment not found");
+            throw new ApplicationException(ErrorType.POST_WELD_HEAT_TREATMENT_DOES_NOT_EXIST);
         }
-        PostWeldHeatTreatment postWeldHeatTreatment= new PostWeldHeatTreatment(postWeldHeatTreatmentEntity.get());
+        PostWeldHeatTreatment postWeldHeatTreatment = new PostWeldHeatTreatment(postWeldHeatTreatmentEntity.get());
         return postWeldHeatTreatment;
     }
 
     public List<PostWeldHeatTreatment> getAll() throws Exception {
-        Iterable<PostWeldHeatTreatmentEntity> postWeldHeatTreatmentEntities= this.postWeldHeatTreatmentDal.findAll();
+        Iterable<PostWeldHeatTreatmentEntity> postWeldHeatTreatmentEntities;
         List<PostWeldHeatTreatment> postWeldHeatTreatments = new ArrayList<>();
-        // Check if the findAll method returned a value
-        if (!postWeldHeatTreatmentEntities.iterator().hasNext()) {
-//          TODO throw new ApplicationException
-            throw new Exception("Post Weld Heat Treatment list is empty");
-        }
-        // Convert Iterable to List
-        for (PostWeldHeatTreatmentEntity postWeldHeatTreatmentEntity: postWeldHeatTreatmentEntities
-        ) {
-            PostWeldHeatTreatment postWeldHeatTreatment= new PostWeldHeatTreatment(postWeldHeatTreatmentEntity);
-            postWeldHeatTreatments.add(postWeldHeatTreatment);
+        try {
+            postWeldHeatTreatmentEntities = this.postWeldHeatTreatmentDal.findAll();
+            // Convert Iterable to List
+            for (PostWeldHeatTreatmentEntity postWeldHeatTreatmentEntity : postWeldHeatTreatmentEntities
+            ) {
+                PostWeldHeatTreatment postWeldHeatTreatment = new PostWeldHeatTreatment(postWeldHeatTreatmentEntity);
+                postWeldHeatTreatments.add(postWeldHeatTreatment);
+            }
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.POST_WELD_HEAT_TREATMENT_COULD_NOT_BE_FOUND);
         }
         return postWeldHeatTreatments;
     }

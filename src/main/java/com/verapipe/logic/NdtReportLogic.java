@@ -33,8 +33,7 @@ public class NdtReportLogic {
         try {
             ndtReportEntity = this.ndtReportDal.save(ndtReportEntity);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.NDT_REPORT_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
         int addedNdtReportId = ndtReportEntity.getId();
         return addedNdtReportId;
@@ -43,29 +42,21 @@ public class NdtReportLogic {
     public void update(NdtReport ndtReport) throws Exception {
         validations(ndtReport);
         NdtReportEntity sentNdtReportEntity = new NdtReportEntity(ndtReport);
-        NdtReportEntity receivedNdtReportEntity;
         try {
-            receivedNdtReportEntity = this.ndtReportDal.save(sentNdtReportEntity);
+            this.ndtReportDal.save(sentNdtReportEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
-        }
-        // Validate sent entity and return entity from DB are equals
-        if (!sentNdtReportEntity.equals(receivedNdtReportEntity)) {
-//            TODO throw new ApplicationException
-            throw new Exception();
+            throw new ApplicationException(ErrorType.NDT_REPORT_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
     }
 
     public void delete(int id) throws Exception {
         if (!isNdtReportExist(id)) {
-//            TODO throw new ApplicationException
+            throw new ApplicationException(ErrorType.NDT_REPORT_DOES_NOT_EXIST);
         }
         try {
             this.ndtReportDal.deleteById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_NDT_REPORT);
         }
     }
 
@@ -74,31 +65,31 @@ public class NdtReportLogic {
         try {
             ndtReportEntity = this.ndtReportDal.findById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.NDT_REPORT_COULD_NOT_BE_FOUND);
         }
         if (ndtReportEntity.isEmpty()) {
-//            TODO throw new ApplicationException
-            throw new Exception("Ndt Report not found");
+            throw new ApplicationException(ErrorType.NDT_REPORT_DOES_NOT_EXIST);
         }
         NdtReport ndtReport = new NdtReport(ndtReportEntity.get());
         return ndtReport;
     }
 
     public List<NdtReport> getAll() throws Exception {
-        Iterable<NdtReportEntity> ndtReportEntities = this.ndtReportDal.findAll();
+        Iterable<NdtReportEntity> ndtReportEntities;
         List<NdtReport> ndtReports = new ArrayList<>();
-        // Check if the findAll method returned a value
-        if (!ndtReportEntities.iterator().hasNext()) {
-//          TODO throw new ApplicationException
-            throw new Exception("Ndt Report list is empty");
+        try {
+            ndtReportEntities = this.ndtReportDal.findAll();
+            // Convert Iterable to List
+            for (NdtReportEntity ndtReportEntity : ndtReportEntities
+            ) {
+                NdtReport ndtReport = new NdtReport(ndtReportEntity);
+                ndtReports.add(ndtReport);
+            }
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.NDT_REPORT_COULD_NOT_BE_FOUND);
         }
-        // Convert Iterable to List
-        for (NdtReportEntity ndtReportEntity : ndtReportEntities
-        ) {
-            NdtReport ndtReport = new NdtReport(ndtReportEntity);
-            ndtReports.add(ndtReport);
-        }
+
+
         return ndtReports;
     }
 

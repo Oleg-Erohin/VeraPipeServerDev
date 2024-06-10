@@ -4,6 +4,7 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.IFusionProcessDal;
 import com.verapipe.dto.FusionProcess;
 import com.verapipe.entities.FusionProcessEntity;
+import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,7 @@ public class FusionProcessLogic {
         try {
             fusionProcessEntity = this.fusionProcessDal.save(fusionProcessEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FUSION_PROCESS_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
         int addedFusionProcessId = fusionProcessEntity.getId();
         return addedFusionProcessId;
@@ -39,29 +39,21 @@ public class FusionProcessLogic {
     public void update(FusionProcess fusionProcess) throws Exception {
         validations(fusionProcess);
         FusionProcessEntity sentFusionProcessEntity = new FusionProcessEntity(fusionProcess);
-        FusionProcessEntity receivedFusionProcessEntity;
         try {
-            receivedFusionProcessEntity = this.fusionProcessDal.save(sentFusionProcessEntity);
+            this.fusionProcessDal.save(sentFusionProcessEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
-        }
-        // Validate sent entity and return entity from DB are equals
-        if (!sentFusionProcessEntity.equals(receivedFusionProcessEntity)) {
-//            TODO throw new ApplicationException
-            throw new Exception();
+            throw new ApplicationException(ErrorType.FUSION_PROCESS_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
     }
 
     public void delete(int id) throws Exception {
         if (!isFusionProcessExist(id)) {
-//            TODO throw new ApplicationException
+            throw new ApplicationException(ErrorType.FUSION_PROCESS_DOES_NOT_EXIST);
         }
         try {
             this.fusionProcessDal.deleteById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_FUSION_PROCESS);
         }
     }
 
@@ -70,12 +62,10 @@ public class FusionProcessLogic {
         try {
             fusionProcessEntity = this.fusionProcessDal.findById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FUSION_PROCESS_COULD_NOT_BE_FOUND);
         }
         if (fusionProcessEntity.isEmpty()) {
-//            TODO throw new ApplicationException
-            throw new Exception("Fusion Process not found");
+            throw new ApplicationException(ErrorType.FUSION_PROCESS_DOES_NOT_EXIST);
         }
         FusionProcess fusionProcess = new FusionProcess(fusionProcessEntity.get());
         return fusionProcess;
@@ -83,18 +73,18 @@ public class FusionProcessLogic {
 
     @Cacheable(cacheNames = "fusionProcessesCache", key = "#root.methodName")
     public List<FusionProcess> getAll() throws Exception {
-        Iterable<FusionProcessEntity> fusionProcessEntities = this.fusionProcessDal.findAll();
+        Iterable<FusionProcessEntity> fusionProcessEntities;
         List<FusionProcess> fusionProcesses = new ArrayList<>();
-        // Check if the findAll method returned a value
-        if (!fusionProcessEntities.iterator().hasNext()) {
-//          TODO throw new ApplicationException
-            throw new Exception("Fusion Processes list is empty");
-        }
-        // Convert Iterable to List
-        for (FusionProcessEntity fusionProcessEntity : fusionProcessEntities
-        ) {
-            FusionProcess fusionProcess = new FusionProcess(fusionProcessEntity);
-            fusionProcesses.add(fusionProcess);
+        try{
+            fusionProcessEntities = this.fusionProcessDal.findAll();
+            // Convert Iterable to List
+            for (FusionProcessEntity fusionProcessEntity : fusionProcessEntities
+            ) {
+                FusionProcess fusionProcess = new FusionProcess(fusionProcessEntity);
+                fusionProcesses.add(fusionProcess);
+            }
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.FUSION_PROCESS_COULD_NOT_BE_FOUND);
         }
         return fusionProcesses;
     }

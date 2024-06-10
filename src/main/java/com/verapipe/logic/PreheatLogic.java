@@ -4,6 +4,7 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.IPreheatDal;
 import com.verapipe.dto.Preheat;
 import com.verapipe.entities.PreheatEntity;
+import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,7 @@ public class PreheatLogic {
         try {
             preheatEntity = this.preheatDal.save(preheatEntity);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.PREHEAT_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
         int addedPreheatId = preheatEntity.getId();
         return addedPreheatId;
@@ -39,29 +39,21 @@ public class PreheatLogic {
     public void update(Preheat preheat) throws Exception {
         validations(preheat);
         PreheatEntity sentPreheatEntity = new PreheatEntity(preheat);
-        PreheatEntity receivedPreheatEntity;
         try {
-            receivedPreheatEntity = this.preheatDal.save(sentPreheatEntity);
+            this.preheatDal.save(sentPreheatEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
-        }
-        // Validate sent entity and return entity from DB are equals
-        if (!sentPreheatEntity.equals(receivedPreheatEntity)) {
-//            TODO throw new ApplicationException
-            throw new Exception();
+            throw new ApplicationException(ErrorType.PREHEAT_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
     }
 
     public void delete(int id) throws Exception {
         if (!isPreheatExist(id)) {
-//            TODO throw new ApplicationException
+            throw new ApplicationException(ErrorType.PREHEAT_DOES_NOT_EXIST);
         }
         try {
             this.preheatDal.deleteById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_PREHEAT);
         }
     }
 
@@ -70,31 +62,30 @@ public class PreheatLogic {
         try {
             preheatEntity = this.preheatDal.findById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.PREHEAT_COULD_NOT_BE_FOUND);
         }
         if (preheatEntity.isEmpty()) {
-//            TODO throw new ApplicationException
-            throw new Exception("Preheat not found");
+            throw new ApplicationException(ErrorType.PREHEAT_DOES_NOT_EXIST);
         }
         Preheat preheat = new Preheat(preheatEntity.get());
         return preheat;
     }
 
     public List<Preheat> getAll() throws Exception {
-        Iterable<PreheatEntity> preheatEntities = this.preheatDal.findAll();
+        Iterable<PreheatEntity> preheatEntities;
         List<Preheat> preheats = new ArrayList<>();
-        // Check if the findAll method returned a value
-        if (!preheatEntities.iterator().hasNext()) {
-//          TODO throw new ApplicationException
-            throw new Exception("Preheat list is empty");
+        try {
+            preheatEntities = this.preheatDal.findAll();
+            // Convert Iterable to List
+            for (PreheatEntity preheatEntity : preheatEntities
+            ) {
+                Preheat preheat = new Preheat(preheatEntity);
+                preheats.add(preheat);
+            }
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.PREHEAT_COULD_NOT_BE_FOUND);
         }
-        // Convert Iterable to List
-        for (PreheatEntity preheatEntity : preheatEntities
-        ) {
-            Preheat preheat = new Preheat(preheatEntity);
-            preheats.add(preheat);
-        }
+
         return preheats;
     }
 

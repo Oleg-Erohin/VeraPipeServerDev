@@ -40,8 +40,7 @@ public class JointLogic {
         try {
             jointEntity = this.jointDal.save(jointEntity);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.JOINT_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
         int addedJointId = jointEntity.getId();
         return addedJointId;
@@ -50,29 +49,21 @@ public class JointLogic {
     public void update(Joint joint) throws Exception {
         validations(joint);
         JointEntity sentJointEntity = new JointEntity(joint);
-        JointEntity receivedJointEntity;
         try {
-            receivedJointEntity = this.jointDal.save(sentJointEntity);
+            this.jointDal.save(sentJointEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
-        }
-        // Validate sent entity and return entity from DB are equals
-        if (!sentJointEntity.equals(receivedJointEntity)) {
-//            TODO throw new ApplicationException
-            throw new Exception();
+            throw new ApplicationException(ErrorType.JOINT_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
     }
 
     public void delete(int id) throws Exception {
         if (!isJointExist(id)) {
-//            TODO throw new ApplicationException
+            throw new ApplicationException(ErrorType.JOINT_COULD_NOT_BE_FOUND);
         }
         try {
             this.jointDal.deleteById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_JOINT);
         }
     }
 
@@ -81,30 +72,28 @@ public class JointLogic {
         try {
             jointEntity = this.jointDal.findById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.JOINT_COULD_NOT_BE_FOUND);
         }
         if (jointEntity.isEmpty()) {
-//            TODO throw new ApplicationException
-            throw new Exception("Joint not found");
+            throw new ApplicationException(ErrorType.JOINT_DOES_NOT_EXIST);
         }
         Joint joint = new Joint(jointEntity.get());
         return joint;
     }
 
     public List<Joint> getAll() throws Exception {
-        Iterable<JointEntity> jointEntities = this.jointDal.findAll();
+        Iterable<JointEntity> jointEntities;
         List<Joint> joints = new ArrayList<>();
-        // Check if the findAll method returned a value
-        if (!jointEntities.iterator().hasNext()) {
-//          TODO throw new ApplicationException
-            throw new Exception("Joints list is empty");
-        }
-        // Convert Iterable to List
-        for (JointEntity jointEntity : jointEntities
-        ) {
-            Joint joint = new Joint(jointEntity);
-            joints.add(joint);
+        try{
+            jointEntities = this.jointDal.findAll();
+            // Convert Iterable to List
+            for (JointEntity jointEntity : jointEntities
+            ) {
+                Joint joint = new Joint(jointEntity);
+                joints.add(joint);
+            }
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.JOINT_COULD_NOT_BE_FOUND);
         }
         return joints;
     }

@@ -4,6 +4,7 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.IJointDesignDal;
 import com.verapipe.dto.JointDesign;
 import com.verapipe.entities.JointDesignEntity;
+import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,7 @@ public class JointDesignLogic {
         try {
             jointDesignEntity = this.jointDesignDal.save(jointDesignEntity);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.JOINT_DESIGN_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
         int addedJointDesignId = jointDesignEntity.getId();
         return addedJointDesignId;
@@ -39,29 +39,21 @@ public class JointDesignLogic {
     public void update(JointDesign jointDesign) throws Exception {
         validations(jointDesign);
         JointDesignEntity sentJointDesignEntity = new JointDesignEntity(jointDesign);
-        JointDesignEntity receivedJointDesignEntity;
         try {
-            receivedJointDesignEntity = this.jointDesignDal.save(sentJointDesignEntity);
+            this.jointDesignDal.save(sentJointDesignEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
-        }
-        // Validate sent entity and return entity from DB are equals
-        if (!sentJointDesignEntity.equals(receivedJointDesignEntity)) {
-//            TODO throw new ApplicationException
-            throw new Exception();
+            throw new ApplicationException(ErrorType.JOINT_DESIGN_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
     }
 
     public void delete(int id) throws Exception {
         if (!isJointDesignExist(id)) {
-//            TODO throw new ApplicationException
+            throw new ApplicationException(ErrorType.JOINT_DESIGN_DOES_NOT_EXIST);
         }
         try {
             this.jointDesignDal.deleteById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_JOINT_DESIGN);
         }
     }
 
@@ -70,12 +62,10 @@ public class JointDesignLogic {
         try {
             jointDesignEntity = this.jointDesignDal.findById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.JOINT_DESIGN_COULD_NOT_BE_FOUND);
         }
         if (jointDesignEntity.isEmpty()) {
-//            TODO throw new ApplicationException
-            throw new Exception("Joint Design not found");
+            throw new ApplicationException(ErrorType.JOINT_DESIGN_DOES_NOT_EXIST);
         }
         JointDesign jointDesign = new JointDesign(jointDesignEntity.get());
         return jointDesign;
@@ -83,18 +73,18 @@ public class JointDesignLogic {
 
     @Cacheable(cacheNames = "jointDesignsCache", key = "#root.methodName")
     public List<JointDesign> getAll() throws Exception {
-        Iterable<JointDesignEntity> jointDesignEntities = this.jointDesignDal.findAll();
+        Iterable<JointDesignEntity> jointDesignEntities;
         List<JointDesign> jointDesigns = new ArrayList<>();
-        // Check if the findAll method returned a value
-        if (!jointDesignEntities.iterator().hasNext()) {
-//          TODO throw new ApplicationException
-            throw new Exception("Joint Design list is empty");
-        }
-        // Convert Iterable to List
-        for (JointDesignEntity jointDesignEntity : jointDesignEntities
-        ) {
-            JointDesign jointDesign = new JointDesign(jointDesignEntity);
-            jointDesigns.add(jointDesign);
+        try{
+            jointDesignEntities = this.jointDesignDal.findAll();
+            // Convert Iterable to List
+            for (JointDesignEntity jointDesignEntity : jointDesignEntities
+            ) {
+                JointDesign jointDesign = new JointDesign(jointDesignEntity);
+                jointDesigns.add(jointDesign);
+            }
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.JOINT_DESIGN_COULD_NOT_BE_FOUND);
         }
         return jointDesigns;
     }

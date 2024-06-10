@@ -4,6 +4,7 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.INdtTypeDal;
 import com.verapipe.dto.NdtType;
 import com.verapipe.entities.NdtTypeEntity;
+import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,7 @@ public class NdtTypeLogic {
         try {
             ndtTypeEntity = this.ndtTypeDal.save(ndtTypeEntity);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.NDT_TYPE_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
         int addedNdtTypeId = ndtTypeEntity.getId();
         return addedNdtTypeId;
@@ -39,29 +39,21 @@ public class NdtTypeLogic {
     public void update(NdtType ndtType) throws Exception {
         validations(ndtType);
         NdtTypeEntity sentNdtTypeEntity = new NdtTypeEntity(ndtType);
-        NdtTypeEntity receivedNdtTypeEntity;
         try {
-            receivedNdtTypeEntity = this.ndtTypeDal.save(sentNdtTypeEntity);
+            this.ndtTypeDal.save(sentNdtTypeEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
-        }
-        // Validate sent entity and return entity from DB are equals
-        if (!sentNdtTypeEntity.equals(receivedNdtTypeEntity)) {
-//            TODO throw new ApplicationException
-            throw new Exception();
+            throw new ApplicationException(ErrorType.NDT_TYPE_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
     }
 
     public void delete(int id) throws Exception {
         if (!isNdtTypeExist(id)) {
-//            TODO throw new ApplicationException
+            throw new ApplicationException(ErrorType.NDT_TYPE_DOES_NOT_EXIST);
         }
         try {
             this.ndtTypeDal.deleteById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_NDT_TYPE);
         }
     }
 
@@ -70,12 +62,10 @@ public class NdtTypeLogic {
         try {
             ndtTypeEntity = this.ndtTypeDal.findById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.NDT_TYPE_COULD_NOT_BE_FOUND);
         }
         if (ndtTypeEntity.isEmpty()) {
-//            TODO throw new ApplicationException
-            throw new Exception("Ndt Type not found");
+            throw new ApplicationException(ErrorType.NDT_TYPE_DOES_NOT_EXIST);
         }
         NdtType ndtType = new NdtType(ndtTypeEntity.get());
         return ndtType;
@@ -83,18 +73,18 @@ public class NdtTypeLogic {
 
     @Cacheable(cacheNames = "ndtTypeCache", key = "#root.methodName")
     public List<NdtType> getAll() throws Exception {
-        Iterable<NdtTypeEntity> ndtTypeEntities = this.ndtTypeDal.findAll();
+        Iterable<NdtTypeEntity> ndtTypeEntities;
         List<NdtType> ndtTypes = new ArrayList<>();
-        // Check if the findAll method returned a value
-        if (!ndtTypeEntities.iterator().hasNext()) {
-//          TODO throw new ApplicationException
-            throw new Exception("Ndt Type list is empty");
-        }
-        // Convert Iterable to List
-        for (NdtTypeEntity ndtTypeEntity : ndtTypeEntities
-        ) {
-            NdtType ndtType = new NdtType(ndtTypeEntity);
-            ndtTypes.add(ndtType);
+        try{
+            ndtTypeEntities = this.ndtTypeDal.findAll();
+            // Convert Iterable to List
+            for (NdtTypeEntity ndtTypeEntity : ndtTypeEntities
+            ) {
+                NdtType ndtType = new NdtType(ndtTypeEntity);
+                ndtTypes.add(ndtType);
+            }
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.NDT_TYPE_COULD_NOT_BE_FOUND);
         }
         return ndtTypes;
     }

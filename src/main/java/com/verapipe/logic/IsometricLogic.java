@@ -30,8 +30,7 @@ public class IsometricLogic {
         try {
             isometricEntity = this.isometricDal.save(isometricEntity);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.ISOMETRIC_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
         int addedIsometricId = isometricEntity.getId();
         return addedIsometricId;
@@ -40,29 +39,22 @@ public class IsometricLogic {
     public void update(Isometric isometric) throws Exception {
         validations(isometric);
         IsometricEntity sentIsometricEntity = new IsometricEntity(isometric);
-        IsometricEntity receivedIsometricEntity;
         try {
-            receivedIsometricEntity = this.isometricDal.save(sentIsometricEntity);
+            this.isometricDal.save(sentIsometricEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
-        }
-        // Validate sent entity and return entity from DB are equals
-        if (!sentIsometricEntity.equals(receivedIsometricEntity)) {
-//            TODO throw new ApplicationException
-            throw new Exception();
+            throw new ApplicationException(ErrorType.ISOMETRIC_COULD_NOT_BE_ADDED_OR_UPDATED);
+
         }
     }
 
     public void delete(int id) throws Exception {
         if (!isIsometricExist(id)) {
-//            TODO throw new ApplicationException
+            throw new ApplicationException(ErrorType.ISOMETRIC_DOES_NOT_EXIST);
         }
         try {
             this.isometricDal.deleteById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_ISOMETRIC);
         }
     }
 
@@ -71,30 +63,28 @@ public class IsometricLogic {
         try {
             isometricEntity = this.isometricDal.findById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.ISOMETRIC_COULD_NOT_BE_FOUND);
         }
         if (isometricEntity.isEmpty()) {
-//            TODO throw new ApplicationException
-            throw new Exception("Isometric not found");
+            throw new ApplicationException(ErrorType.ISOMETRIC_DOES_NOT_EXIST);
         }
         Isometric isometric = new Isometric(isometricEntity.get());
         return isometric;
     }
 
     public List<Isometric> getAll() throws Exception {
-        Iterable<IsometricEntity> isometricEntities = this.isometricDal.findAll();
+        Iterable<IsometricEntity> isometricEntities;
         List<Isometric> isometrics = new ArrayList<>();
-        // Check if the findAll method returned a value
-        if (!isometricEntities.iterator().hasNext()) {
-//          TODO throw new ApplicationException
-            throw new Exception("Isometrics list is empty");
-        }
-        // Convert Iterable to List
-        for (IsometricEntity isometricEntity : isometricEntities
-        ) {
-            Isometric isometric = new Isometric(isometricEntity);
-            isometrics.add(isometric);
+        try{
+            isometricEntities = this.isometricDal.findAll();
+            // Convert Iterable to List
+            for (IsometricEntity isometricEntity : isometricEntities
+            ) {
+                Isometric isometric = new Isometric(isometricEntity);
+                isometrics.add(isometric);
+            }
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.ISOMETRIC_COULD_NOT_BE_FOUND);
         }
         return isometrics;
     }
@@ -146,7 +136,7 @@ public class IsometricLogic {
             List<Integer> currentSheets = pidSheets.get(pid.getName());
             for (Integer sheet : currentSheets) {
                 if (sheet < 0 || sheet > pid.getSheets()) {
-                    throw new ApplicationException(ErrorType.SHEETS_DONT_MATCH_PID);
+                    throw new ApplicationException(ErrorType.SHEETS_DO_NOT_MATCH_PID);
                 }
             }
         }

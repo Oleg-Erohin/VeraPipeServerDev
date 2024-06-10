@@ -4,6 +4,7 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.IPidDal;
 import com.verapipe.dto.Pid;
 import com.verapipe.entities.PidEntity;
+import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,7 @@ public class PidLogic {
         try {
             pidEntity = this.pidDal.save(pidEntity);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.PID_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
         int addedPidId = pidEntity.getId();
         return addedPidId;
@@ -39,29 +39,22 @@ public class PidLogic {
     public void update(Pid pid) throws Exception {
         validations(pid);
         PidEntity sentPidEntity = new PidEntity(pid);
-        PidEntity receivedPidEntity;
         try {
-            receivedPidEntity = this.pidDal.save(sentPidEntity);
+            this.pidDal.save(sentPidEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
-        }
-        // Validate sent entity and return entity from DB are equals
-        if (!sentPidEntity.equals(receivedPidEntity)) {
-//            TODO throw new ApplicationException
-            throw new Exception();
+            throw new ApplicationException(ErrorType.PID_COULD_NOT_BE_ADDED_OR_UPDATED);
+
         }
     }
 
     public void delete(int id) throws Exception {
         if (!isPidExist(id)) {
-//            TODO throw new ApplicationException
+            throw new ApplicationException(ErrorType.PID_DOES_NOT_EXIST);
         }
         try {
             this.pidDal.deleteById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_PID);
         }
     }
 
@@ -70,30 +63,28 @@ public class PidLogic {
         try {
             pidEntity = this.pidDal.findById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.PID_COULD_NOT_BE_FOUND);
         }
         if (pidEntity.isEmpty()) {
-//            TODO throw new ApplicationException
-            throw new Exception("Pid not found");
+            throw new ApplicationException(ErrorType.PID_DOES_NOT_EXIST);
         }
         Pid pid = new Pid(pidEntity.get());
         return pid;
     }
 
     public List<Pid> getAll() throws Exception {
-        Iterable<PidEntity> pidEntities = this.pidDal.findAll();
+        Iterable<PidEntity> pidEntities;
         List<Pid> pids = new ArrayList<>();
-        // Check if the findAll method returned a value
-        if (!pidEntities.iterator().hasNext()) {
-//          TODO throw new ApplicationException
-            throw new Exception("Pid list is empty");
-        }
-        // Convert Iterable to List
-        for (PidEntity pidEntity : pidEntities
-        ) {
-            Pid pid = new Pid(pidEntity);
-            pids.add(pid);
+        try{
+            pidEntities = this.pidDal.findAll();
+            // Convert Iterable to List
+            for (PidEntity pidEntity : pidEntities
+            ) {
+                Pid pid = new Pid(pidEntity);
+                pids.add(pid);
+            }
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.PID_COULD_NOT_BE_FOUND);
         }
         return pids;
     }

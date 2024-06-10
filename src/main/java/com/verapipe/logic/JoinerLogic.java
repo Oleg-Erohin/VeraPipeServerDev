@@ -4,6 +4,7 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.IJoinerDal;
 import com.verapipe.dto.Joiner;
 import com.verapipe.entities.JoinerEntity;
+import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,7 @@ public class JoinerLogic {
         try {
             joinerEntity = this.joinerDal.save(joinerEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.JOINER_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
         int addedJoinerId = joinerEntity.getId();
         return addedJoinerId;
@@ -38,29 +38,21 @@ public class JoinerLogic {
     public void update(Joiner joiner) throws Exception {
         validations(joiner);
         JoinerEntity sentJoinerEntity = new JoinerEntity(joiner);
-        JoinerEntity receivedJoinerEntity;
         try {
-            receivedJoinerEntity = this.joinerDal.save(sentJoinerEntity);
+            this.joinerDal.save(sentJoinerEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
-        }
-        // Validate sent entity and return entity from DB are equals
-        if (!sentJoinerEntity.equals(receivedJoinerEntity)) {
-//            TODO throw new ApplicationException
-            throw new Exception();
+            throw new ApplicationException(ErrorType.JOINER_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
     }
 
     public void delete(int id) throws Exception {
         if (!isJoinerExist(id)) {
-//            TODO throw new ApplicationException
+            throw new ApplicationException(ErrorType.JOINER_DOES_NOT_EXIST);
         }
         try {
             this.joinerDal.deleteById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_JOINER);
         }
     }
 
@@ -69,31 +61,30 @@ public class JoinerLogic {
         try {
             joinerEntity = this.joinerDal.findById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.JOINER_COULD_NOT_BE_FOUND);
         }
         if (joinerEntity.isEmpty()) {
-//            TODO throw new ApplicationException
-            throw new Exception("Joiner not found");
+            throw new ApplicationException(ErrorType.JOINER_DOES_NOT_EXIST);
         }
         Joiner joiner = new Joiner(joinerEntity.get());
         return joiner;
     }
 
     public List<Joiner> getAll() throws Exception {
-        Iterable<JoinerEntity> joinerEntities = this.joinerDal.findAll();
+        Iterable<JoinerEntity> joinerEntities;
         List<Joiner> joiners = new ArrayList<>();
-        // Check if the findAll method returned a value
-        if (!joinerEntities.iterator().hasNext()) {
-//          TODO throw new ApplicationException
-            throw new Exception("Joiners list is empty");
+        try {
+            joinerEntities = this.joinerDal.findAll();
+            // Convert Iterable to List
+            for (JoinerEntity joinerEntity : joinerEntities
+            ) {
+                Joiner joiner = new Joiner(joinerEntity);
+                joiners.add(joiner);
+            }
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.JOINER_COULD_NOT_BE_FOUND);
         }
-        // Convert Iterable to List
-        for (JoinerEntity joinerEntity : joinerEntities
-        ) {
-            Joiner joiner = new Joiner(joinerEntity);
-            joiners.add(joiner);
-        }
+
         return joiners;
     }
 
