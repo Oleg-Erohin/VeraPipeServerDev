@@ -33,12 +33,12 @@ public class JointEntity {
     private String fittingDescription1;
     @Column(name = "comments", unique = false, nullable = true, columnDefinition = "TEXT")
     private String comments;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "base_material_type_1")
-    private BaseMaterialTypeEntity baseMaterialType1;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "base_material_certificate_1")
-    private BaseMaterialCertificateEntity baseMaterialCertificate1;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "base_material_type_1")
+//    private BaseMaterialTypeEntity baseMaterialType1;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "base_material_certificate_1")
+//    private BaseMaterialCertificateEntity baseMaterialCertificate1;
     @Column(name = "fitting_description_2", unique = false, nullable = false)
     private String fittingDescription2;
     @ManyToMany(fetch = FetchType.EAGER)
@@ -46,6 +46,8 @@ public class JointEntity {
     // TODO to make validation that only 2 objects in baseMaterialCertificateList
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<BaseMaterialCertificateEntity> baseMaterialCertificateList;
+    @Column(name = "thickness", unique = false, nullable = false)
+    private Float thickness;
     // TODO to make validation that only 2 objects in fillerMaterialTypeList
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<FillerMaterialTypeEntity> fillerMaterialTypeList;
@@ -93,6 +95,7 @@ public class JointEntity {
         initializeBaseMaterialTypeListWithValues(joint);
         this.baseMaterialCertificateList = new HashSet<>();
         initializeBaseMaterialCertificateListWithValues(joint);
+        this.thickness = joint.getThickness();
         this.fittingDescription2 = joint.getFittingDescription2();
         this.fillerMaterialTypeList = new HashSet<>();
         initializeFillerMaterialTypeListWithValues(joint);
@@ -275,6 +278,14 @@ public class JointEntity {
         this.baseMaterialCertificateList = baseMaterialCertificateList;
     }
 
+    public Float getThickness() {
+        return thickness;
+    }
+
+    public void setThickness(Float thickness) {
+        this.thickness = thickness;
+    }
+
     public Set<FillerMaterialTypeEntity> getFillerMaterialTypeList() {
         return fillerMaterialTypeList;
     }
@@ -339,8 +350,12 @@ public class JointEntity {
         this.ndtReport = ndtReport;
     }
 
-    public boolean isNdtPassed() {
+    public Boolean getNdtPassed() {
         return isNdtPassed;
+    }
+
+    public void setNdtPassed(Boolean ndtPassed) {
+        isNdtPassed = ndtPassed;
     }
 
     public void setNdtPassed(boolean ndtPassed) {

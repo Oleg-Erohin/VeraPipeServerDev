@@ -1,10 +1,10 @@
 Important:
 - Add validations to logics - Oleg
 - Add exception in all logics (per marked "TODO") - Aviad
+- Add thickness to joint. If imperial - selected from table. If metric - manual input. Validate against joiner and PSP - Oleg (Incomplete validation)
 
 To Do Later:
 - Ensure comments include line breaks
-- Add thickness to joint. If imperial - selected from table. If metric - manual input. Validate against joiner and PSP
 
 
 

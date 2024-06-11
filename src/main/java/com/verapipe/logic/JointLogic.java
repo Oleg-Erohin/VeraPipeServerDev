@@ -5,6 +5,7 @@ import com.verapipe.dal.IJointDal;
 import com.verapipe.dto.*;
 import com.verapipe.entities.JointEntity;
 import com.verapipe.enums.ErrorType;
+import com.verapipe.enums.ThicknessUOM;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +24,17 @@ public class JointLogic {
     private PostWeldHeatTreatmentLogic postWeldHeatTreatmentLogic;
     private JoinerLogic joinerLogic;
     private IsometricLogic isometricLogic;
+    private ProcessSpecificationProcedureLogic processSpecificationProcedureLogic;
 
     @Autowired
-    public JointLogic(IJointDal jointDal, NdtReportLogic ndtReportLogic, PreheatLogic preheatLogic, PostWeldHeatTreatmentLogic postWeldHeatTreatmentLogic, JoinerLogic joinerLogic, IsometricLogic isometricLogic) {
+    public JointLogic(IJointDal jointDal, NdtReportLogic ndtReportLogic, PreheatLogic preheatLogic, PostWeldHeatTreatmentLogic postWeldHeatTreatmentLogic, JoinerLogic joinerLogic, IsometricLogic isometricLogic, ProcessSpecificationProcedureLogic processSpecificationProcedureLogic) {
         this.jointDal = jointDal;
         this.ndtReportLogic = ndtReportLogic;
         this.preheatLogic = preheatLogic;
         this.postWeldHeatTreatmentLogic = postWeldHeatTreatmentLogic;
         this.joinerLogic = joinerLogic;
         this.isometricLogic = isometricLogic;
+        this.processSpecificationProcedureLogic = processSpecificationProcedureLogic;
     }
 
     public int add(Joint joint) throws Exception {
@@ -112,39 +115,38 @@ public class JointLogic {
             validateNumberInputNotNegative(joint.getDiameterInch());
         }
         validateJointFittingDescription(joint.getFittingDescription1());
-        if (joint.getBaseMaterialTypeName1() != null) {
-            validateJointBaseMaterialType(joint.getBaseMaterialTypeName1());
-        }
+        validateJointBaseMaterialType(joint.getBaseMaterialTypeName1());
         if (joint.getBaseMaterialHeatNum1() != null) {
             validateJointBaseMaterialHeatNum(joint.getBaseMaterialHeatNum1());
         }
         validateJointFittingDescription(joint.getFittingDescription2());
         if (joint.getBaseMaterialTypeName2() != null) {
             validateJointBaseMaterialType(joint.getBaseMaterialTypeName2());
+            if (joint.getBaseMaterialHeatNum2() != null) {
+                validateJointBaseMaterialHeatNum(joint.getBaseMaterialHeatNum2());
+            }
         }
-        if (joint.getBaseMaterialHeatNum2() != null) {
-            validateJointBaseMaterialHeatNum(joint.getBaseMaterialHeatNum2());
-        }
+        validateThickness(joint);
         if (joint.getFillerMaterialTypeName1() != null) {
             validateJointFillerMaterialType(joint.getFillerMaterialTypeName1());
-        }
-        if (joint.getFillerMaterialHeatNum1() != null) {
-            validateJointFillerMaterialHeatNum(joint.getFillerMaterialHeatNum1());
+            if (joint.getFillerMaterialHeatNum1() != null) {
+                validateJointFillerMaterialHeatNum(joint.getFillerMaterialHeatNum1());
+            }
         }
         if (joint.getFillerMaterialTypeName2() != null) {
             validateJointFillerMaterialType(joint.getFillerMaterialTypeName2());
-        }
-        if (joint.getFillerMaterialHeatNum2() != null) {
-            validateJointFillerMaterialHeatNum(joint.getFillerMaterialHeatNum2());
+            if (joint.getFillerMaterialHeatNum2() != null) {
+                validateJointFillerMaterialHeatNum(joint.getFillerMaterialHeatNum2());
+            }
         }
         if (joint.getProcessSpecificationProcedureName() != null) {
             validateJointProcessSpecificationProcedure(joint.getProcessSpecificationProcedureName());
         }
         if (joint.getJoinerTagId1() != null) {
             validateJointJoinerTagId(joint.getJoinerTagId1());
-        }
-        if (joint.getJoinerTagId2() != null) {
-            validateJointJoinerTagId(joint.getJoinerTagId2());
+            if (joint.getJoinerTagId2() != null) {
+                validateJointJoinerTagId(joint.getJoinerTagId2());
+            }
         }
         if (joint.getDate() != null) {
             validateJointDate(joint.getDate());
@@ -172,6 +174,16 @@ public class JointLogic {
         }
     }
 
+    private void validateThickness(Joint joint) {
+        ProcessSpecificationProcedure psp = this.processSpecificationProcedureLogic.getByName(joint.getProcessSpecificationProcedureName());
+        ThicknessUOM thicknessUOM = psp.getThicknessUom();
+        if (thicknessUOM == ThicknessUOM.SCH){
+
+        } else {
+
+        }
+    }
+
     private void validateJointSheetOnIsometric(String isometricName, int sheetOnIsometric) throws Exception {
         List<Isometric> allIsometrics = isometricLogic.getAll();
         Isometric isometric = null;
@@ -195,9 +207,9 @@ public class JointLogic {
     }
 
     private void validateJointJoinerTagId(String joinersTagId) throws Exception {
-        List <Joiner> allJoiners = this.joinerLogic.getAll();
-        for (Joiner joiner : allJoiners){
-            if (joiner.getTagId().equals(joinersTagId)){
+        List<Joiner> allJoiners = this.joinerLogic.getAll();
+        for (Joiner joiner : allJoiners) {
+            if (joiner.getTagId().equals(joinersTagId)) {
                 return;
             }
         }

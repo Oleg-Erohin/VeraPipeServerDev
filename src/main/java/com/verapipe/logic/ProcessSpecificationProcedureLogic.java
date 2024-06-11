@@ -175,4 +175,8 @@ public class ProcessSpecificationProcedureLogic {
     private boolean isProcessSpecificationProcedureExist(int id) {
         return this.processSpecificationProcedureDal.existsById(id);
     }
+
+    public ProcessSpecificationProcedure getByName(String processSpecificationProcedureName) {
+        return this.processSpecificationProcedureDal.findByName(processSpecificationProcedureName);
+    }
 }
