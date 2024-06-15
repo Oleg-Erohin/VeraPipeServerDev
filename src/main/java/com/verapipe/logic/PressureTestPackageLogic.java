@@ -4,6 +4,7 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.IPressureTestPackageDal;
 import com.verapipe.dto.PressureTestPackage;
 import com.verapipe.entities.PressureTestPackageEntity;
+import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,7 @@ public class PressureTestPackageLogic {
         try {
             pressureTestPackageEntity = this.pressureTestPackageDal.save(pressureTestPackageEntity);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.PRESSURE_TEST_PACKAGE_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
         int addedPressureTestPackageId = pressureTestPackageEntity.getId();
         return addedPressureTestPackageId;
@@ -39,29 +39,21 @@ public class PressureTestPackageLogic {
     public void update(PressureTestPackage pressureTestPackage) throws Exception {
         validations(pressureTestPackage);
         PressureTestPackageEntity sentPressureTestPackageEntity = new PressureTestPackageEntity(pressureTestPackage);
-        PressureTestPackageEntity receivedPressureTestPackageEntity;
         try {
-            receivedPressureTestPackageEntity = this.pressureTestPackageDal.save(sentPressureTestPackageEntity);
+            this.pressureTestPackageDal.save(sentPressureTestPackageEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
-        }
-        // Validate sent entity and return entity from DB are equals
-        if (!sentPressureTestPackageEntity.equals(receivedPressureTestPackageEntity)) {
-//            TODO throw new ApplicationException
-            throw new Exception();
+            throw new ApplicationException(ErrorType.PRESSURE_TEST_PACKAGE_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
     }
 
     public void delete(int id) throws Exception {
         if (!isPressureTestPackageExist(id)) {
-//            TODO throw new ApplicationException
+            throw new ApplicationException(ErrorType.PRESSURE_TEST_PACKAGE_DOES_NOT_EXIST);
         }
         try {
             this.pressureTestPackageDal.deleteById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_PRESSURE_TEST_PACKAGE);
         }
     }
 
@@ -70,30 +62,28 @@ public class PressureTestPackageLogic {
         try {
             pressureTestPackageEntity = this.pressureTestPackageDal.findById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.PRESSURE_TEST_PACKAGE_COULD_NOT_BE_FOUND);
         }
         if (pressureTestPackageEntity.isEmpty()) {
-//            TODO throw new ApplicationException
-            throw new Exception("Pressure Test Package not found");
+            throw new ApplicationException(ErrorType.PRESSURE_TEST_PACKAGE_DOES_NOT_EXIST);
         }
         PressureTestPackage pressureTestPackage = new PressureTestPackage(pressureTestPackageEntity.get());
         return pressureTestPackage;
     }
 
     public List<PressureTestPackage> getAll() throws Exception {
-        Iterable<PressureTestPackageEntity> pressureTestPackageEntities = this.pressureTestPackageDal.findAll();
+        Iterable<PressureTestPackageEntity> pressureTestPackageEntities;
         List<PressureTestPackage> pressureTestPackages = new ArrayList<>();
-        // Check if the findAll method returned a value
-        if (!pressureTestPackageEntities.iterator().hasNext()) {
-//          TODO throw new ApplicationException
-            throw new Exception("Pressure Test Package list is empty");
-        }
-        // Convert Iterable to List
-        for (PressureTestPackageEntity pressureTestPackageEntity : pressureTestPackageEntities
-        ) {
-            PressureTestPackage pressureTestPackage = new PressureTestPackage(pressureTestPackageEntity);
-            pressureTestPackages.add(pressureTestPackage);
+        try{
+            pressureTestPackageEntities = this.pressureTestPackageDal.findAll();
+            // Convert Iterable to List
+            for (PressureTestPackageEntity pressureTestPackageEntity : pressureTestPackageEntities
+            ) {
+                PressureTestPackage pressureTestPackage = new PressureTestPackage(pressureTestPackageEntity);
+                pressureTestPackages.add(pressureTestPackage);
+            }
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.PRESSURE_TEST_PACKAGE_COULD_NOT_BE_FOUND);
         }
         return pressureTestPackages;
     }

@@ -33,8 +33,7 @@ public class ProcessSpecificationProcedureLogic {
         try {
             processSpecificationProcedureEntity = this.processSpecificationProcedureDal.save(processSpecificationProcedureEntity);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.PROCESS_SPECIFICATION_PROCEDURE_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
         int addedProcessSpecificationProcedureId = processSpecificationProcedureEntity.getId();
         return addedProcessSpecificationProcedureId;
@@ -43,29 +42,21 @@ public class ProcessSpecificationProcedureLogic {
     public void update(ProcessSpecificationProcedure processSpecificationProcedure) throws Exception {
         validations(processSpecificationProcedure);
         ProcessSpecificationProcedureEntity sentProcessSpecificationProcedureEntity = new ProcessSpecificationProcedureEntity(processSpecificationProcedure);
-        ProcessSpecificationProcedureEntity receivedProcessSpecificationProcedureEntity;
         try {
-            receivedProcessSpecificationProcedureEntity = this.processSpecificationProcedureDal.save(sentProcessSpecificationProcedureEntity);
+            this.processSpecificationProcedureDal.save(sentProcessSpecificationProcedureEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
-        }
-        // Validate sent entity and return entity from DB are equals
-        if (!sentProcessSpecificationProcedureEntity.equals(receivedProcessSpecificationProcedureEntity)) {
-//            TODO throw new ApplicationException
-            throw new Exception();
+            throw new ApplicationException(ErrorType.PROCESS_SPECIFICATION_PROCEDURE_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
     }
 
     public void delete(int id) throws Exception {
         if (!isProcessSpecificationProcedureExist(id)) {
-//            TODO throw new ApplicationException
+            throw new ApplicationException(ErrorType.PROCESS_SPECIFICATION_PROCEDURE_DOES_NOT_EXIST);
         }
         try {
             this.processSpecificationProcedureDal.deleteById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_PROCESS_SPECIFICATION_PROCEDURE);
         }
     }
 
@@ -74,12 +65,10 @@ public class ProcessSpecificationProcedureLogic {
         try {
             processSpecificationProcedureEntity = this.processSpecificationProcedureDal.findById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.PROCESS_SPECIFICATION_PROCEDURE_COULD_NOT_BE_FOUND);
         }
         if (processSpecificationProcedureEntity.isEmpty()) {
-//            TODO throw new ApplicationException
-            throw new Exception("Process Specification Procedure not found");
+            throw new ApplicationException(ErrorType.PROCESS_SPECIFICATION_PROCEDURE_DOES_NOT_EXIST);
         }
         ProcessSpecificationProcedure processSpecificationProcedure = new ProcessSpecificationProcedure(processSpecificationProcedureEntity.get());
         return processSpecificationProcedure;
@@ -87,18 +76,18 @@ public class ProcessSpecificationProcedureLogic {
 
     @Cacheable(cacheNames = "processSpecificationProceduresCache", key = "#root.methodName")
     public List<ProcessSpecificationProcedure> getAll() throws Exception {
-        Iterable<ProcessSpecificationProcedureEntity> processSpecificationProcedureEntities = this.processSpecificationProcedureDal.findAll();
+        Iterable<ProcessSpecificationProcedureEntity> processSpecificationProcedureEntities;
         List<ProcessSpecificationProcedure> processSpecificationProcedures = new ArrayList<>();
-        // Check if the findAll method returned a value
-        if (!processSpecificationProcedureEntities.iterator().hasNext()) {
-//          TODO throw new ApplicationException
-            throw new Exception("Process Specification Procedure list is empty");
-        }
-        // Convert Iterable to List
-        for (ProcessSpecificationProcedureEntity processSpecificationProcedureEntity : processSpecificationProcedureEntities
-        ) {
-            ProcessSpecificationProcedure processSpecificationProcedure = new ProcessSpecificationProcedure(processSpecificationProcedureEntity);
-            processSpecificationProcedures.add(processSpecificationProcedure);
+        try{
+            processSpecificationProcedureEntities = this.processSpecificationProcedureDal.findAll();
+            // Convert Iterable to List
+            for (ProcessSpecificationProcedureEntity processSpecificationProcedureEntity : processSpecificationProcedureEntities
+            ) {
+                ProcessSpecificationProcedure processSpecificationProcedure = new ProcessSpecificationProcedure(processSpecificationProcedureEntity);
+                processSpecificationProcedures.add(processSpecificationProcedure);
+            }
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.PROCESS_SPECIFICATION_PROCEDURE_COULD_NOT_BE_FOUND);
         }
         return processSpecificationProcedures;
     }

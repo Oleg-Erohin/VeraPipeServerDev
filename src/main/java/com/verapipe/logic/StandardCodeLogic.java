@@ -4,6 +4,7 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.IStandardCodeDal;
 import com.verapipe.dto.StandardCode;
 import com.verapipe.entities.StandardCodeEntity;
+import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,7 @@ public class StandardCodeLogic {
         try {
             standardCodeEntity = this.standardCodeDal.save(standardCodeEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.STANDARD_CODE_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
         int addedStandardCodeId = standardCodeEntity.getId();
         return addedStandardCodeId;
@@ -39,29 +39,22 @@ public class StandardCodeLogic {
     public void update(StandardCode standardCode) throws Exception {
         validations(standardCode);
         StandardCodeEntity sentStandardCodeEntity = new StandardCodeEntity(standardCode);
-        StandardCodeEntity receivedStandardCodeEntity;
+
         try {
-            receivedStandardCodeEntity = this.standardCodeDal.save(sentStandardCodeEntity);
+            this.standardCodeDal.save(sentStandardCodeEntity);
         } catch (Exception e) {
-//          TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
-        }
-        // Validate sent entity and return entity from DB are equals
-        if (!sentStandardCodeEntity.equals(receivedStandardCodeEntity)) {
-//            TODO throw new ApplicationException
-            throw new Exception();
+            throw new ApplicationException(ErrorType.STANDARD_CODE_COULD_NOT_BE_ADDED_OR_UPDATED);
         }
     }
 
     public void delete(int id) throws Exception {
         if (!isStandardCodeExist(id)) {
-//            TODO throw new ApplicationException
+            throw new ApplicationException(ErrorType.STANDARD_CODE_DOES_NOT_EXIST);
         }
         try {
             this.standardCodeDal.deleteById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_STANDARD_CODE);
         }
     }
 
@@ -70,12 +63,10 @@ public class StandardCodeLogic {
         try {
             standardCodeEntity = this.standardCodeDal.findById(id);
         } catch (Exception e) {
-//            TODO throw new ApplicationException
-            throw new Exception(e.getMessage());
+            throw new ApplicationException(ErrorType.STANDARD_CODE_COULD_NOT_BE_FOUND);
         }
         if (standardCodeEntity.isEmpty()) {
-//            TODO throw new ApplicationException
-            throw new Exception("Standard Code not found");
+            throw new ApplicationException(ErrorType.STANDARD_CODE_DOES_NOT_EXIST);
         }
         StandardCode standardCode = new StandardCode(standardCodeEntity.get());
         return standardCode;
@@ -83,18 +74,18 @@ public class StandardCodeLogic {
 
     @Cacheable(cacheNames = "standardCodeCache", key = "#root.methodName")
     public List<StandardCode> getAll() throws Exception {
-        Iterable<StandardCodeEntity> standardCodeEntities = this.standardCodeDal.findAll();
+        Iterable<StandardCodeEntity> standardCodeEntities;
         List<StandardCode> standardCodes = new ArrayList<>();
-        // Check if the findAll method returned a value
-        if (!standardCodeEntities.iterator().hasNext()) {
-//          TODO throw new ApplicationException
-            throw new Exception("Standard Code list is empty");
-        }
-        // Convert Iterable to List
-        for (StandardCodeEntity standardCodeEntity : standardCodeEntities
-        ) {
-            StandardCode standardCode = new StandardCode(standardCodeEntity);
-            standardCodes.add(standardCode);
+        try{
+            standardCodeEntities = this.standardCodeDal.findAll();
+            // Convert Iterable to List
+            for (StandardCodeEntity standardCodeEntity : standardCodeEntities
+            ) {
+                StandardCode standardCode = new StandardCode(standardCodeEntity);
+                standardCodes.add(standardCode);
+            }
+        } catch (Exception e) {
+
         }
         return standardCodes;
     }

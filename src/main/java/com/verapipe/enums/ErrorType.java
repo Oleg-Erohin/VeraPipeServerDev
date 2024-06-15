@@ -76,6 +76,18 @@ public enum ErrorType {
     PREHEAT_COULD_NOT_BE_ADDED_OR_UPDATED(871, "Preheat could not be added or updated",false),
     FAILED_TO_DELETE_PREHEAT(872,"Failed to delete Preheat",false),
     PREHEAT_COULD_NOT_BE_FOUND(873,"Failed to get this Preheat", false),
+    PRESSURE_TEST_PACKAGE_COULD_NOT_BE_ADDED_OR_UPDATED(874, "Pressure test package could not be added or updated",false),
+    FAILED_TO_DELETE_PRESSURE_TEST_PACKAGE(875,"Failed to delete Pressure test package",false),
+    PRESSURE_TEST_PACKAGE_COULD_NOT_BE_FOUND(876,"Failed to get this Pressure test package", false),
+    PRESSURE_TEST_PACKAGE_DOES_NOT_EXIST(877, "The Pressure test package does not exist in existing Pressure test packages", false),
+    PROCESS_SPECIFICATION_PROCEDURE_COULD_NOT_BE_ADDED_OR_UPDATED(878, "Process Specification procedure could not be added or updated",false),
+    FAILED_TO_DELETE_PROCESS_SPECIFICATION_PROCEDURE(879,"Failed to delete Process Specification procedure",false),
+    PROCESS_SPECIFICATION_PROCEDURE_COULD_NOT_BE_FOUND(880,"Failed to get this Process Specification procedure", false),
+    STANDARD_CODE_COULD_NOT_BE_ADDED_OR_UPDATED(881, "Standard code could not be added or updated",false),
+    FAILED_TO_DELETE_STANDARD_CODE(882,"Failed to delete Standard code",false),
+    STANDARD_CODE_COULD_NOT_BE_FOUND(883,"Failed to get this Standard code", false),
+    STANDARD_CODE_DOES_NOT_EXIST(884, "The Standard code does not exist in existing Standard codes", false),
+
 
 
 
