@@ -1,10 +1,12 @@
 Important:
 - Add validations to logics - Oleg
-- Add exception in all logics (per marked "TODO") - Aviad
-- Add thickness to joint. If imperial - selected from table. If metric - manual input. Validate against joiner and PSP - Oleg (Incomplete validation)
+- Add thickness to joint. If imperial - selected from table. If metric - manual input. Validate against joiner and PSP - Oleg (Incomplete validation) - Comment out validation
+- Remove dual thickness from Joint, add UOM and SCH
+- Add CORS filter
 
 To Do Later:
 - Ensure comments include line breaks
+- Disable possibility of duplicate values for all
 
 
 
@@ -30,3 +32,4 @@ Done:
 - DTO to not have List/Set variables (Separate to "1" & "2") - Oleg
 - To decide Cascade types - Aviad
 - Revision validation in File: check that does not exist in previous revisions - Oleg
+- Add exception in all logics (per marked "TODO") - Aviad
