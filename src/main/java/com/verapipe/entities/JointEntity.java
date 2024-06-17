@@ -3,6 +3,7 @@ package com.verapipe.entities;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.verapipe.dto.Joint;
+import com.verapipe.enums.UnitOfMeasure;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -25,20 +26,16 @@ public class JointEntity {
     private IsometricEntity isometric;
     @Column(name = "sheet_on_isometric", unique = false, nullable = false)
     private int sheetOnIsometric;
-    @Column(name = "diameter_mm", unique = false, nullable = true)
-    private Float diameterMm;
-    @Column(name = "diameter_inch", unique = false, nullable = true)
-    private Float diameterInch;
+    @Column(name = "uom", unique = false, nullable = false)
+    private UnitOfMeasure uom;
+    @Column(name = "schedule", unique = false, nullable = true)
+    private String schedule;
+    @Column(name = "diameter", unique = false, nullable = false)
+    private Float diameter;
     @Column(name = "fitting_description_1", unique = false, nullable = false)
     private String fittingDescription1;
     @Column(name = "comments", unique = false, nullable = true, columnDefinition = "TEXT")
     private String comments;
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "base_material_type_1")
-//    private BaseMaterialTypeEntity baseMaterialType1;
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "base_material_certificate_1")
-//    private BaseMaterialCertificateEntity baseMaterialCertificate1;
     @Column(name = "fitting_description_2", unique = false, nullable = false)
     private String fittingDescription2;
     @ManyToMany(fetch = FetchType.EAGER)
@@ -88,8 +85,9 @@ public class JointEntity {
         String isometricName = joint.getIsometricName();
         this.isometric.setName(isometricName);
         this.sheetOnIsometric = joint.getSheetOnIsometric();
-        this.diameterMm = joint.getDiameterMm();
-        this.diameterInch = joint.getDiameterInch();
+        this.uom = joint.getUom();
+        this.schedule = joint.getSchedule();
+        this.diameter = joint.getDiameter();
         this.fittingDescription1 = joint.getFittingDescription1();
         this.baseMaterialTypeList = new HashSet<>();
         initializeBaseMaterialTypeListWithValues(joint);
@@ -190,6 +188,7 @@ public class JointEntity {
 //        }
 //    }
 
+
     public int getId() {
         return id;
     }
@@ -238,20 +237,28 @@ public class JointEntity {
         this.sheetOnIsometric = sheetOnIsometric;
     }
 
-    public Float getDiameterMm() {
-        return diameterMm;
+    public UnitOfMeasure getUom() {
+        return uom;
     }
 
-    public void setDiameterMm(Float diameterMm) {
-        this.diameterMm = diameterMm;
+    public void setUom(UnitOfMeasure uom) {
+        this.uom = uom;
     }
 
-    public Float getDiameterInch() {
-        return diameterInch;
+    public String getSchedule() {
+        return schedule;
     }
 
-    public void setDiameterInch(Float diameterInch) {
-        this.diameterInch = diameterInch;
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
+    }
+
+    public Float getDiameter() {
+        return diameter;
+    }
+
+    public void setDiameter(Float diameter) {
+        this.diameter = diameter;
     }
 
     public String getFittingDescription1() {
@@ -262,12 +269,28 @@ public class JointEntity {
         this.fittingDescription1 = fittingDescription1;
     }
 
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
     public String getFittingDescription2() {
         return fittingDescription2;
     }
 
     public void setFittingDescription2(String fittingDescription2) {
         this.fittingDescription2 = fittingDescription2;
+    }
+
+    public Set<BaseMaterialTypeEntity> getBaseMaterialTypeList() {
+        return baseMaterialTypeList;
+    }
+
+    public void setBaseMaterialTypeList(Set<BaseMaterialTypeEntity> baseMaterialTypeList) {
+        this.baseMaterialTypeList = baseMaterialTypeList;
     }
 
     public Set<BaseMaterialCertificateEntity> getBaseMaterialCertificateList() {
@@ -290,14 +313,6 @@ public class JointEntity {
         return fillerMaterialTypeList;
     }
 
-    public Set<BaseMaterialTypeEntity> getBaseMaterialTypeList() {
-        return baseMaterialTypeList;
-    }
-
-    public void setBaseMaterialTypeList(Set<BaseMaterialTypeEntity> baseMaterialTypeList) {
-        this.baseMaterialTypeList = baseMaterialTypeList;
-    }
-
     public void setFillerMaterialTypeList(Set<FillerMaterialTypeEntity> fillerMaterialTypeList) {
         this.fillerMaterialTypeList = fillerMaterialTypeList;
     }
@@ -316,6 +331,14 @@ public class JointEntity {
 
     public void setProcessSpecificationProcedure(ProcessSpecificationProcedureEntity processSpecificationProcedure) {
         this.processSpecificationProcedure = processSpecificationProcedure;
+    }
+
+    public Set<JoinerEntity> getJoinersList() {
+        return joinersList;
+    }
+
+    public void setJoinersList(Set<JoinerEntity> joinersList) {
+        this.joinersList = joinersList;
     }
 
     public Date getDate() {
@@ -358,10 +381,6 @@ public class JointEntity {
         isNdtPassed = ndtPassed;
     }
 
-    public void setNdtPassed(boolean ndtPassed) {
-        isNdtPassed = ndtPassed;
-    }
-
     public PreheatEntity getPreheat() {
         return preheat;
     }
@@ -376,21 +395,5 @@ public class JointEntity {
 
     public void setPostWeldHeatTreatment(PostWeldHeatTreatmentEntity postWeldHeatTreatment) {
         this.postWeldHeatTreatment = postWeldHeatTreatment;
-    }
-
-    public Set<JoinerEntity> getJoinersList() {
-        return joinersList;
-    }
-
-    public void setJoinersList(Set<JoinerEntity> joinersList) {
-        this.joinersList = joinersList;
-    }
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
     }
 }

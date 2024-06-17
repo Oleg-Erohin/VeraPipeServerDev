@@ -3,7 +3,7 @@ package com.verapipe.dto;
 import com.verapipe.entities.BaseMaterialTypeEntity;
 import com.verapipe.entities.FillerMaterialTypeEntity;
 import com.verapipe.entities.ProcessSpecificationProcedureEntity;
-import com.verapipe.enums.ThicknessUOM;
+import com.verapipe.enums.UnitOfMeasure;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +24,14 @@ public class ProcessSpecificationProcedure {
     private Float diameterMaxMm;
     private Float diameterMinInch;
     private Float diameterMaxInch;
-    private ThicknessUOM thicknessUom;
+    private UnitOfMeasure unitOfMeasure;
     private Float thicknessMinMm;
     private Float thicknessMaxMm;
 
     public ProcessSpecificationProcedure() {
     }
 
-    public ProcessSpecificationProcedure(String name, String jointDesignName, String baseMaterialName1, String baseMaterialName2, String fusionProcessName, String fillerMaterialName1, String fillerMaterialName2, String standardCodeName, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, Float diameterMinMm, Float diameterMaxMm, Float diameterMinInch, Float diameterMaxInch, ThicknessUOM thicknessUom, Float thicknessMinMm, Float thicknessMaxMm) {
+    public ProcessSpecificationProcedure(String name, String jointDesignName, String baseMaterialName1, String baseMaterialName2, String fusionProcessName, String fillerMaterialName1, String fillerMaterialName2, String standardCodeName, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, Float diameterMinMm, Float diameterMaxMm, Float diameterMinInch, Float diameterMaxInch, UnitOfMeasure unitOfMeasure, Float thicknessMinMm, Float thicknessMaxMm) {
         this.name = name;
         this.jointDesignName = jointDesignName;
         this.baseMaterialName1 = baseMaterialName1;
@@ -46,12 +46,12 @@ public class ProcessSpecificationProcedure {
         this.diameterMaxMm = diameterMaxMm;
         this.diameterMinInch = diameterMinInch;
         this.diameterMaxInch = diameterMaxInch;
-        this.thicknessUom = thicknessUom;
+        this.unitOfMeasure = unitOfMeasure;
         this.thicknessMinMm = thicknessMinMm;
         this.thicknessMaxMm = thicknessMaxMm;
     }
 
-    public ProcessSpecificationProcedure(int id, String name, String jointDesignName, String baseMaterialName1, String baseMaterialName2, String fusionProcessName, String fillerMaterialName1, String fillerMaterialName2, String standardCodeName, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, Float diameterMinMm, Float diameterMaxMm, Float diameterMinInch, Float diameterMaxInch, ThicknessUOM thicknessUom, Float thicknessMinMm, Float thicknessMaxMm) {
+    public ProcessSpecificationProcedure(int id, String name, String jointDesignName, String baseMaterialName1, String baseMaterialName2, String fusionProcessName, String fillerMaterialName1, String fillerMaterialName2, String standardCodeName, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, Float diameterMinMm, Float diameterMaxMm, Float diameterMinInch, Float diameterMaxInch, UnitOfMeasure unitOfMeasure, Float thicknessMinMm, Float thicknessMaxMm) {
         this.id = id;
         this.name = name;
         this.jointDesignName = jointDesignName;
@@ -67,7 +67,7 @@ public class ProcessSpecificationProcedure {
         this.diameterMaxMm = diameterMaxMm;
         this.diameterMinInch = diameterMinInch;
         this.diameterMaxInch = diameterMaxInch;
-        this.thicknessUom = thicknessUom;
+        this.unitOfMeasure = unitOfMeasure;
         this.thicknessMinMm = thicknessMinMm;
         this.thicknessMaxMm = thicknessMaxMm;
     }
@@ -96,7 +96,7 @@ public class ProcessSpecificationProcedure {
         this.diameterMaxMm = processSpecificationProcedureEntity.getDiameterMmMax();
         this.diameterMinInch = processSpecificationProcedureEntity.getDiameterInchMin();
         this.diameterMaxInch = processSpecificationProcedureEntity.getDiameterInchMax();
-        this.thicknessUom = processSpecificationProcedureEntity.getThicknessUom();
+        this.unitOfMeasure = processSpecificationProcedureEntity.getThicknessUom();
         this.thicknessMinMm = processSpecificationProcedureEntity.getThicknessMmMin();
         this.thicknessMaxMm = processSpecificationProcedureEntity.getThicknessMmMax();
     }
@@ -221,12 +221,12 @@ public class ProcessSpecificationProcedure {
         this.diameterMaxInch = diameterMaxInch;
     }
 
-    public ThicknessUOM getThicknessUom() {
-        return thicknessUom;
+    public UnitOfMeasure getThicknessUom() {
+        return unitOfMeasure;
     }
 
-    public void setThicknessUom(ThicknessUOM thicknessUom) {
-        this.thicknessUom = thicknessUom;
+    public void setThicknessUom(UnitOfMeasure unitOfMeasure) {
+        this.unitOfMeasure = unitOfMeasure;
     }
 
     public Float getThicknessMinMm() {
@@ -263,7 +263,7 @@ public class ProcessSpecificationProcedure {
                 ", diameterMmMax=" + diameterMaxMm +
                 ", diameterInchMin=" + diameterMinInch +
                 ", diameterInchMax=" + diameterMaxInch +
-                ", thicknessUom=" + thicknessUom +
+                ", thicknessUom=" + unitOfMeasure +
                 ", thicknessMinMm=" + thicknessMinMm +
                 ", thicknessMaxMm=" + thicknessMaxMm +
                 '}';

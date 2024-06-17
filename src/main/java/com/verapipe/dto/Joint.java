@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.verapipe.entities.*;
+import com.verapipe.enums.UnitOfMeasure;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,8 +17,9 @@ public class Joint {
     private String pidName;
     private String isometricName;
     private int sheetOnIsometric;
-    private Float diameterMm;
-    private Float diameterInch;
+    private UnitOfMeasure uom;
+    private String schedule;
+    private Float diameter;
     private String fittingDescription1;
     private String baseMaterialTypeName1;
     private String baseMaterialHeatNum1;
@@ -44,14 +46,15 @@ public class Joint {
     public Joint() {
     }
 
-    public Joint(int number, Coordinates coordinatesOnIsometric, String pidName, String isometricName, int sheetOnIsometric, Float diameterMm, Float diameterInch, String fittingDescription1, String baseMaterialTypeName1, String baseMaterialHeatNum1, String fittingDescription2, String baseMaterialTypeName2, String baseMaterialHeatNum2, Float thickness, String fillerMaterialTypeName1, String fillerMaterialHeatNum1, String fillerMaterialTypeName2, String fillerMaterialHeatNum2, String processSpecificationProcedureName, String joinerTagId1, String joinerTagId2, Date date, boolean isFitUpDone, boolean isVisualInspectionDone, String ndtReportName, boolean isNdtPassed, String preheatName, String postWeldHeatTreatmentName, String comments) {
+    public Joint(int number, Coordinates coordinatesOnIsometric, String pidName, String isometricName, int sheetOnIsometric, UnitOfMeasure uom, String schedule, Float diameter, String fittingDescription1, String baseMaterialTypeName1, String baseMaterialHeatNum1, String fittingDescription2, String baseMaterialTypeName2, String baseMaterialHeatNum2, Float thickness, String fillerMaterialTypeName1, String fillerMaterialHeatNum1, String fillerMaterialTypeName2, String fillerMaterialHeatNum2, String processSpecificationProcedureName, String joinerTagId1, String joinerTagId2, Date date, boolean isFitUpDone, boolean isVisualInspectionDone, String ndtReportName, boolean isNdtPassed, String preheatName, String postWeldHeatTreatmentName, String comments) {
         this.number = number;
         this.coordinatesOnIsometric = coordinatesOnIsometric;
         this.pidName = pidName;
         this.isometricName = isometricName;
         this.sheetOnIsometric = sheetOnIsometric;
-        this.diameterMm = diameterMm;
-        this.diameterInch = diameterInch;
+        this.uom = uom;
+        this.schedule = schedule;
+        this.diameter = diameter;
         this.fittingDescription1 = fittingDescription1;
         this.baseMaterialTypeName1 = baseMaterialTypeName1;
         this.baseMaterialHeatNum1 = baseMaterialHeatNum1;
@@ -76,15 +79,16 @@ public class Joint {
         this.comments = comments;
     }
 
-    public Joint(int id, int number, Coordinates coordinatesOnIsometric, String pidName, String isometricName, int sheetOnIsometric, Float diameterMm, Float diameterInch, String fittingDescription1, String baseMaterialTypeName1, String baseMaterialHeatNum1, String fittingDescription2, String baseMaterialTypeName2, String baseMaterialHeatNum2, Float thickness, String fillerMaterialTypeName1, String fillerMaterialHeatNum1, String fillerMaterialTypeName2, String fillerMaterialHeatNum2, String processSpecificationProcedureName, String joinerTagId1, String joinerTagId2, Date date, boolean isFitUpDone, boolean isVisualInspectionDone, String ndtReportName, boolean isNdtPassed, String preheatName, String postWeldHeatTreatmentName, String comments) {
+    public Joint(int id, int number, Coordinates coordinatesOnIsometric, String pidName, String isometricName, int sheetOnIsometric, UnitOfMeasure uom, String schedule, Float diameter, String fittingDescription1, String baseMaterialTypeName1, String baseMaterialHeatNum1, String fittingDescription2, String baseMaterialTypeName2, String baseMaterialHeatNum2, Float thickness, String fillerMaterialTypeName1, String fillerMaterialHeatNum1, String fillerMaterialTypeName2, String fillerMaterialHeatNum2, String processSpecificationProcedureName, String joinerTagId1, String joinerTagId2, Date date, boolean isFitUpDone, boolean isVisualInspectionDone, String ndtReportName, boolean isNdtPassed, String preheatName, String postWeldHeatTreatmentName, String comments) {
         this.id = id;
         this.number = number;
         this.coordinatesOnIsometric = coordinatesOnIsometric;
         this.pidName = pidName;
         this.isometricName = isometricName;
         this.sheetOnIsometric = sheetOnIsometric;
-        this.diameterMm = diameterMm;
-        this.diameterInch = diameterInch;
+        this.uom = uom;
+        this.schedule = schedule;
+        this.diameter = diameter;
         this.fittingDescription1 = fittingDescription1;
         this.baseMaterialTypeName1 = baseMaterialTypeName1;
         this.baseMaterialHeatNum1 = baseMaterialHeatNum1;
@@ -120,8 +124,9 @@ public class Joint {
         this.pidName = jointEntity.getPid().getName();
         this.isometricName = jointEntity.getIsometric().getName();
         this.sheetOnIsometric = jointEntity.getSheetOnIsometric();
-        this.diameterMm = jointEntity.getDiameterMm();
-        this.diameterInch = jointEntity.getDiameterInch();
+        this.uom = jointEntity.getUom();
+        this.schedule = jointEntity.getSchedule();
+        this.diameter = jointEntity.getDiameter();
         this.fittingDescription1 = jointEntity.getFittingDescription1();
         this.fittingDescription2 = jointEntity.getFittingDescription2();
 
@@ -168,7 +173,6 @@ public class Joint {
         this.postWeldHeatTreatmentName = jointEntity.getPostWeldHeatTreatment().getName();
         this.comments = jointEntity.getComments();
     }
-
 
     public int getId() {
         return id;
@@ -218,20 +222,28 @@ public class Joint {
         this.sheetOnIsometric = sheetOnIsometric;
     }
 
-    public Float getDiameterMm() {
-        return diameterMm;
+    public UnitOfMeasure getUom() {
+        return uom;
     }
 
-    public void setDiameterMm(Float diameterMm) {
-        this.diameterMm = diameterMm;
+    public void setUom(UnitOfMeasure uom) {
+        this.uom = uom;
     }
 
-    public Float getDiameterInch() {
-        return diameterInch;
+    public String getSchedule() {
+        return schedule;
     }
 
-    public void setDiameterInch(Float diameterInch) {
-        this.diameterInch = diameterInch;
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
+    }
+
+    public Float getDiameter() {
+        return diameter;
+    }
+
+    public void setDiameter(Float diameter) {
+        this.diameter = diameter;
     }
 
     public String getFittingDescription1() {
@@ -278,16 +290,16 @@ public class Joint {
         return baseMaterialHeatNum2;
     }
 
+    public void setBaseMaterialHeatNum2(String baseMaterialHeatNum2) {
+        this.baseMaterialHeatNum2 = baseMaterialHeatNum2;
+    }
+
     public Float getThickness() {
         return thickness;
     }
 
     public void setThickness(Float thickness) {
         this.thickness = thickness;
-    }
-
-    public void setBaseMaterialHeatNum2(String baseMaterialHeatNum2) {
-        this.baseMaterialHeatNum2 = baseMaterialHeatNum2;
     }
 
     public String getFillerMaterialTypeName1() {
@@ -383,7 +395,7 @@ public class Joint {
     }
 
     public void setNdtPassed(boolean ndtPassed) {
-        this.isNdtPassed = ndtPassed;
+        isNdtPassed = ndtPassed;
     }
 
     public String getPreheatName() {
@@ -419,8 +431,9 @@ public class Joint {
                 ", pidName='" + pidName + '\'' +
                 ", isometricName='" + isometricName + '\'' +
                 ", sheetOnIsometric=" + sheetOnIsometric +
-                ", diameterMm=" + diameterMm +
-                ", diameterInch=" + diameterInch +
+                ", uom=" + uom +
+                ", schedule='" + schedule + '\'' +
+                ", diameter=" + diameter +
                 ", fittingDescription1='" + fittingDescription1 + '\'' +
                 ", baseMaterialTypeName1='" + baseMaterialTypeName1 + '\'' +
                 ", baseMaterialHeatNum1='" + baseMaterialHeatNum1 + '\'' +

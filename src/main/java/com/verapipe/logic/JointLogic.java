@@ -5,7 +5,7 @@ import com.verapipe.dal.IJointDal;
 import com.verapipe.dto.*;
 import com.verapipe.entities.JointEntity;
 import com.verapipe.enums.ErrorType;
-import com.verapipe.enums.ThicknessUOM;
+import com.verapipe.enums.UnitOfMeasure;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,11 +108,8 @@ public class JointLogic {
         validateJointPid(joint.getPidName());
         validateJointIsometric(joint.getIsometricName());
         validateJointSheetOnIsometric(joint.getIsometricName(), joint.getSheetOnIsometric());
-        if (joint.getDiameterMm() != null) {
-            validateNumberInputNotNegative(joint.getDiameterMm());
-        }
-        if (joint.getDiameterInch() != null) {
-            validateNumberInputNotNegative(joint.getDiameterInch());
+        if(joint.getUom() == UnitOfMeasure.MM){
+            joint.setSchedule(null);
         }
         validateJointFittingDescription(joint.getFittingDescription1());
         validateJointBaseMaterialType(joint.getBaseMaterialTypeName1());
@@ -126,7 +123,7 @@ public class JointLogic {
                 validateJointBaseMaterialHeatNum(joint.getBaseMaterialHeatNum2());
             }
         }
-        validateThickness(joint);
+//        validateThickness(joint);
         if (joint.getFillerMaterialTypeName1() != null) {
             validateJointFillerMaterialType(joint.getFillerMaterialTypeName1());
             if (joint.getFillerMaterialHeatNum1() != null) {
@@ -174,15 +171,15 @@ public class JointLogic {
         }
     }
 
-    private void validateThickness(Joint joint) {
-        ProcessSpecificationProcedure psp = this.processSpecificationProcedureLogic.getByName(joint.getProcessSpecificationProcedureName());
-        ThicknessUOM thicknessUOM = psp.getThicknessUom();
-        if (thicknessUOM == ThicknessUOM.SCH){
-
-        } else {
-
-        }
-    }
+//    private void validateThickness(Joint joint) {
+//        ProcessSpecificationProcedure psp = this.processSpecificationProcedureLogic.getByName(joint.getProcessSpecificationProcedureName());
+//        ThicknessUOM thicknessUOM = psp.getThicknessUom();
+//        if (thicknessUOM == ThicknessUOM.SCH){
+//
+//        } else {
+//
+//        }
+//    }
 
     private void validateJointSheetOnIsometric(String isometricName, int sheetOnIsometric) throws Exception {
         List<Isometric> allIsometrics = isometricLogic.getAll();

@@ -1,7 +1,7 @@
 package com.verapipe.entities;
 
 import com.verapipe.dto.ProcessSpecificationProcedure;
-import com.verapipe.enums.ThicknessUOM;
+import com.verapipe.enums.UnitOfMeasure;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -29,7 +29,7 @@ public class ProcessSpecificationProcedureEntity {
     @Column(name = "diameter_inch_max", unique = false, nullable = true)
     private Float diameterInchMax;
     @Column(name = "thickness_uom", unique = false, nullable = false)
-    private ThicknessUOM thicknessUom;
+    private UnitOfMeasure unitOfMeasure;
     @Column(name = "thickness_mm_min", unique = false, nullable = true)
     private Float thicknessMmMin;
     @Column(name = "thickness_mm_max", unique = false, nullable = true)
@@ -63,7 +63,7 @@ public class ProcessSpecificationProcedureEntity {
         this.diameterMmMax = processSpecificationProcedure.getDiameterMaxMm();
         this.diameterInchMin = processSpecificationProcedure.getDiameterMinInch();
         this.diameterInchMax = processSpecificationProcedure.getDiameterMaxInch();
-        this.thicknessUom = processSpecificationProcedure.getThicknessUom();
+        this.unitOfMeasure = processSpecificationProcedure.getThicknessUom();
         this.thicknessMmMin = processSpecificationProcedure.getThicknessMinMm();
         this.thicknessMmMax = processSpecificationProcedure.getThicknessMaxMm();
         this.jointDesign = new JointDesignEntity();
@@ -167,12 +167,12 @@ public class ProcessSpecificationProcedureEntity {
         this.diameterInchMax = diameterInchMax;
     }
 
-    public ThicknessUOM getThicknessUom() {
-        return thicknessUom;
+    public UnitOfMeasure getThicknessUom() {
+        return unitOfMeasure;
     }
 
-    public void setThicknessUom(ThicknessUOM thicknessUom) {
-        this.thicknessUom = thicknessUom;
+    public void setThicknessUom(UnitOfMeasure unitOfMeasure) {
+        this.unitOfMeasure = unitOfMeasure;
     }
 
     public Float getThicknessMmMin() {
