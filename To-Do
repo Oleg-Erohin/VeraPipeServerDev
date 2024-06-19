@@ -1,5 +1,6 @@
 Important:
-- Add validations to logics - Oleg
+- Add cache to PipeWallThickness - Oleg
+- Learn how to use PagingAndSortingRepository - Aviad
 
 To Do Later:
 - Ensure comments include line breaks
@@ -33,3 +34,4 @@ Done:
 - Add CORS filter - Oleg
 - Add thickness to joint. If imperial - selected from table. If metric - manual input. Validate against joiner and PSP - Oleg (Incomplete validation) - Comment out validation
 - Remove dual diameter from Joint, add UOM and SCH - Oleg
+- Add validations to logics - Oleg

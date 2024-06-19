@@ -111,6 +111,7 @@ public class JointLogic {
         if(joint.getUom() == UnitOfMeasure.MM){
             joint.setSchedule(null);
         }
+        validateDiameter(joint.getDiameter());
         validateJointFittingDescription(joint.getFittingDescription1());
         validateJointBaseMaterialType(joint.getBaseMaterialTypeName1());
         if (joint.getBaseMaterialHeatNum1() != null) {
@@ -169,6 +170,10 @@ public class JointLogic {
         if (joint.getComments() != null) {
 //        validateJointComments(joint.getComments());
         }
+    }
+
+    private void validateDiameter(Float diameter) throws ApplicationException {
+        CommonValidations.validateNotNegative(diameter);
     }
 
 //    private void validateThickness(Joint joint) {
