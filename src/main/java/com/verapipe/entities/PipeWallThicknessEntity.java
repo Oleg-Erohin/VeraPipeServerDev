@@ -1,5 +1,7 @@
 package com.verapipe.entities;
 
+import com.verapipe.dto.PipeWallThickness;
+
 import javax.persistence.*;
 
 @Entity
@@ -58,6 +60,30 @@ public class PipeWallThicknessEntity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public PipeWallThicknessEntity(PipeWallThickness pipeWallThickness) {
+        this.id = pipeWallThickness.getId();
+        this.nominalDiameterInch = pipeWallThickness.getNominalDiameterInch();
+        this.odInch = pipeWallThickness.getOdInch();
+        this.odMm = pipeWallThickness.getOdMm();
+        this.sch10 = pipeWallThickness.getSch10();
+        this.sch20 = pipeWallThickness.getSch20();
+        this.sch30 = pipeWallThickness.getSch30();
+        this.schStd = pipeWallThickness.getSchStd();
+        this.sch40 = pipeWallThickness.getSch40();
+        this.sch60 = pipeWallThickness.getSch60();
+        this.schXs = pipeWallThickness.getSchXs();
+        this.sch80 = pipeWallThickness.getSch80();
+        this.sch100 = pipeWallThickness.getSch100();
+        this.sch120 = pipeWallThickness.getSch120();
+        this.sch140 = pipeWallThickness.getSch140();
+        this.sch160 = pipeWallThickness.getSch160();
+        this.schXxs = pipeWallThickness.getSchXxs();
+        this.sch5S = pipeWallThickness.getSch5S();
+        this.sch10S = pipeWallThickness.getSch10S();
+        this.sch40S = pipeWallThickness.getSch40S();
+        this.sch80S = pipeWallThickness.getSch80S();
     }
 
     public String getNominalDiameterInch() {

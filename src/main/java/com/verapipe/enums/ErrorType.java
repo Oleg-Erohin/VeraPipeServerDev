@@ -87,6 +87,7 @@ public enum ErrorType {
     FAILED_TO_DELETE_STANDARD_CODE(882,"Failed to delete Standard code",false),
     STANDARD_CODE_COULD_NOT_BE_FOUND(883,"Failed to get this Standard code", false),
     STANDARD_CODE_DOES_NOT_EXIST(884, "The Standard code does not exist in existing Standard codes", false),
+    PIPE_WALL_THICKNESS_COULD_NOT_BE_FOUND(885, "Failed to get this pipe wall thickness", false),
 
 
 
