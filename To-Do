@@ -1,5 +1,6 @@
 Important:
-- Learn how to use PagingAndSortingRepository - Aviad
+- Find a different solution to multiple filters - Aviad
+- Find convention for separators in URL ("_" or "-") - Aviad
 
 To Do Later:
 - Ensure comments include line breaks
@@ -35,3 +36,4 @@ Done:
 - Remove dual diameter from Joint, add UOM and SCH - Oleg
 - Add validations to logics - Oleg
 - Add cache to PipeWallThickness - Oleg
+- Learn how to use PagingAndSortingRepository - Aviad

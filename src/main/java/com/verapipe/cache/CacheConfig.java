@@ -27,7 +27,6 @@ public class CacheConfig {
         cacheManager.setCacheNames(Arrays.asList("processSpecificationProceduresCache"));
         cacheManager.setCacheNames(Arrays.asList("pipeWallThicknessCache"));
 
-
         return cacheManager;
     }
 }

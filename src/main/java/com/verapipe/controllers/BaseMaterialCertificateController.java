@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/base-material-certificate")
+@RequestMapping("/base-material-certificates")
 public class BaseMaterialCertificateController {
     private BaseMaterialCertificateLogic baseMaterialCertificateLogic;
 

@@ -12,21 +12,21 @@ import java.util.List;
 
 public class Joint {
     private int id;
-    private int number;
-    private Coordinates coordinatesOnIsometric;
-    private String pidName;
-    private String isometricName;
-    private int sheetOnIsometric;
-    private UnitOfMeasure uom;
-    private String schedule;
-    private Float diameter;
-    private String fittingDescription1;
-    private String baseMaterialTypeName1;
+    private int number;//
+    private Coordinates coordinatesOnIsometric;//
+    private String pidName;//
+    private String isometricName;//
+    private int sheetOnIsometric;//
+    private UnitOfMeasure uom;//
+    private String schedule;//
+    private Float diameter;//
+    private String fittingDescription1;//
+    private String baseMaterialTypeName1;//
     private String baseMaterialHeatNum1;
-    private String fittingDescription2;
-    private String baseMaterialTypeName2;
+    private String fittingDescription2;//
+    private String baseMaterialTypeName2;//
     private String baseMaterialHeatNum2;
-    private Float thickness;
+    private Float thickness;//
     private String fillerMaterialTypeName1;
     private String fillerMaterialHeatNum1;
     private String fillerMaterialTypeName2;

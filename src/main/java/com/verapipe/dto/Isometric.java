@@ -11,13 +11,13 @@ import java.util.Map;
 
 public class Isometric {
     private int id;
-    private String name;
-    private Map<String, List<Integer>> pidsAndSheets;
-    private String revision;
-    private Date date;
-    private int sheets;
-    private List<Coordinates> coordinatesInPid;
-    private boolean isApproved;
+    private String name;//
+    private Map<String, List<Integer>> pidsAndSheets;//
+    private String revision;//
+    private Date date;//
+    private int sheets;//
+    private List<Coordinates> coordinatesInPid;//
+    private boolean isApproved;//
     private String comments;
 
     public Isometric() {
