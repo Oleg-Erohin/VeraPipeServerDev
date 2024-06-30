@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/standard_code")
+@RequestMapping("/standard-code")
 public class StandardCodeController {
     private StandardCodeLogic standardCodeLogic;
 

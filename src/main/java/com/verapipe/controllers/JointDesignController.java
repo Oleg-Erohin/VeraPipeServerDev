@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/joint_design")
+@RequestMapping("/joint-design")
 public class JointDesignController {
     private JointDesignLogic jointDesignLogic;
 

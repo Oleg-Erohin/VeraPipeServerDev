@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/post_weld_heat_treatment")
+@RequestMapping("/post-weld-heat-treatment")
 public class PostWeldHeatTreatmentController {
     private PostWeldHeatTreatmentLogic postWeldHeatTreatmentLogic;
 

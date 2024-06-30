@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/pressure_test_package")
+@RequestMapping("/pressure-test-package")
 public class PressureTestPackageController {
     private PressureTestPackageLogic pressureTestPackageLogic;
 

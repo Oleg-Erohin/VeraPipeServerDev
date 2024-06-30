@@ -1,6 +1,7 @@
 Important:
 - Find a different solution to multiple filters - Aviad
-- Find convention for separators in URL ("_" or "-") - Aviad
+- After add or update the cache is updating too? - Oleg
+- Create dynamic filtering - Aviad
 
 To Do Later:
 - Ensure comments include line breaks
@@ -30,10 +31,11 @@ Done:
 - DTO to not have List/Set variables (Separate to "1" & "2") - Oleg
 - To decide Cascade types - Aviad
 - Revision validation in File: check that does not exist in previous revisions - Oleg
-- Add exception in all logics (per marked "TODO") - Aviad
+- Add exception in all logics (per marked "TO-DO") - Aviad
 - Add CORS filter - Oleg
 - Add thickness to joint. If imperial - selected from table. If metric - manual input. Validate against joiner and PSP - Oleg (Incomplete validation) - Comment out validation
 - Remove dual diameter from Joint, add UOM and SCH - Oleg
 - Add validations to logics - Oleg
 - Add cache to PipeWallThickness - Oleg
 - Learn how to use PagingAndSortingRepository - Aviad
+- Find convention for separators in URL ("_" or "-") - Aviad
