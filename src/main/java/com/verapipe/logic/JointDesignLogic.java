@@ -8,6 +8,7 @@ import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ public class JointDesignLogic {
         this.jointDesignDal = jointDesignDal;
     }
 
+    @CacheEvict(cacheNames = "jointDesignsCache", allEntries = true)
     public int add(JointDesign jointDesign) throws Exception {
         validations(jointDesign);
         JointDesignEntity jointDesignEntity = new JointDesignEntity(jointDesign);
@@ -36,6 +38,7 @@ public class JointDesignLogic {
         return addedJointDesignId;
     }
 
+    @CacheEvict(cacheNames = "jointDesignsCache", allEntries = true)
     public void update(JointDesign jointDesign) throws Exception {
         validations(jointDesign);
         JointDesignEntity sentJointDesignEntity = new JointDesignEntity(jointDesign);
@@ -46,6 +49,7 @@ public class JointDesignLogic {
         }
     }
 
+    @CacheEvict(cacheNames = "jointDesignsCache", allEntries = true)
     public void delete(int id) throws Exception {
         if (!isJointDesignExist(id)) {
             throw new ApplicationException(ErrorType.JOINT_DESIGN_DOES_NOT_EXIST);

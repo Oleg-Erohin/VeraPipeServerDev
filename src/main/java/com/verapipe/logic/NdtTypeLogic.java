@@ -8,6 +8,7 @@ import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ public class NdtTypeLogic {
         this.ndtTypeDal = ndtTypeDal;
     }
 
+    @CacheEvict(cacheNames = "ndtTypeCache", allEntries = true)
     public int add(NdtType ndtType) throws Exception {
         validations(ndtType);
         NdtTypeEntity ndtTypeEntity = new NdtTypeEntity(ndtType);
@@ -36,6 +38,7 @@ public class NdtTypeLogic {
         return addedNdtTypeId;
     }
 
+    @CacheEvict(cacheNames = "ndtTypeCache", allEntries = true)
     public void update(NdtType ndtType) throws Exception {
         validations(ndtType);
         NdtTypeEntity sentNdtTypeEntity = new NdtTypeEntity(ndtType);
@@ -46,6 +49,7 @@ public class NdtTypeLogic {
         }
     }
 
+    @CacheEvict(cacheNames = "ndtTypeCache", allEntries = true)
     public void delete(int id) throws Exception {
         if (!isNdtTypeExist(id)) {
             throw new ApplicationException(ErrorType.NDT_TYPE_DOES_NOT_EXIST);

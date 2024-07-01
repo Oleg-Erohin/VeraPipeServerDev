@@ -8,6 +8,7 @@ import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ public class BaseMaterialTypeLogic {
         this.baseMaterialTypeDal = baseMaterialTypeDal;
     }
 
+    @CacheEvict(cacheNames = "baseMaterialTypesCache", allEntries = true)
     public int add(BaseMaterialType baseMaterialType) throws Exception {
         validations(baseMaterialType);
         BaseMaterialTypeEntity baseMaterialTypeEntity = new BaseMaterialTypeEntity(baseMaterialType);
@@ -36,6 +38,7 @@ public class BaseMaterialTypeLogic {
         return addedBaseMaterialTypeId;
     }
 
+    @CacheEvict(cacheNames = "baseMaterialTypesCache", allEntries = true)
     public void update(BaseMaterialType baseMaterialType) throws Exception {
         validations(baseMaterialType);
         BaseMaterialTypeEntity sentBaseMaterialTypeEntity = new BaseMaterialTypeEntity(baseMaterialType);
@@ -46,6 +49,7 @@ public class BaseMaterialTypeLogic {
         }
     }
 
+    @CacheEvict(cacheNames = "baseMaterialTypesCache", allEntries = true)
     public void delete(int id) throws Exception {
         if (!isBaseMaterialTypeExist(id)) {
             throw new ApplicationException(ErrorType.BASE_MATERIAL_TYPE_DOES_NOT_EXIST);

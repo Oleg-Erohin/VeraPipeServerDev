@@ -8,6 +8,7 @@ import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ public class FusionProcessLogic {
         this.fusionProcessDal = fusionProcessDal;
     }
 
+    @CacheEvict(cacheNames = "fusionProcessesCache", allEntries = true)
     public int add(FusionProcess fusionProcess) throws Exception {
         validations(fusionProcess);
         FusionProcessEntity fusionProcessEntity = new FusionProcessEntity(fusionProcess);
@@ -36,6 +38,7 @@ public class FusionProcessLogic {
         return addedFusionProcessId;
     }
 
+    @CacheEvict(cacheNames = "fusionProcessesCache", allEntries = true)
     public void update(FusionProcess fusionProcess) throws Exception {
         validations(fusionProcess);
         FusionProcessEntity sentFusionProcessEntity = new FusionProcessEntity(fusionProcess);
@@ -46,6 +49,7 @@ public class FusionProcessLogic {
         }
     }
 
+    @CacheEvict(cacheNames = "fusionProcessesCache", allEntries = true)
     public void delete(int id) throws Exception {
         if (!isFusionProcessExist(id)) {
             throw new ApplicationException(ErrorType.FUSION_PROCESS_DOES_NOT_EXIST);

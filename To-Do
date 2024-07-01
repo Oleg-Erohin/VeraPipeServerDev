@@ -1,6 +1,5 @@
 Important:
 - Find a different solution to multiple filters - Aviad
-- After add or update the cache is updating too? - Oleg
 - Create dynamic filtering - Aviad
 
 To Do Later:
@@ -39,3 +38,4 @@ Done:
 - Add cache to PipeWallThickness - Oleg
 - Learn how to use PagingAndSortingRepository - Aviad
 - Find convention for separators in URL ("_" or "-") - Aviad
+- After add or update the cache is updating too? Added @CacheEvict annotation to add, update and delete functions - Oleg

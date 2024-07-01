@@ -9,6 +9,7 @@ import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,7 @@ public class ProcessSpecificationProcedureLogic {
         this.standardCodeLogic = standardCodeLogic;
     }
 
+    @CacheEvict(cacheNames = "processSpecificationProceduresCache", allEntries = true)
     public int add(ProcessSpecificationProcedure processSpecificationProcedure) throws Exception {
         validations(processSpecificationProcedure);
         ProcessSpecificationProcedureEntity processSpecificationProcedureEntity = new ProcessSpecificationProcedureEntity(processSpecificationProcedure);
@@ -39,6 +41,7 @@ public class ProcessSpecificationProcedureLogic {
         return addedProcessSpecificationProcedureId;
     }
 
+    @CacheEvict(cacheNames = "processSpecificationProceduresCache", allEntries = true)
     public void update(ProcessSpecificationProcedure processSpecificationProcedure) throws Exception {
         validations(processSpecificationProcedure);
         ProcessSpecificationProcedureEntity sentProcessSpecificationProcedureEntity = new ProcessSpecificationProcedureEntity(processSpecificationProcedure);
@@ -49,6 +52,7 @@ public class ProcessSpecificationProcedureLogic {
         }
     }
 
+    @CacheEvict(cacheNames = "processSpecificationProceduresCache", allEntries = true)
     public void delete(int id) throws Exception {
         if (!isProcessSpecificationProcedureExist(id)) {
             throw new ApplicationException(ErrorType.PROCESS_SPECIFICATION_PROCEDURE_DOES_NOT_EXIST);

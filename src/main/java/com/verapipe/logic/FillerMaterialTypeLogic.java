@@ -8,6 +8,7 @@ import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class FillerMaterialTypeLogic {
         this.fillerMaterialTypeDal = fillerMaterialTypeDal;
     }
 
-
+    @CacheEvict(cacheNames = "fillerMaterialTypesCache", allEntries = true)
     public int add(FillerMaterialType fillerMaterialType) throws Exception {
         validations(fillerMaterialType);
         FillerMaterialTypeEntity fillerMaterialTypeEntity = new FillerMaterialTypeEntity(fillerMaterialType);
@@ -37,6 +38,7 @@ public class FillerMaterialTypeLogic {
         return addedFillerMaterialTypeId;
     }
 
+    @CacheEvict(cacheNames = "fillerMaterialTypesCache", allEntries = true)
     public void update(FillerMaterialType fillerMaterialType) throws Exception {
         validations(fillerMaterialType);
         FillerMaterialTypeEntity sentFillerMaterialTypeEntity = new FillerMaterialTypeEntity(fillerMaterialType);
@@ -47,6 +49,7 @@ public class FillerMaterialTypeLogic {
         }
     }
 
+    @CacheEvict(cacheNames = "fillerMaterialTypesCache", allEntries = true)
     public void delete(int id) throws Exception {
         if (!isFillerMaterialTypeExist(id)) {
             throw new ApplicationException(ErrorType.FILLER_MATERIAL_TYPE_DOES_NOT_EXIST);

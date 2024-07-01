@@ -8,6 +8,7 @@ import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ public class StandardCodeLogic {
         this.standardCodeDal = standardCodeDal;
     }
 
+    @CacheEvict(cacheNames = "standardCodeCache", allEntries = true)
     public int add(StandardCode standardCode) throws Exception {
         validations(standardCode);
         StandardCodeEntity standardCodeEntity = new StandardCodeEntity(standardCode);
@@ -36,6 +38,7 @@ public class StandardCodeLogic {
         return addedStandardCodeId;
     }
 
+    @CacheEvict(cacheNames = "standardCodeCache", allEntries = true)
     public void update(StandardCode standardCode) throws Exception {
         validations(standardCode);
         StandardCodeEntity sentStandardCodeEntity = new StandardCodeEntity(standardCode);
@@ -47,6 +50,7 @@ public class StandardCodeLogic {
         }
     }
 
+    @CacheEvict(cacheNames = "standardCodeCache", allEntries = true)
     public void delete(int id) throws Exception {
         if (!isStandardCodeExist(id)) {
             throw new ApplicationException(ErrorType.STANDARD_CODE_DOES_NOT_EXIST);
