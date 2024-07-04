@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/filler-material-type")
+@RequestMapping("/filler-material-types")
 public class FillerMaterialTypeController {
     private FillerMaterialTypeLogic fillerMaterialTypeLogic;
 

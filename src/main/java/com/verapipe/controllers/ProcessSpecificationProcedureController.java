@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/process-specification-procedure")
+@RequestMapping("/process-specification-procedures")
 public class ProcessSpecificationProcedureController {
     private ProcessSpecificationProcedureLogic processSpecificationProcedureLogic;
 

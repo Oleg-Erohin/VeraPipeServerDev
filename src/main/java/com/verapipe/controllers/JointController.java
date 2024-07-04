@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/joint")
+@RequestMapping("/joints")
 public class JointController {
     private JointLogic jointLogic;
 

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/joiner")
+@RequestMapping("/joiners")
 public class JoinerController {
     private JoinerLogic joinerLogic;
 

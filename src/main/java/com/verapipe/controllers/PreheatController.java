@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/preheat")
+@RequestMapping("/preheats")
 public class PreheatController {
     private PreheatLogic preheatLogic;
 

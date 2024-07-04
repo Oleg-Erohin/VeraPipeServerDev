@@ -106,10 +106,10 @@ public class FileLogic {
     }
 
     private void validateResourceName(FileType fileType, String resourceName) throws ApplicationException {
-        boolean doesFileExist = this.fileDal.doesFileExist();
-        if (!doesFileExist) {
-            throw new ApplicationException(ErrorType.FILE_DOES_NOT_EXIST);
-        }
+//        boolean doesFileExist = this.fileDal.doesFileExist();
+//        if (!doesFileExist) {
+//            throw new ApplicationException(ErrorType.FILE_DOES_NOT_EXIST);
+//        }
     }
 
     private void validateUploadDate(Date uploadDate) throws ApplicationException {
@@ -119,10 +119,10 @@ public class FileLogic {
     }
 
     private void validateRevision(FileType fileType, String resourceName, String revision) throws ApplicationException {
-        boolean doesExistWithCurrentRevision = this.fileDal.doesExistWithCurrentRevision(fileType, resourceName, revision);
-        if (doesExistWithCurrentRevision) {
-            throw new ApplicationException(ErrorType.REVISION_ALREADY_EXISTS);
-        }
+//        boolean doesExistWithCurrentRevision = this.fileDal.doesExistWithCurrentRevision(fileType, resourceName, revision);
+//        if (doesExistWithCurrentRevision) {
+//            throw new ApplicationException(ErrorType.REVISION_ALREADY_EXISTS);
+//        }
     }
 
     private void validateFile(byte[] file) throws ApplicationException {

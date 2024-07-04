@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ndt-report")
+@RequestMapping("/ndt-reports")
 public class NdtReportController {
     private NdtReportLogic ndtReportLogic;
 

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ndt-type")
+@RequestMapping("/ndt-types")
 public class NdtTypeController {
     private NdtTypeLogic ndtTypeLogic;
 

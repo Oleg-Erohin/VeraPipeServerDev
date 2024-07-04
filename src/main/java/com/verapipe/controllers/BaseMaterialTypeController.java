@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/base-material-type")
+@RequestMapping("/base-material-types")
 public class BaseMaterialTypeController {
     private BaseMaterialTypeLogic baseMaterialTypeLogic;
 

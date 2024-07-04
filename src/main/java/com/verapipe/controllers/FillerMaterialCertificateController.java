@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/filler-material-certificate")
+@RequestMapping("/filler-material-certificates")
 public class FillerMaterialCertificateController {
     private FillerMaterialCertificateLogic fillerMaterialCertificateLogic;
 
