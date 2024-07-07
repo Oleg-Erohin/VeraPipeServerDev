@@ -18,17 +18,17 @@ public class BaseMaterialCertificateController {
     }
 
     @PostMapping
-    public int add (@RequestBody BaseMaterialCertificate baseMaterialCertificate) throws Exception {
+    public int add(@RequestBody BaseMaterialCertificate baseMaterialCertificate) throws Exception {
         return this.baseMaterialCertificateLogic.add(baseMaterialCertificate);
     }
 
     @PutMapping
-    public void update (@RequestBody BaseMaterialCertificate baseMaterialCertificate) throws Exception {
+    public void update(@RequestBody BaseMaterialCertificate baseMaterialCertificate) throws Exception {
         this.baseMaterialCertificateLogic.update(baseMaterialCertificate);
     }
 
     @DeleteMapping("/{id}")
-    public void delete (@PathVariable("id") int id) throws Exception {
+    public void delete(@PathVariable("id") int id) throws Exception {
         this.baseMaterialCertificateLogic.delete(id);
     }
 
@@ -40,5 +40,14 @@ public class BaseMaterialCertificateController {
     @GetMapping("/{id}")
     public BaseMaterialCertificate getById(@PathVariable("id") int id) throws Exception {
         return this.baseMaterialCertificateLogic.getById(id);
+    }
+
+    @GetMapping("/by-filters")
+    public List<BaseMaterialCertificate> getBaseMaterialCertificates(
+            @RequestParam(required = false) List<String> heatNum,
+            @RequestParam(required = false) List<String> lotNum,
+            @RequestParam(required = false) List<String> materialTypeName) {
+
+        return this.baseMaterialCertificateLogic.findCertificatesByFilters(heatNum, lotNum, materialTypeName);
     }
 }

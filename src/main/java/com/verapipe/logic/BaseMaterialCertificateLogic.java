@@ -6,8 +6,10 @@ import com.verapipe.dto.BaseMaterialCertificate;
 import com.verapipe.entities.BaseMaterialCertificateEntity;
 import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.specifications.BaseMaterialCertificateSpecifications;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -87,6 +89,27 @@ public class BaseMaterialCertificateLogic {
         return baseMaterialCertificates;
     }
 
+    public List<BaseMaterialCertificate> findCertificatesByFilters(List<String> heatNums, List<String> lotNums, List<String> materialTypeNames) {
+        Specification<BaseMaterialCertificateEntity> spec = Specification
+                .where(BaseMaterialCertificateSpecifications.hasHeatNumIn(heatNums))
+                .and(BaseMaterialCertificateSpecifications.hasLotNumIn(lotNums))
+                .and(BaseMaterialCertificateSpecifications.hasMaterialTypeNameIn(materialTypeNames));
+
+        List<BaseMaterialCertificateEntity> baseMaterialCertificateEntities = this.baseMaterialCertificateDal.findAll(spec);
+        List<BaseMaterialCertificate> baseMaterialCertificates = convertEntityListToDtoList(baseMaterialCertificateEntities);
+
+        return baseMaterialCertificates;
+    }
+
+    private List<BaseMaterialCertificate> convertEntityListToDtoList(List<BaseMaterialCertificateEntity> baseMaterialCertificateEntities) {
+        List<BaseMaterialCertificate> baseMaterialCertificates = new ArrayList<>();
+        for (BaseMaterialCertificateEntity entity : baseMaterialCertificateEntities
+        ) {
+            BaseMaterialCertificate baseMaterialCertificate = new BaseMaterialCertificate(entity);
+            baseMaterialCertificates.add(baseMaterialCertificate);
+        }
+        return baseMaterialCertificates;
+    }
 
     private void validations(BaseMaterialCertificate baseMaterialCertificate) throws Exception {
         validateBaseMaterialCertificateHeatOrLotNum(baseMaterialCertificate.getHeatNum());

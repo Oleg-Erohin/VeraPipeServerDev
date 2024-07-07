@@ -1,10 +1,14 @@
 Important:
-- Find a different solution to multiple filters - Aviad
-- Create dynamic filtering - Aviad
+- Joint - change ndt to Map - Oleg
+- Joint - list with tabs for Mor - Oleg
+- Change Static functions in specifications - Aviad
+- Create filters functions to all entities - Aviad: FillerMaterialCertificate, Isometric, Joiner, Joint, NdtReport
+                                             Oleg: Pid, PWHT, PreHeat, PressureTestPackage, PSP
 
 To Do Later:
 - Ensure comments include line breaks
 - Disable possibility of duplicate values for all
+- Refactor PWHT and PSP names
 
 
 
@@ -39,3 +43,6 @@ Done:
 - Learn how to use PagingAndSortingRepository - Aviad
 - Find convention for separators in URL ("_" or "-") - Aviad
 - After add or update the cache is updating too? Added @CacheEvict annotation to add, update and delete functions - Oleg
+- Find a different solution to multiple filters - Aviad
+- Create dynamic filtering - Aviad
+
