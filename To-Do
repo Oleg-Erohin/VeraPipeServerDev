@@ -4,6 +4,7 @@ Important:
 - Change Static functions in specifications - Aviad
 - Create filters functions to all entities - Aviad: FillerMaterialCertificate, Isometric, Joiner, Joint, NdtReport
                                              Oleg: Pid, PWHT, PreHeat, PressureTestPackage, PSP
+- Find how to properly define static parameters in class (Logics in common validations) - Oleg
 
 To Do Later:
 - Ensure comments include line breaks

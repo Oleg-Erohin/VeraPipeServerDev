@@ -5,10 +5,12 @@ import com.verapipe.dto.*;
 import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.logic.*;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 
+@Service
 public class CommonValidations {
 
     private static BaseMaterialTypeLogic baseMaterialTypeLogic;
@@ -20,6 +22,28 @@ public class CommonValidations {
     private static IsometricLogic isometricLogic;
     private static BaseMaterialCertificateLogic baseMaterialCertificateLogic;
     private static FillerMaterialCertificateLogic fillerMaterialCertificateLogic;
+
+//    @Autowired
+//    public CommonValidations(BaseMaterialTypeLogic baseMaterialTypeLogic
+//                             FillerMaterialTypeLogic fillerMaterialTypeLogic,
+//                             JointDesignLogic jointDesignLogic,
+//                             FusionProcessLogic fusionProcessLogic,
+//                             ProcessSpecificationProcedureLogic processSpecificationProcedureLogic,
+//                             PidLogic pidLogic,
+//                             IsometricLogic isometricLogic,
+//                             BaseMaterialCertificateLogic baseMaterialCertificateLogic,
+//                             FillerMaterialCertificateLogic fillerMaterialCertificateLogic
+//    ) {
+//        this.baseMaterialTypeLogic = baseMaterialTypeLogic;
+//        this.fillerMaterialTypeLogic = fillerMaterialTypeLogic;
+//        this.jointDesignLogic = jointDesignLogic;
+//        this.fusionProcessLogic = fusionProcessLogic;
+//        this.processSpecificationProcedureLogic = processSpecificationProcedureLogic;
+//        this.pidLogic = pidLogic;
+//        this.isometricLogic = isometricLogic;
+//        this.baseMaterialCertificateLogic = baseMaterialCertificateLogic;
+//        this.fillerMaterialCertificateLogic = fillerMaterialCertificateLogic;
+//    }
 
     public static void validateStringLength(String string, int min, int max) throws ApplicationException {
         if (string.length() < min) {
