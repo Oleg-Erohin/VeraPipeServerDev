@@ -1,10 +1,13 @@
 package com.verapipe.controllers;
 
 import com.verapipe.dto.NdtReport;
+import com.verapipe.entities.JointEntity;
+import com.verapipe.entities.NdtTypeEntity;
 import com.verapipe.logic.NdtReportLogic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -40,5 +43,15 @@ public class NdtReportController {
     @GetMapping("/{id}")
     public NdtReport getById(@PathVariable("id") int id) throws Exception {
         return this.ndtReportLogic.getById(id);
+    }
+
+    @GetMapping("/by-filters")
+    public List<NdtReport> getNdtReports(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Date date,
+            @RequestParam(required = false) NdtTypeEntity ndtType,
+            @RequestParam(required = false) List<JointEntity> jointsList) {
+
+        return this.ndtReportLogic.findNdtReportsByFilters(name, date, ndtType, jointsList);
     }
 }

@@ -1,14 +1,20 @@
 package com.verapipe.logic;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.verapipe.consts.Consts;
 import com.verapipe.dal.IIsometricDal;
 import com.verapipe.dto.Isometric;
 import com.verapipe.dto.Pid;
 import com.verapipe.entities.IsometricEntity;
+import com.verapipe.entities.JointEntity;
+import com.verapipe.entities.PidEntity;
+import com.verapipe.entities.PressureTestPackageEntity;
 import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.specifications.IsometricSpecifications;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -17,11 +23,13 @@ import java.util.*;
 public class IsometricLogic {
     private IIsometricDal isometricDal;
     private PidLogic pidLogic;
+    private IsometricSpecifications isometricSpecifications;
 
     @Autowired
-    public IsometricLogic(IIsometricDal isometricDal, PidLogic pidLogic) {
+    public IsometricLogic(IIsometricDal isometricDal, PidLogic pidLogic, IsometricSpecifications isometricSpecifications) {
         this.isometricDal = isometricDal;
         this.pidLogic = pidLogic;
+        this.isometricSpecifications = isometricSpecifications;
     }
 
     public int add(Isometric isometric) throws Exception {
@@ -85,6 +93,33 @@ public class IsometricLogic {
             }
         } catch (Exception e) {
             throw new ApplicationException(ErrorType.ISOMETRIC_COULD_NOT_BE_FOUND);
+        }
+        return isometrics;
+    }
+
+    public List<Isometric> findIsometricsByFilters(List<String> names, List<String> revisions, List<Date> dates, List<Integer> sheets, List<String> coordinatesInPid, Boolean isApproved, List<String> comments, Set<PidEntity> pids, List<JointEntity> joints, Set<PressureTestPackageEntity> testPacks) throws JsonProcessingException {
+        Specification<IsometricEntity> spec = Specification
+                .where(isometricSpecifications.hasNameIn(names))
+                .and(isometricSpecifications.hasRevisionIn(revisions))
+                .and(isometricSpecifications.hasDateIn(dates))
+                .and(isometricSpecifications.hasSheetsIn(sheets))
+                .and(isometricSpecifications.hasCoordinatesInPidIn(coordinatesInPid))
+                .and(isometricSpecifications.hasIsApproved(isApproved))
+                .and(isometricSpecifications.hasCommentsIn(comments))
+                .and(isometricSpecifications.hasPidsIn(pids))
+                .and(isometricSpecifications.hasJointsIn(joints))
+                .and(isometricSpecifications.hasTestPacksIn(testPacks));
+        List<IsometricEntity> isometricEntities = this.isometricDal.findAll(spec);
+        List<Isometric> isometrics = convertEntityListToDtoList(isometricEntities);
+        return isometrics;
+    }
+
+    private List<Isometric> convertEntityListToDtoList(List<IsometricEntity> isometricEntities) throws JsonProcessingException {
+        List<Isometric> isometrics = new ArrayList<>();
+        for (IsometricEntity entity : isometricEntities
+             ) {
+            Isometric isometric = new Isometric(entity);
+            isometrics.add(isometric);
         }
         return isometrics;
     }

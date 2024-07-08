@@ -6,8 +6,10 @@ import com.verapipe.dto.FillerMaterialCertificate;
 import com.verapipe.entities.FillerMaterialCertificateEntity;
 import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.specifications.FillerMaterialCertificateSpecifications;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,10 +19,14 @@ import java.util.Optional;
 @Service
 public class FillerMaterialCertificateLogic {
     private IFillerMaterialCertificateDal fillerMaterialCertificateDal;
+    private FillerMaterialCertificateSpecifications fillerMaterialCertificateSpecifications;
 
     @Autowired
-    public FillerMaterialCertificateLogic(IFillerMaterialCertificateDal fillerMaterialCertificateDal) {
+    public FillerMaterialCertificateLogic(IFillerMaterialCertificateDal fillerMaterialCertificateDal,
+                                          FillerMaterialCertificateSpecifications fillerMaterialCertificateSpecifications
+    ) {
         this.fillerMaterialCertificateDal = fillerMaterialCertificateDal;
+        this.fillerMaterialCertificateSpecifications = fillerMaterialCertificateSpecifications;
     }
 
     public int add(FillerMaterialCertificate fillerMaterialCertificate) throws Exception {
@@ -73,7 +79,7 @@ public class FillerMaterialCertificateLogic {
     public List<FillerMaterialCertificate> getAll() throws Exception {
         Iterable<FillerMaterialCertificateEntity> fillerMaterialCertificateEntities;
         List<FillerMaterialCertificate> fillerMaterialCertificates = new ArrayList<>();
-        try{
+        try {
             fillerMaterialCertificateEntities = this.fillerMaterialCertificateDal.findAll();
             // Convert Iterable to List
             for (FillerMaterialCertificateEntity fillerMaterialCertificateEntity : fillerMaterialCertificateEntities
@@ -83,6 +89,29 @@ public class FillerMaterialCertificateLogic {
             }
         } catch (Exception e) {
             throw new ApplicationException(ErrorType.FILLER_MATERIAL_CERTIFICATE_COULD_NOT_BE_FOUND);
+        }
+        return fillerMaterialCertificates;
+    }
+
+    public List<FillerMaterialCertificate> findCertificatesByFilters(List<String> heatNums, List<String> fillerMaterialTypes, List<String> jointNums) {
+        Specification<FillerMaterialCertificateEntity> spec = Specification
+                .where(this.fillerMaterialCertificateSpecifications.hasHeatNumIn(heatNums))
+                .and(this.fillerMaterialCertificateSpecifications.hasFillerMaterialTypeIn(fillerMaterialTypes))
+                .and(this.fillerMaterialCertificateSpecifications.hasJointNumsIn(jointNums));
+
+        List<FillerMaterialCertificateEntity> fillerMaterialCertificateEntities = this.fillerMaterialCertificateDal.findAll(spec);
+        List<FillerMaterialCertificate> fillerMaterialCertificates = convertEntityListToDtoList(fillerMaterialCertificateEntities);
+
+        return fillerMaterialCertificates;
+    }
+
+    private List<FillerMaterialCertificate> convertEntityListToDtoList(List<FillerMaterialCertificateEntity> fillerMaterialCertificateEntities) {
+        List<FillerMaterialCertificate> fillerMaterialCertificates = new ArrayList<>();
+
+        for (FillerMaterialCertificateEntity entity : fillerMaterialCertificateEntities
+        ) {
+            FillerMaterialCertificate fillerMaterialCertificate = new FillerMaterialCertificate(entity);
+            fillerMaterialCertificates.add(fillerMaterialCertificate);
         }
         return fillerMaterialCertificates;
     }

@@ -1,8 +1,9 @@
 package com.verapipe.dal;
 
 import com.verapipe.entities.FillerMaterialCertificateEntity;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface IFillerMaterialCertificateDal extends PagingAndSortingRepository<FillerMaterialCertificateEntity,Integer> {
+public interface IFillerMaterialCertificateDal extends PagingAndSortingRepository<FillerMaterialCertificateEntity,Integer>, JpaSpecificationExecutor<FillerMaterialCertificateEntity> {
 
 }

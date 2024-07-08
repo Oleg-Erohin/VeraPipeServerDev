@@ -1,8 +1,6 @@
 package com.verapipe.controllers;
 
-import com.verapipe.dto.BaseMaterialType;
 import com.verapipe.dto.FillerMaterialCertificate;
-import com.verapipe.logic.BaseMaterialTypeLogic;
 import com.verapipe.logic.FillerMaterialCertificateLogic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -42,5 +40,13 @@ public class FillerMaterialCertificateController {
     @GetMapping("/{id}")
     public FillerMaterialCertificate getById(@PathVariable("id") int id) throws Exception {
         return this.fillerMaterialCertificateLogic.getById(id);
+    }
+    @GetMapping("/by-filters")
+    public List<FillerMaterialCertificate> getFillerMaterialCertificates(
+            @RequestParam(required = false) List<String> heatNum,
+            @RequestParam(required = false) List<String> fillerMaterialTypeName,
+            @RequestParam(required = false) List<String> jointNum) {
+
+        return fillerMaterialCertificateLogic.findCertificatesByFilters(heatNum, fillerMaterialTypeName, jointNum);
     }
 }

@@ -1,20 +1,20 @@
 package com.verapipe.logic;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.verapipe.consts.Consts;
 import com.verapipe.dal.IJointDal;
 import com.verapipe.dto.*;
-import com.verapipe.entities.JointEntity;
+import com.verapipe.entities.*;
 import com.verapipe.enums.ErrorType;
 import com.verapipe.enums.UnitOfMeasure;
 import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.specifications.JointSpecifications;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class JointLogic {
@@ -25,9 +25,18 @@ public class JointLogic {
     private JoinerLogic joinerLogic;
     private IsometricLogic isometricLogic;
     private ProcessSpecificationProcedureLogic processSpecificationProcedureLogic;
+    private JointSpecifications jointSpecifications;
 
     @Autowired
-    public JointLogic(IJointDal jointDal, NdtReportLogic ndtReportLogic, PreheatLogic preheatLogic, PostWeldHeatTreatmentLogic postWeldHeatTreatmentLogic, JoinerLogic joinerLogic, IsometricLogic isometricLogic, ProcessSpecificationProcedureLogic processSpecificationProcedureLogic) {
+    public JointLogic(IJointDal jointDal,
+                      NdtReportLogic ndtReportLogic,
+                      PreheatLogic preheatLogic,
+                      PostWeldHeatTreatmentLogic postWeldHeatTreatmentLogic,
+                      JoinerLogic joinerLogic,
+                      IsometricLogic isometricLogic,
+                      ProcessSpecificationProcedureLogic processSpecificationProcedureLogic,
+                      JointSpecifications jointSpecifications
+                      ) {
         this.jointDal = jointDal;
         this.ndtReportLogic = ndtReportLogic;
         this.preheatLogic = preheatLogic;
@@ -35,6 +44,7 @@ public class JointLogic {
         this.joinerLogic = joinerLogic;
         this.isometricLogic = isometricLogic;
         this.processSpecificationProcedureLogic = processSpecificationProcedureLogic;
+        this.jointSpecifications = jointSpecifications;
     }
 
     public int add(Joint joint) throws Exception {
@@ -87,7 +97,7 @@ public class JointLogic {
     public List<Joint> getAll() throws Exception {
         Iterable<JointEntity> jointEntities;
         List<Joint> joints = new ArrayList<>();
-        try{
+        try {
             jointEntities = this.jointDal.findAll();
             // Convert Iterable to List
             for (JointEntity jointEntity : jointEntities
@@ -101,6 +111,48 @@ public class JointLogic {
         return joints;
     }
 
+    public List<Joint> findJointsByFilters(Integer number, String coordinatesOnIsometric, PidEntity pid, IsometricEntity isometric, Integer sheetOnIsometric, UnitOfMeasure uom, String schedule, Float diameter, String fittingDescription1, String comments, String fittingDescription2, Set<BaseMaterialTypeEntity> baseMaterialTypeList, Set<BaseMaterialCertificateEntity> baseMaterialCertificateList, Float thickness, Set<FillerMaterialTypeEntity> fillerMaterialTypeList, Set<FillerMaterialCertificateEntity> fillerMaterialCertificateList, ProcessSpecificationProcedureEntity processSpecificationProcedure, Set<JoinerEntity> joinersList, Date date, Boolean isFitUpDone, Boolean isVisualInspectionDone, NdtReportEntity ndtReport, Boolean isNdtPassed, PreheatEntity preheat, PostWeldHeatTreatmentEntity postWeldHeatTreatment) throws JsonProcessingException {
+        Specification<JointEntity> spec = Specification
+                .where(jointSpecifications.hasNumber(number))
+                .and(jointSpecifications.hasCoordinatesOnIsometric(coordinatesOnIsometric))
+                .and(jointSpecifications.hasPid(pid))
+                .and(jointSpecifications.hasIsometric(isometric))
+                .and(jointSpecifications.hasSheetOnIsometric(sheetOnIsometric))
+                .and(jointSpecifications.hasUom(uom))
+                .and(jointSpecifications.hasSchedule(schedule))
+                .and(jointSpecifications.hasDiameter(diameter))
+                .and(jointSpecifications.hasFittingDescription1(fittingDescription1))
+                .and(jointSpecifications.hasComments(comments))
+                .and(jointSpecifications.hasFittingDescription2(fittingDescription2))
+                .and(jointSpecifications.hasBaseMaterialTypesIn(baseMaterialTypeList))
+                .and(jointSpecifications.hasBaseMaterialCertificatesIn(baseMaterialCertificateList))
+                .and(jointSpecifications.hasThickness(thickness))
+                .and(jointSpecifications.hasFillerMaterialTypesIn(fillerMaterialTypeList))
+                .and(jointSpecifications.hasFillerMaterialCertificatesIn(fillerMaterialCertificateList))
+                .and(jointSpecifications.hasProcessSpecificationProcedure(processSpecificationProcedure))
+                .and(jointSpecifications.hasJoinersIn(joinersList))
+                .and(jointSpecifications.hasDate(date))
+                .and(jointSpecifications.isFitUpDone(isFitUpDone))
+                .and(jointSpecifications.isVisualInspectionDone(isVisualInspectionDone))
+                .and(jointSpecifications.hasNdtReport(ndtReport))
+                .and(jointSpecifications.isNdtPassed(isNdtPassed))
+                .and(jointSpecifications.hasPreheat(preheat))
+                .and(jointSpecifications.hasPostWeldHeatTreatment(postWeldHeatTreatment));
+        List<JointEntity> jointEntities = this.jointDal.findAll(spec);
+        List<Joint>joints = convertEntityListToDtoList(jointEntities);
+        return joints;
+    }
+
+    private List<Joint> convertEntityListToDtoList(List<JointEntity> jointEntities) throws JsonProcessingException {
+        List<Joint>joints = new ArrayList<>();
+        for (JointEntity entity : jointEntities
+             ) {
+            Joint joint = new Joint(entity);
+            joints.add(joint);
+        }
+        return joints;
+    }
+
 
     private void validations(Joint joint) throws Exception {
 //        validateJointNumber(joint.getNumber());
@@ -108,7 +160,7 @@ public class JointLogic {
         validateJointPid(joint.getPidName());
         validateJointIsometric(joint.getIsometricName());
         validateJointSheetOnIsometric(joint.getIsometricName(), joint.getSheetOnIsometric());
-        if(joint.getUom() == UnitOfMeasure.MM){
+        if (joint.getUom() == UnitOfMeasure.MM) {
             joint.setSchedule(null);
         }
         validateDiameter(joint.getDiameter());

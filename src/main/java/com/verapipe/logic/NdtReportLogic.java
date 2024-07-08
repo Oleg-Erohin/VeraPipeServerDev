@@ -4,11 +4,15 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.INdtReportDal;
 import com.verapipe.dto.NdtReport;
 import com.verapipe.dto.NdtType;
+import com.verapipe.entities.JointEntity;
 import com.verapipe.entities.NdtReportEntity;
+import com.verapipe.entities.NdtTypeEntity;
 import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.specifications.NdtReportSpecifications;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,11 +24,13 @@ import java.util.Optional;
 public class NdtReportLogic {
     private INdtReportDal ndtReportDal;
     private NdtTypeLogic ndtTypeLogic;
+    private NdtReportSpecifications ndtReportSpecifications;
 
     @Autowired
-    public NdtReportLogic(INdtReportDal ndtReportDal, NdtTypeLogic ndtTypeLogic) {
+    public NdtReportLogic(INdtReportDal ndtReportDal, NdtTypeLogic ndtTypeLogic, NdtReportSpecifications ndtReportSpecifications) {
         this.ndtReportDal = ndtReportDal;
         this.ndtTypeLogic = ndtTypeLogic;
+        this.ndtReportSpecifications = ndtReportSpecifications;
     }
 
     public int add(NdtReport ndtReport) throws Exception {
@@ -90,6 +96,28 @@ public class NdtReportLogic {
         }
 
 
+        return ndtReports;
+    }
+
+    public List<NdtReport> findNdtReportsByFilters(String name, Date date, NdtTypeEntity ndtType, List<JointEntity> jointsList) {
+        Specification<NdtReportEntity> spec = Specification
+                .where(ndtReportSpecifications.hasName(name))
+                .and(ndtReportSpecifications.hasDate(date))
+                .and(ndtReportSpecifications.hasNdtType(ndtType))
+                .and(ndtReportSpecifications.hasJointsIn(jointsList));
+
+        List<NdtReportEntity> ndtReportEntities = this.ndtReportDal.findAll(spec);
+        List<NdtReport> ndtReports = convertEntityListToDtoList(ndtReportEntities);
+        return ndtReports;
+    }
+
+    private List<NdtReport> convertEntityListToDtoList(List<NdtReportEntity> ndtReportEntities) {
+        List<NdtReport> ndtReports = new ArrayList<>();
+        for (NdtReportEntity entity : ndtReportEntities
+             ) {
+            NdtReport ndtReport = new NdtReport(entity);
+            ndtReports.add(ndtReport);
+        }
         return ndtReports;
     }
 
