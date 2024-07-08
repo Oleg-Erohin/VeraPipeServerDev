@@ -19,10 +19,14 @@ import java.util.Optional;
 @Service
 public class BaseMaterialCertificateLogic {
     private IBaseMaterialCertificateDal baseMaterialCertificateDal;
+    private BaseMaterialCertificateSpecifications baseMaterialCertificateSpecifications;
 
     @Autowired
-    public BaseMaterialCertificateLogic(IBaseMaterialCertificateDal baseMaterialCertificateDal) {
+    public BaseMaterialCertificateLogic(IBaseMaterialCertificateDal baseMaterialCertificateDal,
+                                        BaseMaterialCertificateSpecifications baseMaterialCertificateSpecifications
+                                        ) {
         this.baseMaterialCertificateDal = baseMaterialCertificateDal;
+        this.baseMaterialCertificateSpecifications = baseMaterialCertificateSpecifications;
     }
 
     public int add(BaseMaterialCertificate baseMaterialCertificate) throws Exception {
@@ -91,9 +95,9 @@ public class BaseMaterialCertificateLogic {
 
     public List<BaseMaterialCertificate> findCertificatesByFilters(List<String> heatNums, List<String> lotNums, List<String> materialTypeNames) {
         Specification<BaseMaterialCertificateEntity> spec = Specification
-                .where(BaseMaterialCertificateSpecifications.hasHeatNumIn(heatNums))
-                .and(BaseMaterialCertificateSpecifications.hasLotNumIn(lotNums))
-                .and(BaseMaterialCertificateSpecifications.hasMaterialTypeNameIn(materialTypeNames));
+                .where(this.baseMaterialCertificateSpecifications.hasHeatNumIn(heatNums))
+                .and(this.baseMaterialCertificateSpecifications.hasLotNumIn(lotNums))
+                .and(this.baseMaterialCertificateSpecifications.hasMaterialTypeNameIn(materialTypeNames));
 
         List<BaseMaterialCertificateEntity> baseMaterialCertificateEntities = this.baseMaterialCertificateDal.findAll(spec);
         List<BaseMaterialCertificate> baseMaterialCertificates = convertEntityListToDtoList(baseMaterialCertificateEntities);

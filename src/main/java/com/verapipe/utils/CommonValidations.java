@@ -45,6 +45,7 @@ public class CommonValidations {
 //        this.fillerMaterialCertificateLogic = fillerMaterialCertificateLogic;
 //    }
 
+
     public static void validateStringLength(String string, int min, int max) throws ApplicationException {
         if (string.length() < min) {
             throw new ApplicationException(ErrorType.TEXT_TOO_SHORT);
