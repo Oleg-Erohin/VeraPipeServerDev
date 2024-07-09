@@ -1,7 +1,5 @@
 Important:
 - Joint - change ndt to Map - Oleg
-- Joint - list with tabs for Mor - Oleg
-- Change Static functions in specifications - Aviad
 - Create filters functions to all entities - Aviad: FillerMaterialCertificate, Isometric, Joiner, Joint, NdtReport
                                              Oleg: Pid, PWHT, PreHeat, PressureTestPackage, PSP
 - Find how to properly define static parameters in class (Logics in common validations) - Oleg
