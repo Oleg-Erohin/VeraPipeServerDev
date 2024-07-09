@@ -46,7 +46,7 @@ public class BaseMaterialCertificateController {
     public List<BaseMaterialCertificate> getBaseMaterialCertificates(
             @RequestParam(required = false) List<String> heatNum,
             @RequestParam(required = false) List<String> lotNum,
-            @RequestParam(required = false) List<String> materialTypeName) {
+            @RequestParam(required = false) List<String> materialTypeName) throws Exception {
 
         return this.baseMaterialCertificateLogic.findCertificatesByFilters(heatNum, lotNum, materialTypeName);
     }

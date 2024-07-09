@@ -4,6 +4,7 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.IBaseMaterialCertificateDal;
 import com.verapipe.dto.BaseMaterialCertificate;
 import com.verapipe.entities.BaseMaterialCertificateEntity;
+import com.verapipe.entities.BaseMaterialTypeEntity;
 import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.specifications.BaseMaterialCertificateSpecifications;
@@ -20,18 +21,21 @@ import java.util.Optional;
 public class BaseMaterialCertificateLogic {
     private IBaseMaterialCertificateDal baseMaterialCertificateDal;
     private BaseMaterialCertificateSpecifications baseMaterialCertificateSpecifications;
+    private BaseMaterialTypeLogic baseMaterialTypeLogic;
 
     @Autowired
     public BaseMaterialCertificateLogic(IBaseMaterialCertificateDal baseMaterialCertificateDal,
-                                        BaseMaterialCertificateSpecifications baseMaterialCertificateSpecifications
+                                        BaseMaterialCertificateSpecifications baseMaterialCertificateSpecifications,
+                                        BaseMaterialTypeLogic baseMaterialTypeLogic
                                         ) {
         this.baseMaterialCertificateDal = baseMaterialCertificateDal;
         this.baseMaterialCertificateSpecifications = baseMaterialCertificateSpecifications;
+        this.baseMaterialTypeLogic = baseMaterialTypeLogic;
     }
 
     public int add(BaseMaterialCertificate baseMaterialCertificate) throws Exception {
         validations(baseMaterialCertificate);
-        BaseMaterialCertificateEntity baseMaterialCertificateEntity = new BaseMaterialCertificateEntity(baseMaterialCertificate);
+        BaseMaterialCertificateEntity baseMaterialCertificateEntity = convertDtoToEntity(baseMaterialCertificate);
         try {
             baseMaterialCertificateEntity = this.baseMaterialCertificateDal.save(baseMaterialCertificateEntity);
         } catch (Exception e) {
@@ -43,7 +47,7 @@ public class BaseMaterialCertificateLogic {
 
     public void update(BaseMaterialCertificate baseMaterialCertificate) throws Exception {
         validations(baseMaterialCertificate);
-        BaseMaterialCertificateEntity sentBaseMaterialCertificateEntity = new BaseMaterialCertificateEntity(baseMaterialCertificate);
+        BaseMaterialCertificateEntity sentBaseMaterialCertificateEntity = convertDtoToEntity(baseMaterialCertificate);
         try {
             this.baseMaterialCertificateDal.save(sentBaseMaterialCertificateEntity);
         } catch (Exception e) {
@@ -72,7 +76,7 @@ public class BaseMaterialCertificateLogic {
         if (baseMaterialCertificateEntity.isEmpty()) {
             throw new ApplicationException(ErrorType.BASE_MATERIAL_CERTIFICATE_DOES_NOT_EXIST);
         }
-        BaseMaterialCertificate baseMaterialCertificate = new BaseMaterialCertificate(baseMaterialCertificateEntity.get());
+        BaseMaterialCertificate baseMaterialCertificate = convertEntityToDto(baseMaterialCertificateEntity.get());
         return baseMaterialCertificate;
     }
 
@@ -84,7 +88,7 @@ public class BaseMaterialCertificateLogic {
             // Convert Iterable to List
             for (BaseMaterialCertificateEntity baseMaterialCertificateEntity : baseMaterialCertificateEntities
             ) {
-                BaseMaterialCertificate baseMaterialCertificate = new BaseMaterialCertificate(baseMaterialCertificateEntity);
+                BaseMaterialCertificate baseMaterialCertificate = convertEntityToDto(baseMaterialCertificateEntity);
                 baseMaterialCertificates.add(baseMaterialCertificate);
             }
         } catch (Exception e) {
@@ -93,7 +97,7 @@ public class BaseMaterialCertificateLogic {
         return baseMaterialCertificates;
     }
 
-    public List<BaseMaterialCertificate> findCertificatesByFilters(List<String> heatNums, List<String> lotNums, List<String> materialTypeNames) {
+    public List<BaseMaterialCertificate> findCertificatesByFilters(List<String> heatNums, List<String> lotNums, List<String> materialTypeNames) throws Exception {
         Specification<BaseMaterialCertificateEntity> spec = Specification
                 .where(this.baseMaterialCertificateSpecifications.hasHeatNumIn(heatNums))
                 .and(this.baseMaterialCertificateSpecifications.hasLotNumIn(lotNums))
@@ -105,11 +109,11 @@ public class BaseMaterialCertificateLogic {
         return baseMaterialCertificates;
     }
 
-    private List<BaseMaterialCertificate> convertEntityListToDtoList(List<BaseMaterialCertificateEntity> baseMaterialCertificateEntities) {
+    private List<BaseMaterialCertificate> convertEntityListToDtoList(List<BaseMaterialCertificateEntity> baseMaterialCertificateEntities) throws Exception {
         List<BaseMaterialCertificate> baseMaterialCertificates = new ArrayList<>();
         for (BaseMaterialCertificateEntity entity : baseMaterialCertificateEntities
         ) {
-            BaseMaterialCertificate baseMaterialCertificate = new BaseMaterialCertificate(entity);
+            BaseMaterialCertificate baseMaterialCertificate = convertEntityToDto(entity);
             baseMaterialCertificates.add(baseMaterialCertificate);
         }
         return baseMaterialCertificates;
@@ -133,5 +137,21 @@ public class BaseMaterialCertificateLogic {
 
     private boolean isBaseMaterialCertificateExist(int id) {
         return this.baseMaterialCertificateDal.existsById(id);
+    }
+
+    private BaseMaterialCertificateEntity convertDtoToEntity(BaseMaterialCertificate baseMaterialCertificate) throws Exception {
+        BaseMaterialCertificateEntity baseMaterialCertificateEntity = new BaseMaterialCertificateEntity(baseMaterialCertificate);
+        BaseMaterialTypeEntity baseMaterialTypeEntity = getBaseMaterialTypeByName(baseMaterialCertificate.getMaterialTypeName());
+        baseMaterialCertificateEntity.setBaseMaterialType(baseMaterialTypeEntity);
+        return baseMaterialCertificateEntity;
+    }
+
+    private BaseMaterialCertificate convertEntityToDto(BaseMaterialCertificateEntity baseMaterialCertificateEntity) throws Exception {
+        BaseMaterialCertificate baseMaterialCertificate = new BaseMaterialCertificate(baseMaterialCertificateEntity);
+        return baseMaterialCertificate;
+    }
+
+    private BaseMaterialTypeEntity getBaseMaterialTypeByName(String materialTypeName) throws ApplicationException {
+        return baseMaterialTypeLogic.getByName(materialTypeName);
     }
 }

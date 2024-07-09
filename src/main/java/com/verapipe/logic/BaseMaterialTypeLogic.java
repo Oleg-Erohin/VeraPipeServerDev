@@ -93,6 +93,10 @@ public class BaseMaterialTypeLogic {
         return baseMaterialTypes;
     }
 
+    public BaseMaterialTypeEntity getByName(String BaseMaterialTypeName) throws ApplicationException {
+        return baseMaterialTypeDal.findByName(BaseMaterialTypeName)
+                .orElseThrow(() -> new ApplicationException(ErrorType.BASE_MATERIAL_TYPE_DOES_NOT_EXIST));
+    }
 
     private void validations(BaseMaterialType baseMaterialType) throws Exception {
         validateBaseMaterialTypeName(baseMaterialType.getName());
