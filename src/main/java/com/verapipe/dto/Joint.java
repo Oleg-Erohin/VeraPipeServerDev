@@ -1,10 +1,12 @@
 package com.verapipe.dto;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.verapipe.entities.JointEntity;
+import com.verapipe.entities.NdtReportEntity;
 import com.verapipe.enums.UnitOfMeasure;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Joint {
     private int id;
@@ -33,8 +35,7 @@ public class Joint {
     private Date date;
     private boolean isFitUpDone;
     private boolean isVisualInspectionDone;
-    private NdtReport ndtReport;
-    private boolean isNdtPassed;
+    private Map<NdtReport, Boolean> ndtReports;
     private Preheat preheat;
     private PostWeldHeatTreatment postWeldHeatTreatment;
     private String comments;
@@ -42,7 +43,7 @@ public class Joint {
     public Joint() {
     }
 
-    public Joint(int number, Coordinates coordinatesOnIsometric, Pid pid, Isometric isometric, int sheetOnIsometric, UnitOfMeasure uom, String schedule, Float diameter, String fittingDescription1, BaseMaterialType baseMaterialType1, BaseMaterialCertificate baseMaterial1, String fittingDescription2, BaseMaterialType baseMaterialType2, BaseMaterialCertificate baseMaterial2, Float thickness, FillerMaterialType fillerMaterialType1, FillerMaterialCertificate fillerMaterial1, FillerMaterialType fillerMaterialType2, FillerMaterialCertificate fillerMaterial2, ProcessSpecificationProcedure processSpecificationProcedure, Joiner joiner1, Joiner joiner2, Date date, boolean isFitUpDone, boolean isVisualInspectionDone, NdtReport ndtReport, boolean isNdtPassed, Preheat preheat, PostWeldHeatTreatment postWeldHeatTreatment, String comments) {
+    public Joint(int number, Coordinates coordinatesOnIsometric, Pid pid, Isometric isometric, int sheetOnIsometric, UnitOfMeasure uom, String schedule, Float diameter, String fittingDescription1, BaseMaterialType baseMaterialType1, BaseMaterialCertificate baseMaterial1, String fittingDescription2, BaseMaterialType baseMaterialType2, BaseMaterialCertificate baseMaterial2, Float thickness, FillerMaterialType fillerMaterialType1, FillerMaterialCertificate fillerMaterial1, FillerMaterialType fillerMaterialType2, FillerMaterialCertificate fillerMaterial2, ProcessSpecificationProcedure processSpecificationProcedure, Joiner joiner1, Joiner joiner2, Date date, boolean isFitUpDone, boolean isVisualInspectionDone, Map<NdtReport, Boolean> ndtReports, Preheat preheat, PostWeldHeatTreatment postWeldHeatTreatment, String comments) {
         this.number = number;
         this.coordinatesOnIsometric = coordinatesOnIsometric;
         this.pid = pid;
@@ -68,14 +69,13 @@ public class Joint {
         this.date = date;
         this.isFitUpDone = isFitUpDone;
         this.isVisualInspectionDone = isVisualInspectionDone;
-        this.ndtReport = ndtReport;
-        this.isNdtPassed = isNdtPassed;
+        this.ndtReports = ndtReports;
         this.preheat = preheat;
         this.postWeldHeatTreatment = postWeldHeatTreatment;
         this.comments = comments;
     }
 
-    public Joint(int id, int number, Coordinates coordinatesOnIsometric, Pid pid, Isometric isometric, int sheetOnIsometric, UnitOfMeasure uom, String schedule, Float diameter, String fittingDescription1, BaseMaterialType baseMaterialType1, BaseMaterialCertificate baseMaterial1, String fittingDescription2, BaseMaterialType baseMaterialType2, BaseMaterialCertificate baseMaterial2, Float thickness, FillerMaterialType fillerMaterialType1, FillerMaterialCertificate fillerMaterial1, FillerMaterialType fillerMaterialType2, FillerMaterialCertificate fillerMaterial2, ProcessSpecificationProcedure processSpecificationProcedure, Joiner joiner1, Joiner joiner2, Date date, boolean isFitUpDone, boolean isVisualInspectionDone, NdtReport ndtReport, boolean isNdtPassed, Preheat preheat, PostWeldHeatTreatment postWeldHeatTreatment, String comments) {
+    public Joint(int id, int number, Coordinates coordinatesOnIsometric, Pid pid, Isometric isometric, int sheetOnIsometric, UnitOfMeasure uom, String schedule, Float diameter, String fittingDescription1, BaseMaterialType baseMaterialType1, BaseMaterialCertificate baseMaterial1, String fittingDescription2, BaseMaterialType baseMaterialType2, BaseMaterialCertificate baseMaterial2, Float thickness, FillerMaterialType fillerMaterialType1, FillerMaterialCertificate fillerMaterial1, FillerMaterialType fillerMaterialType2, FillerMaterialCertificate fillerMaterial2, ProcessSpecificationProcedure processSpecificationProcedure, Joiner joiner1, Joiner joiner2, Date date, boolean isFitUpDone, boolean isVisualInspectionDone, Map<NdtReport, Boolean> ndtReports, Preheat preheat, PostWeldHeatTreatment postWeldHeatTreatment, String comments) {
         this.id = id;
         this.number = number;
         this.coordinatesOnIsometric = coordinatesOnIsometric;
@@ -102,14 +102,13 @@ public class Joint {
         this.date = date;
         this.isFitUpDone = isFitUpDone;
         this.isVisualInspectionDone = isVisualInspectionDone;
-        this.ndtReport = ndtReport;
-        this.isNdtPassed = isNdtPassed;
+        this.ndtReports = ndtReports;
         this.preheat = preheat;
         this.postWeldHeatTreatment = postWeldHeatTreatment;
         this.comments = comments;
     }
 
-    public Joint(JointEntity jointEntity) throws JsonProcessingException {
+    public Joint(JointEntity jointEntity) {
         this.id = jointEntity.getId();
         this.number = jointEntity.getNumber();
         this.coordinatesOnIsometric = jointEntity.getCoordinatesOnIsometric();
@@ -126,8 +125,7 @@ public class Joint {
         this.date = jointEntity.getDate();
         this.isFitUpDone = jointEntity.isFitUpDone();
         this.isVisualInspectionDone = jointEntity.isVisualInspectionDone();
-        this.ndtReport = new NdtReport(jointEntity.getNdtReport());
-        this.isNdtPassed = jointEntity.getNdtPassed();
+        this.ndtReports = convertNdtReportsEntitiesToDTOs(jointEntity.getNdtReports());
         this.preheat = new Preheat(jointEntity.getPreheat());
         this.postWeldHeatTreatment = new PostWeldHeatTreatment(jointEntity.getPostWeldHeatTreatment());
         this.comments = jointEntity.getComments();
@@ -167,6 +165,16 @@ public class Joint {
                 this.joiner2 = new Joiner(jointEntity.getJoinersList().iterator().next());
             }
         }
+    }
+
+    private Map<NdtReport, Boolean> convertNdtReportsEntitiesToDTOs(Map<NdtReportEntity, Boolean> ndtReportsEntities) {
+        Map<NdtReport, Boolean> ndtReportsDTOs = new HashMap<>();
+        for (Map.Entry<NdtReportEntity, Boolean> entry : ndtReportsEntities.entrySet()) {
+            NdtReportEntity entity = entry.getKey();
+            NdtReport dto = new NdtReport(entity);
+            ndtReportsDTOs.put(dto, entry.getValue());
+        }
+        return ndtReportsDTOs;
     }
 
     public int getId() {
@@ -377,20 +385,12 @@ public class Joint {
         isVisualInspectionDone = visualInspectionDone;
     }
 
-    public NdtReport getNdtReport() {
-        return ndtReport;
+    public Map<NdtReport, Boolean> getNdtReports() {
+        return ndtReports;
     }
 
-    public void setNdtReport(NdtReport ndtReport) {
-        this.ndtReport = ndtReport;
-    }
-
-    public boolean isNdtPassed() {
-        return isNdtPassed;
-    }
-
-    public void setNdtPassed(boolean ndtPassed) {
-        isNdtPassed = ndtPassed;
+    public void setNdtReports(Map<NdtReport, Boolean> ndtReports) {
+        this.ndtReports = ndtReports;
     }
 
     public Preheat getPreheat() {
@@ -415,5 +415,41 @@ public class Joint {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    @Override
+    public String toString() {
+        return "Joint{" +
+                "id=" + id +
+                ", number=" + number +
+                ", coordinatesOnIsometric=" + coordinatesOnIsometric +
+                ", pid=" + pid +
+                ", isometric=" + isometric +
+                ", sheetOnIsometric=" + sheetOnIsometric +
+                ", uom=" + uom +
+                ", schedule='" + schedule + '\'' +
+                ", diameter=" + diameter +
+                ", fittingDescription1='" + fittingDescription1 + '\'' +
+                ", baseMaterialType1=" + baseMaterialType1 +
+                ", baseMaterial1=" + baseMaterial1 +
+                ", fittingDescription2='" + fittingDescription2 + '\'' +
+                ", baseMaterialType2=" + baseMaterialType2 +
+                ", baseMaterial2=" + baseMaterial2 +
+                ", thickness=" + thickness +
+                ", fillerMaterialType1=" + fillerMaterialType1 +
+                ", fillerMaterial1=" + fillerMaterial1 +
+                ", fillerMaterialType2=" + fillerMaterialType2 +
+                ", fillerMaterial2=" + fillerMaterial2 +
+                ", processSpecificationProcedure=" + processSpecificationProcedure +
+                ", joiner1=" + joiner1 +
+                ", joiner2=" + joiner2 +
+                ", date=" + date +
+                ", isFitUpDone=" + isFitUpDone +
+                ", isVisualInspectionDone=" + isVisualInspectionDone +
+                ", ndtReports=" + ndtReports +
+                ", preheat=" + preheat +
+                ", postWeldHeatTreatment=" + postWeldHeatTreatment +
+                ", comments='" + comments + '\'' +
+                '}';
     }
 }

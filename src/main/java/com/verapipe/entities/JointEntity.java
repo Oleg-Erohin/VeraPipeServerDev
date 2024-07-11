@@ -1,14 +1,12 @@
 package com.verapipe.entities;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.verapipe.dto.Coordinates;
 import com.verapipe.dto.Joint;
+import com.verapipe.dto.NdtReport;
 import com.verapipe.enums.UnitOfMeasure;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "joint")
@@ -58,10 +56,9 @@ public class JointEntity {
     private boolean isFitUpDone;
     @Column(name = "is_visual_inspection_done", unique = false, nullable = true)
     private boolean isVisualInspectionDone;
-    @ManyToOne(fetch = FetchType.EAGER)
-    private NdtReportEntity ndtReport;
-    @Column(name = "is_ndt_passed", unique = false, nullable = true)
-    private Boolean isNdtPassed;
+    @ManyToMany(mappedBy = "jointEntity")
+    @MapKeyJoinColumn(name = "ndt_report_id")
+    private Map<NdtReportEntity, Boolean> ndtReports;
     @ManyToOne(fetch = FetchType.EAGER)
     private PreheatEntity preheat;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -70,7 +67,7 @@ public class JointEntity {
     public JointEntity() {
     }
 
-    public JointEntity(Joint joint) throws JsonProcessingException {
+    public JointEntity(Joint joint) {
         this.id = joint.getId();
         this.number = joint.getNumber();
         this.coordinatesOnIsometric = joint.getCoordinatesOnIsometric();
@@ -87,8 +84,7 @@ public class JointEntity {
         this.date = joint.getDate();
         this.isFitUpDone = joint.isFitUpDone();
         this.isVisualInspectionDone = joint.isVisualInspectionDone();
-        this.ndtReport = new NdtReportEntity(joint.getNdtReport());
-        this.isNdtPassed = joint.isNdtPassed();
+        this.ndtReports = convertNdtReportsDTOsToEntities(joint.getNdtReports());
         this.preheat = new PreheatEntity(joint.getPreheat());
         this.postWeldHeatTreatment = new PostWeldHeatTreatmentEntity(joint.getPostWeldHeatTreatment());
         this.comments = joint.getComments();
@@ -137,6 +133,16 @@ public class JointEntity {
                 this.joinersList.add(new JoinerEntity(joint.getJoiner2()));
             }
         }
+    }
+
+    private Map<NdtReportEntity, Boolean> convertNdtReportsDTOsToEntities(Map<NdtReport, Boolean> ndtReportsDTOs) {
+        Map<NdtReportEntity, Boolean> ndtReportsEntities = new HashMap<>();
+        for (Map.Entry<NdtReport, Boolean> entry : ndtReportsDTOs.entrySet()) {
+            NdtReport dto = entry.getKey();
+            NdtReportEntity entity = new NdtReportEntity(dto);
+            ndtReportsEntities.put(entity, entry.getValue());
+        }
+        return ndtReportsEntities;
     }
 
     public int getId() {
@@ -315,20 +321,12 @@ public class JointEntity {
         isVisualInspectionDone = visualInspectionDone;
     }
 
-    public NdtReportEntity getNdtReport() {
-        return ndtReport;
+    public Map<NdtReportEntity, Boolean> getNdtReports() {
+        return ndtReports;
     }
 
-    public void setNdtReport(NdtReportEntity ndtReport) {
-        this.ndtReport = ndtReport;
-    }
-
-    public Boolean getNdtPassed() {
-        return isNdtPassed;
-    }
-
-    public void setNdtPassed(Boolean ndtPassed) {
-        isNdtPassed = ndtPassed;
+    public void setNdtReports(Map<NdtReportEntity, Boolean> ndtReports) {
+        this.ndtReports = ndtReports;
     }
 
     public PreheatEntity getPreheat() {

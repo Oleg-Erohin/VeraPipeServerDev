@@ -38,7 +38,7 @@ public class IsometricEntity {
     private String comments;
 
     @OneToMany(mappedBy = "isometric", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<IsometricPidSheetEntity> pidSheets = new HashSet<>();
+    private Set<IsometricPidSheetEntity> pidSheets;
 
     @OneToMany(mappedBy = "isometric", fetch = FetchType.LAZY)
     private List<JointEntity> jointsList;
