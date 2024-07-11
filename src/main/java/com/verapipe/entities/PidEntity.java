@@ -14,25 +14,32 @@ public class PidEntity {
     @Id
     @GeneratedValue
     private int id;
+
     @Column(name = "name", unique = true, nullable = false)
     private String name;
-    @Column(name = "revision", unique = false, nullable = false)
+
+    @Column(name = "revision", nullable = false)
     private String revision;
-    @Column(name = "date", unique = false, nullable = false)
+
+    @Column(name = "date", nullable = false)
     private Date date;
-    @Column(name = "sheets", unique = false, nullable = false)
+
+    @Column(name = "sheets", nullable = false)
     private int sheets;
-    @Column(name = "comments", unique = false, nullable = true, columnDefinition="TEXT")
+
+    @Column(name = "comments", columnDefinition="TEXT")
     private String comments;
-    @ManyToMany(mappedBy = "pidsList", fetch = FetchType.LAZY)
-    private Set<IsometricEntity> isometricDrawingsList;
+
+    @OneToMany(mappedBy = "pid", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<IsometricPidSheetEntity> isometricDrawingsList = new HashSet<>();
+
     @OneToMany(mappedBy = "pid", fetch = FetchType.LAZY)
-    private List<JointEntity> JointsList;
+    private List<JointEntity> jointsList;
+
     @ManyToMany(mappedBy = "pidsList", fetch = FetchType.LAZY)
     private Set<PressureTestPackageEntity> pressureTestPackagesList;
 
-    public PidEntity() {
-    }
+    public PidEntity() {}
 
     public PidEntity(Pid pid) {
         this.id = pid.getId();
@@ -40,8 +47,6 @@ public class PidEntity {
         this.revision = pid.getRevision();
         this.date = pid.getDate();
         this.sheets = pid.getSheets();
-        this.isometricDrawingsList = new HashSet<>();
-        this.pressureTestPackagesList = new HashSet<>();
         this.comments = pid.getComments();
     }
 
@@ -85,20 +90,28 @@ public class PidEntity {
         this.sheets = sheets;
     }
 
-    public Set<IsometricEntity> getIsometricDrawingsList() {
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public Set<IsometricPidSheetEntity> getIsometricDrawingsList() {
         return isometricDrawingsList;
     }
 
-    public void setIsometricDrawingsList(Set<IsometricEntity> isometricDrawingsList) {
+    public void setIsometricDrawingsList(Set<IsometricPidSheetEntity> isometricDrawingsList) {
         this.isometricDrawingsList = isometricDrawingsList;
     }
 
     public List<JointEntity> getJointsList() {
-        return JointsList;
+        return jointsList;
     }
 
     public void setJointsList(List<JointEntity> jointsList) {
-        JointsList = jointsList;
+        this.jointsList = jointsList;
     }
 
     public Set<PressureTestPackageEntity> getPressureTestPackagesList() {
@@ -107,13 +120,5 @@ public class PidEntity {
 
     public void setPressureTestPackagesList(Set<PressureTestPackageEntity> pressureTestPackagesList) {
         this.pressureTestPackagesList = pressureTestPackagesList;
-    }
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
     }
 }

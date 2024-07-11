@@ -7,29 +7,29 @@ import java.util.Date;
 public class Preheat {
     private int id;
     private String name;
-    private String processSpecificationProcedureName;
+    private ProcessSpecificationProcedure processSpecificationProcedure;
     private Date date;
 
     public Preheat() {
     }
 
-    public Preheat(String name, String processSpecificationProcedureName, Date date) {
+    public Preheat(String name, ProcessSpecificationProcedure processSpecificationProcedure, Date date) {
         this.name = name;
-        this.processSpecificationProcedureName = processSpecificationProcedureName;
+        this.processSpecificationProcedure = processSpecificationProcedure;
         this.date = date;
     }
 
-    public Preheat(int id, String name, String processSpecificationProcedureName, Date date) {
+    public Preheat(int id, String name, ProcessSpecificationProcedure processSpecificationProcedure, Date date) {
         this.id = id;
         this.name = name;
-        this.processSpecificationProcedureName = processSpecificationProcedureName;
+        this.processSpecificationProcedure = processSpecificationProcedure;
         this.date = date;
     }
 
     public Preheat(PreheatEntity preheatEntity) {
         this.id = preheatEntity.getId();
         this.name = preheatEntity.getName();
-        this.processSpecificationProcedureName = preheatEntity.getProcessSpecificationProcedure().getName();
+        this.processSpecificationProcedure = new ProcessSpecificationProcedure(preheatEntity.getProcessSpecificationProcedure());
         this.date = preheatEntity.getDate();
     }
 
@@ -49,12 +49,12 @@ public class Preheat {
         this.name = name;
     }
 
-    public String getProcessSpecificationProcedureName() {
-        return processSpecificationProcedureName;
+    public ProcessSpecificationProcedure getProcessSpecificationProcedure() {
+        return processSpecificationProcedure;
     }
 
-    public void setProcessSpecificationProcedureName(String processSpecificationProcedureName) {
-        this.processSpecificationProcedureName = processSpecificationProcedureName;
+    public void setProcessSpecificationProcedure(ProcessSpecificationProcedure processSpecificationProcedure) {
+        this.processSpecificationProcedure = processSpecificationProcedure;
     }
 
     public Date getDate() {
@@ -70,7 +70,7 @@ public class Preheat {
         return "Preheat{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", processSpecificationProcedureName='" + processSpecificationProcedureName + '\'' +
+                ", processSpecificationProcedure=" + processSpecificationProcedure +
                 ", date=" + date +
                 '}';
     }

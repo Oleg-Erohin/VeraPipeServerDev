@@ -6,10 +6,10 @@ import java.util.Date;
 
 public class Pid {
     private int id;
-    private String name;//
-    private String revision;//
-    private Date date;//
-    private int sheets;//
+    private String name;
+    private String revision;
+    private Date date;
+    private int sheets;
     private String comments;
 
     public Pid() {

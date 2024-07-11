@@ -1,5 +1,8 @@
 package com.verapipe.dto;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Coordinates {
     private int id;
     private Float startCoordinateX;

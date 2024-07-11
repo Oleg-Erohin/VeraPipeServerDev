@@ -1,9 +1,8 @@
 package com.verapipe.entities;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.verapipe.dto.Coordinates;
 import com.verapipe.dto.Isometric;
-import com.verapipe.utils.MapConverter;
+import com.verapipe.dto.Pid;
 
 import javax.persistence.*;
 import java.util.*;
@@ -14,45 +13,62 @@ public class IsometricEntity {
     @Id
     @GeneratedValue
     private int id;
+
     @Column(name = "name", unique = true, nullable = false)
     private String name;
-    @Column(name = "revision", unique = false, nullable = false)
+
+    @Column(name = "revision", nullable = false)
     private String revision;
-    @Column(name = "date", unique = false, nullable = false)
+
+    @Column(name = "date", nullable = false)
     private Date date;
-    @Column(name = "sheets", unique = false, nullable = false)
+
+    @Column(name = "sheets", nullable = false)
     private int sheets;
-    @Column(name = "coordinates", unique = true, nullable = true)
-    private String coordinatesInPid;
-    @Column(name = "is_approved", unique = false,  nullable = false)
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "coordinates", joinColumns = @JoinColumn(name = "isometric_id"))
+    @Column(name = "coordinates", unique = true)
+    private List<Coordinates> coordinatesInPid;
+
+    @Column(name = "is_approved", nullable = false)
     private boolean isApproved;
-    @Column(name = "pid_sheets", unique = false, nullable = true)
-    @Convert(converter = MapConverter.class)
-    private Map<String, List<Integer>> pidSheets;
-    @Column(name = "comments", unique = false, nullable = true, columnDefinition="TEXT")
+
+    @Column(name = "comments", columnDefinition="TEXT")
     private String comments;
-    @ManyToMany(fetch = FetchType.LAZY)
-    private Set<PidEntity> pidsList;
+
+    @OneToMany(mappedBy = "isometric", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<IsometricPidSheetEntity> pidSheets = new HashSet<>();
+
     @OneToMany(mappedBy = "isometric", fetch = FetchType.LAZY)
     private List<JointEntity> jointsList;
+
     @ManyToMany(mappedBy = "isometricsList", fetch = FetchType.LAZY)
     private Set<PressureTestPackageEntity> testPacksList;
 
-    public IsometricEntity() {
-    }
+    public IsometricEntity() {}
 
-    public IsometricEntity(Isometric isometric) throws JsonProcessingException {
+    public IsometricEntity(Isometric isometric) {
         this.id = isometric.getId();
         this.name = isometric.getName();
         this.revision = isometric.getRevision();
         this.date = isometric.getDate();
         this.sheets = isometric.getSheets();
-        ObjectMapper objectMapper = new ObjectMapper();
-        this.coordinatesInPid = objectMapper.writeValueAsString(isometric.getCoordinatesInPid());
+        this.coordinatesInPid = isometric.getCoordinatesInPid();
         this.isApproved = isometric.isApproved();
-        this.pidsList = new HashSet<>();
-        this.pidSheets = isometric.getPidsAndSheets();
         this.comments = isometric.getComments();
+
+        // Convert pidsAndSheets map to IsometricPidSheetEntity objects and add to pidSheets
+        if (isometric.getPidsAndSheets() != null) {
+            this.pidSheets = new HashSet<>();
+            for (Map.Entry<Pid, List<Integer>> entry : isometric.getPidsAndSheets().entrySet()) {
+                Pid pid = entry.getKey();
+                List<Integer> sheets = entry.getValue();
+                if (pid != null && sheets != null) {
+                    this.pidSheets.add(new IsometricPidSheetEntity(this, new PidEntity(pid), sheets));
+                }
+            }
+        }
     }
 
     public int getId() {
@@ -95,11 +111,11 @@ public class IsometricEntity {
         this.sheets = sheets;
     }
 
-    public String getCoordinatesInPid() {
+    public List<Coordinates> getCoordinatesInPid() {
         return coordinatesInPid;
     }
 
-    public void setCoordinatesInPid(String coordinatesInPid) {
+    public void setCoordinatesInPid(List<Coordinates> coordinatesInPid) {
         this.coordinatesInPid = coordinatesInPid;
     }
 
@@ -111,12 +127,20 @@ public class IsometricEntity {
         isApproved = approved;
     }
 
-    public Set<PidEntity> getPidsList() {
-        return pidsList;
+    public String getComments() {
+        return comments;
     }
 
-    public void setPidsList(Set<PidEntity> pidsList) {
-        this.pidsList = pidsList;
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public Set<IsometricPidSheetEntity> getPidSheets() {
+        return pidSheets;
+    }
+
+    public void setPidSheets(Set<IsometricPidSheetEntity> pidSheets) {
+        this.pidSheets = pidSheets;
     }
 
     public List<JointEntity> getJointsList() {
@@ -133,21 +157,5 @@ public class IsometricEntity {
 
     public void setTestPacksList(Set<PressureTestPackageEntity> testPacksList) {
         this.testPacksList = testPacksList;
-    }
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
-    public Map<String, List<Integer>> getPidSheets() {
-        return pidSheets;
-    }
-
-    public void setPidSheets(Map<String, List<Integer>> pidSheets) {
-        this.pidSheets = pidSheets;
     }
 }

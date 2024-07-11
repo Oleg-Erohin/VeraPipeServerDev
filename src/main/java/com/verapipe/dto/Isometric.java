@@ -1,29 +1,28 @@
 package com.verapipe.dto;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.verapipe.entities.IsometricEntity;
+import com.verapipe.entities.IsometricPidSheetEntity;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Isometric {
     private int id;
-    private String name;//
-    private Map<String, List<Integer>> pidsAndSheets;//
-    private String revision;//
-    private Date date;//
-    private int sheets;//
-    private List<Coordinates> coordinatesInPid;//
-    private boolean isApproved;//
+    private String name;
+    private Map<Pid, List<Integer>> pidsAndSheets;
+    private String revision;
+    private Date date;
+    private int sheets;
+    private List<Coordinates> coordinatesInPid;
+    private boolean isApproved;
     private String comments;
 
     public Isometric() {
     }
 
-    public Isometric(String name, Map<String, List<Integer>> pidsAndSheets, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
+    public Isometric(String name, Map<Pid, List<Integer>> pidsAndSheets, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
         this.name = name;
         this.pidsAndSheets = pidsAndSheets;
         this.revision = revision;
@@ -34,7 +33,7 @@ public class Isometric {
         this.comments = comments;
     }
 
-    public Isometric(int id, String name, Map<String, List<Integer>> pidsAndSheets, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
+    public Isometric(int id, String name, Map<Pid, List<Integer>> pidsAndSheets, String revision, Date date, int sheets, List<Coordinates> coordinatesInPid, boolean isApproved, String comments) {
         this.id = id;
         this.name = name;
         this.pidsAndSheets = pidsAndSheets;
@@ -46,21 +45,25 @@ public class Isometric {
         this.comments = comments;
     }
 
-    public Isometric(IsometricEntity isometricEntity) throws JsonProcessingException {
+    public Isometric(IsometricEntity isometricEntity) {
         this.id = isometricEntity.getId();
         this.name = isometricEntity.getName();
-
-        this.pidsAndSheets = isometricEntity.getPidSheets();
-
         this.revision = isometricEntity.getRevision();
         this.date = isometricEntity.getDate();
         this.sheets = isometricEntity.getSheets();
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        this.coordinatesInPid = objectMapper.readValue(isometricEntity.getCoordinatesInPid(), new TypeReference<List<Coordinates>>(){});
-
+        this.coordinatesInPid = isometricEntity.getCoordinatesInPid();
         this.isApproved = isometricEntity.isApproved();
         this.comments = isometricEntity.getComments();
+
+        // Convert pidSheets to pidsAndSheets map in the DTO
+        if (isometricEntity.getPidSheets() != null) {
+            this.pidsAndSheets = new HashMap<>();
+            for (IsometricPidSheetEntity pidSheet : isometricEntity.getPidSheets()) {
+                Pid pid = new Pid(pidSheet.getPid());
+                List<Integer> sheets = pidSheet.getSheets();
+                this.pidsAndSheets.put(pid, sheets);
+            }
+        }
     }
 
     public int getId() {
@@ -79,12 +82,12 @@ public class Isometric {
         this.name = name;
     }
 
-    public Map<String, List<Integer>> getPidsAndSheets() {
+    public Map<Pid, List<Integer>> getPidsAndSheets() {
         return pidsAndSheets;
     }
 
-    public void setPidsAndSheets(Map<String, List<Integer>> pidSheets) {
-        this.pidsAndSheets = pidSheets;
+    public void setPidsAndSheets(Map<Pid, List<Integer>> pidsAndSheets) {
+        this.pidsAndSheets = pidsAndSheets;
     }
 
     public String getRevision() {
@@ -140,7 +143,6 @@ public class Isometric {
         return "Isometric{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-//                ", pidNames='" + pidNames + '\'' +
                 ", pidsAndSheets=" + pidsAndSheets +
                 ", revision='" + revision + '\'' +
                 ", date=" + date +

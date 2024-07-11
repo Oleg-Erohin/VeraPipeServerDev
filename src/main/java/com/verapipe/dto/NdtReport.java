@@ -7,30 +7,30 @@ import java.util.Date;
 public class NdtReport {
     private int id;
     private String name;
-    private String NdtTypeName;
+    private NdtType ndtType;
     private Date date;
 
     public NdtReport() {
     }
 
-    public NdtReport(String name, String NdtTypeName, Date date) {
+    public NdtReport(String name, NdtType ndtType, Date date) {
         this.name = name;
-        this.NdtTypeName = NdtTypeName;
+        this.ndtType = ndtType;
         this.date = date;
     }
 
-    public NdtReport(int id, String name, String NdtTypeName, Date date) {
+    public NdtReport(int id, String name, NdtType ndtType, Date date) {
         this.id = id;
         this.name = name;
-        this.NdtTypeName = NdtTypeName;
+        this.ndtType = ndtType;
         this.date = date;
     }
 
     public NdtReport(NdtReportEntity ndtReportEntity) {
         this.id = ndtReportEntity.getId();
         this.name = ndtReportEntity.getName();
-        this.NdtTypeName = ndtReportEntity.getNdtType().getName();
         this.date = ndtReportEntity.getDate();
+        this.ndtType = new NdtType(ndtReportEntity.getNdtType());
     }
 
     public int getId() {
@@ -49,12 +49,12 @@ public class NdtReport {
         this.name = name;
     }
 
-    public String getNdtTypeName() {
-        return NdtTypeName;
+    public com.verapipe.dto.NdtType getNdtType() {
+        return ndtType;
     }
 
-    public void setNdtTypeName(String NdtTypeName) {
-        this.NdtTypeName = NdtTypeName;
+    public void setNdtType(com.verapipe.dto.NdtType ndtType) {
+        this.ndtType = ndtType;
     }
 
     public Date getDate() {
@@ -70,7 +70,7 @@ public class NdtReport {
         return "NdtReport{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", NdtTypeName='" + NdtTypeName + '\'' +
+                ", NdtType=" + ndtType +
                 ", date=" + date +
                 '}';
     }

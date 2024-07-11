@@ -1,7 +1,7 @@
 package com.verapipe.entities;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.verapipe.dto.Coordinates;
 import com.verapipe.dto.Joint;
 import com.verapipe.enums.UnitOfMeasure;
 
@@ -19,7 +19,7 @@ public class JointEntity {
     @Column(name = "number", unique = false, nullable = false)
     private int number;
     @Column(name = "coordinates", unique = true, nullable = false)
-    private String coordinatesOnIsometric;
+    private Coordinates coordinatesOnIsometric;
     @ManyToOne(fetch = FetchType.EAGER)
     private PidEntity pid;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -40,15 +40,12 @@ public class JointEntity {
     private String fittingDescription2;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<BaseMaterialTypeEntity> baseMaterialTypeList;
-    // TODO to make validation that only 2 objects in baseMaterialCertificateList
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<BaseMaterialCertificateEntity> baseMaterialCertificateList;
     @Column(name = "thickness", unique = false, nullable = false)
     private Float thickness;
-    // TODO to make validation that only 2 objects in fillerMaterialTypeList
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<FillerMaterialTypeEntity> fillerMaterialTypeList;
-    // TODO to make validation that only 2 objects in fillerMaterialCertificateList
     @ManyToMany
     private Set<FillerMaterialCertificateEntity> fillerMaterialCertificateList;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -76,118 +73,71 @@ public class JointEntity {
     public JointEntity(Joint joint) throws JsonProcessingException {
         this.id = joint.getId();
         this.number = joint.getNumber();
-        ObjectMapper objectMapper = new ObjectMapper();
-        this.coordinatesOnIsometric = objectMapper.writeValueAsString(joint.getCoordinatesOnIsometric());
-        this.pid = new PidEntity();
-        String pidName = joint.getPidName();
-        this.pid.setName(pidName);
-        this.isometric = new IsometricEntity();
-        String isometricName = joint.getIsometricName();
-        this.isometric.setName(isometricName);
+        this.coordinatesOnIsometric = joint.getCoordinatesOnIsometric();
+        this.pid = new PidEntity(joint.getPid());
+        this.isometric = new IsometricEntity(joint.getIsometric());
         this.sheetOnIsometric = joint.getSheetOnIsometric();
         this.uom = joint.getUom();
         this.schedule = joint.getSchedule();
         this.diameter = joint.getDiameter();
         this.fittingDescription1 = joint.getFittingDescription1();
-        this.baseMaterialTypeList = new HashSet<>();
-        initializeBaseMaterialTypeListWithValues(joint);
-        this.baseMaterialCertificateList = new HashSet<>();
-        initializeBaseMaterialCertificateListWithValues(joint);
-        this.thickness = joint.getThickness();
         this.fittingDescription2 = joint.getFittingDescription2();
-        this.fillerMaterialTypeList = new HashSet<>();
-        initializeFillerMaterialTypeListWithValues(joint);
-        this.fillerMaterialCertificateList = new HashSet<>();
-        initializeFillerMaterialCertificateListWithValues(joint);
-        this.processSpecificationProcedure = new ProcessSpecificationProcedureEntity();
-        String processSpecificationProcedureName = joint.getProcessSpecificationProcedureName();
-        this.processSpecificationProcedure.setName(processSpecificationProcedureName);
-        this.joinersList = new HashSet<>();
-        initializeJoinersList(joint.getJoinerTagId1(), joint.getJoinerTagId2());
+        this.thickness = joint.getThickness();
+        this.processSpecificationProcedure = new ProcessSpecificationProcedureEntity(joint.getProcessSpecificationProcedure());
         this.date = joint.getDate();
         this.isFitUpDone = joint.isFitUpDone();
         this.isVisualInspectionDone = joint.isVisualInspectionDone();
-        this.ndtReport = new NdtReportEntity();
-        String ndtReportName = joint.getNdtReportName();
-        this.ndtReport.setName(ndtReportName);
+        this.ndtReport = new NdtReportEntity(joint.getNdtReport());
         this.isNdtPassed = joint.isNdtPassed();
-        this.preheat = new PreheatEntity();
-        String preheatName = joint.getPreheatName();
-        this.preheat.setName(preheatName);
-        this.postWeldHeatTreatment = new PostWeldHeatTreatmentEntity();
-        String postWeldHeatTreatmentName = joint.getPostWeldHeatTreatmentName();
-        this.postWeldHeatTreatment.setName(postWeldHeatTreatmentName);
+        this.preheat = new PreheatEntity(joint.getPreheat());
+        this.postWeldHeatTreatment = new PostWeldHeatTreatmentEntity(joint.getPostWeldHeatTreatment());
         this.comments = joint.getComments();
+
+        // Base Material Type List
+        if (joint.getBaseMaterialType1() != null) {
+            this.baseMaterialTypeList = new HashSet<>();
+            this.baseMaterialTypeList.add(new BaseMaterialTypeEntity(joint.getBaseMaterialType1()));
+            if (joint.getBaseMaterialType2() != null) {
+                this.baseMaterialTypeList.add(new BaseMaterialTypeEntity(joint.getBaseMaterialType2()));
+            }
+        }
+
+        // Base Material Certificate List
+        if (joint.getBaseMaterial1() != null) {
+            this.baseMaterialCertificateList = new HashSet<>();
+            this.baseMaterialCertificateList.add(new BaseMaterialCertificateEntity(joint.getBaseMaterial1()));
+            if (joint.getBaseMaterial2() != null) {
+                this.baseMaterialCertificateList.add(new BaseMaterialCertificateEntity(joint.getBaseMaterial2()));
+            }
+        }
+
+        // Filler Material Type List
+        if (joint.getFillerMaterialType1() != null) {
+            this.fillerMaterialTypeList = new HashSet<>();
+            this.fillerMaterialTypeList.add(new FillerMaterialTypeEntity(joint.getFillerMaterialType1()));
+            if (joint.getFillerMaterialType2() != null) {
+                this.fillerMaterialTypeList.add(new FillerMaterialTypeEntity(joint.getFillerMaterialType2()));
+            }
+        }
+
+        // Filler Material Certificate List
+        if (joint.getFillerMaterial1() != null) {
+            this.fillerMaterialCertificateList = new HashSet<>();
+            this.fillerMaterialCertificateList.add(new FillerMaterialCertificateEntity(joint.getFillerMaterial1()));
+            if (joint.getFillerMaterial2() != null) {
+                this.fillerMaterialCertificateList.add(new FillerMaterialCertificateEntity(joint.getFillerMaterial2()));
+            }
+        }
+
+        // Joiners List
+        if (joint.getJoiner1() != null) {
+            this.joinersList = new HashSet<>();
+            this.joinersList.add(new JoinerEntity(joint.getJoiner1()));
+            if (joint.getJoiner2() != null) {
+                this.joinersList.add(new JoinerEntity(joint.getJoiner2()));
+            }
+        }
     }
-
-    private void initializeBaseMaterialCertificateListWithValues(Joint joint) {
-        BaseMaterialCertificateEntity baseMaterialCertificate1 = new BaseMaterialCertificateEntity();
-        BaseMaterialCertificateEntity baseMaterialCertificate2 = new BaseMaterialCertificateEntity();
-        String baseMaterialHeatNum1 = joint.getBaseMaterialHeatNum1();
-        String baseMaterialHeatNum2 = joint.getBaseMaterialHeatNum2();
-        baseMaterialCertificate1.setHeatNum(baseMaterialHeatNum1);
-        baseMaterialCertificate2.setHeatNum(baseMaterialHeatNum2);
-        this.baseMaterialCertificateList.add(baseMaterialCertificate1);
-        this.baseMaterialCertificateList.add(baseMaterialCertificate2);
-    }
-
-    private void initializeFillerMaterialCertificateListWithValues(Joint joint) {
-        FillerMaterialCertificateEntity fillerMaterialCertificate1 = new FillerMaterialCertificateEntity();
-        FillerMaterialCertificateEntity fillerMaterialCertificate2 = new FillerMaterialCertificateEntity();
-        String fillerMaterialHeatNum1 = joint.getFillerMaterialHeatNum1();
-        String fillerMaterialHeatNum2 = joint.getFillerMaterialHeatNum2();
-        fillerMaterialCertificate1.setHeatNum(fillerMaterialHeatNum1);
-        fillerMaterialCertificate2.setHeatNum(fillerMaterialHeatNum2);
-        this.fillerMaterialCertificateList.add(fillerMaterialCertificate1);
-        this.fillerMaterialCertificateList.add(fillerMaterialCertificate2);
-    }
-
-    private void initializeBaseMaterialTypeListWithValues(Joint joint) {
-        BaseMaterialTypeEntity baseMaterialType1 = new BaseMaterialTypeEntity();
-        BaseMaterialTypeEntity baseMaterialType2 = new BaseMaterialTypeEntity();
-        String baseMaterialTypeName1 = joint.getBaseMaterialTypeName1();
-        String baseMaterialTypeName2 = joint.getBaseMaterialTypeName2();
-        baseMaterialType1.setName(baseMaterialTypeName1);
-        baseMaterialType2.setName(baseMaterialTypeName2);
-        this.baseMaterialTypeList.add(baseMaterialType1);
-        this.baseMaterialTypeList.add(baseMaterialType2);
-    }
-
-    private void initializeFillerMaterialTypeListWithValues(Joint joint) {
-        FillerMaterialTypeEntity fillerMaterialType1 = new FillerMaterialTypeEntity();
-        FillerMaterialTypeEntity fillerMaterialType2 = new FillerMaterialTypeEntity();
-        String fillerMaterialTypeName1 = joint.getFillerMaterialTypeName1();
-        String fillerMaterialTypeName2 = joint.getFillerMaterialTypeName2();
-        fillerMaterialType1.setName(fillerMaterialTypeName1);
-        fillerMaterialType2.setName(fillerMaterialTypeName2);
-        this.fillerMaterialTypeList.add(fillerMaterialType1);
-        this.fillerMaterialTypeList.add(fillerMaterialType2);
-    }
-
-    private void initializeJoinersList(String joinerTagId1, String joinerTagId2) {
-        JoinerEntity joiner1 = new JoinerEntity();
-        joiner1.setTagId(joinerTagId1);
-        this.joinersList.add(joiner1);
-
-        JoinerEntity joiner2 = new JoinerEntity();
-        joiner2.setTagId(joinerTagId2);
-        this.joinersList.add(joiner2);
-    }
-
-//    private void initializeJoinersList(List<String> joinersTagIdList) {
-//        if (!joinersTagIdList.isEmpty()) {
-//        JoinerEntity joiner1 = new JoinerEntity();
-//        String joiner1TagId = joinersTagIdList.get(0);
-//        joiner1.setTagId(joiner1TagId);
-//        this.joinersList.set(0, joiner1);
-//        // TODO verify if joiner2 is null ??
-//        JoinerEntity joiner2 = new JoinerEntity();
-//        String joiner2TagId = joinersTagIdList.get(1);
-//        joiner2.setTagId(joiner2TagId);
-//        this.joinersList.set(1, joiner2);
-//        }
-//    }
-
 
     public int getId() {
         return id;
@@ -205,11 +155,11 @@ public class JointEntity {
         this.number = number;
     }
 
-    public String getCoordinatesOnIsometric() {
+    public Coordinates getCoordinatesOnIsometric() {
         return coordinatesOnIsometric;
     }
 
-    public void setCoordinatesOnIsometric(String coordinatesOnIsometric) {
+    public void setCoordinatesOnIsometric(Coordinates coordinatesOnIsometric) {
         this.coordinatesOnIsometric = coordinatesOnIsometric;
     }
 

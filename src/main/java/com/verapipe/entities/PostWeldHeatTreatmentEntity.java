@@ -27,10 +27,8 @@ public class PostWeldHeatTreatmentEntity {
     public PostWeldHeatTreatmentEntity(PostWeldHeatTreatment postWeldHeatTreatment) {
         this.id = postWeldHeatTreatment.getId();
         this.name = postWeldHeatTreatment.getName();
+        this.processSpecificationProcedure = new ProcessSpecificationProcedureEntity(postWeldHeatTreatment.getProcessSpecificationProcedure());
         this.date = postWeldHeatTreatment.getDate();
-        this.processSpecificationProcedure = new ProcessSpecificationProcedureEntity();
-        String processSpecificationProcedureName = postWeldHeatTreatment.getProcessSpecificationProcedureName();
-        this.processSpecificationProcedure.setName(processSpecificationProcedureName);
     }
 
     public int getId() {

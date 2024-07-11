@@ -24,9 +24,7 @@ public class FillerMaterialCertificateEntity {
     public FillerMaterialCertificateEntity(FillerMaterialCertificate fillerMaterialCertificate) {
         this.id = fillerMaterialCertificate.getId();
         this.heatNum = fillerMaterialCertificate.getHeatNum();
-        this.fillerMaterialType = new FillerMaterialTypeEntity();
-        String fillerMaterialTypeName = fillerMaterialCertificate.getMaterialTypeName();
-        this.fillerMaterialType.setName(fillerMaterialTypeName);
+        this.fillerMaterialType = new FillerMaterialTypeEntity(fillerMaterialCertificate.getFillerMaterialType());
     }
 
     public int getId() {

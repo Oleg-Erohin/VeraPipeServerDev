@@ -5,26 +5,26 @@ import com.verapipe.entities.FillerMaterialCertificateEntity;
 public class FillerMaterialCertificate {
     private int id;
     private String heatNum;
-    private String materialTypeName;
+    private FillerMaterialType fillerMaterialType;
 
     public FillerMaterialCertificate() {
     }
 
-    public FillerMaterialCertificate(String heatNum, String materialTypeName) {
+    public FillerMaterialCertificate(String heatNum, FillerMaterialType fillerMaterialType) {
         this.heatNum = heatNum;
-        this.materialTypeName = materialTypeName;
+        this.fillerMaterialType = fillerMaterialType;
     }
 
-    public FillerMaterialCertificate(int id, String heatNum, byte[] file, String materialTypeName) {
+    public FillerMaterialCertificate(int id, String heatNum, byte[] file, FillerMaterialType fillerMaterialType) {
         this.id = id;
         this.heatNum = heatNum;
-        this.materialTypeName = materialTypeName;
+        this.fillerMaterialType = fillerMaterialType;
     }
 
     public FillerMaterialCertificate(FillerMaterialCertificateEntity fillerMaterialCertificateEntity) {
         this.id = fillerMaterialCertificateEntity.getId();
         this.heatNum = fillerMaterialCertificateEntity.getHeatNum();
-        this.materialTypeName = fillerMaterialCertificateEntity.getFillerMaterialType().getName();
+        this.fillerMaterialType = new FillerMaterialType(fillerMaterialCertificateEntity.getFillerMaterialType());
     }
 
     public int getId() {
@@ -43,12 +43,12 @@ public class FillerMaterialCertificate {
         this.heatNum = heatNum;
     }
 
-    public String getMaterialTypeName() {
-        return materialTypeName;
+    public FillerMaterialType getFillerMaterialType() {
+        return fillerMaterialType;
     }
 
-    public void setMaterialTypeName(String materialTypeName) {
-        this.materialTypeName = materialTypeName;
+    public void setFillerMaterialType(FillerMaterialType fillerMaterialType) {
+        this.fillerMaterialType = fillerMaterialType;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class FillerMaterialCertificate {
         return "FillerMaterialCertificate{" +
                 "id=" + id +
                 ", heatNum='" + heatNum + '\'' +
-                ", materialTypeName='" + materialTypeName + '\'' +
+                ", fillerMaterialType=" + fillerMaterialType +
                 '}';
     }
 }

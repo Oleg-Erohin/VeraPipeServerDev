@@ -27,10 +27,8 @@ public class PreheatEntity {
     public PreheatEntity(Preheat preheat) {
         this.id = preheat.getId();
         this.name = preheat.getName();
+        this.processSpecificationProcedure = new ProcessSpecificationProcedureEntity(preheat.getProcessSpecificationProcedure());
         this.date = preheat.getDate();
-        this.processSpecificationProcedure = new ProcessSpecificationProcedureEntity();
-        String processSpecificationProcedureName = preheat.getProcessSpecificationProcedureName();
-        this.processSpecificationProcedure.setName(processSpecificationProcedureName);
     }
 
     public int getId() {
