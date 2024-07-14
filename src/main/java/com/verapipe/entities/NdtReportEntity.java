@@ -18,7 +18,7 @@ public class NdtReportEntity {
     private Date date;
     @ManyToOne(fetch = FetchType.EAGER)
     private NdtTypeEntity ndtType;
-    @ManyToMany(mappedBy = "ndtReport", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "ndtReports", fetch = FetchType.LAZY)
     private List<JointEntity> jointsList;
 
     public NdtReportEntity() {

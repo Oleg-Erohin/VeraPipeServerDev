@@ -1,6 +1,7 @@
 package com.verapipe.dto;
 
 import com.verapipe.entities.JointEntity;
+import com.verapipe.entities.JointNdtReportEntity;
 import com.verapipe.entities.NdtReportEntity;
 import com.verapipe.enums.UnitOfMeasure;
 
@@ -125,10 +126,19 @@ public class Joint {
         this.date = jointEntity.getDate();
         this.isFitUpDone = jointEntity.isFitUpDone();
         this.isVisualInspectionDone = jointEntity.isVisualInspectionDone();
-        this.ndtReports = convertNdtReportsEntitiesToDTOs(jointEntity.getNdtReports());
+//        this.ndtReports = convertNdtReportsEntitiesToDTOs(jointEntity.getNdtReports());
         this.preheat = new Preheat(jointEntity.getPreheat());
         this.postWeldHeatTreatment = new PostWeldHeatTreatment(jointEntity.getPostWeldHeatTreatment());
         this.comments = jointEntity.getComments();
+
+        if (jointEntity.getNdtReports() != null) {
+            this.ndtReports = new HashMap<>();
+            for (JointNdtReportEntity ndtReport : jointEntity.getNdtReports()) {
+                NdtReport ndtReportTemp = new NdtReport(ndtReport.getNdtReport());
+                Boolean isPassed = ndtReport.isPassed();
+                this.ndtReports.put(ndtReportTemp, isPassed);
+            }
+        }
 
         // Base Material Types and Certificates
         if (jointEntity.getBaseMaterialTypeList() != null && !jointEntity.getBaseMaterialTypeList().isEmpty()) {

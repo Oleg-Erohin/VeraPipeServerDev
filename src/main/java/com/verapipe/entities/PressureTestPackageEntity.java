@@ -19,10 +19,7 @@ public class PressureTestPackageEntity {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "pids_coordinates_mapping", joinColumns = @JoinColumn(name = "package_id"))
-    @MapKeyJoinColumn(name = "pid_id")
-    @Column(name = "coordinates")
+    @ManyToMany
     private Map<PidEntity, List<Coordinates>> pidsAndCoordinates;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

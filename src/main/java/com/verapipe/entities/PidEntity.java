@@ -36,7 +36,7 @@ public class PidEntity {
     @OneToMany(mappedBy = "pid", fetch = FetchType.LAZY)
     private List<JointEntity> jointsList;
 
-    @ManyToMany(mappedBy = "pidsList", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "pidsAndCoordinates", fetch = FetchType.LAZY)
     private Set<PressureTestPackageEntity> pressureTestPackagesList;
 
     public PidEntity() {}

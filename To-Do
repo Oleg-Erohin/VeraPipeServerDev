@@ -2,7 +2,9 @@ Important:
 - Joint - change ndt to Map - Aviad
 - Create filters functions to all entities - Aviad: FillerMaterialCertificate, Isometric, Joiner, Joint, NdtReport
                                              Aviad: Pid, PWHT, PreHeat, PressureTestPackage, PSP
-- In DTO objects - change to other object rather than identification string (name etc.) - Oleg
+- Resolve all errors while booting server - Oleg
+- Add file get functionality - Aviad
+- Redefine/rewrite all validations
 
 To Do Later:
 - Ensure comments include line breaks
@@ -48,3 +50,4 @@ Done:
 - Joint - list with tabs for Mor - Oleg
 - Change Static functions in specifications - Aviad
 - Find how to properly define static parameters in class (Logics in common validations) - Oleg
+- In DTO objects - change to other object rather than identification string (name etc.) - Oleg

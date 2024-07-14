@@ -57,8 +57,7 @@ public class JointEntity {
     @Column(name = "is_visual_inspection_done", unique = false, nullable = true)
     private boolean isVisualInspectionDone;
     @ManyToMany
-    @MapKeyJoinColumn(name = "ndt_report_id")
-    private Map<NdtReportEntity, Boolean> ndtReports;
+    private List<JointNdtReportEntity> ndtReports;
     @ManyToOne(fetch = FetchType.EAGER)
     private PreheatEntity preheat;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -84,10 +83,21 @@ public class JointEntity {
         this.date = joint.getDate();
         this.isFitUpDone = joint.isFitUpDone();
         this.isVisualInspectionDone = joint.isVisualInspectionDone();
-        this.ndtReports = convertNdtReportsDTOsToEntities(joint.getNdtReports());
+//        this.ndtReports = convertNdtReportsDTOsToEntities(joint.getNdtReports());
         this.preheat = new PreheatEntity(joint.getPreheat());
         this.postWeldHeatTreatment = new PostWeldHeatTreatmentEntity(joint.getPostWeldHeatTreatment());
         this.comments = joint.getComments();
+
+        if (joint.getNdtReports() != null) {
+            this.ndtReports = new ArrayList<>();
+            for (Map.Entry<NdtReport, Boolean> entry : joint.getNdtReports().entrySet()) {
+                NdtReport ndtReport = entry.getKey();
+                Boolean isPassed = entry.getValue();
+                if (ndtReport != null && isPassed != null) {
+                    this.ndtReports.add(new JointNdtReportEntity(this, new NdtReportEntity(ndtReport), isPassed));
+                }
+            }
+        }
 
         // Base Material Type List
         if (joint.getBaseMaterialType1() != null) {
@@ -321,11 +331,11 @@ public class JointEntity {
         isVisualInspectionDone = visualInspectionDone;
     }
 
-    public Map<NdtReportEntity, Boolean> getNdtReports() {
+    public List<JointNdtReportEntity> getNdtReports() {
         return ndtReports;
     }
 
-    public void setNdtReports(Map<NdtReportEntity, Boolean> ndtReports) {
+    public void setNdtReports(List<JointNdtReportEntity> ndtReports) {
         this.ndtReports = ndtReports;
     }
 
