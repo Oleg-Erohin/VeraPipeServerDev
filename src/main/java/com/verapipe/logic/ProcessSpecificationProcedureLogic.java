@@ -30,7 +30,7 @@ public class ProcessSpecificationProcedureLogic {
 
     @CacheEvict(cacheNames = "processSpecificationProceduresCache", allEntries = true)
     public int add(ProcessSpecificationProcedure processSpecificationProcedure) throws Exception {
-        validations(processSpecificationProcedure);
+//        validations(processSpecificationProcedure);
         ProcessSpecificationProcedureEntity processSpecificationProcedureEntity = new ProcessSpecificationProcedureEntity(processSpecificationProcedure);
         try {
             processSpecificationProcedureEntity = this.processSpecificationProcedureDal.save(processSpecificationProcedureEntity);
@@ -43,7 +43,7 @@ public class ProcessSpecificationProcedureLogic {
 
     @CacheEvict(cacheNames = "processSpecificationProceduresCache", allEntries = true)
     public void update(ProcessSpecificationProcedure processSpecificationProcedure) throws Exception {
-        validations(processSpecificationProcedure);
+//        validations(processSpecificationProcedure);
         ProcessSpecificationProcedureEntity sentProcessSpecificationProcedureEntity = new ProcessSpecificationProcedureEntity(processSpecificationProcedure);
         try {
             this.processSpecificationProcedureDal.save(sentProcessSpecificationProcedureEntity);
@@ -96,39 +96,39 @@ public class ProcessSpecificationProcedureLogic {
         return processSpecificationProcedures;
     }
 
-    private void validations(ProcessSpecificationProcedure processSpecificationProcedure) throws Exception {
-        validateProcessSpecificationProcedureName(processSpecificationProcedure.getName());
-        validateProcessSpecificationProcedureJointDesign(processSpecificationProcedure.getJointDesignName());
-        validateProcessSpecificationProcedureBaseMaterial(processSpecificationProcedure.getBaseMaterialName1());
-        if (processSpecificationProcedure.getBaseMaterialName2() != null) {
-            validateProcessSpecificationProcedureBaseMaterial(processSpecificationProcedure.getBaseMaterialName2());
-        }
-        validateProcessSpecificationProcedureFusionProcess(processSpecificationProcedure.getFusionProcessName());
-        validateProcessSpecificationProcedureFillerMaterial(processSpecificationProcedure.getFillerMaterialName1());
-        if (processSpecificationProcedure.getFillerMaterialName2() != null) {
-            validateProcessSpecificationProcedureFillerMaterial(processSpecificationProcedure.getFillerMaterialName2());
-        }
-        validateProcessSpecificationProcedureStandardCode(processSpecificationProcedure.getStandardCodeName());
-//        validateProcessSpecificationProcedureIsPreheatRequired(processSpecificationProcedure.isPreheatRequired());
-//        validateProcessSpecificationProcedureIsPostWeldHeatTreatmentRequired(processSpecificationProcedure.isPostWeldHeatTreatmentRequired());
-        if (processSpecificationProcedure.getDiameterMinMm() != null) {
-            validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMinMm());
-        }
-        if (processSpecificationProcedure.getDiameterMaxMm() != null) {
-            validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMaxMm());
-        }
-        if (processSpecificationProcedure.getDiameterMinInch() != null) {
-            validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMinInch());
-        }
-        if (processSpecificationProcedure.getDiameterMaxInch() != null) {
-            validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMaxInch());
-        }
-//        validateProcessSpecificationProcedureThicknessUom(processSpecificationProcedure.getThicknessUom());
-        validateNumberInputNotNegative(processSpecificationProcedure.getThicknessMinMm());
-        if (processSpecificationProcedure.getThicknessMaxMm() != null) {
-            validateNumberInputNotNegative(processSpecificationProcedure.getThicknessMaxMm());
-        }
-    }
+//    private void validations(ProcessSpecificationProcedure processSpecificationProcedure) throws Exception {
+//        validateProcessSpecificationProcedureName(processSpecificationProcedure.getName());
+//        validateProcessSpecificationProcedureJointDesign(processSpecificationProcedure.getJointDesignName());
+//        validateProcessSpecificationProcedureBaseMaterial(processSpecificationProcedure.getBaseMaterialName1());
+//        if (processSpecificationProcedure.getBaseMaterialName2() != null) {
+//            validateProcessSpecificationProcedureBaseMaterial(processSpecificationProcedure.getBaseMaterialName2());
+//        }
+//        validateProcessSpecificationProcedureFusionProcess(processSpecificationProcedure.getFusionProcessName());
+//        validateProcessSpecificationProcedureFillerMaterial(processSpecificationProcedure.getFillerMaterialName1());
+//        if (processSpecificationProcedure.getFillerMaterialName2() != null) {
+//            validateProcessSpecificationProcedureFillerMaterial(processSpecificationProcedure.getFillerMaterialName2());
+//        }
+//        validateProcessSpecificationProcedureStandardCode(processSpecificationProcedure.getStandardCodeName());
+////        validateProcessSpecificationProcedureIsPreheatRequired(processSpecificationProcedure.isPreheatRequired());
+////        validateProcessSpecificationProcedureIsPostWeldHeatTreatmentRequired(processSpecificationProcedure.isPostWeldHeatTreatmentRequired());
+//        if (processSpecificationProcedure.getDiameterMinMm() != null) {
+//            validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMinMm());
+//        }
+//        if (processSpecificationProcedure.getDiameterMaxMm() != null) {
+//            validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMaxMm());
+//        }
+//        if (processSpecificationProcedure.getDiameterMinInch() != null) {
+//            validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMinInch());
+//        }
+//        if (processSpecificationProcedure.getDiameterMaxInch() != null) {
+//            validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMaxInch());
+//        }
+////        validateProcessSpecificationProcedureThicknessUom(processSpecificationProcedure.getThicknessUom());
+//        validateNumberInputNotNegative(processSpecificationProcedure.getThicknessMinMm());
+//        if (processSpecificationProcedure.getThicknessMaxMm() != null) {
+//            validateNumberInputNotNegative(processSpecificationProcedure.getThicknessMaxMm());
+//        }
+//    }
 
     private void validateProcessSpecificationProcedureStandardCode(String standardCodeName) throws Exception {
         List<StandardCode> standardCodes = standardCodeLogic.getAll();

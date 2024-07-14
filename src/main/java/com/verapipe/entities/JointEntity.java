@@ -56,7 +56,7 @@ public class JointEntity {
     private boolean isFitUpDone;
     @Column(name = "is_visual_inspection_done", unique = false, nullable = true)
     private boolean isVisualInspectionDone;
-    @ManyToMany(mappedBy = "jointEntity")
+    @ManyToMany
     @MapKeyJoinColumn(name = "ndt_report_id")
     private Map<NdtReportEntity, Boolean> ndtReports;
     @ManyToOne(fetch = FetchType.EAGER)

@@ -29,7 +29,7 @@ public class JoinerLogic {
     }
 
     public int add(Joiner joiner) throws Exception {
-        validations(joiner);
+//        validations(joiner);
         JoinerEntity joinerEntity = new JoinerEntity(joiner);
         try {
             joinerEntity = this.joinerDal.save(joinerEntity);
@@ -41,7 +41,7 @@ public class JoinerLogic {
     }
 
     public void update(Joiner joiner) throws Exception {
-        validations(joiner);
+//        validations(joiner);
         JoinerEntity sentJoinerEntity = new JoinerEntity(joiner);
         try {
             this.joinerDal.save(sentJoinerEntity);
@@ -121,28 +121,28 @@ public class JoinerLogic {
     }
 
 
-    private void validations(Joiner joiner) throws Exception {
-        validateJoinerTagId(joiner.getTagId());
-        if (joiner.getCertifiedDiameterMinMm() != null) {
-            validateNumberInputNotNegative(joiner.getCertifiedDiameterMinMm());
-        }
-        if (joiner.getCertifiedDiameterMaxMm() != null) {
-            validateNumberInputNotNegative(joiner.getCertifiedDiameterMaxMm());
-        }
-        if (joiner.getCertifiedDiameterMinInch() != null) {
-            validateNumberInputNotNegative(joiner.getCertifiedDiameterMinInch());
-        }
-        if (joiner.getCertifiedDiameterMaxInch() != null) {
-            validateNumberInputNotNegative(joiner.getCertifiedDiameterMaxInch());
-        }
-        validateNumberInputNotNegative(joiner.getMaxDepositedMaterial());
-        validateJoinerBaseMaterialType(joiner.getBaseMaterialTypeName1());
-        if (joiner.getBaseMaterialTypeName2() != null) {
-            validateJoinerBaseMaterialType(joiner.getBaseMaterialTypeName2());
-        }
-        validateJoinerJointDesign(joiner.getJointDesignName());
-        validateJoinerFusionProcess(joiner.getFusionProcessName());
-    }
+//    private void validations(Joiner joiner) throws Exception {
+//        validateJoinerTagId(joiner.getTagId());
+//        if (joiner.getCertifiedDiameterMinMm() != null) {
+//            validateNumberInputNotNegative(joiner.getCertifiedDiameterMinMm());
+//        }
+//        if (joiner.getCertifiedDiameterMaxMm() != null) {
+//            validateNumberInputNotNegative(joiner.getCertifiedDiameterMaxMm());
+//        }
+//        if (joiner.getCertifiedDiameterMinInch() != null) {
+//            validateNumberInputNotNegative(joiner.getCertifiedDiameterMinInch());
+//        }
+//        if (joiner.getCertifiedDiameterMaxInch() != null) {
+//            validateNumberInputNotNegative(joiner.getCertifiedDiameterMaxInch());
+//        }
+//        validateNumberInputNotNegative(joiner.getMaxDepositedMaterial());
+//        validateJoinerBaseMaterialType(joiner.getBaseMaterialTypeName1());
+//        if (joiner.getBaseMaterialTypeName2() != null) {
+//            validateJoinerBaseMaterialType(joiner.getBaseMaterialTypeName2());
+//        }
+//        validateJoinerJointDesign(joiner.getJointDesignName());
+//        validateJoinerFusionProcess(joiner.getFusionProcessName());
+//    }
 
     private void validateJoinerFusionProcess(String fusionProcessName) throws Exception {
         CommonValidations.validateIsExistInFusionProcesses(fusionProcessName);

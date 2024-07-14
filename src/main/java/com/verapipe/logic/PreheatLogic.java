@@ -25,7 +25,7 @@ public class PreheatLogic {
     }
 
     public int add(Preheat preheat) throws Exception {
-        validations(preheat);
+//        validations(preheat);
         PreheatEntity preheatEntity = new PreheatEntity(preheat);
         try {
             preheatEntity = this.preheatDal.save(preheatEntity);
@@ -37,7 +37,7 @@ public class PreheatLogic {
     }
 
     public void update(Preheat preheat) throws Exception {
-        validations(preheat);
+//        validations(preheat);
         PreheatEntity sentPreheatEntity = new PreheatEntity(preheat);
         try {
             this.preheatDal.save(sentPreheatEntity);
@@ -89,11 +89,11 @@ public class PreheatLogic {
         return preheats;
     }
 
-    private void validations(Preheat preheat) throws Exception {
-        validatePreheatName(preheat.getName());
-        validatePreheatProcessSpecificationProcedure(preheat.getProcessSpecificationProcedureName());
-        validatePreheatDate(preheat.getDate());
-    }
+//    private void validations(Preheat preheat) throws Exception {
+//        validatePreheatName(preheat.getName());
+//        validatePreheatProcessSpecificationProcedure(preheat.getProcessSpecificationProcedureName());
+//        validatePreheatDate(preheat.getDate());
+//    }
 
     private void validatePreheatDate(Date date) throws Exception {
         CommonValidations.validateDateIsNotLaterThanCurrentDate(date);

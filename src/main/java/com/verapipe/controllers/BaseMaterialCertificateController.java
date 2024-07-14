@@ -1,11 +1,15 @@
 package com.verapipe.controllers;
 
 import com.verapipe.dto.BaseMaterialCertificate;
+import com.verapipe.entities.BaseMaterialTypeEntity;
+import com.verapipe.entities.JointEntity;
+import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.logic.BaseMaterialCertificateLogic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/base-material-certificates")
@@ -44,10 +48,11 @@ public class BaseMaterialCertificateController {
 
     @GetMapping("/by-filters")
     public List<BaseMaterialCertificate> getBaseMaterialCertificates(
-            @RequestParam(required = false) List<String> heatNum,
-            @RequestParam(required = false) List<String> lotNum,
-            @RequestParam(required = false) List<String> materialTypeName) throws Exception {
+            @RequestParam(required = false) String heatNum,
+            @RequestParam(required = false) String lotNum,
+            @RequestParam(required = false) BaseMaterialTypeEntity baseMaterialType,
+            @RequestParam(required = false) Set<JointEntity> jointsList) throws ApplicationException {
 
-        return this.baseMaterialCertificateLogic.findCertificatesByFilters(heatNum, lotNum, materialTypeName);
+        return this.baseMaterialCertificateLogic.findCertificatesByFilters(heatNum, lotNum, baseMaterialType, jointsList);
     }
 }

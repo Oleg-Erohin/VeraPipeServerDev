@@ -25,7 +25,7 @@ public class PostWeldHeatTreatmentLogic {
     }
 
     public int add(PostWeldHeatTreatment postWeldHeatTreatment) throws Exception {
-        validations(postWeldHeatTreatment);
+//        validations(postWeldHeatTreatment);
         PostWeldHeatTreatmentEntity postWeldHeatTreatmentEntity = new PostWeldHeatTreatmentEntity(postWeldHeatTreatment);
         try {
             postWeldHeatTreatmentEntity = this.postWeldHeatTreatmentDal.save(postWeldHeatTreatmentEntity);
@@ -37,7 +37,7 @@ public class PostWeldHeatTreatmentLogic {
     }
 
     public void update(PostWeldHeatTreatment postWeldHeatTreatment) throws Exception {
-        validations(postWeldHeatTreatment);
+//        validations(postWeldHeatTreatment);
         PostWeldHeatTreatmentEntity sentPostWeldHeatTreatmentEntity = new PostWeldHeatTreatmentEntity(postWeldHeatTreatment);
         try {
             this.postWeldHeatTreatmentDal.save(sentPostWeldHeatTreatmentEntity);
@@ -88,11 +88,11 @@ public class PostWeldHeatTreatmentLogic {
         return postWeldHeatTreatments;
     }
 
-    private void validations(PostWeldHeatTreatment postWeldHeatTreatment) throws Exception {
-        validatePostWeldHeatTreatmentName(postWeldHeatTreatment.getName());
-        validatePostWeldHeatTreatmentProcessSpecificationProcedure(postWeldHeatTreatment.getProcessSpecificationProcedureName());
-        validatePostWeldHeatTreatmentDate(postWeldHeatTreatment.getDate());
-    }
+//    private void validations(PostWeldHeatTreatment postWeldHeatTreatment) throws Exception {
+//        validatePostWeldHeatTreatmentName(postWeldHeatTreatment.getName());
+//        validatePostWeldHeatTreatmentProcessSpecificationProcedure(postWeldHeatTreatment.getProcessSpecificationProcedureName());
+//        validatePostWeldHeatTreatmentDate(postWeldHeatTreatment.getDate());
+//    }
 
     private void validatePostWeldHeatTreatmentDate(Date date) throws Exception {
         CommonValidations.validateDateIsNotLaterThanCurrentDate(date);

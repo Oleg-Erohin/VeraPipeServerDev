@@ -48,7 +48,7 @@ public class JointLogic {
     }
 
     public int add(Joint joint) throws Exception {
-        validations(joint);
+//        validations(joint);
         JointEntity jointEntity = new JointEntity(joint);
         try {
             jointEntity = this.jointDal.save(jointEntity);
@@ -60,7 +60,7 @@ public class JointLogic {
     }
 
     public void update(Joint joint) throws Exception {
-        validations(joint);
+//        validations(joint);
         JointEntity sentJointEntity = new JointEntity(joint);
         try {
             this.jointDal.save(sentJointEntity);
@@ -154,75 +154,75 @@ public class JointLogic {
     }
 
 
-    private void validations(Joint joint) throws Exception {
-//        validateJointNumber(joint.getNumber());
-//        validateJointCoordinatesOnIsometric(joint.getCoordinatesOnIsometric());
-        validateJointPid(joint.getPidName());
-        validateJointIsometric(joint.getIsometricName());
-        validateJointSheetOnIsometric(joint.getIsometricName(), joint.getSheetOnIsometric());
-        if (joint.getUom() == UnitOfMeasure.MM) {
-            joint.setSchedule(null);
-        }
-        validateDiameter(joint.getDiameter());
-        validateJointFittingDescription(joint.getFittingDescription1());
-        validateJointBaseMaterialType(joint.getBaseMaterialTypeName1());
-        if (joint.getBaseMaterialHeatNum1() != null) {
-            validateJointBaseMaterialHeatNum(joint.getBaseMaterialHeatNum1());
-        }
-        validateJointFittingDescription(joint.getFittingDescription2());
-        if (joint.getBaseMaterialTypeName2() != null) {
-            validateJointBaseMaterialType(joint.getBaseMaterialTypeName2());
-            if (joint.getBaseMaterialHeatNum2() != null) {
-                validateJointBaseMaterialHeatNum(joint.getBaseMaterialHeatNum2());
-            }
-        }
-//        validateThickness(joint);
-        if (joint.getFillerMaterialTypeName1() != null) {
-            validateJointFillerMaterialType(joint.getFillerMaterialTypeName1());
-            if (joint.getFillerMaterialHeatNum1() != null) {
-                validateJointFillerMaterialHeatNum(joint.getFillerMaterialHeatNum1());
-            }
-        }
-        if (joint.getFillerMaterialTypeName2() != null) {
-            validateJointFillerMaterialType(joint.getFillerMaterialTypeName2());
-            if (joint.getFillerMaterialHeatNum2() != null) {
-                validateJointFillerMaterialHeatNum(joint.getFillerMaterialHeatNum2());
-            }
-        }
-        if (joint.getProcessSpecificationProcedureName() != null) {
-            validateJointProcessSpecificationProcedure(joint.getProcessSpecificationProcedureName());
-        }
-        if (joint.getJoinerTagId1() != null) {
-            validateJointJoinerTagId(joint.getJoinerTagId1());
-            if (joint.getJoinerTagId2() != null) {
-                validateJointJoinerTagId(joint.getJoinerTagId2());
-            }
-        }
-        if (joint.getDate() != null) {
-            validateJointDate(joint.getDate());
-        }
-        if (joint.isFitUpDone()) {
-//        validateJointIsFitUpDone(joint.isFitUpDone());
-        }
-        if (joint.isVisualInspectionDone()) {
-//        validateJointIsVisualInspectionDone(joint.isVisualInspectionDone());
-        }
-        if (joint.getNdtReportName() != null) {
-            validateJointNdtReport(joint.getNdtReportName());
-        }
-        if (joint.isNdtPassed()) {
-//        validateJointIsNdtPassed(joint.isNdtPassed());
-        }
-        if (joint.getPreheatName() != null) {
-            validateJointPreHeat(joint.getPreheatName());
-        }
-        if (joint.getPostWeldHeatTreatmentName() != null) {
-            validateJointPostWeldHeatTreatment(joint.getPostWeldHeatTreatmentName());
-        }
-        if (joint.getComments() != null) {
-//        validateJointComments(joint.getComments());
-        }
-    }
+//    private void validations(Joint joint) throws Exception {
+////        validateJointNumber(joint.getNumber());
+////        validateJointCoordinatesOnIsometric(joint.getCoordinatesOnIsometric());
+//        validateJointPid(joint.getPidName());
+//        validateJointIsometric(joint.getIsometricName());
+//        validateJointSheetOnIsometric(joint.getIsometricName(), joint.getSheetOnIsometric());
+//        if (joint.getUom() == UnitOfMeasure.MM) {
+//            joint.setSchedule(null);
+//        }
+//        validateDiameter(joint.getDiameter());
+//        validateJointFittingDescription(joint.getFittingDescription1());
+//        validateJointBaseMaterialType(joint.getBaseMaterialTypeName1());
+//        if (joint.getBaseMaterialHeatNum1() != null) {
+//            validateJointBaseMaterialHeatNum(joint.getBaseMaterialHeatNum1());
+//        }
+//        validateJointFittingDescription(joint.getFittingDescription2());
+//        if (joint.getBaseMaterialTypeName2() != null) {
+//            validateJointBaseMaterialType(joint.getBaseMaterialTypeName2());
+//            if (joint.getBaseMaterialHeatNum2() != null) {
+//                validateJointBaseMaterialHeatNum(joint.getBaseMaterialHeatNum2());
+//            }
+//        }
+////        validateThickness(joint);
+//        if (joint.getFillerMaterialTypeName1() != null) {
+//            validateJointFillerMaterialType(joint.getFillerMaterialTypeName1());
+//            if (joint.getFillerMaterialHeatNum1() != null) {
+//                validateJointFillerMaterialHeatNum(joint.getFillerMaterialHeatNum1());
+//            }
+//        }
+//        if (joint.getFillerMaterialTypeName2() != null) {
+//            validateJointFillerMaterialType(joint.getFillerMaterialTypeName2());
+//            if (joint.getFillerMaterialHeatNum2() != null) {
+//                validateJointFillerMaterialHeatNum(joint.getFillerMaterialHeatNum2());
+//            }
+//        }
+//        if (joint.getProcessSpecificationProcedureName() != null) {
+//            validateJointProcessSpecificationProcedure(joint.getProcessSpecificationProcedureName());
+//        }
+//        if (joint.getJoinerTagId1() != null) {
+//            validateJointJoinerTagId(joint.getJoinerTagId1());
+//            if (joint.getJoinerTagId2() != null) {
+//                validateJointJoinerTagId(joint.getJoinerTagId2());
+//            }
+//        }
+//        if (joint.getDate() != null) {
+//            validateJointDate(joint.getDate());
+//        }
+//        if (joint.isFitUpDone()) {
+////        validateJointIsFitUpDone(joint.isFitUpDone());
+//        }
+//        if (joint.isVisualInspectionDone()) {
+////        validateJointIsVisualInspectionDone(joint.isVisualInspectionDone());
+//        }
+//        if (joint.getNdtReportName() != null) {
+//            validateJointNdtReport(joint.getNdtReportName());
+//        }
+//        if (joint.isNdtPassed()) {
+////        validateJointIsNdtPassed(joint.isNdtPassed());
+//        }
+//        if (joint.getPreheatName() != null) {
+//            validateJointPreHeat(joint.getPreheatName());
+//        }
+//        if (joint.getPostWeldHeatTreatmentName() != null) {
+//            validateJointPostWeldHeatTreatment(joint.getPostWeldHeatTreatmentName());
+//        }
+//        if (joint.getComments() != null) {
+////        validateJointComments(joint.getComments());
+//        }
+//    }
 
     private void validateDiameter(Float diameter) throws ApplicationException {
         CommonValidations.validateNotNegative(diameter);

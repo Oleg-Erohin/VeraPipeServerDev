@@ -33,7 +33,7 @@ public class IsometricLogic {
     }
 
     public int add(Isometric isometric) throws Exception {
-        validations(isometric);
+//        validations(isometric);
         IsometricEntity isometricEntity = new IsometricEntity(isometric);
         try {
             isometricEntity = this.isometricDal.save(isometricEntity);
@@ -45,7 +45,7 @@ public class IsometricLogic {
     }
 
     public void update(Isometric isometric) throws Exception {
-        validations(isometric);
+//        validations(isometric);
         IsometricEntity sentIsometricEntity = new IsometricEntity(isometric);
         try {
             this.isometricDal.save(sentIsometricEntity);
@@ -125,24 +125,24 @@ public class IsometricLogic {
     }
 
 
-    private void validations(Isometric isometric) throws Exception {
-        validateIsometricName(isometric.getName());
-
-        if (isometric.getPidsAndSheets() != null) {
-            validateIsometricPidSheets(isometric.getPidsAndSheets());
-        }
-
-        validateIsometricRevision(isometric.getRevision());
-        validateIsometricDate(isometric.getDate());
-//        validateIsometricSheets(isometric.getSheets());
-        if (isometric.getCoordinatesInPid() != null) {
-//        validateIsometricCoordinatesInPid(isometric.getCoordinatesInPid());
-        }
-//        validateIsometricIsApproves(isometric.isApproved());
-        if (isometric.getComments() != null) {
-//        validateIsometricComments(isometric.getComments());
-        }
-    }
+//    private void validations(Isometric isometric) throws Exception {
+//        validateIsometricName(isometric.getName());
+//
+//        if (isometric.getPidsAndSheets() != null) {
+//            validateIsometricPidSheets(isometric.getPidsAndSheets());
+//        }
+//
+//        validateIsometricRevision(isometric.getRevision());
+//        validateIsometricDate(isometric.getDate());
+////        validateIsometricSheets(isometric.getSheets());
+//        if (isometric.getCoordinatesInPid() != null) {
+////        validateIsometricCoordinatesInPid(isometric.getCoordinatesInPid());
+//        }
+////        validateIsometricIsApproves(isometric.isApproved());
+//        if (isometric.getComments() != null) {
+////        validateIsometricComments(isometric.getComments());
+//        }
+//    }
 
     private void validateIsometricDate(Date date) throws Exception {
         CommonValidations.validateDateIsNotLaterThanCurrentDate(date);

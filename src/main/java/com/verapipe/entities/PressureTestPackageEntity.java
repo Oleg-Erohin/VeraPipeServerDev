@@ -25,7 +25,7 @@ public class PressureTestPackageEntity {
     @Column(name = "coordinates")
     private Map<PidEntity, List<Coordinates>> pidsAndCoordinates;
 
-    @OneToMany(mappedBy = "package", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<IsometricEntity> isometrics;
 
     @Column(name = "date", nullable = false)

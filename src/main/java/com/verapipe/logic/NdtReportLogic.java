@@ -124,7 +124,7 @@ public class NdtReportLogic {
 
     private void validations(NdtReport ndtReport) throws Exception {
         validateNdtReportName(ndtReport.getName());
-        validateNdtReportNdtType(ndtReport.getNdtTypeName());
+//        validateNdtReportNdtType(ndtReport.getNdtTypeName());
         validateNdtReportDate(ndtReport.getDate());
     }
 

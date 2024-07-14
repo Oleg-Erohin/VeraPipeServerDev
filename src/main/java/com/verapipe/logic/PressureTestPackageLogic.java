@@ -25,7 +25,7 @@ public class PressureTestPackageLogic {
     }
 
     public int add(PressureTestPackage pressureTestPackage) throws Exception {
-        validations(pressureTestPackage);
+//        validations(pressureTestPackage);
         PressureTestPackageEntity pressureTestPackageEntity = new PressureTestPackageEntity(pressureTestPackage);
         try {
             pressureTestPackageEntity = this.pressureTestPackageDal.save(pressureTestPackageEntity);
@@ -37,7 +37,7 @@ public class PressureTestPackageLogic {
     }
 
     public void update(PressureTestPackage pressureTestPackage) throws Exception {
-        validations(pressureTestPackage);
+//        validations(pressureTestPackage);
         PressureTestPackageEntity sentPressureTestPackageEntity = new PressureTestPackageEntity(pressureTestPackage);
         try {
             this.pressureTestPackageDal.save(sentPressureTestPackageEntity);
@@ -88,21 +88,21 @@ public class PressureTestPackageLogic {
         return pressureTestPackages;
     }
 
-    private void validations(PressureTestPackage pressureTestPackage) throws Exception {
-        validatePressureTestPackageName(pressureTestPackage.getName());
-        if (pressureTestPackage.getPidNames() != null) {
-            validatePressureTestPackagePids(pressureTestPackage.getPidNames());
-        }
-        if (pressureTestPackage.getIsometricNames() != null) {
-            validatePressureTestPackageIsometrics(pressureTestPackage.getIsometricNames());
-        }
-        if (pressureTestPackage.getCoordinatesInPidsList() != null) {
-//        validatePressureTestPackageCoordinatesInPids(pressureTestPackage.getCoordinatesInPidsList());
-        }
-        if (pressureTestPackage.getDate() != null) {
-            validatePressureTestPackageDate(pressureTestPackage.getDate());
-        }
-    }
+//    private void validations(PressureTestPackage pressureTestPackage) throws Exception {
+//        validatePressureTestPackageName(pressureTestPackage.getName());
+//        if (pressureTestPackage.getPidNames() != null) {
+//            validatePressureTestPackagePids(pressureTestPackage.getPidNames());
+//        }
+//        if (pressureTestPackage.getIsometricNames() != null) {
+//            validatePressureTestPackageIsometrics(pressureTestPackage.getIsometricNames());
+//        }
+//        if (pressureTestPackage.getCoordinatesInPidsList() != null) {
+////        validatePressureTestPackageCoordinatesInPids(pressureTestPackage.getCoordinatesInPidsList());
+//        }
+//        if (pressureTestPackage.getDate() != null) {
+//            validatePressureTestPackageDate(pressureTestPackage.getDate());
+//        }
+//    }
 
     private void validatePressureTestPackageDate(Date date) throws Exception {
         CommonValidations.validateDateIsNotLaterThanCurrentDate(date);

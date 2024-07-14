@@ -43,7 +43,7 @@ public class IsometricEntity {
     @OneToMany(mappedBy = "isometric", fetch = FetchType.LAZY)
     private List<JointEntity> jointsList;
 
-    @ManyToMany(mappedBy = "isometricsList", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "isometrics", fetch = FetchType.LAZY)
     private Set<PressureTestPackageEntity> testPacksList;
 
     public IsometricEntity() {}

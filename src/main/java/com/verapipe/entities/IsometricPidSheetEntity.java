@@ -5,7 +5,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "isometric_pid_sheet")
-public class IsometricPidSheetEntity {
+public class  IsometricPidSheetEntity {
     @Id
     @GeneratedValue
     private int id;
