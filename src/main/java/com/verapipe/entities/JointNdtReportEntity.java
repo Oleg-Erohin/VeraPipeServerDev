@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "joint_ndt_report")
 public class JointNdtReportEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)

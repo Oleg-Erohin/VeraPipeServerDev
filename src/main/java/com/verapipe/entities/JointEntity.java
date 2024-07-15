@@ -12,7 +12,7 @@ import java.util.*;
 @Table(name = "joint")
 public class JointEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private int id;
     @Column(name = "number", unique = false, nullable = false)
     private int number;

@@ -9,7 +9,7 @@ import java.util.Set;
 @Table(name = "base_material_certificate")
 public class BaseMaterialCertificateEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private int id;
     @Column(name = "heat_number", unique = true, nullable = false)
     private String heatNum;

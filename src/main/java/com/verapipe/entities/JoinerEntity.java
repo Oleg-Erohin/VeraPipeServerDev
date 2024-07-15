@@ -9,7 +9,7 @@ import java.util.Set;
 @Table(name = "joiner")
 public class JoinerEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private int id;
     @Column(name = "tag_id", unique = false, nullable = false)
     private String tagId;
