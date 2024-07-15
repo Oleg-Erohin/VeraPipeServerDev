@@ -9,12 +9,12 @@ public class JointNdtReportEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "joint_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
     private JointEntity joint;
 
-    @ManyToOne
-    @JoinColumn(name = "ndt_report_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
     private NdtReportEntity ndtReport;
 
     @Column(name = "is_passed", nullable = false)

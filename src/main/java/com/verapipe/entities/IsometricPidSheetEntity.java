@@ -11,15 +11,15 @@ public class  IsometricPidSheetEntity {
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "isometric_id", nullable = false)
+    @JoinColumn(nullable = false)
     private IsometricEntity isometric;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pid_id", nullable = false)
+    @JoinColumn(nullable = false)
     private PidEntity pid;
 
     @ElementCollection
-    @CollectionTable(name = "pid_sheets", joinColumns = @JoinColumn(name = "isometric_pid_sheet_id"))
+    @CollectionTable(name = "pid_sheets", joinColumns = @JoinColumn)
     @Column(name = "sheet_number")
     private List<Integer> sheets;
 

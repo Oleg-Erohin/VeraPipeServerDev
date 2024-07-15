@@ -27,7 +27,7 @@ public class IsometricEntity {
     private int sheets;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "coordinates", joinColumns = @JoinColumn(name = "isometric_id"))
+    @CollectionTable(name = "coordinates", joinColumns = @JoinColumn)
     @Column(name = "coordinates", unique = true)
     private List<Coordinates> coordinatesInPid;
 

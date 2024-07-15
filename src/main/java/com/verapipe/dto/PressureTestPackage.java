@@ -1,8 +1,10 @@
 package com.verapipe.dto;
 
 import com.verapipe.entities.PressureTestPackageEntity;
+import com.verapipe.entities.PressureTestPackagePidCoordinatesEntity;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -38,9 +40,14 @@ public class PressureTestPackage {
         this.date = pressureTestPackageEntity.getDate();
 
         // Convert pidsAndCoordinates map from entity to DTO format
-        this.pidsAndCoordinates = pressureTestPackageEntity.getPidsAndCoordinates().entrySet().stream()
-                .collect(Collectors.toMap(entry -> new Pid(entry.getKey()),
-                        Map.Entry::getValue));
+        if (pressureTestPackageEntity.getPidsAndCoordinates() != null) {
+            this.pidsAndCoordinates = new HashMap<>();
+            for (PressureTestPackagePidCoordinatesEntity pidsAndCoordinates : pressureTestPackageEntity.getPidsAndCoordinates()) {
+                Pid pid = new Pid(pidsAndCoordinates.getPid());
+                List<Coordinates> coordinates = pidsAndCoordinates.getCoordinates();
+                this.pidsAndCoordinates.put(pid, coordinates);
+            }
+        }
 
         // Convert isometrics list from entity to DTO format
         this.isometrics = pressureTestPackageEntity.getIsometrics().stream()

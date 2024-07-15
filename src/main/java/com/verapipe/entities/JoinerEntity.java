@@ -29,7 +29,7 @@ public class JoinerEntity {
     private JointDesignEntity jointDesign;
     @ManyToOne(fetch = FetchType.EAGER)
     private FusionProcessEntity fusionProcess;
-    @ManyToMany
+    @ManyToMany(mappedBy = "joinersList")
     private Set<JointEntity> jointsList;
 
     public JoinerEntity() {

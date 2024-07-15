@@ -1,12 +1,11 @@
 package com.verapipe.entities;
 
 import com.verapipe.dto.Coordinates;
+import com.verapipe.dto.Pid;
 import com.verapipe.dto.PressureTestPackage;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -19,8 +18,8 @@ public class PressureTestPackageEntity {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-    @ManyToMany
-    private Map<PidEntity, List<Coordinates>> pidsAndCoordinates;
+    @OneToMany(mappedBy = "pressureTestPackage", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<PressureTestPackagePidCoordinatesEntity> pidsAndCoordinatesList;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<IsometricEntity> isometrics;
@@ -37,9 +36,16 @@ public class PressureTestPackageEntity {
         this.date = pressureTestPackage.getDate();
 
         // Convert pidsAndCoordinates map from DTO to entity format
-        this.pidsAndCoordinates = pressureTestPackage.getPidsAndCoordinates().entrySet().stream()
-                .collect(Collectors.toMap(entry -> new PidEntity(entry.getKey()),
-                        Map.Entry::getValue));
+        if (pressureTestPackage.getPidsAndCoordinates() != null) {
+            this.pidsAndCoordinatesList = new HashSet<>();
+            for (Map.Entry<Pid, List<Coordinates>> entry : pressureTestPackage.getPidsAndCoordinates().entrySet()) {
+                Pid pid = entry.getKey();
+                List<Coordinates> coordinates = entry.getValue();
+                if (pid != null && coordinates != null) {
+                    this.pidsAndCoordinatesList.add(new PressureTestPackagePidCoordinatesEntity(this, new PidEntity(pid), coordinates));
+                }
+            }
+        }
 
         // Convert isometrics list from DTO to entity format
         this.isometrics = pressureTestPackage.getIsometrics().stream()
@@ -63,12 +69,12 @@ public class PressureTestPackageEntity {
         this.name = name;
     }
 
-    public Map<PidEntity, List<Coordinates>> getPidsAndCoordinates() {
-        return pidsAndCoordinates;
+    public Set<PressureTestPackagePidCoordinatesEntity> getPidsAndCoordinates() {
+        return pidsAndCoordinatesList;
     }
 
-    public void setPidsAndCoordinates(Map<PidEntity, List<Coordinates>> pidsAndCoordinates) {
-        this.pidsAndCoordinates = pidsAndCoordinates;
+    public void setPidsAndCoordinates(Set<PressureTestPackagePidCoordinatesEntity> pidsAndCoordinatesList) {
+        this.pidsAndCoordinatesList = pidsAndCoordinatesList;
     }
 
     public List<IsometricEntity> getIsometrics() {
