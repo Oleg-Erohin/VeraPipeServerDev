@@ -67,4 +67,8 @@ public class BaseMaterialCertificateEntity {
     public void setJointsList(Set<JointEntity> jointsList) {
         this.jointsList = jointsList;
     }
+
+    public Set<JointEntity> getJointsList() {
+        return jointsList;
+    }
 }

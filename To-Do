@@ -3,7 +3,8 @@ Important:
 - Create filters functions to all entities - Aviad: FillerMaterialCertificate, Isometric, Joiner, Joint, NdtReport
                                              Aviad: Pid, PWHT, PreHeat, PressureTestPackage, PSP
 - In DTO objects - change to other object rather than identification string (name etc.) - Oleg
--
+- Add file get functionality - Aviad
+- Redefine/rewrite all validations
 
 To Do Later:
 - Ensure comments include line breaks
