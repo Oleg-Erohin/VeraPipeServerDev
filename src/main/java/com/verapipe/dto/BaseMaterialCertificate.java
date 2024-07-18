@@ -6,29 +6,29 @@ public class BaseMaterialCertificate {
     private int id;
     private String heatNum;
     private String lotNum;
-    private String materialTypeName;
+    private BaseMaterialType materialType;
 
     public BaseMaterialCertificate() {
     }
 
-    public BaseMaterialCertificate(String heatNum, String lotNum, String materialTypeName) {
+    public BaseMaterialCertificate(String heatNum, String lotNum, BaseMaterialType materialType) {
         this.heatNum = heatNum;
         this.lotNum = lotNum;
-        this.materialTypeName = materialTypeName;
+        this.materialType = materialType;
     }
 
-    public BaseMaterialCertificate(int id, String heatNum, String lotNum, String materialTypeName) {
+    public BaseMaterialCertificate(int id, String heatNum, String lotNum, BaseMaterialType materialType) {
         this.id = id;
         this.heatNum = heatNum;
         this.lotNum = lotNum;
-        this.materialTypeName = materialTypeName;
+        this.materialType = materialType;
     }
 
     public BaseMaterialCertificate(BaseMaterialCertificateEntity baseMaterialCertificateEntity) {
         this.id = baseMaterialCertificateEntity.getId();
         this.heatNum = baseMaterialCertificateEntity.getHeatNum();
         this.lotNum = baseMaterialCertificateEntity.getLotNum();
-        this.materialTypeName = baseMaterialCertificateEntity.getBaseMaterialType().getName();
+        this.materialType = new BaseMaterialType(baseMaterialCertificateEntity.getBaseMaterialType());
     }
 
     public int getId() {
@@ -55,13 +55,12 @@ public class BaseMaterialCertificate {
         this.lotNum = lotNum;
     }
 
-
-    public String getMaterialTypeName() {
-        return materialTypeName;
+    public BaseMaterialType getMaterialType() {
+        return materialType;
     }
 
-    public void setMaterialTypeName(String materialTypeName) {
-        this.materialTypeName = materialTypeName;
+    public void setMaterialType(BaseMaterialType materialType) {
+        this.materialType = materialType;
     }
 
     @Override
@@ -70,7 +69,7 @@ public class BaseMaterialCertificate {
                 "id=" + id +
                 ", heatNum='" + heatNum + '\'' +
                 ", lotNum='" + lotNum + '\'' +
-                ", materialTypeName='" + materialTypeName + '\'' +
+                ", materialType=" + materialType +
                 '}';
     }
 }

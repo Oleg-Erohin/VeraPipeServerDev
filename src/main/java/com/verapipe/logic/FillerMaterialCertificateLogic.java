@@ -3,6 +3,7 @@ package com.verapipe.logic;
 import com.verapipe.consts.Consts;
 import com.verapipe.dal.IFillerMaterialCertificateDal;
 import com.verapipe.dto.FillerMaterialCertificate;
+import com.verapipe.dto.FillerMaterialType;
 import com.verapipe.entities.FillerMaterialCertificateEntity;
 import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
@@ -119,11 +120,11 @@ public class FillerMaterialCertificateLogic {
 
     private void validations(FillerMaterialCertificate fillerMaterialCertificate) throws Exception {
         validateFillerMaterialCertificateHeatNum(fillerMaterialCertificate.getHeatNum());
-        validateFillerMaterialCertificateMaterialTypeName(fillerMaterialCertificate.getMaterialTypeName());
+        validateFillerMaterialCertificateMaterialTypeName(fillerMaterialCertificate.getMaterialType());
     }
 
-    private void validateFillerMaterialCertificateMaterialTypeName(String materialTypeName) throws Exception {
-        CommonValidations.validateIsExistInFillerMaterialTypes(materialTypeName);
+    private void validateFillerMaterialCertificateMaterialTypeName(FillerMaterialType materialType) throws Exception {
+        CommonValidations.validateIsExistInFillerMaterialTypes(materialType);
     }
 
     private void validateFillerMaterialCertificateHeatNum(String heatNum) throws ApplicationException {

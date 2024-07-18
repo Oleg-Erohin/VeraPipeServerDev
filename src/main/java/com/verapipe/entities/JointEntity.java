@@ -143,23 +143,15 @@ public class JointEntity {
     }
 
     private void initializeBaseMaterialTypeListWithValues(Joint joint) {
-        BaseMaterialTypeEntity baseMaterialType1 = new BaseMaterialTypeEntity();
-        BaseMaterialTypeEntity baseMaterialType2 = new BaseMaterialTypeEntity();
-        String baseMaterialTypeName1 = joint.getBaseMaterialTypeName1();
-        String baseMaterialTypeName2 = joint.getBaseMaterialTypeName2();
-        baseMaterialType1.setName(baseMaterialTypeName1);
-        baseMaterialType2.setName(baseMaterialTypeName2);
+        BaseMaterialTypeEntity baseMaterialType1 = new BaseMaterialTypeEntity(joint.getBaseMaterialType1());
+        BaseMaterialTypeEntity baseMaterialType2 = new BaseMaterialTypeEntity(joint.getBaseMaterialType2());
         this.baseMaterialTypeList.add(baseMaterialType1);
         this.baseMaterialTypeList.add(baseMaterialType2);
     }
 
     private void initializeFillerMaterialTypeListWithValues(Joint joint) {
-        FillerMaterialTypeEntity fillerMaterialType1 = new FillerMaterialTypeEntity();
-        FillerMaterialTypeEntity fillerMaterialType2 = new FillerMaterialTypeEntity();
-        String fillerMaterialTypeName1 = joint.getFillerMaterialTypeName1();
-        String fillerMaterialTypeName2 = joint.getFillerMaterialTypeName2();
-        fillerMaterialType1.setName(fillerMaterialTypeName1);
-        fillerMaterialType2.setName(fillerMaterialTypeName2);
+        FillerMaterialTypeEntity fillerMaterialType1 = new FillerMaterialTypeEntity(joint.getFillerMaterialType1());
+        FillerMaterialTypeEntity fillerMaterialType2 = new FillerMaterialTypeEntity(joint.getFillerMaterialType2());
         this.fillerMaterialTypeList.add(fillerMaterialType1);
         this.fillerMaterialTypeList.add(fillerMaterialType2);
     }

@@ -57,12 +57,8 @@ public class JoinerEntity {
     }
 
     private void initializeBaseMaterialTypeListWithValues(Joiner joiner) {
-        BaseMaterialTypeEntity baseMaterialType1 = new BaseMaterialTypeEntity();
-        BaseMaterialTypeEntity baseMaterialType2 = new BaseMaterialTypeEntity();
-        String baseMaterialTypeName1 = joiner.getBaseMaterialTypeName1();
-        String baseMaterialTypeName2 = joiner.getBaseMaterialTypeName2();
-        baseMaterialType1.setName(baseMaterialTypeName1);
-        baseMaterialType2.setName(baseMaterialTypeName2);
+        BaseMaterialTypeEntity baseMaterialType1 = new BaseMaterialTypeEntity(joiner.getBaseMaterialType1());
+        BaseMaterialTypeEntity baseMaterialType2 = new BaseMaterialTypeEntity(joiner.getBaseMaterialType2());
         this.baseMaterialTypeList.add(baseMaterialType1);
         this.baseMaterialTypeList.add(baseMaterialType2);
     }

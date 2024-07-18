@@ -63,7 +63,7 @@ public class ProcessSpecificationProcedureEntity {
         this.diameterMmMax = processSpecificationProcedure.getDiameterMaxMm();
         this.diameterInchMin = processSpecificationProcedure.getDiameterMinInch();
         this.diameterInchMax = processSpecificationProcedure.getDiameterMaxInch();
-        this.unitOfMeasure = processSpecificationProcedure.getThicknessUom();
+        this.unitOfMeasure = processSpecificationProcedure.getUnitOfMeasure();
         this.thicknessMmMin = processSpecificationProcedure.getThicknessMinMm();
         this.thicknessMmMax = processSpecificationProcedure.getThicknessMaxMm();
         this.jointDesign = new JointDesignEntity();
@@ -82,23 +82,15 @@ public class ProcessSpecificationProcedureEntity {
     }
 
     private void initializeFillerMaterialTypeListWithValues(ProcessSpecificationProcedure processSpecificationProcedure) {
-        FillerMaterialTypeEntity fillerMaterial1 = new FillerMaterialTypeEntity();
-        FillerMaterialTypeEntity fillerMaterial2 = new FillerMaterialTypeEntity();
-        String fillerMaterialName1 = processSpecificationProcedure.getFillerMaterialName1();
-        String fillerMaterialName2 = processSpecificationProcedure.getFillerMaterialName2();
-        fillerMaterial1.setName(fillerMaterialName1);
-        fillerMaterial2.setName(fillerMaterialName2);
+        FillerMaterialTypeEntity fillerMaterial1 = new FillerMaterialTypeEntity(processSpecificationProcedure.getFillerMaterial1());
+        FillerMaterialTypeEntity fillerMaterial2 = new FillerMaterialTypeEntity(processSpecificationProcedure.getFillerMaterial2());
         this.fillerMaterialTypeList.add(fillerMaterial1);
         this.fillerMaterialTypeList.add(fillerMaterial2);
     }
 
     private void initializeBaseMaterialListWithValues(ProcessSpecificationProcedure processSpecificationProcedure) {
-        BaseMaterialTypeEntity baseMaterial1 = new BaseMaterialTypeEntity();
-        BaseMaterialTypeEntity baseMaterial2 = new BaseMaterialTypeEntity();
-        String baseMaterialName1 = processSpecificationProcedure.getBaseMaterialName1();
-        String baseMaterialName2 = processSpecificationProcedure.getBaseMaterialName2();
-        baseMaterial1.setName(baseMaterialName1);
-        baseMaterial2.setName(baseMaterialName2);
+        BaseMaterialTypeEntity baseMaterial1 = new BaseMaterialTypeEntity(processSpecificationProcedure.getBaseMaterial1());
+        BaseMaterialTypeEntity baseMaterial2 = new BaseMaterialTypeEntity(processSpecificationProcedure.getBaseMaterial2());
         this.baseMaterialTypeList.add(baseMaterial1);
         this.baseMaterialTypeList.add(baseMaterial2);
     }

@@ -86,22 +86,22 @@ public class CommonValidations {
         }
     }
 
-    public static void validateIsExistInBaseMaterialTypes(String materialTypeName) throws Exception {
+    public static void validateIsExistInBaseMaterialTypes(BaseMaterialType materialType) throws Exception {
         List<BaseMaterialType> allBaseMaterialTypes =  Holder.baseMaterialTypeLogic.getAll();
 
         for (BaseMaterialType baseMaterialType : allBaseMaterialTypes){
-            if (baseMaterialType.getName().equals(materialTypeName)){
+            if (baseMaterialType.equals(materialType)){
                 return;
             }
         }
         throw new ApplicationException(ErrorType.BASE_MATERIAL_TYPE_DOES_NOT_EXIST);
     }
 
-    public static void validateIsExistInFillerMaterialTypes(String materialTypeName) throws Exception {
+    public static void validateIsExistInFillerMaterialTypes(FillerMaterialType materialType) throws Exception {
         List<FillerMaterialType> allFillerMaterialTypes =  Holder.fillerMaterialTypeLogic.getAll();
 
         for (FillerMaterialType fillerMaterialType : allFillerMaterialTypes){
-            if (fillerMaterialType.getName().equals(materialTypeName)){
+            if (fillerMaterialType.equals(materialType)){
                 return;
             }
         }

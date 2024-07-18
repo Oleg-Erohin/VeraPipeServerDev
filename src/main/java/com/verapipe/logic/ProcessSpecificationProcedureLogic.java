@@ -2,6 +2,8 @@ package com.verapipe.logic;
 
 import com.verapipe.consts.Consts;
 import com.verapipe.dal.IProcessSpecificationProcedureDal;
+import com.verapipe.dto.BaseMaterialType;
+import com.verapipe.dto.FillerMaterialType;
 import com.verapipe.dto.ProcessSpecificationProcedure;
 import com.verapipe.dto.StandardCode;
 import com.verapipe.entities.ProcessSpecificationProcedureEntity;
@@ -99,14 +101,14 @@ public class ProcessSpecificationProcedureLogic {
     private void validations(ProcessSpecificationProcedure processSpecificationProcedure) throws Exception {
         validateProcessSpecificationProcedureName(processSpecificationProcedure.getName());
         validateProcessSpecificationProcedureJointDesign(processSpecificationProcedure.getJointDesignName());
-        validateProcessSpecificationProcedureBaseMaterial(processSpecificationProcedure.getBaseMaterialName1());
-        if (processSpecificationProcedure.getBaseMaterialName2() != null) {
-            validateProcessSpecificationProcedureBaseMaterial(processSpecificationProcedure.getBaseMaterialName2());
+        validateProcessSpecificationProcedureBaseMaterial(processSpecificationProcedure.getBaseMaterial1());
+        if (processSpecificationProcedure.getBaseMaterial2() != null) {
+            validateProcessSpecificationProcedureBaseMaterial(processSpecificationProcedure.getBaseMaterial2());
         }
         validateProcessSpecificationProcedureFusionProcess(processSpecificationProcedure.getFusionProcessName());
-        validateProcessSpecificationProcedureFillerMaterial(processSpecificationProcedure.getFillerMaterialName1());
-        if (processSpecificationProcedure.getFillerMaterialName2() != null) {
-            validateProcessSpecificationProcedureFillerMaterial(processSpecificationProcedure.getFillerMaterialName2());
+        validateProcessSpecificationProcedureFillerMaterial(processSpecificationProcedure.getFillerMaterial1());
+        if (processSpecificationProcedure.getFillerMaterial2() != null) {
+            validateProcessSpecificationProcedureFillerMaterial(processSpecificationProcedure.getFillerMaterial2());
         }
         validateProcessSpecificationProcedureStandardCode(processSpecificationProcedure.getStandardCodeName());
 //        validateProcessSpecificationProcedureIsPreheatRequired(processSpecificationProcedure.isPreheatRequired());
@@ -149,12 +151,12 @@ public class ProcessSpecificationProcedureLogic {
         CommonValidations.validateIsExistInJointDesigns(jointDesignName);
     }
 
-    private void validateProcessSpecificationProcedureFillerMaterial(String fillerMaterialName) throws Exception {
-        CommonValidations.validateIsExistInFillerMaterialTypes(fillerMaterialName);
+    private void validateProcessSpecificationProcedureFillerMaterial(FillerMaterialType fillerMaterial) throws Exception {
+        CommonValidations.validateIsExistInFillerMaterialTypes(fillerMaterial);
     }
 
-    private void validateProcessSpecificationProcedureBaseMaterial(String baseMaterialName) throws Exception {
-        CommonValidations.validateIsExistInBaseMaterialTypes(baseMaterialName);
+    private void validateProcessSpecificationProcedureBaseMaterial(BaseMaterialType baseMaterialType) throws Exception {
+        CommonValidations.validateIsExistInBaseMaterialTypes(baseMaterialType);
     }
 
     private void validateNumberInputNotNegative(Float number) throws ApplicationException {

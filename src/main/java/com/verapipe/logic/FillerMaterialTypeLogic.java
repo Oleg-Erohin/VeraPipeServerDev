@@ -102,7 +102,7 @@ public class FillerMaterialTypeLogic {
         CommonValidations.validateStringLength(name, Consts.resourceNameLengthMin, Consts.resourceNameLengthMax);
     }
 
-    private boolean isFillerMaterialTypeExist(int id) {
+    public boolean isFillerMaterialTypeExist(int id) {
         return this.fillerMaterialTypeDal.existsById(id);
     }
 }

@@ -12,11 +12,11 @@ public class ProcessSpecificationProcedure {
     private int id;
     private String name;
     private String jointDesignName;
-    private String baseMaterialName1;
-    private String baseMaterialName2;
+    private BaseMaterialType baseMaterial1;
+    private BaseMaterialType baseMaterial2;
     private String fusionProcessName;
-    private String fillerMaterialName1;
-    private String fillerMaterialName2;
+    private FillerMaterialType fillerMaterial1;
+    private FillerMaterialType fillerMaterial2;
     private String standardCodeName;
     private boolean isPreheatRequired;
     private boolean isPostWeldHeatTreatmentRequired;
@@ -31,14 +31,14 @@ public class ProcessSpecificationProcedure {
     public ProcessSpecificationProcedure() {
     }
 
-    public ProcessSpecificationProcedure(String name, String jointDesignName, String baseMaterialName1, String baseMaterialName2, String fusionProcessName, String fillerMaterialName1, String fillerMaterialName2, String standardCodeName, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, Float diameterMinMm, Float diameterMaxMm, Float diameterMinInch, Float diameterMaxInch, UnitOfMeasure unitOfMeasure, Float thicknessMinMm, Float thicknessMaxMm) {
+    public ProcessSpecificationProcedure(String name, String jointDesignName, BaseMaterialType baseMaterial1, BaseMaterialType baseMaterial2, String fusionProcessName, FillerMaterialType fillerMaterial1, FillerMaterialType fillerMaterial2, String standardCodeName, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, Float diameterMinMm, Float diameterMaxMm, Float diameterMinInch, Float diameterMaxInch, UnitOfMeasure unitOfMeasure, Float thicknessMinMm, Float thicknessMaxMm) {
         this.name = name;
         this.jointDesignName = jointDesignName;
-        this.baseMaterialName1 = baseMaterialName1;
-        this.baseMaterialName2 = baseMaterialName2;
+        this.baseMaterial1 = baseMaterial1;
+        this.baseMaterial2 = baseMaterial2;
         this.fusionProcessName = fusionProcessName;
-        this.fillerMaterialName1 = fillerMaterialName1;
-        this.fillerMaterialName2 = fillerMaterialName2;
+        this.fillerMaterial1 = fillerMaterial1;
+        this.fillerMaterial2 = fillerMaterial2;
         this.standardCodeName = standardCodeName;
         this.isPreheatRequired = isPreheatRequired;
         this.isPostWeldHeatTreatmentRequired = isPostWeldHeatTreatmentRequired;
@@ -51,15 +51,15 @@ public class ProcessSpecificationProcedure {
         this.thicknessMaxMm = thicknessMaxMm;
     }
 
-    public ProcessSpecificationProcedure(int id, String name, String jointDesignName, String baseMaterialName1, String baseMaterialName2, String fusionProcessName, String fillerMaterialName1, String fillerMaterialName2, String standardCodeName, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, Float diameterMinMm, Float diameterMaxMm, Float diameterMinInch, Float diameterMaxInch, UnitOfMeasure unitOfMeasure, Float thicknessMinMm, Float thicknessMaxMm) {
+    public ProcessSpecificationProcedure(int id, String name, String jointDesignName, BaseMaterialType baseMaterial1, BaseMaterialType baseMaterial2, String fusionProcessName, FillerMaterialType fillerMaterial1, FillerMaterialType fillerMaterial2, String standardCodeName, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, Float diameterMinMm, Float diameterMaxMm, Float diameterMinInch, Float diameterMaxInch, UnitOfMeasure unitOfMeasure, Float thicknessMinMm, Float thicknessMaxMm) {
         this.id = id;
         this.name = name;
         this.jointDesignName = jointDesignName;
-        this.baseMaterialName1 = baseMaterialName1;
-        this.baseMaterialName2 = baseMaterialName2;
+        this.baseMaterial1 = baseMaterial1;
+        this.baseMaterial2 = baseMaterial2;
         this.fusionProcessName = fusionProcessName;
-        this.fillerMaterialName1 = fillerMaterialName1;
-        this.fillerMaterialName2 = fillerMaterialName2;
+        this.fillerMaterial1 = fillerMaterial1;
+        this.fillerMaterial2 = fillerMaterial2;
         this.standardCodeName = standardCodeName;
         this.isPreheatRequired = isPreheatRequired;
         this.isPostWeldHeatTreatmentRequired = isPostWeldHeatTreatmentRequired;
@@ -79,15 +79,15 @@ public class ProcessSpecificationProcedure {
 
         List<BaseMaterialTypeEntity> baseMaterialTypeEntityList = new ArrayList<>();
         baseMaterialTypeEntityList.addAll(processSpecificationProcedureEntity.getBaseMaterialTypeList());
-        this.baseMaterialName1 = baseMaterialTypeEntityList.get(0).getName();
-        this.baseMaterialName2 = baseMaterialTypeEntityList.get(1).getName();
+        this.baseMaterial1 = new BaseMaterialType(baseMaterialTypeEntityList.get(0));
+        this.baseMaterial2 = new BaseMaterialType(baseMaterialTypeEntityList.get(1));
 
         this.fusionProcessName = processSpecificationProcedureEntity.getFusionProcess().getName();
 
         List<FillerMaterialTypeEntity> fillerMaterialTypeEntityList = new ArrayList<>();
         fillerMaterialTypeEntityList.addAll(processSpecificationProcedureEntity.getFillerMaterialTypeList());
-        this.fillerMaterialName1 = fillerMaterialTypeEntityList.get(0).getName();
-        this.fillerMaterialName2 = fillerMaterialTypeEntityList.get(1).getName();
+        this.fillerMaterial1 = new FillerMaterialType(fillerMaterialTypeEntityList.get(0));
+        this.fillerMaterial2 = new FillerMaterialType(fillerMaterialTypeEntityList.get(1));
 
         this.standardCodeName = processSpecificationProcedureEntity.getStandardCode().getName();
         this.isPreheatRequired = processSpecificationProcedureEntity.isPreheatRequired();
@@ -125,20 +125,20 @@ public class ProcessSpecificationProcedure {
         this.jointDesignName = jointDesignName;
     }
 
-    public String getBaseMaterialName1() {
-        return baseMaterialName1;
+    public BaseMaterialType getBaseMaterial1() {
+        return baseMaterial1;
     }
 
-    public void setBaseMaterialName1(String baseMaterialName1) {
-        this.baseMaterialName1 = baseMaterialName1;
+    public void setBaseMaterial1(BaseMaterialType baseMaterial1) {
+        this.baseMaterial1 = baseMaterial1;
     }
 
-    public String getBaseMaterialName2() {
-        return baseMaterialName2;
+    public BaseMaterialType getBaseMaterial2() {
+        return baseMaterial2;
     }
 
-    public void setBaseMaterialName2(String baseMaterialName2) {
-        this.baseMaterialName2 = baseMaterialName2;
+    public void setBaseMaterial2(BaseMaterialType baseMaterial2) {
+        this.baseMaterial2 = baseMaterial2;
     }
 
     public String getFusionProcessName() {
@@ -149,20 +149,20 @@ public class ProcessSpecificationProcedure {
         this.fusionProcessName = fusionProcessName;
     }
 
-    public String getFillerMaterialName1() {
-        return fillerMaterialName1;
+    public FillerMaterialType getFillerMaterial1() {
+        return fillerMaterial1;
     }
 
-    public void setFillerMaterialName1(String fillerMaterialName1) {
-        this.fillerMaterialName1 = fillerMaterialName1;
+    public void setFillerMaterial1(FillerMaterialType fillerMaterial1) {
+        this.fillerMaterial1 = fillerMaterial1;
     }
 
-    public String getFillerMaterialName2() {
-        return fillerMaterialName2;
+    public FillerMaterialType getFillerMaterial2() {
+        return fillerMaterial2;
     }
 
-    public void setFillerMaterialName2(String fillerMaterialName2) {
-        this.fillerMaterialName2 = fillerMaterialName2;
+    public void setFillerMaterial2(FillerMaterialType fillerMaterial2) {
+        this.fillerMaterial2 = fillerMaterial2;
     }
 
     public String getStandardCodeName() {
@@ -221,11 +221,11 @@ public class ProcessSpecificationProcedure {
         this.diameterMaxInch = diameterMaxInch;
     }
 
-    public UnitOfMeasure getThicknessUom() {
+    public UnitOfMeasure getUnitOfMeasure() {
         return unitOfMeasure;
     }
 
-    public void setThicknessUom(UnitOfMeasure unitOfMeasure) {
+    public void setUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
         this.unitOfMeasure = unitOfMeasure;
     }
 
@@ -251,19 +251,19 @@ public class ProcessSpecificationProcedure {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", jointDesignName='" + jointDesignName + '\'' +
-                ", baseMaterialName1='" + baseMaterialName1 + '\'' +
-                ", baseMaterialName2='" + baseMaterialName2 + '\'' +
+                ", baseMaterial1=" + baseMaterial1 +
+                ", baseMaterial2=" + baseMaterial2 +
                 ", fusionProcessName='" + fusionProcessName + '\'' +
-                ", fillerMaterialName1='" + fillerMaterialName1 + '\'' +
-                ", fillerMaterialName2='" + fillerMaterialName2 + '\'' +
+                ", fillerMaterial1=" + fillerMaterial1 +
+                ", fillerMaterial2=" + fillerMaterial2 +
                 ", standardCodeName='" + standardCodeName + '\'' +
                 ", isPreheatRequired=" + isPreheatRequired +
                 ", isPostWeldHeatTreatmentRequired=" + isPostWeldHeatTreatmentRequired +
-                ", diameterMmMin=" + diameterMinMm +
-                ", diameterMmMax=" + diameterMaxMm +
-                ", diameterInchMin=" + diameterMinInch +
-                ", diameterInchMax=" + diameterMaxInch +
-                ", thicknessUom=" + unitOfMeasure +
+                ", diameterMinMm=" + diameterMinMm +
+                ", diameterMaxMm=" + diameterMaxMm +
+                ", diameterMinInch=" + diameterMinInch +
+                ", diameterMaxInch=" + diameterMaxInch +
+                ", unitOfMeasure=" + unitOfMeasure +
                 ", thicknessMinMm=" + thicknessMinMm +
                 ", thicknessMaxMm=" + thicknessMaxMm +
                 '}';

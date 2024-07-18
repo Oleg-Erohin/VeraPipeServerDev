@@ -2,6 +2,7 @@ package com.verapipe.logic;
 
 import com.verapipe.consts.Consts;
 import com.verapipe.dal.IJoinerDal;
+import com.verapipe.dto.BaseMaterialType;
 import com.verapipe.dto.Joiner;
 import com.verapipe.entities.*;
 import com.verapipe.enums.ErrorType;
@@ -136,9 +137,9 @@ public class JoinerLogic {
             validateNumberInputNotNegative(joiner.getCertifiedDiameterMaxInch());
         }
         validateNumberInputNotNegative(joiner.getMaxDepositedMaterial());
-        validateJoinerBaseMaterialType(joiner.getBaseMaterialTypeName1());
-        if (joiner.getBaseMaterialTypeName2() != null) {
-            validateJoinerBaseMaterialType(joiner.getBaseMaterialTypeName2());
+        validateJoinerBaseMaterialType(joiner.getBaseMaterialType1());
+        if (joiner.getBaseMaterialType2() != null) {
+            validateJoinerBaseMaterialType(joiner.getBaseMaterialType2());
         }
         validateJoinerJointDesign(joiner.getJointDesignName());
         validateJoinerFusionProcess(joiner.getFusionProcessName());
@@ -152,8 +153,8 @@ public class JoinerLogic {
         CommonValidations.validateIsExistInJointDesigns(jointDesignName);
     }
 
-    private void validateJoinerBaseMaterialType(String baseMaterialTypeName) throws Exception {
-        CommonValidations.validateIsExistInBaseMaterialTypes(baseMaterialTypeName);
+    private void validateJoinerBaseMaterialType(BaseMaterialType baseMaterialType) throws Exception {
+        CommonValidations.validateIsExistInBaseMaterialTypes(baseMaterialType);
     }
 
     private void validateNumberInputNotNegative(Float number) throws ApplicationException {

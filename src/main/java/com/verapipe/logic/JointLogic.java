@@ -165,30 +165,31 @@ public class JointLogic {
         }
         validateDiameter(joint.getDiameter());
         validateJointFittingDescription(joint.getFittingDescription1());
-        validateJointBaseMaterialType(joint.getBaseMaterialTypeName1());
+        validateJointBaseMaterialType(joint.getBaseMaterialType1());
         if (joint.getBaseMaterialHeatNum1() != null) {
             validateJointBaseMaterialHeatNum(joint.getBaseMaterialHeatNum1());
         }
         validateJointFittingDescription(joint.getFittingDescription2());
-        if (joint.getBaseMaterialTypeName2() != null) {
-            validateJointBaseMaterialType(joint.getBaseMaterialTypeName2());
+        if (joint.getBaseMaterialType2() != null) {
+            validateJointBaseMaterialType(joint.getBaseMaterialType2());
             if (joint.getBaseMaterialHeatNum2() != null) {
                 validateJointBaseMaterialHeatNum(joint.getBaseMaterialHeatNum2());
             }
         }
 //        validateThickness(joint);
-        if (joint.getFillerMaterialTypeName1() != null) {
-            validateJointFillerMaterialType(joint.getFillerMaterialTypeName1());
+        if (joint.getFillerMaterialType1() != null) {
+            validateJointFillerMaterialType(joint.getFillerMaterialType1());
             if (joint.getFillerMaterialHeatNum1() != null) {
                 validateJointFillerMaterialHeatNum(joint.getFillerMaterialHeatNum1());
             }
-        }
-        if (joint.getFillerMaterialTypeName2() != null) {
-            validateJointFillerMaterialType(joint.getFillerMaterialTypeName2());
-            if (joint.getFillerMaterialHeatNum2() != null) {
-                validateJointFillerMaterialHeatNum(joint.getFillerMaterialHeatNum2());
+            if (joint.getFillerMaterialType2() != null) {
+                validateJointFillerMaterialType(joint.getFillerMaterialType2());
+                if (joint.getFillerMaterialHeatNum2() != null) {
+                    validateJointFillerMaterialHeatNum(joint.getFillerMaterialHeatNum2());
+                }
             }
         }
+
         if (joint.getProcessSpecificationProcedureName() != null) {
             validateJointProcessSpecificationProcedure(joint.getProcessSpecificationProcedureName());
         }
@@ -334,12 +335,12 @@ public class JointLogic {
         CommonValidations.validateIsExistInPids(pidName);
     }
 
-    private void validateJointFillerMaterialType(String fillerMaterialTypeName) throws Exception {
-        CommonValidations.validateIsExistInFillerMaterialTypes(fillerMaterialTypeName);
+    private void validateJointFillerMaterialType(FillerMaterialType fillerMaterialType) throws Exception {
+        CommonValidations.validateIsExistInFillerMaterialTypes(fillerMaterialType);
     }
 
-    private void validateJointBaseMaterialType(String baseMaterialTypeName) throws Exception {
-        CommonValidations.validateIsExistInBaseMaterialTypes(baseMaterialTypeName);
+    private void validateJointBaseMaterialType(BaseMaterialType baseMaterialType) throws Exception {
+        CommonValidations.validateIsExistInBaseMaterialTypes(baseMaterialType);
     }
 
     private void validateNumberInputNotNegative(Float number) throws ApplicationException {
