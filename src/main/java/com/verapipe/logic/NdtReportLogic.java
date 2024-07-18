@@ -124,7 +124,7 @@ public class NdtReportLogic {
 
     private void validations(NdtReport ndtReport) throws Exception {
         validateNdtReportName(ndtReport.getName());
-        validateNdtReportNdtType(ndtReport.getNdtTypeName());
+        validateNdtReportNdtType(ndtReport.getNdtType());
         validateNdtReportDate(ndtReport.getDate());
     }
 
@@ -132,11 +132,11 @@ public class NdtReportLogic {
         CommonValidations.validateDateIsNotLaterThanCurrentDate(date);
     }
 
-    private void validateNdtReportNdtType(String ndtTypeName) throws Exception {
+    private void validateNdtReportNdtType(NdtType ndtType) throws Exception {
         List<NdtType> ndtTypes =  ndtTypeLogic.getAll();
 
-        for (NdtType ndtType : ndtTypes){
-            if (ndtType.getName().equals(ndtTypeName)){
+        for (NdtType currentNdtType : ndtTypes){
+            if (currentNdtType.equals(ndtType)){
                 return;
             }
         }

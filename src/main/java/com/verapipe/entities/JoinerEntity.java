@@ -46,9 +46,7 @@ public class JoinerEntity {
         this.baseMaterialTypeList = new HashSet<>();
         initializeBaseMaterialTypeListWithValues(joiner);
         this.jointDesign = new JointDesignEntity(joiner.getJointDesign());
-        this.fusionProcess = new FusionProcessEntity();
-        String fusionProcessName = joiner.getFusionProcessName();
-        this.fusionProcess.setName(fusionProcessName);
+        this.fusionProcess = new FusionProcessEntity(joiner.getFusionProcess());
         this.jointsList = new HashSet<>();
     }
 

@@ -20,20 +20,16 @@ public class ProcessSpecificationProcedureEntity {
     private boolean isPreheatRequired;
     @Column(name = "is_post_weld_heat_treatment_required", unique = false, nullable = false)
     private boolean isPostWeldHeatTreatmentRequired;
-    @Column(name = "diameter_mm_min", unique = false, nullable = true)
-    private Float diameterMmMin;
-    @Column(name = "diameter_mm_max", unique = false, nullable = true)
-    private Float diameterMmMax;
-    @Column(name = "diameter_inch_min", unique = false, nullable = true)
-    private Float diameterInchMin;
-    @Column(name = "diameter_inch_max", unique = false, nullable = true)
-    private Float diameterInchMax;
     @Column(name = "thickness_uom", unique = false, nullable = false)
     private UnitOfMeasure unitOfMeasure;
-    @Column(name = "thickness_mm_min", unique = false, nullable = true)
-    private Float thicknessMmMin;
-    @Column(name = "thickness_mm_max", unique = false, nullable = true)
-    private Float thicknessMmMax;
+    @Column(name = "diameter_min", unique = false, nullable = true)
+    private Float diameterMin;
+    @Column(name = "diameter_max", unique = false, nullable = true)
+    private Float diameterMax;
+    @Column(name = "thickness_min", unique = false, nullable = true)
+    private Float thicknessMin;
+    @Column(name = "thickness_max", unique = false, nullable = true)
+    private Float thicknessMax;
     @ManyToOne(fetch = FetchType.EAGER)
     private JointDesignEntity jointDesign;
     @ManyToMany(fetch = FetchType.EAGER)
@@ -59,19 +55,15 @@ public class ProcessSpecificationProcedureEntity {
         this.name = processSpecificationProcedure.getName();
         this.isPreheatRequired = processSpecificationProcedure.isPreheatRequired();
         this.isPostWeldHeatTreatmentRequired = processSpecificationProcedure.isPostWeldHeatTreatmentRequired();
-        this.diameterMmMin = processSpecificationProcedure.getDiameterMinMm();
-        this.diameterMmMax = processSpecificationProcedure.getDiameterMaxMm();
-        this.diameterInchMin = processSpecificationProcedure.getDiameterMinInch();
-        this.diameterInchMax = processSpecificationProcedure.getDiameterMaxInch();
         this.unitOfMeasure = processSpecificationProcedure.getUnitOfMeasure();
-        this.thicknessMmMin = processSpecificationProcedure.getThicknessMinMm();
-        this.thicknessMmMax = processSpecificationProcedure.getThicknessMaxMm();
+        this.diameterMin = processSpecificationProcedure.getDiameterMin();
+        this.diameterMax = processSpecificationProcedure.getDiameterMax();
+        this.thicknessMin = processSpecificationProcedure.getThicknessMin();
+        this.thicknessMax = processSpecificationProcedure.getThicknessMax();
         this.jointDesign = new JointDesignEntity(processSpecificationProcedure.getJointDesign());
         this.baseMaterialTypeList = new HashSet<>();
         initializeBaseMaterialListWithValues(processSpecificationProcedure);
-        this.fusionProcess = new FusionProcessEntity();
-        String fusionProcessName = processSpecificationProcedure.getFusionProcessName();
-        this.fusionProcess.setName(fusionProcessName);
+        this.fusionProcess = new FusionProcessEntity(processSpecificationProcedure.getFusionProcess());
         this.fillerMaterialTypeList = new HashSet<>();
         initializeFillerMaterialTypeListWithValues(processSpecificationProcedure);
         this.standardCode = new StandardCodeEntity();
@@ -125,60 +117,44 @@ public class ProcessSpecificationProcedureEntity {
         isPostWeldHeatTreatmentRequired = postWeldHeatTreatmentRequired;
     }
 
-    public Float getDiameterMmMin() {
-        return diameterMmMin;
-    }
-
-    public void setDiameterMmMin(Float diameterMmMin) {
-        this.diameterMmMin = diameterMmMin;
-    }
-
-    public Float getDiameterMmMax() {
-        return diameterMmMax;
-    }
-
-    public void setDiameterMmMax(Float diameterMmMax) {
-        this.diameterMmMax = diameterMmMax;
-    }
-
-    public Float getDiameterInchMin() {
-        return diameterInchMin;
-    }
-
-    public void setDiameterInchMin(Float diameterInchMin) {
-        this.diameterInchMin = diameterInchMin;
-    }
-
-    public Float getDiameterInchMax() {
-        return diameterInchMax;
-    }
-
-    public void setDiameterInchMax(Float diameterInchMax) {
-        this.diameterInchMax = diameterInchMax;
-    }
-
-    public UnitOfMeasure getThicknessUom() {
+    public UnitOfMeasure getUnitOfMeasure() {
         return unitOfMeasure;
     }
 
-    public void setThicknessUom(UnitOfMeasure unitOfMeasure) {
+    public void setUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
         this.unitOfMeasure = unitOfMeasure;
     }
 
-    public Float getThicknessMmMin() {
-        return thicknessMmMin;
+    public Float getDiameterMin() {
+        return diameterMin;
     }
 
-    public void setThicknessMmMin(Float thicknessMmMin) {
-        this.thicknessMmMin = thicknessMmMin;
+    public void setDiameterMin(Float diameterMin) {
+        this.diameterMin = diameterMin;
     }
 
-    public Float getThicknessMmMax() {
-        return thicknessMmMax;
+    public Float getDiameterMax() {
+        return diameterMax;
     }
 
-    public void setThicknessMmMax(Float thicknessMmMax) {
-        this.thicknessMmMax = thicknessMmMax;
+    public void setDiameterMax(Float diameterMax) {
+        this.diameterMax = diameterMax;
+    }
+
+    public Float getThicknessMin() {
+        return thicknessMin;
+    }
+
+    public void setThicknessMin(Float thicknessMin) {
+        this.thicknessMin = thicknessMin;
+    }
+
+    public Float getThicknessMax() {
+        return thicknessMax;
+    }
+
+    public void setThicknessMax(Float thicknessMax) {
+        this.thicknessMax = thicknessMax;
     }
 
     public JointDesignEntity getJointDesign() {

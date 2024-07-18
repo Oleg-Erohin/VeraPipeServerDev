@@ -39,14 +39,14 @@ public class Joint {
     private boolean isVisualInspectionDone;
     private String ndtReportName;
     private boolean isNdtPassed;
-    private String preheatName;
-    private String postWeldHeatTreatmentName;
+    private Preheat preheat;
+    private PostWeldHeatTreatment postWeldHeatTreatment;
     private String comments;
 
     public Joint() {
     }
 
-    public Joint(int number, Coordinates coordinatesOnIsometric, String pidName, String isometricName, int sheetOnIsometric, UnitOfMeasure uom, String schedule, Float diameter, String fittingDescription1, BaseMaterialType baseMaterialType1, BaseMaterialCertificate baseMaterial1, String fittingDescription2, BaseMaterialType baseMaterialType2, BaseMaterialCertificate baseMaterial2, Float thickness, FillerMaterialType fillerMaterialType1, FillerMaterialCertificate fillerMaterial1, FillerMaterialType fillerMaterialType2, FillerMaterialCertificate fillerMaterial2, ProcessSpecificationProcedure processSpecificationProcedure, Joiner joiner1, Joiner joiner2, Date date, boolean isFitUpDone, boolean isVisualInspectionDone, String ndtReportName, boolean isNdtPassed, String preheatName, String postWeldHeatTreatmentName, String comments) {
+    public Joint(int number, Coordinates coordinatesOnIsometric, String pidName, String isometricName, int sheetOnIsometric, UnitOfMeasure uom, String schedule, Float diameter, String fittingDescription1, BaseMaterialType baseMaterialType1, BaseMaterialCertificate baseMaterial1, String fittingDescription2, BaseMaterialType baseMaterialType2, BaseMaterialCertificate baseMaterial2, Float thickness, FillerMaterialType fillerMaterialType1, FillerMaterialCertificate fillerMaterial1, FillerMaterialType fillerMaterialType2, FillerMaterialCertificate fillerMaterial2, ProcessSpecificationProcedure processSpecificationProcedure, Joiner joiner1, Joiner joiner2, Date date, boolean isFitUpDone, boolean isVisualInspectionDone, String ndtReportName, boolean isNdtPassed, Preheat preheat, PostWeldHeatTreatment postWeldHeatTreatment, String comments) {
         this.number = number;
         this.coordinatesOnIsometric = coordinatesOnIsometric;
         this.pidName = pidName;
@@ -74,8 +74,8 @@ public class Joint {
         this.isVisualInspectionDone = isVisualInspectionDone;
         this.ndtReportName = ndtReportName;
         this.isNdtPassed = isNdtPassed;
-        this.preheatName = preheatName;
-        this.postWeldHeatTreatmentName = postWeldHeatTreatmentName;
+        this.preheat = preheat;
+        this.postWeldHeatTreatment = postWeldHeatTreatment;
         this.comments = comments;
     }
 
@@ -108,8 +108,8 @@ public class Joint {
         this.isVisualInspectionDone = isVisualInspectionDone;
         this.ndtReportName = ndtReportName;
         this.isNdtPassed = isNdtPassed;
-        this.preheatName = preheatName;
-        this.postWeldHeatTreatmentName = postWeldHeatTreatmentName;
+        this.preheat = preheat;
+        this.postWeldHeatTreatment = postWeldHeatTreatment;
         this.comments = comments;
     }
 
@@ -164,8 +164,8 @@ public class Joint {
         this.isVisualInspectionDone = jointEntity.isVisualInspectionDone();
         this.ndtReportName = jointEntity.getNdtReport().getName();
         this.isNdtPassed = jointEntity.getNdtPassed();
-        this.preheatName = jointEntity.getPreheat().getName();
-        this.postWeldHeatTreatmentName = jointEntity.getPostWeldHeatTreatment().getName();
+        this.preheat = new Preheat(jointEntity.getPreheat());
+        this.postWeldHeatTreatment = new PostWeldHeatTreatment(jointEntity.getPostWeldHeatTreatment());
         this.comments = jointEntity.getComments();
     }
 
@@ -393,20 +393,20 @@ public class Joint {
         isNdtPassed = ndtPassed;
     }
 
-    public String getPreheatName() {
-        return preheatName;
+    public Preheat getPreheat() {
+        return preheat;
     }
 
-    public void setPreheatName(String preheatName) {
-        this.preheatName = preheatName;
+    public void setPreheat(Preheat preheat) {
+        this.preheat = preheat;
     }
 
-    public String getPostWeldHeatTreatmentName() {
-        return postWeldHeatTreatmentName;
+    public PostWeldHeatTreatment getPostWeldHeatTreatment() {
+        return postWeldHeatTreatment;
     }
 
-    public void setPostWeldHeatTreatmentName(String postWeldHeatTreatmentName) {
-        this.postWeldHeatTreatmentName = postWeldHeatTreatmentName;
+    public void setPostWeldHeatTreatment(PostWeldHeatTreatment postWeldHeatTreatment) {
+        this.postWeldHeatTreatment = postWeldHeatTreatment;
     }
 
     public String getComments() {
@@ -448,8 +448,8 @@ public class Joint {
                 ", isVisualInspectionDone=" + isVisualInspectionDone +
                 ", ndtReportName='" + ndtReportName + '\'' +
                 ", isNdtPassed=" + isNdtPassed +
-                ", preheatName='" + preheatName + '\'' +
-                ", postWeldHeatTreatmentName='" + postWeldHeatTreatmentName + '\'' +
+                ", preheat=" + preheat +
+                ", postWeldHeatTreatment=" + postWeldHeatTreatment +
                 ", comments='" + comments + '\'' +
                 '}';
     }

@@ -28,9 +28,7 @@ public class NdtReportEntity {
         this.id = ndtReport.getId();
         this.name = ndtReport.getName();
         this.date = ndtReport.getDate();
-        this.ndtType = new NdtTypeEntity();
-        String ndtTypeName = ndtReport.getNdtTypeName();
-        this.ndtType.setName(ndtTypeName);
+        this.ndtType = new NdtTypeEntity(ndtReport.getNdtType());
     }
 
     public int getId() {

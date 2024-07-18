@@ -103,12 +103,8 @@ public class JointEntity {
         String ndtReportName = joint.getNdtReportName();
         this.ndtReport.setName(ndtReportName);
         this.isNdtPassed = joint.isNdtPassed();
-        this.preheat = new PreheatEntity();
-        String preheatName = joint.getPreheatName();
-        this.preheat.setName(preheatName);
-        this.postWeldHeatTreatment = new PostWeldHeatTreatmentEntity();
-        String postWeldHeatTreatmentName = joint.getPostWeldHeatTreatmentName();
-        this.postWeldHeatTreatment.setName(postWeldHeatTreatmentName);
+        this.preheat = new PreheatEntity(joint.getPreheat());
+        this.postWeldHeatTreatment = new PostWeldHeatTreatmentEntity(joint.getPostWeldHeatTreatment());
         this.comments = joint.getComments();
     }
 

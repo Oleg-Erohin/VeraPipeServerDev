@@ -3,6 +3,7 @@ package com.verapipe.logic;
 import com.verapipe.consts.Consts;
 import com.verapipe.dal.IJoinerDal;
 import com.verapipe.dto.BaseMaterialType;
+import com.verapipe.dto.FusionProcess;
 import com.verapipe.dto.Joiner;
 import com.verapipe.dto.JointDesign;
 import com.verapipe.entities.*;
@@ -138,11 +139,11 @@ public class JoinerLogic {
             validateJoinerBaseMaterialType(joiner.getBaseMaterialType2());
         }
         validateJoinerJointDesign(joiner.getJointDesign());
-        validateJoinerFusionProcess(joiner.getFusionProcessName());
+        validateJoinerFusionProcess(joiner.getFusionProcess());
     }
 
-    private void validateJoinerFusionProcess(String fusionProcessName) throws Exception {
-        CommonValidations.validateIsExistInFusionProcesses(fusionProcessName);
+    private void validateJoinerFusionProcess(FusionProcess fusionProcess) throws Exception {
+        CommonValidations.validateIsExistInFusionProcesses(fusionProcess);
     }
 
     private void validateJoinerJointDesign(JointDesign jointDesign) throws Exception {

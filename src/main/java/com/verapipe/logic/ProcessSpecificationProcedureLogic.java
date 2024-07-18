@@ -102,7 +102,7 @@ public class ProcessSpecificationProcedureLogic {
         if (processSpecificationProcedure.getBaseMaterial2() != null) {
             validateProcessSpecificationProcedureBaseMaterial(processSpecificationProcedure.getBaseMaterial2());
         }
-        validateProcessSpecificationProcedureFusionProcess(processSpecificationProcedure.getFusionProcessName());
+        validateProcessSpecificationProcedureFusionProcess(processSpecificationProcedure.getFusionProcess());
         validateProcessSpecificationProcedureFillerMaterial(processSpecificationProcedure.getFillerMaterial1());
         if (processSpecificationProcedure.getFillerMaterial2() != null) {
             validateProcessSpecificationProcedureFillerMaterial(processSpecificationProcedure.getFillerMaterial2());
@@ -110,22 +110,16 @@ public class ProcessSpecificationProcedureLogic {
         validateProcessSpecificationProcedureStandardCode(processSpecificationProcedure.getStandardCodeName());
 //        validateProcessSpecificationProcedureIsPreheatRequired(processSpecificationProcedure.isPreheatRequired());
 //        validateProcessSpecificationProcedureIsPostWeldHeatTreatmentRequired(processSpecificationProcedure.isPostWeldHeatTreatmentRequired());
-        if (processSpecificationProcedure.getDiameterMinMm() != null) {
-            validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMinMm());
+        if (processSpecificationProcedure.getDiameterMin() != null) {
+            validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMin());
         }
-        if (processSpecificationProcedure.getDiameterMaxMm() != null) {
-            validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMaxMm());
-        }
-        if (processSpecificationProcedure.getDiameterMinInch() != null) {
-            validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMinInch());
-        }
-        if (processSpecificationProcedure.getDiameterMaxInch() != null) {
-            validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMaxInch());
+        if (processSpecificationProcedure.getDiameterMax() != null) {
+            validateNumberInputNotNegative(processSpecificationProcedure.getDiameterMax());
         }
 //        validateProcessSpecificationProcedureThicknessUom(processSpecificationProcedure.getThicknessUom());
-        validateNumberInputNotNegative(processSpecificationProcedure.getThicknessMinMm());
-        if (processSpecificationProcedure.getThicknessMaxMm() != null) {
-            validateNumberInputNotNegative(processSpecificationProcedure.getThicknessMaxMm());
+        validateNumberInputNotNegative(processSpecificationProcedure.getThicknessMin());
+        if (processSpecificationProcedure.getThicknessMax() != null) {
+            validateNumberInputNotNegative(processSpecificationProcedure.getThicknessMax());
         }
     }
 
@@ -140,8 +134,8 @@ public class ProcessSpecificationProcedureLogic {
         throw new ApplicationException(ErrorType.STANDARD_DOES_NOT_EXIST);
     }
 
-    private void validateProcessSpecificationProcedureFusionProcess(String fusionProcessName) throws Exception {
-        CommonValidations.validateIsExistInFusionProcesses(fusionProcessName);
+    private void validateProcessSpecificationProcedureFusionProcess(FusionProcess fusionProcess) throws Exception {
+        CommonValidations.validateIsExistInFusionProcesses(fusionProcess);
     }
 
     private void validateProcessSpecificationProcedureJointDesign(JointDesign jointDesign) throws Exception {

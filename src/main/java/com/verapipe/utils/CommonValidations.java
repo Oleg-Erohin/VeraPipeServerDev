@@ -119,11 +119,11 @@ public class CommonValidations {
         throw new ApplicationException(ErrorType.JOINT_DESIGN_DOES_NOT_EXIST);
     }
 
-    public static void validateIsExistInFusionProcesses(String fusionProcessName) throws Exception {
+    public static void validateIsExistInFusionProcesses(FusionProcess fusionProcess) throws Exception {
         List<FusionProcess> allFusionProcesses =  Holder.fusionProcessLogic.getAll();
 
-        for (FusionProcess fusionProcess : allFusionProcesses){
-            if (fusionProcess.getName().equals(fusionProcessName)){
+        for (FusionProcess currentFusionProcess : allFusionProcesses){
+            if (currentFusionProcess.equals(fusionProcess)){
                 return;
             }
         }

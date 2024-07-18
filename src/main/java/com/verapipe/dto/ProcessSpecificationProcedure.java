@@ -14,62 +14,56 @@ public class ProcessSpecificationProcedure {
     private JointDesign jointDesign;
     private BaseMaterialType baseMaterial1;
     private BaseMaterialType baseMaterial2;
-    private String fusionProcessName;
+    private FusionProcess fusionProcess;
     private FillerMaterialType fillerMaterial1;
     private FillerMaterialType fillerMaterial2;
     private String standardCodeName;
     private boolean isPreheatRequired;
     private boolean isPostWeldHeatTreatmentRequired;
-    private Float diameterMinMm;
-    private Float diameterMaxMm;
-    private Float diameterMinInch;
-    private Float diameterMaxInch;
     private UnitOfMeasure unitOfMeasure;
-    private Float thicknessMinMm;
-    private Float thicknessMaxMm;
+    private Float diameterMin;
+    private Float diameterMax;
+    private Float thicknessMin;
+    private Float thicknessMax;
 
     public ProcessSpecificationProcedure() {
     }
 
-    public ProcessSpecificationProcedure(String name, JointDesign jointDesign, BaseMaterialType baseMaterial1, BaseMaterialType baseMaterial2, String fusionProcessName, FillerMaterialType fillerMaterial1, FillerMaterialType fillerMaterial2, String standardCodeName, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, Float diameterMinMm, Float diameterMaxMm, Float diameterMinInch, Float diameterMaxInch, UnitOfMeasure unitOfMeasure, Float thicknessMinMm, Float thicknessMaxMm) {
+    public ProcessSpecificationProcedure(String name, JointDesign jointDesign, BaseMaterialType baseMaterial1, BaseMaterialType baseMaterial2, FusionProcess fusionProcess, FillerMaterialType fillerMaterial1, FillerMaterialType fillerMaterial2, String standardCodeName, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, UnitOfMeasure unitOfMeasure, Float diameterMin, Float diameterMax, Float thicknessMin, Float thicknessMax) {
         this.name = name;
         this.jointDesign = jointDesign;
         this.baseMaterial1 = baseMaterial1;
         this.baseMaterial2 = baseMaterial2;
-        this.fusionProcessName = fusionProcessName;
+        this.fusionProcess = fusionProcess;
         this.fillerMaterial1 = fillerMaterial1;
         this.fillerMaterial2 = fillerMaterial2;
         this.standardCodeName = standardCodeName;
         this.isPreheatRequired = isPreheatRequired;
         this.isPostWeldHeatTreatmentRequired = isPostWeldHeatTreatmentRequired;
-        this.diameterMinMm = diameterMinMm;
-        this.diameterMaxMm = diameterMaxMm;
-        this.diameterMinInch = diameterMinInch;
-        this.diameterMaxInch = diameterMaxInch;
         this.unitOfMeasure = unitOfMeasure;
-        this.thicknessMinMm = thicknessMinMm;
-        this.thicknessMaxMm = thicknessMaxMm;
+        this.diameterMin = diameterMin;
+        this.diameterMax = diameterMax;
+        this.thicknessMin = thicknessMin;
+        this.thicknessMax = thicknessMax;
     }
 
-    public ProcessSpecificationProcedure(int id, String name, JointDesign jointDesign, BaseMaterialType baseMaterial1, BaseMaterialType baseMaterial2, String fusionProcessName, FillerMaterialType fillerMaterial1, FillerMaterialType fillerMaterial2, String standardCodeName, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, Float diameterMinMm, Float diameterMaxMm, Float diameterMinInch, Float diameterMaxInch, UnitOfMeasure unitOfMeasure, Float thicknessMinMm, Float thicknessMaxMm) {
+    public ProcessSpecificationProcedure(int id, String name, JointDesign jointDesign, BaseMaterialType baseMaterial1, BaseMaterialType baseMaterial2, FusionProcess fusionProcess, FillerMaterialType fillerMaterial1, FillerMaterialType fillerMaterial2, String standardCodeName, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, UnitOfMeasure unitOfMeasure, Float diameterMin, Float diameterMax, Float thicknessMin, Float thicknessMax) {
         this.id = id;
         this.name = name;
         this.jointDesign = jointDesign;
         this.baseMaterial1 = baseMaterial1;
         this.baseMaterial2 = baseMaterial2;
-        this.fusionProcessName = fusionProcessName;
+        this.fusionProcess = fusionProcess;
         this.fillerMaterial1 = fillerMaterial1;
         this.fillerMaterial2 = fillerMaterial2;
         this.standardCodeName = standardCodeName;
         this.isPreheatRequired = isPreheatRequired;
         this.isPostWeldHeatTreatmentRequired = isPostWeldHeatTreatmentRequired;
-        this.diameterMinMm = diameterMinMm;
-        this.diameterMaxMm = diameterMaxMm;
-        this.diameterMinInch = diameterMinInch;
-        this.diameterMaxInch = diameterMaxInch;
         this.unitOfMeasure = unitOfMeasure;
-        this.thicknessMinMm = thicknessMinMm;
-        this.thicknessMaxMm = thicknessMaxMm;
+        this.diameterMin = diameterMin;
+        this.diameterMax = diameterMax;
+        this.thicknessMin = thicknessMin;
+        this.thicknessMax = thicknessMax;
     }
 
     public ProcessSpecificationProcedure(ProcessSpecificationProcedureEntity processSpecificationProcedureEntity) {
@@ -82,7 +76,7 @@ public class ProcessSpecificationProcedure {
         this.baseMaterial1 = new BaseMaterialType(baseMaterialTypeEntityList.get(0));
         this.baseMaterial2 = new BaseMaterialType(baseMaterialTypeEntityList.get(1));
 
-        this.fusionProcessName = processSpecificationProcedureEntity.getFusionProcess().getName();
+        this.fusionProcess = new FusionProcess(processSpecificationProcedureEntity.getFusionProcess());
 
         List<FillerMaterialTypeEntity> fillerMaterialTypeEntityList = new ArrayList<>();
         fillerMaterialTypeEntityList.addAll(processSpecificationProcedureEntity.getFillerMaterialTypeList());
@@ -92,13 +86,11 @@ public class ProcessSpecificationProcedure {
         this.standardCodeName = processSpecificationProcedureEntity.getStandardCode().getName();
         this.isPreheatRequired = processSpecificationProcedureEntity.isPreheatRequired();
         this.isPostWeldHeatTreatmentRequired = processSpecificationProcedureEntity.isPostWeldHeatTreatmentRequired();
-        this.diameterMinMm = processSpecificationProcedureEntity.getDiameterMmMin();
-        this.diameterMaxMm = processSpecificationProcedureEntity.getDiameterMmMax();
-        this.diameterMinInch = processSpecificationProcedureEntity.getDiameterInchMin();
-        this.diameterMaxInch = processSpecificationProcedureEntity.getDiameterInchMax();
-        this.unitOfMeasure = processSpecificationProcedureEntity.getThicknessUom();
-        this.thicknessMinMm = processSpecificationProcedureEntity.getThicknessMmMin();
-        this.thicknessMaxMm = processSpecificationProcedureEntity.getThicknessMmMax();
+        this.unitOfMeasure = processSpecificationProcedureEntity.getUnitOfMeasure();
+        this.diameterMin = processSpecificationProcedureEntity.getDiameterMin();
+        this.diameterMax = processSpecificationProcedureEntity.getDiameterMax();
+        this.thicknessMin = processSpecificationProcedureEntity.getThicknessMin();
+        this.thicknessMax = processSpecificationProcedureEntity.getThicknessMax();
     }
 
     public int getId() {
@@ -141,12 +133,12 @@ public class ProcessSpecificationProcedure {
         this.baseMaterial2 = baseMaterial2;
     }
 
-    public String getFusionProcessName() {
-        return fusionProcessName;
+    public FusionProcess getFusionProcess() {
+        return fusionProcess;
     }
 
-    public void setFusionProcessName(String fusionProcessName) {
-        this.fusionProcessName = fusionProcessName;
+    public void setFusionProcess(FusionProcess fusionProcess) {
+        this.fusionProcess = fusionProcess;
     }
 
     public FillerMaterialType getFillerMaterial1() {
@@ -189,38 +181,6 @@ public class ProcessSpecificationProcedure {
         isPostWeldHeatTreatmentRequired = postWeldHeatTreatmentRequired;
     }
 
-    public Float getDiameterMinMm() {
-        return diameterMinMm;
-    }
-
-    public void setDiameterMinMm(Float diameterMinMm) {
-        this.diameterMinMm = diameterMinMm;
-    }
-
-    public Float getDiameterMaxMm() {
-        return diameterMaxMm;
-    }
-
-    public void setDiameterMaxMm(Float diameterMaxMm) {
-        this.diameterMaxMm = diameterMaxMm;
-    }
-
-    public Float getDiameterMinInch() {
-        return diameterMinInch;
-    }
-
-    public void setDiameterMinInch(Float diameterMinInch) {
-        this.diameterMinInch = diameterMinInch;
-    }
-
-    public Float getDiameterMaxInch() {
-        return diameterMaxInch;
-    }
-
-    public void setDiameterMaxInch(Float diameterMaxInch) {
-        this.diameterMaxInch = diameterMaxInch;
-    }
-
     public UnitOfMeasure getUnitOfMeasure() {
         return unitOfMeasure;
     }
@@ -229,20 +189,36 @@ public class ProcessSpecificationProcedure {
         this.unitOfMeasure = unitOfMeasure;
     }
 
-    public Float getThicknessMinMm() {
-        return thicknessMinMm;
+    public Float getDiameterMin() {
+        return diameterMin;
     }
 
-    public void setThicknessMinMm(Float thicknessMinMm) {
-        this.thicknessMinMm = thicknessMinMm;
+    public void setDiameterMin(Float diameterMin) {
+        this.diameterMin = diameterMin;
     }
 
-    public Float getThicknessMaxMm() {
-        return thicknessMaxMm;
+    public Float getDiameterMax() {
+        return diameterMax;
     }
 
-    public void setThicknessMaxMm(Float thicknessMaxMm) {
-        this.thicknessMaxMm = thicknessMaxMm;
+    public void setDiameterMax(Float diameterMax) {
+        this.diameterMax = diameterMax;
+    }
+
+    public Float getThicknessMin() {
+        return thicknessMin;
+    }
+
+    public void setThicknessMin(Float thicknessMin) {
+        this.thicknessMin = thicknessMin;
+    }
+
+    public Float getThicknessMax() {
+        return thicknessMax;
+    }
+
+    public void setThicknessMax(Float thicknessMax) {
+        this.thicknessMax = thicknessMax;
     }
 
     @Override
@@ -253,19 +229,17 @@ public class ProcessSpecificationProcedure {
                 ", jointDesign=" + jointDesign +
                 ", baseMaterial1=" + baseMaterial1 +
                 ", baseMaterial2=" + baseMaterial2 +
-                ", fusionProcessName='" + fusionProcessName + '\'' +
+                ", fusionProcess=" + fusionProcess +
                 ", fillerMaterial1=" + fillerMaterial1 +
                 ", fillerMaterial2=" + fillerMaterial2 +
                 ", standardCodeName='" + standardCodeName + '\'' +
                 ", isPreheatRequired=" + isPreheatRequired +
                 ", isPostWeldHeatTreatmentRequired=" + isPostWeldHeatTreatmentRequired +
-                ", diameterMinMm=" + diameterMinMm +
-                ", diameterMaxMm=" + diameterMaxMm +
-                ", diameterMinInch=" + diameterMinInch +
-                ", diameterMaxInch=" + diameterMaxInch +
                 ", unitOfMeasure=" + unitOfMeasure +
-                ", thicknessMinMm=" + thicknessMinMm +
-                ", thicknessMaxMm=" + thicknessMaxMm +
+                ", diameterMin=" + diameterMin +
+                ", diameterMax=" + diameterMax +
+                ", thicknessMin=" + thicknessMin +
+                ", thicknessMax=" + thicknessMax +
                 '}';
     }
 }

@@ -214,11 +214,11 @@ public class JointLogic {
         if (joint.isNdtPassed()) {
 //        validateJointIsNdtPassed(joint.isNdtPassed());
         }
-        if (joint.getPreheatName() != null) {
-            validateJointPreHeat(joint.getPreheatName());
+        if (joint.getPreheat() != null) {
+            validateJointPreHeat(joint.getPreheat());
         }
-        if (joint.getPostWeldHeatTreatmentName() != null) {
-            validateJointPostWeldHeatTreatment(joint.getPostWeldHeatTreatmentName());
+        if (joint.getPostWeldHeatTreatment() != null) {
+            validateJointPostWeldHeatTreatment(joint.getPostWeldHeatTreatment());
         }
         if (joint.getComments() != null) {
 //        validateJointComments(joint.getComments());
@@ -282,22 +282,22 @@ public class JointLogic {
         throw new ApplicationException(ErrorType.JOINER_DOES_NOT_EXIST);
     }
 
-    private void validateJointPostWeldHeatTreatment(String postWeldHeatTreatmentName) throws Exception {
+    private void validateJointPostWeldHeatTreatment(PostWeldHeatTreatment postWeldHeatTreatment) throws Exception {
         List<PostWeldHeatTreatment> postWeldHeatTreatments = postWeldHeatTreatmentLogic.getAll();
 
-        for (PostWeldHeatTreatment postWeldHeatTreatment : postWeldHeatTreatments) {
-            if (postWeldHeatTreatment.getName().equals(postWeldHeatTreatmentName)) {
+        for (PostWeldHeatTreatment currentPostWeldHeatTreatment : postWeldHeatTreatments) {
+            if (currentPostWeldHeatTreatment.equals(postWeldHeatTreatment)) {
                 return;
             }
         }
         throw new ApplicationException(ErrorType.POST_WELD_HEAT_TREATMENT_DOES_NOT_EXIST);
     }
 
-    private void validateJointPreHeat(String preheatName) throws Exception {
+    private void validateJointPreHeat(Preheat preheat) throws Exception {
         List<Preheat> preheats = preheatLogic.getAll();
 
-        for (Preheat preheat : preheats) {
-            if (preheat.getName().equals(preheatName)) {
+        for (Preheat currentPreheat : preheats) {
+            if (currentPreheat.equals(preheat)) {
                 return;
             }
         }

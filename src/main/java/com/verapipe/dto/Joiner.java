@@ -17,12 +17,12 @@ public class Joiner {
     private BaseMaterialType baseMaterialType1;
     private BaseMaterialType baseMaterialType2;
     private JointDesign jointDesign;
-    private String fusionProcessName;
+    private FusionProcess fusionProcess;
 
     public Joiner() {
     }
 
-    public Joiner(String tagId, UnitOfMeasure unitOfMeasure, Float certifiedDiameterMin, Float certifiedDiameterMax, Float maxDepositedMaterial, BaseMaterialType baseMaterialType1, BaseMaterialType baseMaterialType2, JointDesign jointDesign, String fusionProcessName) {
+    public Joiner(String tagId, UnitOfMeasure unitOfMeasure, Float certifiedDiameterMin, Float certifiedDiameterMax, Float maxDepositedMaterial, BaseMaterialType baseMaterialType1, BaseMaterialType baseMaterialType2, JointDesign jointDesign, FusionProcess fusionProcess) {
         this.tagId = tagId;
         this.unitOfMeasure = unitOfMeasure;
         this.certifiedDiameterMin = certifiedDiameterMin;
@@ -31,10 +31,10 @@ public class Joiner {
         this.baseMaterialType1 = baseMaterialType1;
         this.baseMaterialType2 = baseMaterialType2;
         this.jointDesign = jointDesign;
-        this.fusionProcessName = fusionProcessName;
+        this.fusionProcess = fusionProcess;
     }
 
-    public Joiner(int id, String tagId, UnitOfMeasure unitOfMeasure, Float certifiedDiameterMin, Float certifiedDiameterMax, Float maxDepositedMaterial, BaseMaterialType baseMaterialType1, BaseMaterialType baseMaterialType2, JointDesign jointDesign, String fusionProcessName) {
+    public Joiner(int id, String tagId, UnitOfMeasure unitOfMeasure, Float certifiedDiameterMin, Float certifiedDiameterMax, Float maxDepositedMaterial, BaseMaterialType baseMaterialType1, BaseMaterialType baseMaterialType2, JointDesign jointDesign, FusionProcess fusionProcess) {
         this.id = id;
         this.tagId = tagId;
         this.unitOfMeasure = unitOfMeasure;
@@ -44,7 +44,7 @@ public class Joiner {
         this.baseMaterialType1 = baseMaterialType1;
         this.baseMaterialType2 = baseMaterialType2;
         this.jointDesign = jointDesign;
-        this.fusionProcessName = fusionProcessName;
+        this.fusionProcess = fusionProcess;
     }
 
     public Joiner(JoinerEntity joinerEntity) {
@@ -60,7 +60,7 @@ public class Joiner {
         this.baseMaterialType2 = new BaseMaterialType(baseMaterialTypeEntityList.get(1));
 
         this.jointDesign = new JointDesign(joinerEntity.getJointDesign());
-        this.fusionProcessName = joinerEntity.getFusionProcess().getName();
+        this.fusionProcess = new FusionProcess(joinerEntity.getFusionProcess());
     }
 
     public int getId() {
@@ -135,12 +135,12 @@ public class Joiner {
         this.jointDesign = jointDesign;
     }
 
-    public String getFusionProcessName() {
-        return fusionProcessName;
+    public FusionProcess getFusionProcess() {
+        return fusionProcess;
     }
 
-    public void setFusionProcessName(String fusionProcessName) {
-        this.fusionProcessName = fusionProcessName;
+    public void setFusionProcess(FusionProcess fusionProcess) {
+        this.fusionProcess = fusionProcess;
     }
 
     @Override
@@ -155,7 +155,7 @@ public class Joiner {
                 ", baseMaterialType1=" + baseMaterialType1 +
                 ", baseMaterialType2=" + baseMaterialType2 +
                 ", jointDesign=" + jointDesign +
-                ", fusionProcessName='" + fusionProcessName + '\'' +
+                ", fusionProcess=" + fusionProcess +
                 '}';
     }
 }
