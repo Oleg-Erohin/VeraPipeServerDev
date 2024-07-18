@@ -166,26 +166,26 @@ public class JointLogic {
         validateDiameter(joint.getDiameter());
         validateJointFittingDescription(joint.getFittingDescription1());
         validateJointBaseMaterialType(joint.getBaseMaterialType1());
-        if (joint.getBaseMaterialHeatNum1() != null) {
-            validateJointBaseMaterialHeatNum(joint.getBaseMaterialHeatNum1());
+        if (joint.getBaseMaterial1() != null) {
+            validateJointBaseMaterialHeatNum(joint.getBaseMaterial1());
         }
         validateJointFittingDescription(joint.getFittingDescription2());
         if (joint.getBaseMaterialType2() != null) {
             validateJointBaseMaterialType(joint.getBaseMaterialType2());
-            if (joint.getBaseMaterialHeatNum2() != null) {
-                validateJointBaseMaterialHeatNum(joint.getBaseMaterialHeatNum2());
+            if (joint.getBaseMaterial2() != null) {
+                validateJointBaseMaterialHeatNum(joint.getBaseMaterial2());
             }
         }
 //        validateThickness(joint);
         if (joint.getFillerMaterialType1() != null) {
             validateJointFillerMaterialType(joint.getFillerMaterialType1());
-            if (joint.getFillerMaterialHeatNum1() != null) {
-                validateJointFillerMaterialHeatNum(joint.getFillerMaterialHeatNum1());
+            if (joint.getFillerMaterial1() != null) {
+                validateJointFillerMaterialHeatNum(joint.getFillerMaterial1());
             }
             if (joint.getFillerMaterialType2() != null) {
                 validateJointFillerMaterialType(joint.getFillerMaterialType2());
-                if (joint.getFillerMaterialHeatNum2() != null) {
-                    validateJointFillerMaterialHeatNum(joint.getFillerMaterialHeatNum2());
+                if (joint.getFillerMaterial2() != null) {
+                    validateJointFillerMaterialHeatNum(joint.getFillerMaterial2());
                 }
             }
         }
@@ -193,10 +193,10 @@ public class JointLogic {
         if (joint.getProcessSpecificationProcedure() != null) {
             validateJointProcessSpecificationProcedure(joint.getProcessSpecificationProcedure());
         }
-        if (joint.getJoinerTagId1() != null) {
-            validateJointJoinerTagId(joint.getJoinerTagId1());
-            if (joint.getJoinerTagId2() != null) {
-                validateJointJoinerTagId(joint.getJoinerTagId2());
+        if (joint.getJoiner1() != null) {
+            validateJointJoinerTagId(joint.getJoiner1());
+            if (joint.getJoiner2() != null) {
+                validateJointJoinerTagId(joint.getJoiner2());
             }
         }
         if (joint.getDate() != null) {
@@ -261,10 +261,10 @@ public class JointLogic {
         CommonValidations.validateDateIsNotLaterThanCurrentDate(date);
     }
 
-    private void validateJointJoinerTagId(String joinersTagId) throws Exception {
+    private void validateJointJoinerTagId(Joiner joiner) throws Exception {
         List<Joiner> allJoiners = this.joinerLogic.getAll();
-        for (Joiner joiner : allJoiners) {
-            if (joiner.getTagId().equals(joinersTagId)) {
+        for (Joiner currentJoiner : allJoiners) {
+            if (currentJoiner.equals(joiner)) {
                 return;
             }
         }
@@ -315,12 +315,12 @@ public class JointLogic {
         throw new ApplicationException(ErrorType.NDT_REPORT_DOES_NOT_EXIST);
     }
 
-    private void validateJointFillerMaterialHeatNum(String fillerMaterialHeatNum) throws Exception {
-        CommonValidations.validateIsExistInFillerMaterialCertificates(fillerMaterialHeatNum);
+    private void validateJointFillerMaterialHeatNum(FillerMaterialCertificate fillerMaterialCertificate) throws Exception {
+        CommonValidations.validateIsExistInFillerMaterialCertificates(fillerMaterialCertificate);
     }
 
-    private void validateJointBaseMaterialHeatNum(String baseMaterialHeatNum) throws Exception {
-        CommonValidations.validateIsExistInBaseMaterialCertificates(baseMaterialHeatNum);
+    private void validateJointBaseMaterialHeatNum(BaseMaterialCertificate baseMaterialCertificate) throws Exception {
+        CommonValidations.validateIsExistInBaseMaterialCertificates(baseMaterialCertificate);
     }
 
     private void validateJointIsometric(String isometricName) throws Exception {

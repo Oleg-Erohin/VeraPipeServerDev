@@ -163,22 +163,22 @@ public class CommonValidations {
         throw new ApplicationException(ErrorType.ISOMETRIC_DOES_NOT_EXIST);
     }
 
-    public static void validateIsExistInBaseMaterialCertificates(String baseMaterialCertificateHeatNum) throws Exception {
+    public static void validateIsExistInBaseMaterialCertificates(BaseMaterialCertificate baseMaterialCertificate) throws Exception {
         List<BaseMaterialCertificate> allBaseMaterialCertificates =  Holder.baseMaterialCertificateLogic.getAll();
 
-        for (BaseMaterialCertificate baseMaterialCertificate : allBaseMaterialCertificates){
-            if (baseMaterialCertificate.getHeatNum().equals(baseMaterialCertificateHeatNum)){
+        for (BaseMaterialCertificate currentBaseMaterialCertificate : allBaseMaterialCertificates){
+            if (currentBaseMaterialCertificate.equals(baseMaterialCertificate)){
                 return;
             }
         }
         throw new ApplicationException(ErrorType.BASE_MATERIAL_CERTIFICATE_DOES_NOT_EXIST);
     }
 
-    public static void validateIsExistInFillerMaterialCertificates(String fillerMaterialCertificateHeatNum) throws Exception {
+    public static void validateIsExistInFillerMaterialCertificates(FillerMaterialCertificate fillerMaterialCertificate) throws Exception {
         List<FillerMaterialCertificate> allFillerMaterialCertificates =  Holder.fillerMaterialCertificateLogic.getAll();
 
-        for (FillerMaterialCertificate fillerMaterialCertificate : allFillerMaterialCertificates){
-            if (fillerMaterialCertificate.getHeatNum().equals(fillerMaterialCertificateHeatNum)){
+        for (FillerMaterialCertificate currentFillerMaterialCertificate : allFillerMaterialCertificates){
+            if (currentFillerMaterialCertificate.equals(fillerMaterialCertificate)){
                 return;
             }
         }
