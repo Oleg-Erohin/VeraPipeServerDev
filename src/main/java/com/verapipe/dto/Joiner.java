@@ -2,6 +2,7 @@ package com.verapipe.dto;
 
 import com.verapipe.entities.BaseMaterialTypeEntity;
 import com.verapipe.entities.JoinerEntity;
+import com.verapipe.enums.UnitOfMeasure;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,53 +10,48 @@ import java.util.List;
 public class Joiner {
     private int id;
     private String tagId;
-    private Float certifiedDiameterMinMm;
-    private Float certifiedDiameterMaxMm;
-    private Float certifiedDiameterMinInch;
-    private Float certifiedDiameterMaxInch;
+    private UnitOfMeasure unitOfMeasure;
+    private Float certifiedDiameterMin;
+    private Float certifiedDiameterMax;
     private Float maxDepositedMaterial;
     private BaseMaterialType baseMaterialType1;
     private BaseMaterialType baseMaterialType2;
-    private String jointDesignName;
+    private JointDesign jointDesign;
     private String fusionProcessName;
 
     public Joiner() {
     }
 
-    public Joiner(String tagId, Float certifiedDiameterMinMm, Float certifiedDiameterMaxMm, Float certifiedDiameterMinInch, Float certifiedDiameterMaxInch, Float maxDepositedMaterial, BaseMaterialType baseMaterialType1, BaseMaterialType baseMaterialType2, String jointDesignName, String fusionProcessName) {
+    public Joiner(String tagId, UnitOfMeasure unitOfMeasure, Float certifiedDiameterMin, Float certifiedDiameterMax, Float maxDepositedMaterial, BaseMaterialType baseMaterialType1, BaseMaterialType baseMaterialType2, JointDesign jointDesign, String fusionProcessName) {
         this.tagId = tagId;
-        this.certifiedDiameterMinMm = certifiedDiameterMinMm;
-        this.certifiedDiameterMaxMm = certifiedDiameterMaxMm;
-        this.certifiedDiameterMinInch = certifiedDiameterMinInch;
-        this.certifiedDiameterMaxInch = certifiedDiameterMaxInch;
+        this.unitOfMeasure = unitOfMeasure;
+        this.certifiedDiameterMin = certifiedDiameterMin;
+        this.certifiedDiameterMax = certifiedDiameterMax;
         this.maxDepositedMaterial = maxDepositedMaterial;
         this.baseMaterialType1 = baseMaterialType1;
         this.baseMaterialType2 = baseMaterialType2;
-        this.jointDesignName = jointDesignName;
+        this.jointDesign = jointDesign;
         this.fusionProcessName = fusionProcessName;
     }
 
-    public Joiner(int id, String tagId, Float certifiedDiameterMinMm, Float certifiedDiameterMaxMm, Float certifiedDiameterMinInch, Float certifiedDiameterMaxInch, Float maxDepositedMaterial, BaseMaterialType baseMaterialType1, BaseMaterialType baseMaterialType2, String jointDesignName, String fusionProcessName) {
+    public Joiner(int id, String tagId, UnitOfMeasure unitOfMeasure, Float certifiedDiameterMin, Float certifiedDiameterMax, Float maxDepositedMaterial, BaseMaterialType baseMaterialType1, BaseMaterialType baseMaterialType2, JointDesign jointDesign, String fusionProcessName) {
         this.id = id;
         this.tagId = tagId;
-        this.certifiedDiameterMinMm = certifiedDiameterMinMm;
-        this.certifiedDiameterMaxMm = certifiedDiameterMaxMm;
-        this.certifiedDiameterMinInch = certifiedDiameterMinInch;
-        this.certifiedDiameterMaxInch = certifiedDiameterMaxInch;
+        this.unitOfMeasure = unitOfMeasure;
+        this.certifiedDiameterMin = certifiedDiameterMin;
+        this.certifiedDiameterMax = certifiedDiameterMax;
         this.maxDepositedMaterial = maxDepositedMaterial;
         this.baseMaterialType1 = baseMaterialType1;
         this.baseMaterialType2 = baseMaterialType2;
-        this.jointDesignName = jointDesignName;
+        this.jointDesign = jointDesign;
         this.fusionProcessName = fusionProcessName;
     }
 
     public Joiner(JoinerEntity joinerEntity) {
         this.id = joinerEntity.getId();
         this.tagId = joinerEntity.getTagId();
-        this.certifiedDiameterMinMm = joinerEntity.getCertifiedDiameterMinMm();
-        this.certifiedDiameterMaxMm = joinerEntity.getCertifiedDiameterMaxMm();
-        this.certifiedDiameterMinInch = joinerEntity.getCertifiedDiameterMinInch();
-        this.certifiedDiameterMaxInch = joinerEntity.getCertifiedDiameterMaxInch();
+        this.certifiedDiameterMin = joinerEntity.getCertifiedDiameterMin();
+        this.certifiedDiameterMax = joinerEntity.getCertifiedDiameterMax();
         this.maxDepositedMaterial = joinerEntity.getMaxDepositedMaterial();
 
         List<BaseMaterialTypeEntity> baseMaterialTypeEntityList = new ArrayList<>();
@@ -63,7 +59,7 @@ public class Joiner {
         this.baseMaterialType1 = new BaseMaterialType(baseMaterialTypeEntityList.get(0));
         this.baseMaterialType2 = new BaseMaterialType(baseMaterialTypeEntityList.get(1));
 
-        this.jointDesignName = joinerEntity.getJointDesign().getName();
+        this.jointDesign = new JointDesign(joinerEntity.getJointDesign());
         this.fusionProcessName = joinerEntity.getFusionProcess().getName();
     }
 
@@ -83,36 +79,28 @@ public class Joiner {
         this.tagId = tagId;
     }
 
-    public Float getCertifiedDiameterMinMm() {
-        return certifiedDiameterMinMm;
+    public UnitOfMeasure getUnitOfMeasure() {
+        return unitOfMeasure;
     }
 
-    public void setCertifiedDiameterMinMm(Float certifiedDiameterMinMm) {
-        this.certifiedDiameterMinMm = certifiedDiameterMinMm;
+    public void setUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
+        this.unitOfMeasure = unitOfMeasure;
     }
 
-    public Float getCertifiedDiameterMaxMm() {
-        return certifiedDiameterMaxMm;
+    public Float getCertifiedDiameterMin() {
+        return certifiedDiameterMin;
     }
 
-    public void setCertifiedDiameterMaxMm(Float certifiedDiameterMaxMm) {
-        this.certifiedDiameterMaxMm = certifiedDiameterMaxMm;
+    public void setCertifiedDiameterMin(Float certifiedDiameterMin) {
+        this.certifiedDiameterMin = certifiedDiameterMin;
     }
 
-    public Float getCertifiedDiameterMinInch() {
-        return certifiedDiameterMinInch;
+    public Float getCertifiedDiameterMax() {
+        return certifiedDiameterMax;
     }
 
-    public void setCertifiedDiameterMinInch(Float certifiedDiameterMinInch) {
-        this.certifiedDiameterMinInch = certifiedDiameterMinInch;
-    }
-
-    public Float getCertifiedDiameterMaxInch() {
-        return certifiedDiameterMaxInch;
-    }
-
-    public void setCertifiedDiameterMaxInch(Float certifiedDiameterMaxInch) {
-        this.certifiedDiameterMaxInch = certifiedDiameterMaxInch;
+    public void setCertifiedDiameterMax(Float certifiedDiameterMax) {
+        this.certifiedDiameterMax = certifiedDiameterMax;
     }
 
     public Float getMaxDepositedMaterial() {
@@ -139,12 +127,12 @@ public class Joiner {
         this.baseMaterialType2 = baseMaterialType2;
     }
 
-    public String getJointDesignName() {
-        return jointDesignName;
+    public JointDesign getJointDesign() {
+        return jointDesign;
     }
 
-    public void setJointDesignName(String jointDesignName) {
-        this.jointDesignName = jointDesignName;
+    public void setJointDesign(JointDesign jointDesign) {
+        this.jointDesign = jointDesign;
     }
 
     public String getFusionProcessName() {
@@ -160,14 +148,13 @@ public class Joiner {
         return "Joiner{" +
                 "id=" + id +
                 ", tagId='" + tagId + '\'' +
-                ", certifiedDiameterMinMm=" + certifiedDiameterMinMm +
-                ", certifiedDiameterMaxMm=" + certifiedDiameterMaxMm +
-                ", certifiedDiameterMinInch=" + certifiedDiameterMinInch +
-                ", certifiedDiameterMaxInch=" + certifiedDiameterMaxInch +
+                ", unitOfMeasure=" + unitOfMeasure +
+                ", certifiedDiameterMin=" + certifiedDiameterMin +
+                ", certifiedDiameterMax=" + certifiedDiameterMax +
                 ", maxDepositedMaterial=" + maxDepositedMaterial +
                 ", baseMaterialType1=" + baseMaterialType1 +
                 ", baseMaterialType2=" + baseMaterialType2 +
-                ", jointDesignName='" + jointDesignName + '\'' +
+                ", jointDesign=" + jointDesign +
                 ", fusionProcessName='" + fusionProcessName + '\'' +
                 '}';
     }

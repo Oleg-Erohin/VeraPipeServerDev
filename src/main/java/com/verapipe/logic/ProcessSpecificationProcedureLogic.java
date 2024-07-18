@@ -2,10 +2,7 @@ package com.verapipe.logic;
 
 import com.verapipe.consts.Consts;
 import com.verapipe.dal.IProcessSpecificationProcedureDal;
-import com.verapipe.dto.BaseMaterialType;
-import com.verapipe.dto.FillerMaterialType;
-import com.verapipe.dto.ProcessSpecificationProcedure;
-import com.verapipe.dto.StandardCode;
+import com.verapipe.dto.*;
 import com.verapipe.entities.ProcessSpecificationProcedureEntity;
 import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
@@ -100,7 +97,7 @@ public class ProcessSpecificationProcedureLogic {
 
     private void validations(ProcessSpecificationProcedure processSpecificationProcedure) throws Exception {
         validateProcessSpecificationProcedureName(processSpecificationProcedure.getName());
-        validateProcessSpecificationProcedureJointDesign(processSpecificationProcedure.getJointDesignName());
+        validateProcessSpecificationProcedureJointDesign(processSpecificationProcedure.getJointDesign());
         validateProcessSpecificationProcedureBaseMaterial(processSpecificationProcedure.getBaseMaterial1());
         if (processSpecificationProcedure.getBaseMaterial2() != null) {
             validateProcessSpecificationProcedureBaseMaterial(processSpecificationProcedure.getBaseMaterial2());
@@ -147,8 +144,8 @@ public class ProcessSpecificationProcedureLogic {
         CommonValidations.validateIsExistInFusionProcesses(fusionProcessName);
     }
 
-    private void validateProcessSpecificationProcedureJointDesign(String jointDesignName) throws Exception {
-        CommonValidations.validateIsExistInJointDesigns(jointDesignName);
+    private void validateProcessSpecificationProcedureJointDesign(JointDesign jointDesign) throws Exception {
+        CommonValidations.validateIsExistInJointDesigns(jointDesign);
     }
 
     private void validateProcessSpecificationProcedureFillerMaterial(FillerMaterialType fillerMaterial) throws Exception {

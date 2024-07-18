@@ -86,33 +86,33 @@ public class CommonValidations {
         }
     }
 
-    public static void validateIsExistInBaseMaterialTypes(BaseMaterialType materialType) throws Exception {
+    public static void validateIsExistInBaseMaterialTypes(BaseMaterialType baseMaterialType) throws Exception {
         List<BaseMaterialType> allBaseMaterialTypes =  Holder.baseMaterialTypeLogic.getAll();
 
-        for (BaseMaterialType baseMaterialType : allBaseMaterialTypes){
-            if (baseMaterialType.equals(materialType)){
+        for (BaseMaterialType currentBaseMaterialType : allBaseMaterialTypes){
+            if (currentBaseMaterialType.equals(baseMaterialType)){
                 return;
             }
         }
         throw new ApplicationException(ErrorType.BASE_MATERIAL_TYPE_DOES_NOT_EXIST);
     }
 
-    public static void validateIsExistInFillerMaterialTypes(FillerMaterialType materialType) throws Exception {
+    public static void validateIsExistInFillerMaterialTypes(FillerMaterialType fillerMaterialType) throws Exception {
         List<FillerMaterialType> allFillerMaterialTypes =  Holder.fillerMaterialTypeLogic.getAll();
 
-        for (FillerMaterialType fillerMaterialType : allFillerMaterialTypes){
-            if (fillerMaterialType.equals(materialType)){
+        for (FillerMaterialType currentFillerMaterialType : allFillerMaterialTypes){
+            if (currentFillerMaterialType.equals(fillerMaterialType)){
                 return;
             }
         }
         throw new ApplicationException(ErrorType.FILLER_MATERIAL_TYPE_DOES_NOT_EXIST);
     }
 
-    public static void validateIsExistInJointDesigns(String jointDesignName) throws Exception {
+    public static void validateIsExistInJointDesigns(JointDesign jointDesign) throws Exception {
         List<JointDesign> allJointDesigns =  Holder.jointDesignLogic.getAll();
 
-        for (JointDesign jointDesign : allJointDesigns){
-            if (jointDesign.getName().equals(jointDesignName)){
+        for (JointDesign currentJointDesign : allJointDesigns){
+            if (currentJointDesign.equals(jointDesign)){
                 return;
             }
         }
@@ -130,11 +130,11 @@ public class CommonValidations {
         throw new ApplicationException(ErrorType.FUSION_PROCESS_DOES_NOT_EXIST);
     }
 
-    public static void validateIsExistInProcessSpecificationProcedures(String processSpecificationProcedureName) throws Exception {
+    public static void validateIsExistInProcessSpecificationProcedures(ProcessSpecificationProcedure processSpecificationProcedure) throws Exception {
         List<ProcessSpecificationProcedure> allProcessSpecificationProcedures =  Holder.processSpecificationProcedureLogic.getAll();
 
-        for (ProcessSpecificationProcedure processSpecificationProcedure : allProcessSpecificationProcedures){
-            if (processSpecificationProcedure.getName().equals(processSpecificationProcedureName)){
+        for (ProcessSpecificationProcedure currentProcessSpecificationProcedure : allProcessSpecificationProcedures){
+            if (currentProcessSpecificationProcedure.getName().equals(processSpecificationProcedure)){
                 return;
             }
         }

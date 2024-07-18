@@ -3,6 +3,7 @@ package com.verapipe.logic;
 import com.verapipe.consts.Consts;
 import com.verapipe.dal.IPreheatDal;
 import com.verapipe.dto.Preheat;
+import com.verapipe.dto.ProcessSpecificationProcedure;
 import com.verapipe.entities.PreheatEntity;
 import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
@@ -91,7 +92,7 @@ public class PreheatLogic {
 
     private void validations(Preheat preheat) throws Exception {
         validatePreheatName(preheat.getName());
-        validatePreheatProcessSpecificationProcedure(preheat.getProcessSpecificationProcedureName());
+        validatePreheatProcessSpecificationProcedure(preheat.getProcessSpecificationProcedure());
         validatePreheatDate(preheat.getDate());
     }
 
@@ -99,8 +100,8 @@ public class PreheatLogic {
         CommonValidations.validateDateIsNotLaterThanCurrentDate(date);
     }
 
-    private void validatePreheatProcessSpecificationProcedure(String processSpecificationProcedureName) throws Exception {
-        CommonValidations.validateIsExistInProcessSpecificationProcedures(processSpecificationProcedureName);
+    private void validatePreheatProcessSpecificationProcedure(ProcessSpecificationProcedure processSpecificationProcedure) throws Exception {
+        CommonValidations.validateIsExistInProcessSpecificationProcedures(processSpecificationProcedure);
     }
 
     private void validatePreheatName(String name) throws ApplicationException {

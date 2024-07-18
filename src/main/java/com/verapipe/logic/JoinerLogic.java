@@ -4,6 +4,7 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.IJoinerDal;
 import com.verapipe.dto.BaseMaterialType;
 import com.verapipe.dto.Joiner;
+import com.verapipe.dto.JointDesign;
 import com.verapipe.entities.*;
 import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
@@ -124,24 +125,19 @@ public class JoinerLogic {
 
     private void validations(Joiner joiner) throws Exception {
         validateJoinerTagId(joiner.getTagId());
-        if (joiner.getCertifiedDiameterMinMm() != null) {
-            validateNumberInputNotNegative(joiner.getCertifiedDiameterMinMm());
+        if (joiner.getCertifiedDiameterMin() != null) {
+            validateNumberInputNotNegative(joiner.getCertifiedDiameterMin());
         }
-        if (joiner.getCertifiedDiameterMaxMm() != null) {
-            validateNumberInputNotNegative(joiner.getCertifiedDiameterMaxMm());
+        if (joiner.getCertifiedDiameterMax() != null) {
+            validateNumberInputNotNegative(joiner.getCertifiedDiameterMax());
         }
-        if (joiner.getCertifiedDiameterMinInch() != null) {
-            validateNumberInputNotNegative(joiner.getCertifiedDiameterMinInch());
-        }
-        if (joiner.getCertifiedDiameterMaxInch() != null) {
-            validateNumberInputNotNegative(joiner.getCertifiedDiameterMaxInch());
-        }
+
         validateNumberInputNotNegative(joiner.getMaxDepositedMaterial());
         validateJoinerBaseMaterialType(joiner.getBaseMaterialType1());
         if (joiner.getBaseMaterialType2() != null) {
             validateJoinerBaseMaterialType(joiner.getBaseMaterialType2());
         }
-        validateJoinerJointDesign(joiner.getJointDesignName());
+        validateJoinerJointDesign(joiner.getJointDesign());
         validateJoinerFusionProcess(joiner.getFusionProcessName());
     }
 
@@ -149,8 +145,8 @@ public class JoinerLogic {
         CommonValidations.validateIsExistInFusionProcesses(fusionProcessName);
     }
 
-    private void validateJoinerJointDesign(String jointDesignName) throws Exception {
-        CommonValidations.validateIsExistInJointDesigns(jointDesignName);
+    private void validateJoinerJointDesign(JointDesign jointDesign) throws Exception {
+        CommonValidations.validateIsExistInJointDesigns(jointDesign);
     }
 
     private void validateJoinerBaseMaterialType(BaseMaterialType baseMaterialType) throws Exception {

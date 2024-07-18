@@ -190,8 +190,8 @@ public class JointLogic {
             }
         }
 
-        if (joint.getProcessSpecificationProcedureName() != null) {
-            validateJointProcessSpecificationProcedure(joint.getProcessSpecificationProcedureName());
+        if (joint.getProcessSpecificationProcedure() != null) {
+            validateJointProcessSpecificationProcedure(joint.getProcessSpecificationProcedure());
         }
         if (joint.getJoinerTagId1() != null) {
             validateJointJoinerTagId(joint.getJoinerTagId1());
@@ -327,8 +327,8 @@ public class JointLogic {
         CommonValidations.validateIsExistInIsometrics(isometricName);
     }
 
-    private void validateJointProcessSpecificationProcedure(String processSpecificationProcedureName) throws Exception {
-        CommonValidations.validateIsExistInProcessSpecificationProcedures(processSpecificationProcedureName);
+    private void validateJointProcessSpecificationProcedure(ProcessSpecificationProcedure processSpecificationProcedure) throws Exception {
+        CommonValidations.validateIsExistInProcessSpecificationProcedures(processSpecificationProcedure);
     }
 
     private void validateJointPid(String pidName) throws Exception {

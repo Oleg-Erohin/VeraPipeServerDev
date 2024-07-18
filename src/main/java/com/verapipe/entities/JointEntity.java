@@ -99,9 +99,7 @@ public class JointEntity {
         initializeFillerMaterialTypeListWithValues(joint);
         this.fillerMaterialCertificateList = new HashSet<>();
         initializeFillerMaterialCertificateListWithValues(joint);
-        this.processSpecificationProcedure = new ProcessSpecificationProcedureEntity();
-        String processSpecificationProcedureName = joint.getProcessSpecificationProcedureName();
-        this.processSpecificationProcedure.setName(processSpecificationProcedureName);
+        this.processSpecificationProcedure = new ProcessSpecificationProcedureEntity(joint.getProcessSpecificationProcedure());
         this.joinersList = new HashSet<>();
         initializeJoinersList(joint.getJoinerTagId1(), joint.getJoinerTagId2());
         this.date = joint.getDate();

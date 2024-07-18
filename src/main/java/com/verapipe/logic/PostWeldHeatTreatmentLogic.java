@@ -3,6 +3,7 @@ package com.verapipe.logic;
 import com.verapipe.consts.Consts;
 import com.verapipe.dal.IPostWeldHeatTreatmentDal;
 import com.verapipe.dto.PostWeldHeatTreatment;
+import com.verapipe.dto.ProcessSpecificationProcedure;
 import com.verapipe.entities.PostWeldHeatTreatmentEntity;
 import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
@@ -90,7 +91,7 @@ public class PostWeldHeatTreatmentLogic {
 
     private void validations(PostWeldHeatTreatment postWeldHeatTreatment) throws Exception {
         validatePostWeldHeatTreatmentName(postWeldHeatTreatment.getName());
-        validatePostWeldHeatTreatmentProcessSpecificationProcedure(postWeldHeatTreatment.getProcessSpecificationProcedureName());
+        validatePostWeldHeatTreatmentProcessSpecificationProcedure(postWeldHeatTreatment.getProcessSpecificationProcedure());
         validatePostWeldHeatTreatmentDate(postWeldHeatTreatment.getDate());
     }
 
@@ -98,8 +99,8 @@ public class PostWeldHeatTreatmentLogic {
         CommonValidations.validateDateIsNotLaterThanCurrentDate(date);
     }
 
-    private void validatePostWeldHeatTreatmentProcessSpecificationProcedure(String processSpecificationProcedureName) throws Exception {
-        CommonValidations.validateIsExistInProcessSpecificationProcedures(processSpecificationProcedureName);
+    private void validatePostWeldHeatTreatmentProcessSpecificationProcedure(ProcessSpecificationProcedure processSpecificationProcedure) throws Exception {
+        CommonValidations.validateIsExistInProcessSpecificationProcedures(processSpecificationProcedure);
     }
 
     private void validatePostWeldHeatTreatmentName(String name) throws ApplicationException {

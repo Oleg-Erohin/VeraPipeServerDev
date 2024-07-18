@@ -11,7 +11,7 @@ import java.util.List;
 public class ProcessSpecificationProcedure {
     private int id;
     private String name;
-    private String jointDesignName;
+    private JointDesign jointDesign;
     private BaseMaterialType baseMaterial1;
     private BaseMaterialType baseMaterial2;
     private String fusionProcessName;
@@ -31,9 +31,9 @@ public class ProcessSpecificationProcedure {
     public ProcessSpecificationProcedure() {
     }
 
-    public ProcessSpecificationProcedure(String name, String jointDesignName, BaseMaterialType baseMaterial1, BaseMaterialType baseMaterial2, String fusionProcessName, FillerMaterialType fillerMaterial1, FillerMaterialType fillerMaterial2, String standardCodeName, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, Float diameterMinMm, Float diameterMaxMm, Float diameterMinInch, Float diameterMaxInch, UnitOfMeasure unitOfMeasure, Float thicknessMinMm, Float thicknessMaxMm) {
+    public ProcessSpecificationProcedure(String name, JointDesign jointDesign, BaseMaterialType baseMaterial1, BaseMaterialType baseMaterial2, String fusionProcessName, FillerMaterialType fillerMaterial1, FillerMaterialType fillerMaterial2, String standardCodeName, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, Float diameterMinMm, Float diameterMaxMm, Float diameterMinInch, Float diameterMaxInch, UnitOfMeasure unitOfMeasure, Float thicknessMinMm, Float thicknessMaxMm) {
         this.name = name;
-        this.jointDesignName = jointDesignName;
+        this.jointDesign = jointDesign;
         this.baseMaterial1 = baseMaterial1;
         this.baseMaterial2 = baseMaterial2;
         this.fusionProcessName = fusionProcessName;
@@ -51,10 +51,10 @@ public class ProcessSpecificationProcedure {
         this.thicknessMaxMm = thicknessMaxMm;
     }
 
-    public ProcessSpecificationProcedure(int id, String name, String jointDesignName, BaseMaterialType baseMaterial1, BaseMaterialType baseMaterial2, String fusionProcessName, FillerMaterialType fillerMaterial1, FillerMaterialType fillerMaterial2, String standardCodeName, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, Float diameterMinMm, Float diameterMaxMm, Float diameterMinInch, Float diameterMaxInch, UnitOfMeasure unitOfMeasure, Float thicknessMinMm, Float thicknessMaxMm) {
+    public ProcessSpecificationProcedure(int id, String name, JointDesign jointDesign, BaseMaterialType baseMaterial1, BaseMaterialType baseMaterial2, String fusionProcessName, FillerMaterialType fillerMaterial1, FillerMaterialType fillerMaterial2, String standardCodeName, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, Float diameterMinMm, Float diameterMaxMm, Float diameterMinInch, Float diameterMaxInch, UnitOfMeasure unitOfMeasure, Float thicknessMinMm, Float thicknessMaxMm) {
         this.id = id;
         this.name = name;
-        this.jointDesignName = jointDesignName;
+        this.jointDesign = jointDesign;
         this.baseMaterial1 = baseMaterial1;
         this.baseMaterial2 = baseMaterial2;
         this.fusionProcessName = fusionProcessName;
@@ -75,7 +75,7 @@ public class ProcessSpecificationProcedure {
     public ProcessSpecificationProcedure(ProcessSpecificationProcedureEntity processSpecificationProcedureEntity) {
         this.id = processSpecificationProcedureEntity.getId();
         this.name = processSpecificationProcedureEntity.getName();
-        this.jointDesignName = processSpecificationProcedureEntity.getJointDesign().getName();
+        this.jointDesign = new JointDesign(processSpecificationProcedureEntity.getJointDesign());
 
         List<BaseMaterialTypeEntity> baseMaterialTypeEntityList = new ArrayList<>();
         baseMaterialTypeEntityList.addAll(processSpecificationProcedureEntity.getBaseMaterialTypeList());
@@ -117,12 +117,12 @@ public class ProcessSpecificationProcedure {
         this.name = name;
     }
 
-    public String getJointDesignName() {
-        return jointDesignName;
+    public JointDesign getJointDesign() {
+        return jointDesign;
     }
 
-    public void setJointDesignName(String jointDesignName) {
-        this.jointDesignName = jointDesignName;
+    public void setJointDesign(JointDesign jointDesign) {
+        this.jointDesign = jointDesign;
     }
 
     public BaseMaterialType getBaseMaterial1() {
@@ -250,7 +250,7 @@ public class ProcessSpecificationProcedure {
         return "ProcessSpecificationProcedure{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", jointDesignName='" + jointDesignName + '\'' +
+                ", jointDesign=" + jointDesign +
                 ", baseMaterial1=" + baseMaterial1 +
                 ", baseMaterial2=" + baseMaterial2 +
                 ", fusionProcessName='" + fusionProcessName + '\'' +

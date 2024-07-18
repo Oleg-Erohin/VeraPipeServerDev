@@ -1,6 +1,7 @@
 package com.verapipe.entities;
 
 import com.verapipe.dto.Joiner;
+import com.verapipe.enums.UnitOfMeasure;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -14,14 +15,12 @@ public class JoinerEntity {
     private int id;
     @Column(name = "tag_id", unique = false, nullable = false)
     private String tagId;
-    @Column(name = "certified_diameter_min_mm", unique = false, nullable = true)
-    private Float certifiedDiameterMinMm;
-    @Column(name = "certified_diameter_max_mm", unique = false, nullable = true)
-    private Float certifiedDiameterMaxMm;
-    @Column(name = "certified_diameter_min_inch", unique = false, nullable = true)
-    private Float certifiedDiameterMinInch;
-    @Column(name = "certified_diameter_max_inch", unique = false, nullable = true)
-    private Float certifiedDiameterMaxInch;
+    @Column(name = "unit_of_measure", unique = false, nullable = true)
+    private UnitOfMeasure unitOfMeasure;
+    @Column(name = "certified_diameter_min", unique = false, nullable = true)
+    private Float certifiedDiameterMin;
+    @Column(name = "certified_diameter_max", unique = false, nullable = true)
+    private Float certifiedDiameterMax;
     @Column(name = "max_deposited_material", unique = false, nullable = true)
     private Float maxDepositedMaterial;
     // TODO to make validation that only 2 objects in baseMaterialTypeList
@@ -40,16 +39,13 @@ public class JoinerEntity {
     public JoinerEntity(Joiner joiner) {
         this.id = joiner.getId();
         this.tagId = joiner.getTagId();
-        this.certifiedDiameterMinMm = joiner.getCertifiedDiameterMinMm();
-        this.certifiedDiameterMaxMm = joiner.getCertifiedDiameterMaxMm();
-        this.certifiedDiameterMinInch = joiner.getCertifiedDiameterMinInch();
-        this.certifiedDiameterMaxInch = joiner.getCertifiedDiameterMaxInch();
+        this.unitOfMeasure = joiner.getUnitOfMeasure();
+        this.certifiedDiameterMin = joiner.getCertifiedDiameterMin();
+        this.certifiedDiameterMax = joiner.getCertifiedDiameterMax();
         this.maxDepositedMaterial = joiner.getMaxDepositedMaterial();
         this.baseMaterialTypeList = new HashSet<>();
         initializeBaseMaterialTypeListWithValues(joiner);
-        this.jointDesign = new JointDesignEntity();
-        String jointDesignName = joiner.getJointDesignName();
-        this.jointDesign.setName(jointDesignName);
+        this.jointDesign = new JointDesignEntity(joiner.getJointDesign());
         this.fusionProcess = new FusionProcessEntity();
         String fusionProcessName = joiner.getFusionProcessName();
         this.fusionProcess.setName(fusionProcessName);
@@ -79,36 +75,28 @@ public class JoinerEntity {
         this.tagId = tagId;
     }
 
-    public Float getCertifiedDiameterMinMm() {
-        return certifiedDiameterMinMm;
+    public UnitOfMeasure getUnitOfMeasure() {
+        return unitOfMeasure;
     }
 
-    public void setCertifiedDiameterMinMm(Float certifiedDiameterMinMm) {
-        this.certifiedDiameterMinMm = certifiedDiameterMinMm;
+    public void setUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
+        this.unitOfMeasure = unitOfMeasure;
     }
 
-    public Float getCertifiedDiameterMaxMm() {
-        return certifiedDiameterMaxMm;
+    public Float getCertifiedDiameterMin() {
+        return certifiedDiameterMin;
     }
 
-    public void setCertifiedDiameterMaxMm(Float certifiedDiameterMaxMm) {
-        this.certifiedDiameterMaxMm = certifiedDiameterMaxMm;
+    public void setCertifiedDiameterMin(Float certifiedDiameterMin) {
+        this.certifiedDiameterMin = certifiedDiameterMin;
     }
 
-    public Float getCertifiedDiameterMinInch() {
-        return certifiedDiameterMinInch;
+    public Float getCertifiedDiameterMax() {
+        return certifiedDiameterMax;
     }
 
-    public void setCertifiedDiameterMinInch(Float certifiedDiameterMinInch) {
-        this.certifiedDiameterMinInch = certifiedDiameterMinInch;
-    }
-
-    public Float getCertifiedDiameterMaxInch() {
-        return certifiedDiameterMaxInch;
-    }
-
-    public void setCertifiedDiameterMaxInch(Float certifiedDiameterMaxInch) {
-        this.certifiedDiameterMaxInch = certifiedDiameterMaxInch;
+    public void setCertifiedDiameterMax(Float certifiedDiameterMax) {
+        this.certifiedDiameterMax = certifiedDiameterMax;
     }
 
     public Float getMaxDepositedMaterial() {

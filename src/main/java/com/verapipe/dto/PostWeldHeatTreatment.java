@@ -7,29 +7,29 @@ import java.util.Date;
 public class PostWeldHeatTreatment {
     private int id;
     private String name;
-    private String processSpecificationProcedureName;
+    private ProcessSpecificationProcedure processSpecificationProcedure;
     private Date date;
 
     public PostWeldHeatTreatment() {
     }
 
-    public PostWeldHeatTreatment(String name, String processSpecificationProcedureName, Date date) {
+    public PostWeldHeatTreatment(String name, ProcessSpecificationProcedure processSpecificationProcedure, Date date) {
         this.name = name;
-        this.processSpecificationProcedureName = processSpecificationProcedureName;
+        this.processSpecificationProcedure = processSpecificationProcedure;
         this.date = date;
     }
 
-    public PostWeldHeatTreatment(int id, String name, String processSpecificationProcedureName, Date date) {
+    public PostWeldHeatTreatment(int id, String name, ProcessSpecificationProcedure processSpecificationProcedure, Date date) {
         this.id = id;
         this.name = name;
-        this.processSpecificationProcedureName = processSpecificationProcedureName;
+        this.processSpecificationProcedure = processSpecificationProcedure;
         this.date = date;
     }
 
     public PostWeldHeatTreatment(PostWeldHeatTreatmentEntity postWeldHeatTreatmentEntity) {
         this.id = postWeldHeatTreatmentEntity.getId();
         this.name = postWeldHeatTreatmentEntity.getName();
-        this.processSpecificationProcedureName = postWeldHeatTreatmentEntity.getProcessSpecificationProcedure().getName();
+        this.processSpecificationProcedure = new ProcessSpecificationProcedure(postWeldHeatTreatmentEntity.getProcessSpecificationProcedure());
         this.date = postWeldHeatTreatmentEntity.getDate();
     }
 
@@ -49,12 +49,12 @@ public class PostWeldHeatTreatment {
         this.name = name;
     }
 
-    public String getProcessSpecificationProcedureName() {
-        return processSpecificationProcedureName;
+    public ProcessSpecificationProcedure getProcessSpecificationProcedure() {
+        return processSpecificationProcedure;
     }
 
-    public void setProcessSpecificationProcedureName(String processSpecificationProcedureName) {
-        this.processSpecificationProcedureName = processSpecificationProcedureName;
+    public void setProcessSpecificationProcedure(ProcessSpecificationProcedure processSpecificationProcedure) {
+        this.processSpecificationProcedure = processSpecificationProcedure;
     }
 
     public Date getDate() {
@@ -70,7 +70,7 @@ public class PostWeldHeatTreatment {
         return "PostWeldHeatTreatment{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", processSpecificationProcedureName='" + processSpecificationProcedureName + '\'' +
+                ", processSpecificationProcedure=" + processSpecificationProcedure +
                 ", date=" + date +
                 '}';
     }

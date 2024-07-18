@@ -66,9 +66,7 @@ public class ProcessSpecificationProcedureEntity {
         this.unitOfMeasure = processSpecificationProcedure.getUnitOfMeasure();
         this.thicknessMmMin = processSpecificationProcedure.getThicknessMinMm();
         this.thicknessMmMax = processSpecificationProcedure.getThicknessMaxMm();
-        this.jointDesign = new JointDesignEntity();
-        String jointDesignName = processSpecificationProcedure.getJointDesignName();
-        this.jointDesign.setName(jointDesignName);
+        this.jointDesign = new JointDesignEntity(processSpecificationProcedure.getJointDesign());
         this.baseMaterialTypeList = new HashSet<>();
         initializeBaseMaterialListWithValues(processSpecificationProcedure);
         this.fusionProcess = new FusionProcessEntity();
