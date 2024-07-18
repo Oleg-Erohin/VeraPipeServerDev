@@ -17,7 +17,7 @@ public class ProcessSpecificationProcedure {
     private FusionProcess fusionProcess;
     private FillerMaterialType fillerMaterial1;
     private FillerMaterialType fillerMaterial2;
-    private String standardCodeName;
+    private StandardCode standardCode;
     private boolean isPreheatRequired;
     private boolean isPostWeldHeatTreatmentRequired;
     private UnitOfMeasure unitOfMeasure;
@@ -29,7 +29,7 @@ public class ProcessSpecificationProcedure {
     public ProcessSpecificationProcedure() {
     }
 
-    public ProcessSpecificationProcedure(String name, JointDesign jointDesign, BaseMaterialType baseMaterial1, BaseMaterialType baseMaterial2, FusionProcess fusionProcess, FillerMaterialType fillerMaterial1, FillerMaterialType fillerMaterial2, String standardCodeName, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, UnitOfMeasure unitOfMeasure, Float diameterMin, Float diameterMax, Float thicknessMin, Float thicknessMax) {
+    public ProcessSpecificationProcedure(String name, JointDesign jointDesign, BaseMaterialType baseMaterial1, BaseMaterialType baseMaterial2, FusionProcess fusionProcess, FillerMaterialType fillerMaterial1, FillerMaterialType fillerMaterial2, StandardCode standardCode, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, UnitOfMeasure unitOfMeasure, Float diameterMin, Float diameterMax, Float thicknessMin, Float thicknessMax) {
         this.name = name;
         this.jointDesign = jointDesign;
         this.baseMaterial1 = baseMaterial1;
@@ -37,7 +37,7 @@ public class ProcessSpecificationProcedure {
         this.fusionProcess = fusionProcess;
         this.fillerMaterial1 = fillerMaterial1;
         this.fillerMaterial2 = fillerMaterial2;
-        this.standardCodeName = standardCodeName;
+        this.standardCode = standardCode;
         this.isPreheatRequired = isPreheatRequired;
         this.isPostWeldHeatTreatmentRequired = isPostWeldHeatTreatmentRequired;
         this.unitOfMeasure = unitOfMeasure;
@@ -47,7 +47,7 @@ public class ProcessSpecificationProcedure {
         this.thicknessMax = thicknessMax;
     }
 
-    public ProcessSpecificationProcedure(int id, String name, JointDesign jointDesign, BaseMaterialType baseMaterial1, BaseMaterialType baseMaterial2, FusionProcess fusionProcess, FillerMaterialType fillerMaterial1, FillerMaterialType fillerMaterial2, String standardCodeName, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, UnitOfMeasure unitOfMeasure, Float diameterMin, Float diameterMax, Float thicknessMin, Float thicknessMax) {
+    public ProcessSpecificationProcedure(int id, String name, JointDesign jointDesign, BaseMaterialType baseMaterial1, BaseMaterialType baseMaterial2, FusionProcess fusionProcess, FillerMaterialType fillerMaterial1, FillerMaterialType fillerMaterial2, StandardCode standardCode, boolean isPreheatRequired, boolean isPostWeldHeatTreatmentRequired, UnitOfMeasure unitOfMeasure, Float diameterMin, Float diameterMax, Float thicknessMin, Float thicknessMax) {
         this.id = id;
         this.name = name;
         this.jointDesign = jointDesign;
@@ -56,7 +56,7 @@ public class ProcessSpecificationProcedure {
         this.fusionProcess = fusionProcess;
         this.fillerMaterial1 = fillerMaterial1;
         this.fillerMaterial2 = fillerMaterial2;
-        this.standardCodeName = standardCodeName;
+        this.standardCode = standardCode;
         this.isPreheatRequired = isPreheatRequired;
         this.isPostWeldHeatTreatmentRequired = isPostWeldHeatTreatmentRequired;
         this.unitOfMeasure = unitOfMeasure;
@@ -83,7 +83,7 @@ public class ProcessSpecificationProcedure {
         this.fillerMaterial1 = new FillerMaterialType(fillerMaterialTypeEntityList.get(0));
         this.fillerMaterial2 = new FillerMaterialType(fillerMaterialTypeEntityList.get(1));
 
-        this.standardCodeName = processSpecificationProcedureEntity.getStandardCode().getName();
+        this.standardCode = new StandardCode(processSpecificationProcedureEntity.getStandardCode());
         this.isPreheatRequired = processSpecificationProcedureEntity.isPreheatRequired();
         this.isPostWeldHeatTreatmentRequired = processSpecificationProcedureEntity.isPostWeldHeatTreatmentRequired();
         this.unitOfMeasure = processSpecificationProcedureEntity.getUnitOfMeasure();
@@ -157,12 +157,12 @@ public class ProcessSpecificationProcedure {
         this.fillerMaterial2 = fillerMaterial2;
     }
 
-    public String getStandardCodeName() {
-        return standardCodeName;
+    public StandardCode getStandardCode() {
+        return standardCode;
     }
 
-    public void setStandardCodeName(String standardCodeName) {
-        this.standardCodeName = standardCodeName;
+    public void setStandardCode(StandardCode standardCode) {
+        this.standardCode = standardCode;
     }
 
     public boolean isPreheatRequired() {
@@ -232,7 +232,7 @@ public class ProcessSpecificationProcedure {
                 ", fusionProcess=" + fusionProcess +
                 ", fillerMaterial1=" + fillerMaterial1 +
                 ", fillerMaterial2=" + fillerMaterial2 +
-                ", standardCodeName='" + standardCodeName + '\'' +
+                ", standardCode=" + standardCode +
                 ", isPreheatRequired=" + isPreheatRequired +
                 ", isPostWeldHeatTreatmentRequired=" + isPostWeldHeatTreatmentRequired +
                 ", unitOfMeasure=" + unitOfMeasure +

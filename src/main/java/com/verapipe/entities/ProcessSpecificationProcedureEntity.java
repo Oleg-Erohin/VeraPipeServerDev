@@ -66,9 +66,7 @@ public class ProcessSpecificationProcedureEntity {
         this.fusionProcess = new FusionProcessEntity(processSpecificationProcedure.getFusionProcess());
         this.fillerMaterialTypeList = new HashSet<>();
         initializeFillerMaterialTypeListWithValues(processSpecificationProcedure);
-        this.standardCode = new StandardCodeEntity();
-        String standardCodeName = processSpecificationProcedure.getStandardCodeName();
-        this.standardCode.setName(standardCodeName);
+        this.standardCode = new StandardCodeEntity(processSpecificationProcedure.getStandardCode());
     }
 
     private void initializeFillerMaterialTypeListWithValues(ProcessSpecificationProcedure processSpecificationProcedure) {

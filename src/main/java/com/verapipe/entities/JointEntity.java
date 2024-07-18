@@ -99,9 +99,7 @@ public class JointEntity {
         this.date = joint.getDate();
         this.isFitUpDone = joint.isFitUpDone();
         this.isVisualInspectionDone = joint.isVisualInspectionDone();
-        this.ndtReport = new NdtReportEntity();
-        String ndtReportName = joint.getNdtReportName();
-        this.ndtReport.setName(ndtReportName);
+        this.ndtReport = new NdtReportEntity(joint.getNdtReport());
         this.isNdtPassed = joint.isNdtPassed();
         this.preheat = new PreheatEntity(joint.getPreheat());
         this.postWeldHeatTreatment = new PostWeldHeatTreatmentEntity(joint.getPostWeldHeatTreatment());

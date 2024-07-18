@@ -208,8 +208,8 @@ public class JointLogic {
         if (joint.isVisualInspectionDone()) {
 //        validateJointIsVisualInspectionDone(joint.isVisualInspectionDone());
         }
-        if (joint.getNdtReportName() != null) {
-            validateJointNdtReport(joint.getNdtReportName());
+        if (joint.getNdtReport() != null) {
+            validateJointNdtReport(joint.getNdtReport());
         }
         if (joint.isNdtPassed()) {
 //        validateJointIsNdtPassed(joint.isNdtPassed());
@@ -304,11 +304,11 @@ public class JointLogic {
         throw new ApplicationException(ErrorType.PREHEAT_DOES_NOT_EXIST);
     }
 
-    private void validateJointNdtReport(String ndtReportName) throws Exception {
+    private void validateJointNdtReport(NdtReport ndtReport) throws Exception {
         List<NdtReport> ndtReports = ndtReportLogic.getAll();
 
-        for (NdtReport ndtReport : ndtReports) {
-            if (ndtReport.getName().equals(ndtReportName)) {
+        for (NdtReport currentNdtReport : ndtReports) {
+            if (currentNdtReport.equals(ndtReport)) {
                 return;
             }
         }
