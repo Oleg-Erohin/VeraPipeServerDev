@@ -107,7 +107,7 @@ public class ProcessSpecificationProcedureLogic {
         if (processSpecificationProcedure.getFillerMaterial2() != null) {
             validateProcessSpecificationProcedureFillerMaterial(processSpecificationProcedure.getFillerMaterial2());
         }
-        validateProcessSpecificationProcedureStandardCode(processSpecificationProcedure.getStandardCodeName());
+        validateProcessSpecificationProcedureStandardCode(processSpecificationProcedure.getStandardCode());
 //        validateProcessSpecificationProcedureIsPreheatRequired(processSpecificationProcedure.isPreheatRequired());
 //        validateProcessSpecificationProcedureIsPostWeldHeatTreatmentRequired(processSpecificationProcedure.isPostWeldHeatTreatmentRequired());
         if (processSpecificationProcedure.getDiameterMin() != null) {
@@ -123,11 +123,11 @@ public class ProcessSpecificationProcedureLogic {
         }
     }
 
-    private void validateProcessSpecificationProcedureStandardCode(String standardCodeName) throws Exception {
+    private void validateProcessSpecificationProcedureStandardCode(StandardCode standardCode) throws Exception {
         List<StandardCode> standardCodes = standardCodeLogic.getAll();
 
-        for (StandardCode standardCode : standardCodes) {
-            if (standardCode.getName().equals(standardCodeName)) {
+        for (StandardCode currentStandardCode : standardCodes) {
+            if (currentStandardCode.equals(standardCode)) {
                 return;
             }
         }

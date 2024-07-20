@@ -14,27 +14,27 @@ import java.util.List;
 public class PressureTestPackage {
     private int id;
     private String name;
-    private List<String> pidNames;
-    private List<String> isometricNames;
+    private List<Pid> pids;
+    private List<Isometric> isometrics;
     private List<Coordinates> coordinatesInPidsList;
     private Date date;
 
     public PressureTestPackage() {
     }
 
-    public PressureTestPackage(String name, List<String> pidNames, List<String> isometricNames, List<Coordinates> coordinatesInPidsList, Date date) {
+    public PressureTestPackage(String name, List<Pid> pids, List<Isometric> isometrics, List<Coordinates> coordinatesInPidsList, Date date) {
         this.name = name;
-        this.pidNames = pidNames;
-        this.isometricNames = isometricNames;
+        this.pids = pids;
+        this.isometrics = isometrics;
         this.coordinatesInPidsList = coordinatesInPidsList;
         this.date = date;
     }
 
-    public PressureTestPackage(int id, String name, List<String> pidNames, List<String> isometricNames, List<Coordinates> coordinatesInPidsList, Date date) {
+    public PressureTestPackage(int id, String name, List<Pid> pids, List<Isometric> isometrics, List<Coordinates> coordinatesInPidsList, Date date) {
         this.id = id;
         this.name = name;
-        this.pidNames = pidNames;
-        this.isometricNames = isometricNames;
+        this.pids = pids;
+        this.isometrics = isometrics;
         this.coordinatesInPidsList = coordinatesInPidsList;
         this.date = date;
     }
@@ -45,19 +45,17 @@ public class PressureTestPackage {
 
         List<PidEntity> pidEntityList = new ArrayList<>();
         pidEntityList.addAll(pressureTestPackageEntity.getPidsList());
-        List<String> pidNames = new ArrayList<>();
         for(PidEntity pidEntity : pidEntityList){
-            pidNames.add(pidEntity.getName());
+            Pid pid = new Pid(pidEntity);
+            this.pids.add(pid);
         }
-        this.pidNames = pidNames;
 
         List<IsometricEntity> isometricEntityList = new ArrayList<>();
         isometricEntityList.addAll(pressureTestPackageEntity.getIsometricsList());
-        List<String> isometricNames = new ArrayList<>();
         for(IsometricEntity isometricEntity : isometricEntityList){
-            isometricNames.add(isometricEntity.getName());
+            Isometric isometric = new Isometric(isometricEntity);
+            this.isometrics.add(isometric);
         }
-        this.isometricNames = isometricNames;
 
         ObjectMapper objectMapper = new ObjectMapper();
         this.coordinatesInPidsList = objectMapper.readValue(pressureTestPackageEntity.getCoordinatesInPids(), new TypeReference<List<Coordinates>>(){});
@@ -81,20 +79,20 @@ public class PressureTestPackage {
         this.name = name;
     }
 
-    public List<String> getPidNames() {
-        return pidNames;
+    public List<Pid> getPids() {
+        return pids;
     }
 
-    public void setPidNames(List<String> pidNames) {
-        this.pidNames = pidNames;
+    public void setPids(List<Pid> pids) {
+        this.pids = pids;
     }
 
-    public List<String> getIsometricNames() {
-        return isometricNames;
+    public List<Isometric> getIsometrics() {
+        return isometrics;
     }
 
-    public void setIsometricNames(List<String> isometricNames) {
-        this.isometricNames = isometricNames;
+    public void setIsometrics(List<Isometric> isometrics) {
+        this.isometrics = isometrics;
     }
 
     public List<Coordinates> getCoordinatesInPidsList() {
@@ -118,8 +116,8 @@ public class PressureTestPackage {
         return "PressureTestPackage{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", pidNames=" + pidNames +
-                ", isometricNames=" + isometricNames +
+                ", pids=" + pids +
+                ", isometrics=" + isometrics +
                 ", coordinatesInPidsList=" + coordinatesInPidsList +
                 ", date=" + date +
                 '}';

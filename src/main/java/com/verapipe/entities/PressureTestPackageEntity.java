@@ -2,6 +2,8 @@ package com.verapipe.entities;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.verapipe.dto.Isometric;
+import com.verapipe.dto.Pid;
 import com.verapipe.dto.PressureTestPackage;
 
 import javax.persistence.*;
@@ -32,17 +34,15 @@ public class PressureTestPackageEntity {
     public PressureTestPackageEntity(PressureTestPackage pressureTestPackage) throws JsonProcessingException {
         this.id = pressureTestPackage.getId();
         this.name = pressureTestPackage.getName();
-        List<String> pidNames = pressureTestPackage.getPidNames();
-        for (String pidName : pidNames){
-            PidEntity tempPidEntity = new PidEntity();
-            tempPidEntity.setName(pidName);
-            this.pidsList.add(tempPidEntity);
+        List<Pid> pidNames = pressureTestPackage.getPids();
+        for (Pid pid : pidNames){
+            PidEntity pidEntity = new PidEntity(pid);
+            this.pidsList.add(pidEntity);
         }
-        List<String> isometricNames = pressureTestPackage.getIsometricNames();
-        for (String isometricName : isometricNames){
-            IsometricEntity tempIsometricEntity = new IsometricEntity();
-            tempIsometricEntity.setName(isometricName);
-            this.isometricsList.add(tempIsometricEntity);
+        List<Isometric> isometricNames = pressureTestPackage.getIsometrics();
+        for (Isometric isometric : isometricNames){
+            IsometricEntity isometricEntity = new IsometricEntity(isometric);
+            this.isometricsList.add(isometricEntity);
         }
         ObjectMapper objectMapper = new ObjectMapper();
         this.coordinatesInPids = objectMapper.writeValueAsString(pressureTestPackage.getCoordinatesInPidsList());

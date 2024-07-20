@@ -177,9 +177,9 @@ public class IsometricLogic {
         }
     }
 
-    private void validateIsometricPidNames(List<String> pidNames) throws Exception {
-        for (String pidName : pidNames) {
-            CommonValidations.validateIsExistInPids(pidName);
+    private void validateIsometricPids(List<Pid> pids) throws Exception {
+        for (Pid pid : pids) {
+            CommonValidations.validateIsExistInPids(pid);
         }
     }
 

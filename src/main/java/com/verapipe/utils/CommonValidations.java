@@ -141,22 +141,22 @@ public class CommonValidations {
         throw new ApplicationException(ErrorType.PROCESS_SPECIFICATION_PROCEDURE_DOES_NOT_EXIST);
     }
 
-    public static void validateIsExistInPids(String pidName) throws Exception {
+    public static void validateIsExistInPids(Pid pid) throws Exception {
         List<Pid> allPids =  Holder.pidLogic.getAll();
 
-        for (Pid pid : allPids){
-            if (pid.getName().equals(pidName)){
+        for (Pid currentPid : allPids){
+            if (currentPid.equals(pid)){
                 return;
             }
         }
         throw new ApplicationException(ErrorType.PID_DOES_NOT_EXIST);
     }
 
-    public static void validateIsExistInIsometrics(String isometricName) throws Exception {
+    public static void validateIsExistInIsometrics(Isometric isometric) throws Exception {
         List<Isometric> allIsometrics =  Holder.isometricLogic.getAll();
 
-        for (Isometric isometric : allIsometrics){
-            if (isometric.getName().equals(isometricName)){
+        for (Isometric currentIsometric : allIsometrics){
+            if (currentIsometric.equals(isometric)){
                 return;
             }
         }

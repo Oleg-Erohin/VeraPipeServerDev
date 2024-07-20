@@ -75,12 +75,8 @@ public class JointEntity {
         this.number = joint.getNumber();
         ObjectMapper objectMapper = new ObjectMapper();
         this.coordinatesOnIsometric = objectMapper.writeValueAsString(joint.getCoordinatesOnIsometric());
-        this.pid = new PidEntity();
-        String pidName = joint.getPidName();
-        this.pid.setName(pidName);
-        this.isometric = new IsometricEntity();
-        String isometricName = joint.getIsometricName();
-        this.isometric.setName(isometricName);
+        this.pid = new PidEntity(joint.getPid());
+        this.isometric = new IsometricEntity(joint.getIsometric());
         this.sheetOnIsometric = joint.getSheetOnIsometric();
         this.uom = joint.getUom();
         this.schedule = joint.getSchedule();
