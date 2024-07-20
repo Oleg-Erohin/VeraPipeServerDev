@@ -87,6 +87,12 @@ public class FileLogic {
         return files;
     }
 
+    public File getByFilters(FileType fileType, String resourceName, String revision) {
+        FileEntity fileEntity = this.fileDal.findByFileTypeAndResourceNameAndRevision(fileType, resourceName, revision);
+        File file = new File(fileEntity);
+        return file;
+    }
+
 
     private void validations(File file) throws Exception {
         validateFileType(file.getFileType());

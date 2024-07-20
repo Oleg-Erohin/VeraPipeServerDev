@@ -3,8 +3,8 @@ Important:
 - Create filters functions to all entities - Aviad: FillerMaterialCertificate, Isometric, Joiner, Joint, NdtReport
                                              Aviad: Pid, PWHT, PreHeat, PressureTestPackage, PSP
 - In DTO objects - change to other object rather than identification string (name etc.) - Oleg
-- Add file get functionality - Aviad
 - Redefine/rewrite all validations
+- File - resourceName is String and not attached to any entity. after update object name need to refactor all resourceName in files and to put the update as rollback (all or nothing)
 
 To Do Later:
 - Ensure comments include line breaks
@@ -50,3 +50,4 @@ Done:
 - Joint - list with tabs for Mor - Oleg
 - Change Static functions in specifications - Aviad
 - Find how to properly define static parameters in class (Logics in common validations) - Oleg
+- Add file get functionality - Aviad
