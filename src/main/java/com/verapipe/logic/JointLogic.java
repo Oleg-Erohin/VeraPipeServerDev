@@ -157,9 +157,8 @@ public class JointLogic {
     private void validations(Joint joint) throws Exception {
 //        validateJointNumber(joint.getNumber());
 //        validateJointCoordinatesOnIsometric(joint.getCoordinatesOnIsometric());
-        validateJointPid(joint.getPidName());
-        validateJointIsometric(joint.getIsometricName());
-        validateJointSheetOnIsometric(joint.getIsometricName(), joint.getSheetOnIsometric());
+        validateJointPid(joint.getPid());
+        validateJointIsometric(joint.getIsometric());
         if (joint.getUom() == UnitOfMeasure.MM) {
             joint.setSchedule(null);
         }
@@ -239,24 +238,6 @@ public class JointLogic {
 //        }
 //    }
 
-    private void validateJointSheetOnIsometric(String isometricName, int sheetOnIsometric) throws Exception {
-        List<Isometric> allIsometrics = isometricLogic.getAll();
-        Isometric isometric = null;
-
-        while (isometric == null) {
-            for (Isometric currentIsometric : allIsometrics) {
-                if (currentIsometric.getName().equals(isometricName)) {
-                    isometric = currentIsometric;
-                }
-            }
-        }
-
-        if (isometric.getSheets() < 0 || isometric.getSheets() > sheetOnIsometric) {
-            //          TODO throw new ApplicationException
-            throw new Exception("Sheet number does not match the sheets of the isometric");
-        }
-    }
-
     private void validateJointDate(Date date) throws Exception {
         CommonValidations.validateDateIsNotLaterThanCurrentDate(date);
     }
@@ -323,16 +304,16 @@ public class JointLogic {
         CommonValidations.validateIsExistInBaseMaterialCertificates(baseMaterialCertificate);
     }
 
-    private void validateJointIsometric(String isometricName) throws Exception {
-        CommonValidations.validateIsExistInIsometrics(isometricName);
+    private void validateJointIsometric(Isometric isometric) throws Exception {
+        CommonValidations.validateIsExistInIsometrics(isometric);
     }
 
     private void validateJointProcessSpecificationProcedure(ProcessSpecificationProcedure processSpecificationProcedure) throws Exception {
         CommonValidations.validateIsExistInProcessSpecificationProcedures(processSpecificationProcedure);
     }
 
-    private void validateJointPid(String pidName) throws Exception {
-        CommonValidations.validateIsExistInPids(pidName);
+    private void validateJointPid(Pid pid) throws Exception {
+        CommonValidations.validateIsExistInPids(pid);
     }
 
     private void validateJointFillerMaterialType(FillerMaterialType fillerMaterialType) throws Exception {

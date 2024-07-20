@@ -2,6 +2,8 @@ package com.verapipe.logic;
 
 import com.verapipe.consts.Consts;
 import com.verapipe.dal.IPressureTestPackageDal;
+import com.verapipe.dto.Isometric;
+import com.verapipe.dto.Pid;
 import com.verapipe.dto.PressureTestPackage;
 import com.verapipe.entities.PressureTestPackageEntity;
 import com.verapipe.enums.ErrorType;
@@ -90,11 +92,11 @@ public class PressureTestPackageLogic {
 
     private void validations(PressureTestPackage pressureTestPackage) throws Exception {
         validatePressureTestPackageName(pressureTestPackage.getName());
-        if (pressureTestPackage.getPidNames() != null) {
-            validatePressureTestPackagePids(pressureTestPackage.getPidNames());
+        if (pressureTestPackage.getPids() != null) {
+            validatePressureTestPackagePids(pressureTestPackage.getPids());
         }
-        if (pressureTestPackage.getIsometricNames() != null) {
-            validatePressureTestPackageIsometrics(pressureTestPackage.getIsometricNames());
+        if (pressureTestPackage.getIsometrics() != null) {
+            validatePressureTestPackageIsometrics(pressureTestPackage.getIsometrics());
         }
         if (pressureTestPackage.getCoordinatesInPidsList() != null) {
 //        validatePressureTestPackageCoordinatesInPids(pressureTestPackage.getCoordinatesInPidsList());
@@ -108,15 +110,15 @@ public class PressureTestPackageLogic {
         CommonValidations.validateDateIsNotLaterThanCurrentDate(date);
     }
 
-    private void validatePressureTestPackageIsometrics(List<String> isometricNames) throws Exception {
-        for (String isometricName : isometricNames) {
-            CommonValidations.validateIsExistInIsometrics(isometricName);
+    private void validatePressureTestPackageIsometrics(List<Isometric> isometrics) throws Exception {
+        for (Isometric isometric : isometrics) {
+            CommonValidations.validateIsExistInIsometrics(isometric);
         }
     }
 
-    private void validatePressureTestPackagePids(List<String> pidNames) throws Exception {
-        for (String pidName : pidNames) {
-            CommonValidations.validateIsExistInPids(pidName);
+    private void validatePressureTestPackagePids(List<Pid> pids) throws Exception {
+        for (Pid pid : pids) {
+            CommonValidations.validateIsExistInPids(pid);
         }
     }
 
