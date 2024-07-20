@@ -207,12 +207,9 @@ public class JointLogic {
         if (joint.isVisualInspectionDone()) {
 //        validateJointIsVisualInspectionDone(joint.isVisualInspectionDone());
         }
-        if (joint.getNdtReport() != null) {
-            validateJointNdtReport(joint.getNdtReport());
-        }
-        if (joint.isNdtPassed()) {
-//        validateJointIsNdtPassed(joint.isNdtPassed());
-        }
+//        if (joint.getNdtReportsWithResults() != null) {
+//            validateJointNdtReports(joint.getNdtReportsWithResults());
+//        }
         if (joint.getPreheat() != null) {
             validateJointPreHeat(joint.getPreheat());
         }
@@ -295,6 +292,18 @@ public class JointLogic {
         }
         throw new ApplicationException(ErrorType.NDT_REPORT_DOES_NOT_EXIST);
     }
+
+//    private void validateJointNdtReports(Map<NdtReport, Boolean> ndtReportsWithResults) throws Exception {
+//        List<NdtReport> ndtReports = ndtReportLogic.getAll();
+//
+//        for (Map.Entry<NdtReport, Boolean> ndtReportWithResult : ndtReportsWithResults.entrySet()){
+//            for (NdtReport currentNdtReport : ndtReports) {
+//                if (currentNdtReport.equals(ndtReportWithResult.getKey())) {
+//
+//                }
+//            }
+//        }
+//    }
 
     private void validateJointFillerMaterialHeatNum(FillerMaterialCertificate fillerMaterialCertificate) throws Exception {
         CommonValidations.validateIsExistInFillerMaterialCertificates(fillerMaterialCertificate);
