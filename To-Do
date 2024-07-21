@@ -4,7 +4,9 @@ Important:
                                              Aviad: Pid, PWHT, PreHeat, PressureTestPackage, PSP
 - In DTO objects - change to other object rather than identification string (name etc.) - Oleg
 - Redefine/rewrite all validations
-- File - resourceName is String and not attached to any entity. after update object name need to refactor all resourceName in files and to put the update as rollback (all or nothing)
+- File - attached with resourceId instead of resourceName
+- Add name in BaseMaterialCertificate and FillerMaterialCertificate
+- Add get file revisions as List<String> (with the same resourceId and fileType)
 
 To Do Later:
 - Ensure comments include line breaks

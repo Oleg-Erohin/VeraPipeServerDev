@@ -8,6 +8,7 @@ public interface IFileDal extends PagingAndSortingRepository<FileEntity, Integer
 
     //    boolean doesExistWithCurrentRevision(FileType fileType, String resourceName, String revision);
     FileEntity findByFileTypeAndResourceNameAndRevision(FileType fileType, String resourceName, String revision);
+    FileEntity findTopByFileTypeAndResourceNameOrderByUploadDateDesc(FileType fileType, String resourceName);
 
 //
 //    boolean doesFileExist();

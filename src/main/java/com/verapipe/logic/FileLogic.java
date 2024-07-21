@@ -88,7 +88,12 @@ public class FileLogic {
     }
 
     public File getByFilters(FileType fileType, String resourceName, String revision) {
-        FileEntity fileEntity = this.fileDal.findByFileTypeAndResourceNameAndRevision(fileType, resourceName, revision);
+        FileEntity fileEntity = new FileEntity();
+        if (revision.isEmpty()) {
+            fileEntity = this.fileDal.findTopByFileTypeAndResourceNameOrderByUploadDateDesc(fileType,resourceName);
+        } else {
+            fileEntity = this.fileDal.findByFileTypeAndResourceNameAndRevision(fileType, resourceName, revision);
+        }
         File file = new File(fileEntity);
         return file;
     }

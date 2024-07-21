@@ -30,14 +30,14 @@ public class FileController {
     public void delete(@PathVariable("id") int id) throws Exception {
         this.fileLogic.delete(id);
     }
-
+    @GetMapping
+    public File get(@RequestParam FileType fileType,
+                    @RequestParam String resourceName,
+                    @RequestParam(required = false) String revision) {
+        return this.fileLogic.getByFilters(fileType, resourceName, revision);
+    }
     @GetMapping("/{id}")
     public byte[] getById(@PathVariable("id") int id) throws Exception {
         return this.fileLogic.getById(id);
-    }
-
-    @GetMapping("/by-filters")
-    public File getFile(@RequestParam FileType fileType, @RequestParam String resourceName, @RequestParam String revision) {
-        return this.fileLogic.getByFilters(fileType, resourceName, revision);
     }
 }
