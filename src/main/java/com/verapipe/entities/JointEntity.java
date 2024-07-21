@@ -3,12 +3,11 @@ package com.verapipe.entities;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.verapipe.dto.Joint;
+import com.verapipe.dto.NdtReport;
 import com.verapipe.enums.UnitOfMeasure;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "joint")
@@ -56,10 +55,8 @@ public class JointEntity {
     private boolean isFitUpDone;
     @Column(name = "is_visual_inspection_done", unique = false, nullable = true)
     private boolean isVisualInspectionDone;
-    @ManyToOne(fetch = FetchType.EAGER)
-    private NdtReportEntity ndtReport;
-    @Column(name = "is_ndt_passed", unique = false, nullable = true)
-    private Boolean isNdtPassed;
+    @OneToMany(mappedBy = "joint")
+    private List<JointNdtWithResultEntity> jointNdtWithResultsList;
     @ManyToOne(fetch = FetchType.EAGER)
     private PreheatEntity preheat;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -95,11 +92,25 @@ public class JointEntity {
         this.date = joint.getDate();
         this.isFitUpDone = joint.isFitUpDone();
         this.isVisualInspectionDone = joint.isVisualInspectionDone();
-        this.ndtReport = new NdtReportEntity(joint.getNdtReport());
-        this.isNdtPassed = joint.isNdtPassed();
+        this.jointNdtWithResultsList = initializeJointNdtWithResultsListWithValues(joint.getNdtReportsWithResults());
         this.preheat = new PreheatEntity(joint.getPreheat());
         this.postWeldHeatTreatment = new PostWeldHeatTreatmentEntity(joint.getPostWeldHeatTreatment());
         this.comments = joint.getComments();
+    }
+
+    private List<JointNdtWithResultEntity> initializeJointNdtWithResultsListWithValues(Map<NdtReport, Boolean> ndtReportsWithResults) {
+        List<JointNdtWithResultEntity> jointNdtWithResultsList = new ArrayList<>();
+        for (Map.Entry<NdtReport, Boolean> ndtReportWithResult : ndtReportsWithResults.entrySet()){
+            JointNdtWithResultEntity jointNdtWithResultEntity = new JointNdtWithResultEntity();
+
+            NdtReportEntity ndtReportEntity = new NdtReportEntity(ndtReportWithResult.getKey());
+            jointNdtWithResultEntity.setNdtReport(ndtReportEntity);
+            jointNdtWithResultEntity.setPassed(ndtReportWithResult.getValue());
+            jointNdtWithResultEntity.setJoint(this);
+
+            jointNdtWithResultsList.add(jointNdtWithResultEntity);
+        }
+        return jointNdtWithResultsList;
     }
 
     private void initializeBaseMaterialCertificateListWithValues(Joint joint) {
@@ -220,14 +231,6 @@ public class JointEntity {
         this.fittingDescription1 = fittingDescription1;
     }
 
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
     public String getFittingDescription2() {
         return fittingDescription2;
     }
@@ -316,20 +319,12 @@ public class JointEntity {
         isVisualInspectionDone = visualInspectionDone;
     }
 
-    public NdtReportEntity getNdtReport() {
-        return ndtReport;
+    public List<JointNdtWithResultEntity> getJointNdtWithResultsList() {
+        return jointNdtWithResultsList;
     }
 
-    public void setNdtReport(NdtReportEntity ndtReport) {
-        this.ndtReport = ndtReport;
-    }
-
-    public Boolean getNdtPassed() {
-        return isNdtPassed;
-    }
-
-    public void setNdtPassed(Boolean ndtPassed) {
-        isNdtPassed = ndtPassed;
+    public void setJointNdtWithResultsList(List<JointNdtWithResultEntity> jointNdtWithResultsList) {
+        this.jointNdtWithResultsList = jointNdtWithResultsList;
     }
 
     public PreheatEntity getPreheat() {
@@ -346,5 +341,13 @@ public class JointEntity {
 
     public void setPostWeldHeatTreatment(PostWeldHeatTreatmentEntity postWeldHeatTreatment) {
         this.postWeldHeatTreatment = postWeldHeatTreatment;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }

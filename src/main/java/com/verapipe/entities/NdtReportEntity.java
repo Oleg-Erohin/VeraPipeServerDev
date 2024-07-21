@@ -18,8 +18,8 @@ public class NdtReportEntity {
     private Date date;
     @ManyToOne(fetch = FetchType.EAGER)
     private NdtTypeEntity ndtType;
-    @OneToMany(mappedBy = "ndtReport", fetch = FetchType.LAZY)
-    private List<JointEntity> jointsList;
+    @OneToMany(mappedBy = "ndtReport")
+    private List<JointNdtWithResultEntity> jointNdtWithResultsList;
 
     public NdtReportEntity() {
     }
@@ -63,11 +63,11 @@ public class NdtReportEntity {
         this.ndtType = ndtType;
     }
 
-    public List<JointEntity> getJointsList() {
-        return jointsList;
+    public List<JointNdtWithResultEntity> getJointNdtWithResultsList() {
+        return jointNdtWithResultsList;
     }
 
-    public void setJointsList(List<JointEntity> jointsList) {
-        this.jointsList = jointsList;
+    public void setJointNdtWithResultsList(List<JointNdtWithResultEntity> jointNdtWithResultsList) {
+        this.jointNdtWithResultsList = jointNdtWithResultsList;
     }
 }
