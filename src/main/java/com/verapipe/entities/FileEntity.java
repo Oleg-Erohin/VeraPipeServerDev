@@ -14,8 +14,8 @@ public class FileEntity {
     private int id;
     @Column(name = "file_type", unique = false, nullable = false)
     private FileType fileType;
-    @Column(name = "resource_name", unique = false, nullable = false)
-    private String resourceName;
+    @Column(name = "resource_id", unique = false, nullable = false)
+    private int resourceId;
     @Column(name = "revision", unique = false, nullable = false)
     private String revision;
     @Lob
@@ -30,7 +30,7 @@ public class FileEntity {
     public FileEntity(File file) {
         this.id = file.getId();
         this.fileType = file.getFileType();
-        this.resourceName = file.getResourceName();
+        this.resourceId = file.getResourceId();
         this.revision = file.getRevision();
         this.file = file.getFile();
         this.uploadDate = file.getUploadDate();
@@ -52,12 +52,12 @@ public class FileEntity {
         this.fileType = fileType;
     }
 
-    public String getResourceName() {
-        return resourceName;
+    public int getResourceId() {
+        return resourceId;
     }
 
-    public void setResourceName(String resourceName) {
-        this.resourceName = resourceName;
+    public void setResourceId(int resourceId) {
+        this.resourceId = resourceId;
     }
 
     public String getRevision() {

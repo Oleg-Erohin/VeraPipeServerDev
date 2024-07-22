@@ -98,11 +98,12 @@ public class BaseMaterialCertificateLogic {
         return baseMaterialCertificates;
     }
 
-    public List<BaseMaterialCertificate> findCertificatesByFilters(List<String> heatNums, List<String> lotNums, List<String> materialTypeNames) throws Exception {
+    public List<BaseMaterialCertificate> findCertificatesByFilters(List<String> names, List<String> heatNums, List<String> lotNums, List<BaseMaterialType> materialTypes) throws Exception {
         Specification<BaseMaterialCertificateEntity> spec = Specification
-                .where(this.baseMaterialCertificateSpecifications.hasHeatNumIn(heatNums))
+                .where(this.baseMaterialCertificateSpecifications.hasNameIn(names))
+                .and(this.baseMaterialCertificateSpecifications.hasHeatNumIn(heatNums))
                 .and(this.baseMaterialCertificateSpecifications.hasLotNumIn(lotNums))
-                .and(this.baseMaterialCertificateSpecifications.hasMaterialTypeNameIn(materialTypeNames));
+                .and(this.baseMaterialCertificateSpecifications.hasMaterialTypeNameIn(materialTypes));
 
         List<BaseMaterialCertificateEntity> baseMaterialCertificateEntities = this.baseMaterialCertificateDal.findAll(spec);
         List<BaseMaterialCertificate> baseMaterialCertificates = convertEntityListToDtoList(baseMaterialCertificateEntities);

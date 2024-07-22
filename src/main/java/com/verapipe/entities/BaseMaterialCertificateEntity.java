@@ -11,6 +11,8 @@ public class BaseMaterialCertificateEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "name", unique = true, nullable = false)
+    private String name;
     @Column(name = "heat_number", unique = true, nullable = false)
     private String heatNum;
     @Column(name = "lot_number", unique = true, nullable = false)
@@ -25,6 +27,7 @@ public class BaseMaterialCertificateEntity {
 
     public BaseMaterialCertificateEntity(BaseMaterialCertificate baseMaterialCertificate) {
         this.id = baseMaterialCertificate.getId();
+        this.name = baseMaterialCertificate.getName();
         this.heatNum = baseMaterialCertificate.getHeatNum();
         this.lotNum = baseMaterialCertificate.getLotNum();
         this.baseMaterialType = new BaseMaterialTypeEntity(baseMaterialCertificate.getMaterialType());
@@ -36,6 +39,14 @@ public class BaseMaterialCertificateEntity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getHeatNum() {
@@ -62,11 +73,11 @@ public class BaseMaterialCertificateEntity {
         this.baseMaterialType = baseMaterialType;
     }
 
-    public void setJointsList(Set<JointEntity> jointsList) {
-        this.jointsList = jointsList;
-    }
-
     public Set<JointEntity> getJointsList() {
         return jointsList;
+    }
+
+    public void setJointsList(Set<JointEntity> jointsList) {
+        this.jointsList = jointsList;
     }
 }

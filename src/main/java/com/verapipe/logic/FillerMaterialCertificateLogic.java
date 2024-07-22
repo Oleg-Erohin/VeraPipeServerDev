@@ -94,9 +94,10 @@ public class FillerMaterialCertificateLogic {
         return fillerMaterialCertificates;
     }
 
-    public List<FillerMaterialCertificate> findCertificatesByFilters(List<String> heatNums, List<String> fillerMaterialTypes, List<String> jointNums) {
+    public List<FillerMaterialCertificate> findCertificatesByFilters(List<String> names, List<String> heatNums, List<FillerMaterialType> fillerMaterialTypes, List<String> jointNums) {
         Specification<FillerMaterialCertificateEntity> spec = Specification
-                .where(this.fillerMaterialCertificateSpecifications.hasHeatNumIn(heatNums))
+                .where(this.fillerMaterialCertificateSpecifications.hasNameIn(names))
+                .and(this.fillerMaterialCertificateSpecifications.hasHeatNumIn(heatNums))
                 .and(this.fillerMaterialCertificateSpecifications.hasFillerMaterialTypeIn(fillerMaterialTypes))
                 .and(this.fillerMaterialCertificateSpecifications.hasJointNumsIn(jointNums));
 

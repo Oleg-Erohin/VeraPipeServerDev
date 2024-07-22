@@ -32,9 +32,9 @@ public class FileController {
     }
     @GetMapping
     public File get(@RequestParam FileType fileType,
-                    @RequestParam String resourceName,
+                    @RequestParam int resourceId,
                     @RequestParam(required = false) String revision) {
-        return this.fileLogic.getByFilters(fileType, resourceName, revision);
+        return this.fileLogic.getByFilters(fileType, resourceId, revision);
     }
     @GetMapping("/{id}")
     public byte[] getById(@PathVariable("id") int id) throws Exception {

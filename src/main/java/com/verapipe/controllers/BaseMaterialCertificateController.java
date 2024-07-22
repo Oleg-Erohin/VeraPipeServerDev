@@ -1,6 +1,7 @@
 package com.verapipe.controllers;
 
 import com.verapipe.dto.BaseMaterialCertificate;
+import com.verapipe.dto.BaseMaterialType;
 import com.verapipe.logic.BaseMaterialCertificateLogic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -44,10 +45,11 @@ public class BaseMaterialCertificateController {
 
     @GetMapping("/by-filters")
     public List<BaseMaterialCertificate> getBaseMaterialCertificates(
-            @RequestParam(required = false) List<String> heatNum,
-            @RequestParam(required = false) List<String> lotNum,
-            @RequestParam(required = false) List<String> materialTypeName) throws Exception {
+            @RequestParam(required = false) List<String> names,
+            @RequestParam(required = false) List<String> heatNums,
+            @RequestParam(required = false) List<String> lotNums,
+            @RequestParam(required = false) List<BaseMaterialType> materialTypes) throws Exception {
 
-        return this.baseMaterialCertificateLogic.findCertificatesByFilters(heatNum, lotNum, materialTypeName);
+        return this.baseMaterialCertificateLogic.findCertificatesByFilters(names, heatNums, lotNums, materialTypes);
     }
 }

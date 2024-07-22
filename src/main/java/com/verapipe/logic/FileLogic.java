@@ -87,12 +87,12 @@ public class FileLogic {
         return files;
     }
 
-    public File getByFilters(FileType fileType, String resourceName, String revision) {
+    public File getByFilters(FileType fileType, int resourceId, String revision) {
         FileEntity fileEntity = new FileEntity();
         if (revision.isEmpty()) {
-            fileEntity = this.fileDal.findTopByFileTypeAndResourceNameOrderByUploadDateDesc(fileType,resourceName);
+            fileEntity = this.fileDal.findTopByFileTypeAndResourceIdOrderByUploadDateDesc(fileType,resourceId);
         } else {
-            fileEntity = this.fileDal.findByFileTypeAndResourceNameAndRevision(fileType, resourceName, revision);
+            fileEntity = this.fileDal.findByFileTypeAndResourceIdAndRevision(fileType, resourceId, revision);
         }
         File file = new File(fileEntity);
         return file;
@@ -101,8 +101,8 @@ public class FileLogic {
 
     private void validations(File file) throws Exception {
         validateFileType(file.getFileType());
-        validateResourceName(file.getFileType(), file.getResourceName());
-        validateRevision(file.getFileType(), file.getResourceName(), file.getRevision());
+        validateResourceName(file.getFileType(), file.getResourceId());
+        validateRevision(file.getFileType(), file.getResourceId(), file.getRevision());
         validateFile(file.getFile());
         validateUploadDate(file.getUploadDate());
     }
@@ -116,7 +116,7 @@ public class FileLogic {
         throw new ApplicationException(ErrorType.FILE_TYPE_DOES_NOT_EXIST);
     }
 
-    private void validateResourceName(FileType fileType, String resourceName) throws ApplicationException {
+    private void validateResourceName(FileType fileType, int resourceId) throws ApplicationException {
 //        boolean doesFileExist = this.fileDal.doesFileExist();
 //        if (!doesFileExist) {
 //            throw new ApplicationException(ErrorType.FILE_DOES_NOT_EXIST);
@@ -129,7 +129,7 @@ public class FileLogic {
         }
     }
 
-    private void validateRevision(FileType fileType, String resourceName, String revision) throws ApplicationException {
+    private void validateRevision(FileType fileType, int resourceId, String revision) throws ApplicationException {
 //        boolean doesExistWithCurrentRevision = this.fileDal.doesExistWithCurrentRevision(fileType, resourceName, revision);
 //        if (doesExistWithCurrentRevision) {
 //            throw new ApplicationException(ErrorType.REVISION_ALREADY_EXISTS);

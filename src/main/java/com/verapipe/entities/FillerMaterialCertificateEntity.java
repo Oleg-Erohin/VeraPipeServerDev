@@ -11,6 +11,8 @@ public class FillerMaterialCertificateEntity {
     @Id
     @GeneratedValue
     private int id;
+    @Column(name = "name", unique = true, nullable = false)
+    private String name;
     @Column(name = "heat_number", unique = true, nullable = false)
     private String heatNum;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -23,6 +25,7 @@ public class FillerMaterialCertificateEntity {
 
     public FillerMaterialCertificateEntity(FillerMaterialCertificate fillerMaterialCertificate) {
         this.id = fillerMaterialCertificate.getId();
+        this.name = fillerMaterialCertificate.getName();
         this.heatNum = fillerMaterialCertificate.getHeatNum();
         this.fillerMaterialType = new FillerMaterialTypeEntity(fillerMaterialCertificate.getMaterialType());
     }
@@ -33,6 +36,14 @@ public class FillerMaterialCertificateEntity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getHeatNum() {

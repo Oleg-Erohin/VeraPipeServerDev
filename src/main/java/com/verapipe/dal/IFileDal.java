@@ -7,8 +7,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface IFileDal extends PagingAndSortingRepository<FileEntity, Integer> {
 
     //    boolean doesExistWithCurrentRevision(FileType fileType, String resourceName, String revision);
-    FileEntity findByFileTypeAndResourceNameAndRevision(FileType fileType, String resourceName, String revision);
-    FileEntity findTopByFileTypeAndResourceNameOrderByUploadDateDesc(FileType fileType, String resourceName);
+    FileEntity findByFileTypeAndResourceIdAndRevision(FileType fileType, int resourceId, String revision);
+    FileEntity findTopByFileTypeAndResourceIdOrderByUploadDateDesc(FileType fileType, int resourceId);
 
 //
 //    boolean doesFileExist();

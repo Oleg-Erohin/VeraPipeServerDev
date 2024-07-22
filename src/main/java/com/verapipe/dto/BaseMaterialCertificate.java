@@ -4,6 +4,7 @@ import com.verapipe.entities.BaseMaterialCertificateEntity;
 
 public class BaseMaterialCertificate {
     private int id;
+    private String name;
     private String heatNum;
     private String lotNum;
     private BaseMaterialType materialType;
@@ -11,14 +12,16 @@ public class BaseMaterialCertificate {
     public BaseMaterialCertificate() {
     }
 
-    public BaseMaterialCertificate(String heatNum, String lotNum, BaseMaterialType materialType) {
+    public BaseMaterialCertificate(String name, String heatNum, String lotNum, BaseMaterialType materialType) {
+        this.name = name;
         this.heatNum = heatNum;
         this.lotNum = lotNum;
         this.materialType = materialType;
     }
 
-    public BaseMaterialCertificate(int id, String heatNum, String lotNum, BaseMaterialType materialType) {
+    public BaseMaterialCertificate(int id, String name, String heatNum, String lotNum, BaseMaterialType materialType) {
         this.id = id;
+        this.name = name;
         this.heatNum = heatNum;
         this.lotNum = lotNum;
         this.materialType = materialType;
@@ -26,6 +29,7 @@ public class BaseMaterialCertificate {
 
     public BaseMaterialCertificate(BaseMaterialCertificateEntity baseMaterialCertificateEntity) {
         this.id = baseMaterialCertificateEntity.getId();
+        this.name = baseMaterialCertificateEntity.getName();
         this.heatNum = baseMaterialCertificateEntity.getHeatNum();
         this.lotNum = baseMaterialCertificateEntity.getLotNum();
         this.materialType = new BaseMaterialType(baseMaterialCertificateEntity.getBaseMaterialType());
@@ -37,6 +41,14 @@ public class BaseMaterialCertificate {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getHeatNum() {
@@ -67,6 +79,7 @@ public class BaseMaterialCertificate {
     public String toString() {
         return "BaseMaterialCertificate{" +
                 "id=" + id +
+                ", name='" + name + '\'' +
                 ", heatNum='" + heatNum + '\'' +
                 ", lotNum='" + lotNum + '\'' +
                 ", materialType=" + materialType +

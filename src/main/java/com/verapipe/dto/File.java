@@ -9,7 +9,7 @@ import java.util.Date;
 public class File {
     private int id;
     private FileType fileType;
-    private String resourceName;
+    private int resourceId;
     private String revision;
     private byte[] file;
     private Date uploadDate;
@@ -17,18 +17,18 @@ public class File {
     public File() {
     }
 
-    public File(FileType fileType, String resourceName, String revision, byte[] file) {
+    public File(FileType fileType, int resourceId, String revision, byte[] file) {
         this.fileType = fileType;
-        this.resourceName = resourceName;
+        this.resourceId = resourceId;
         this.revision = revision;
         this.file = file;
         this.uploadDate = new Date();
     }
 
-    public File(int id, FileType fileType, String resourceName, String revision, byte[] file) {
+    public File(int id, FileType fileType, int resourceId, String revision, byte[] file) {
         this.id = id;
         this.fileType = fileType;
-        this.resourceName = resourceName;
+        this.resourceId = resourceId;
         this.revision = revision;
         this.file = file;
     }
@@ -36,7 +36,7 @@ public class File {
     public File(FileEntity fileEntity) {
         this.id = fileEntity.getId();
         this.fileType = fileEntity.getFileType();
-        this.resourceName = fileEntity.getResourceName();
+        this.resourceId = fileEntity.getResourceId();
         this.revision = fileEntity.getRevision();
         this.file = fileEntity.getFile();
         this.uploadDate = fileEntity.getUploadDate();
@@ -58,12 +58,12 @@ public class File {
         this.fileType = fileType;
     }
 
-    public String getResourceName() {
-        return resourceName;
+    public int getResourceId() {
+        return resourceId;
     }
 
-    public void setResourceName(String fileName) {
-        this.resourceName = fileName;
+    public void setResourceId(int resourceId) {
+        this.resourceId = resourceId;
     }
 
     public String getRevision() {
@@ -95,7 +95,7 @@ public class File {
         return "File{" +
                 "id=" + id +
                 ", fileType=" + fileType +
-                ", resourceName='" + resourceName + '\'' +
+                ", resourceId='" + resourceId + '\'' +
                 ", revision='" + revision + '\'' +
                 ", file=" + Arrays.toString(file) +
                 ", uploadDate=" + uploadDate +
