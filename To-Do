@@ -3,9 +3,6 @@ Important:
 - Create filters functions to all entities - Aviad: FillerMaterialCertificate, Isometric, Joiner, Joint, NdtReport
                                              Aviad: Pid, PWHT, PreHeat, PressureTestPackage, PSP
 - In DTO objects - change to other object rather than identification string (name etc.) - Oleg
-- Redefine/rewrite all validations
-- File - attached with resourceId instead of resourceName - Oleg
-- Add name in BaseMaterialCertificate and FillerMaterialCertificate - Oleg
 - Add get file revisions as List<String> (with the same resourceId and fileType) - Aviad
 
 To Do Later:
@@ -13,6 +10,8 @@ To Do Later:
 - Disable possibility of duplicate values for all
 - Refactor PWHT and PSP names
 - See other solutions to Holder in CommonValidations (Initiate static parameters)
+- Redefine/rewrite all validations
+
 
 
 
@@ -53,3 +52,5 @@ Done:
 - Change Static functions in specifications - Aviad
 - Find how to properly define static parameters in class (Logics in common validations) - Oleg
 - Add file get functionality - Aviad
+- File - attached with resourceId instead of resourceName - Oleg
+- Add name in BaseMaterialCertificate and FillerMaterialCertificate - Oleg
