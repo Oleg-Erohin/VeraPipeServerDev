@@ -1,7 +1,5 @@
 package com.verapipe.entities;
 
-import com.verapipe.dto.Coordinates;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -9,20 +7,17 @@ import java.util.List;
 @Table(name = "test_pack_pids_and_coordinates")
 public class PressureTestPackPidsAndCoordinatesEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pressure_test_package_id", nullable = false)
     private PressureTestPackageEntity pressureTestPackage;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pid_id", nullable = false)
     private PidEntity pid;
 
-    @ElementCollection
-    @CollectionTable(name = "coordinates", joinColumns = @JoinColumn(name = "test_pack_pids_and_coordinates_id"))
-    private List<Coordinates> coordinatesList;
+    @OneToMany(mappedBy = "pressureTestPackPidsAndCoordinates")
+    private List<CoordinatesEntity> coordinatesList;
 
     public PressureTestPackPidsAndCoordinatesEntity() {
     }
@@ -51,11 +46,11 @@ public class PressureTestPackPidsAndCoordinatesEntity {
         this.pid = pid;
     }
 
-    public List<Coordinates> getCoordinatesList() {
+    public List<CoordinatesEntity> getCoordinatesList() {
         return coordinatesList;
     }
 
-    public void setCoordinatesList(List<Coordinates> coordinatesList) {
+    public void setCoordinatesList(List<CoordinatesEntity> coordinatesList) {
         this.coordinatesList = coordinatesList;
     }
 }

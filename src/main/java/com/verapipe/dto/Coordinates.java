@@ -1,5 +1,7 @@
 package com.verapipe.dto;
 
+import com.verapipe.entities.CoordinatesEntity;
+
 import javax.persistence.Embeddable;
 
 @Embeddable
@@ -19,6 +21,13 @@ public class Coordinates {
         this.endCoordinateX = endCoordinateX;
         this.startCoordinateY = startCoordinateY;
         this.endCoordinateY = endCoordinateY;
+    }
+
+    public Coordinates(CoordinatesEntity coordinatesEntity) {
+        this.startCoordinateX = coordinatesEntity.getStartCoordinateX();
+        this.endCoordinateX = coordinatesEntity.getEndCoordinateX();
+        this.startCoordinateY = coordinatesEntity.getStartCoordinateY();
+        this.endCoordinateY = coordinatesEntity.getEndCoordinateY();
     }
 
     public int getId() {

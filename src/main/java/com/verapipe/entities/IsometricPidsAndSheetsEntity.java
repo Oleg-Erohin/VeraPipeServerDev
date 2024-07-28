@@ -11,17 +11,13 @@ public class IsometricPidsAndSheetsEntity {
     private int id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "isometric_id")
     private IsometricEntity isometric;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "pid_id")
     private PidEntity pid;
 
-    @ElementCollection
-    @CollectionTable(name = "isometric_sheets_on_pid", joinColumns = @JoinColumn(name = "isometric_pids_and_sheets_id"))
-    @Column(name = "sheets_on_pid")
-    private List<Integer> sheetsOnPid;
+    @OneToMany(mappedBy = "isometricPidsAndSheets")
+    private List<SheetsInPidWhereIsometricEntity> sheetsOnPid;
 
     public IsometricPidsAndSheetsEntity() {
     }
@@ -50,11 +46,11 @@ public class IsometricPidsAndSheetsEntity {
         this.pid = pid;
     }
 
-    public List<Integer> getSheetsOnPid() {
+    public List<SheetsInPidWhereIsometricEntity> getSheetsOnPid() {
         return sheetsOnPid;
     }
 
-    public void setSheetsOnPid(List<Integer> sheetsOnPid) {
+    public void setSheetsOnPid(List<SheetsInPidWhereIsometricEntity> sheetsOnPid) {
         this.sheetsOnPid = sheetsOnPid;
     }
 }
