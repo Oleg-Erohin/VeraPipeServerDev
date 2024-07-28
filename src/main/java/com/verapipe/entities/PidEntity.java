@@ -3,10 +3,7 @@ package com.verapipe.entities;
 import com.verapipe.dto.Pid;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "pid")
@@ -14,22 +11,33 @@ public class PidEntity {
     @Id
     @GeneratedValue
     private int id;
+
     @Column(name = "name", unique = true, nullable = false)
     private String name;
+
     @Column(name = "revision", unique = false, nullable = false)
     private String revision;
+
     @Column(name = "date", unique = false, nullable = false)
     private Date date;
+
     @Column(name = "sheets", unique = false, nullable = false)
     private int sheets;
+
     @Column(name = "comments", unique = false, nullable = true, columnDefinition="TEXT")
     private String comments;
-    @ManyToMany(mappedBy = "pidsList", fetch = FetchType.LAZY)
-    private Set<IsometricEntity> isometricDrawingsList;
+
+    @OneToMany(mappedBy = "pid", fetch = FetchType.LAZY)
+    private List<IsometricPidsAndSheetsEntity> isometricPidsAndSheets;
+
     @OneToMany(mappedBy = "pid", fetch = FetchType.LAZY)
     private List<JointEntity> JointsList;
+
     @ManyToMany(mappedBy = "pidsList", fetch = FetchType.LAZY)
     private Set<PressureTestPackageEntity> pressureTestPackagesList;
+
+    @OneToMany(mappedBy = "pid")
+    private List<PressureTestPackPidsAndCoordinatesEntity> pressureTestPackPidsAndCoordinatesList;
 
     public PidEntity() {
     }
@@ -40,8 +48,6 @@ public class PidEntity {
         this.revision = pid.getRevision();
         this.date = pid.getDate();
         this.sheets = pid.getSheets();
-        this.isometricDrawingsList = new HashSet<>();
-        this.pressureTestPackagesList = new HashSet<>();
         this.comments = pid.getComments();
     }
 
@@ -85,12 +91,20 @@ public class PidEntity {
         this.sheets = sheets;
     }
 
-    public Set<IsometricEntity> getIsometricDrawingsList() {
-        return isometricDrawingsList;
+    public String getComments() {
+        return comments;
     }
 
-    public void setIsometricDrawingsList(Set<IsometricEntity> isometricDrawingsList) {
-        this.isometricDrawingsList = isometricDrawingsList;
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public List<IsometricPidsAndSheetsEntity> getIsometricPidsAndSheets() {
+        return isometricPidsAndSheets;
+    }
+
+    public void setIsometricPidsAndSheets(List<IsometricPidsAndSheetsEntity> isometricPidsAndSheets) {
+        this.isometricPidsAndSheets = isometricPidsAndSheets;
     }
 
     public List<JointEntity> getJointsList() {
@@ -109,11 +123,11 @@ public class PidEntity {
         this.pressureTestPackagesList = pressureTestPackagesList;
     }
 
-    public String getComments() {
-        return comments;
+    public List<PressureTestPackPidsAndCoordinatesEntity> getPressureTestPackPidsAndCoordinatesList() {
+        return pressureTestPackPidsAndCoordinatesList;
     }
 
-    public void setComments(String comments) {
-        this.comments = comments;
+    public void setPressureTestPackPidsAndCoordinatesList(List<PressureTestPackPidsAndCoordinatesEntity> pressureTestPackPidsAndCoordinatesList) {
+        this.pressureTestPackPidsAndCoordinatesList = pressureTestPackPidsAndCoordinatesList;
     }
 }

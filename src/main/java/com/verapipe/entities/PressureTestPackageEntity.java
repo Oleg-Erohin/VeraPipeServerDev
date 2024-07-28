@@ -17,16 +17,24 @@ public class PressureTestPackageEntity {
     @Id
     @GeneratedValue
     private int id;
+
     @Column(name = "name", unique = true, nullable = false)
     private String name;
+
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<PidEntity> pidsList;
+
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<IsometricEntity> isometricsList;
+
     @Column(name = "coordinates", unique = true, nullable = true)
     private String coordinatesInPids;
+
     @Column(name = "date", nullable = false)
     private Date date;
+
+    @OneToMany(mappedBy = "pressureTestPackage")
+    private List<PressureTestPackPidsAndCoordinatesEntity> pressureTestPackPidsAndCoordinatesList;
 
     public PressureTestPackageEntity() {
     }
@@ -95,5 +103,13 @@ public class PressureTestPackageEntity {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public List<PressureTestPackPidsAndCoordinatesEntity> getPressureTestPackPidsAndCoordinatesList() {
+        return pressureTestPackPidsAndCoordinatesList;
+    }
+
+    public void setPressureTestPackPidsAndCoordinatesList(List<PressureTestPackPidsAndCoordinatesEntity> pressureTestPackPidsAndCoordinatesList) {
+        this.pressureTestPackPidsAndCoordinatesList = pressureTestPackPidsAndCoordinatesList;
     }
 }

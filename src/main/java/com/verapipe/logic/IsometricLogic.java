@@ -129,7 +129,7 @@ public class IsometricLogic {
         validateIsometricName(isometric.getName());
 
         if (isometric.getPidsAndSheets() != null) {
-            validateIsometricPidSheets(isometric.getPidsAndSheets());
+//            validateIsometricPidSheets(isometric.getPidsAndSheets());
         }
 
         validateIsometricRevision(isometric.getRevision());
