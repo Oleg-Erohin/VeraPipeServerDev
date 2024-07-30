@@ -26,6 +26,8 @@ public class CoordinatesEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private PressureTestPackPidsAndCoordinatesEntity pressureTestPackPidsAndCoordinates;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private IsometricEntity isometric;
 
     public CoordinatesEntity() {
     }
@@ -91,5 +93,13 @@ public class CoordinatesEntity {
 
     public void setPressureTestPackPidsAndCoordinates(PressureTestPackPidsAndCoordinatesEntity pressureTestPackPidsAndCoordinates) {
         this.pressureTestPackPidsAndCoordinates = pressureTestPackPidsAndCoordinates;
+    }
+
+    public IsometricEntity getIsometric() {
+        return isometric;
+    }
+
+    public void setIsometric(IsometricEntity isometric) {
+        this.isometric = isometric;
     }
 }

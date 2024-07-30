@@ -1,8 +1,7 @@
 package com.verapipe.dto;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.verapipe.entities.CoordinatesEntity;
 import com.verapipe.entities.IsometricEntity;
 import com.verapipe.entities.IsometricPidsAndSheetsEntity;
 import com.verapipe.entities.SheetsInPidWhereIsometricEntity;
@@ -57,12 +56,20 @@ public class Isometric {
         this.date = isometricEntity.getDate();
         this.sheets = isometricEntity.getSheets();
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        this.coordinatesInPid = objectMapper.readValue(isometricEntity.getCoordinatesInPid(), new TypeReference<List<Coordinates>>() {
-        });
+        this.coordinatesInPid = initializeCoordinatesInPid(isometricEntity.getCoordinatesInPid());
 
         this.isApproved = isometricEntity.isApproved();
         this.comments = isometricEntity.getComments();
+    }
+
+    private List<Coordinates> initializeCoordinatesInPid(List<CoordinatesEntity> coordinatesInPid) {
+        List<Coordinates> tempCoordinatesList = new ArrayList<>();
+        for (CoordinatesEntity coordinatesEntity : coordinatesInPid) {
+            Coordinates tempCoordinates = new Coordinates(coordinatesEntity);
+            tempCoordinatesList.add(tempCoordinates);
+        }
+        return tempCoordinatesList;
+
     }
 
     private Map<Pid, List<Integer>> initializePidsAndSheets(List<IsometricPidsAndSheetsEntity> isometricPidsAndSheets) {
@@ -71,7 +78,7 @@ public class Isometric {
         for (IsometricPidsAndSheetsEntity pidAndSheets : isometricPidsAndSheets) {
             Pid tempPid = new Pid(pidAndSheets.getPid());
             List<Integer> tempSheetsOnPid = new ArrayList<>();
-            for (SheetsInPidWhereIsometricEntity sheetInPidWhereIsometric : pidAndSheets.getSheetsOnPid()){
+            for (SheetsInPidWhereIsometricEntity sheetInPidWhereIsometric : pidAndSheets.getSheetsOnPid()) {
                 Integer tempSheetInPid = sheetInPidWhereIsometric.getSheet();
                 tempSheetsOnPid.add(tempSheetInPid);
             }
