@@ -121,7 +121,7 @@ public class FillerMaterialCertificateLogic {
 
     private void validations(FillerMaterialCertificate fillerMaterialCertificate) throws Exception {
         validateFillerMaterialCertificateHeatNum(fillerMaterialCertificate.getHeatNum());
-        validateFillerMaterialCertificateMaterialTypeName(fillerMaterialCertificate.getMaterialType());
+        validateFillerMaterialCertificateMaterialTypeName(fillerMaterialCertificate.getFillerMaterialType());
     }
 
     private void validateFillerMaterialCertificateMaterialTypeName(FillerMaterialType materialType) throws Exception {

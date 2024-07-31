@@ -126,7 +126,7 @@ public class BaseMaterialCertificateLogic {
         if (baseMaterialCertificate.getLotNum() != null) {
             validateBaseMaterialCertificateHeatOrLotNum(baseMaterialCertificate.getLotNum());
         }
-        validateBaseMaterialCertificateMaterialType(baseMaterialCertificate.getMaterialType());
+        validateBaseMaterialCertificateMaterialType(baseMaterialCertificate.getBaseMaterialType());
     }
 
     private void validateBaseMaterialCertificateMaterialType(BaseMaterialType materialType) throws Exception {

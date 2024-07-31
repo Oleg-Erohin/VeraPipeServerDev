@@ -30,7 +30,7 @@ public class BaseMaterialCertificateEntity {
         this.name = baseMaterialCertificate.getName();
         this.heatNum = baseMaterialCertificate.getHeatNum();
         this.lotNum = baseMaterialCertificate.getLotNum();
-        this.baseMaterialType = new BaseMaterialTypeEntity(baseMaterialCertificate.getMaterialType());
+        this.baseMaterialType = new BaseMaterialTypeEntity(baseMaterialCertificate.getBaseMaterialType());
     }
 
     public int getId() {

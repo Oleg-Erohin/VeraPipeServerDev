@@ -7,24 +7,24 @@ public class BaseMaterialCertificate {
     private String name;
     private String heatNum;
     private String lotNum;
-    private BaseMaterialType materialType;
+    private BaseMaterialType baseMaterialType;
 
     public BaseMaterialCertificate() {
     }
 
-    public BaseMaterialCertificate(String name, String heatNum, String lotNum, BaseMaterialType materialType) {
+    public BaseMaterialCertificate(String name, String heatNum, String lotNum, BaseMaterialType baseMaterialType) {
         this.name = name;
         this.heatNum = heatNum;
         this.lotNum = lotNum;
-        this.materialType = materialType;
+        this.baseMaterialType = baseMaterialType;
     }
 
-    public BaseMaterialCertificate(int id, String name, String heatNum, String lotNum, BaseMaterialType materialType) {
+    public BaseMaterialCertificate(int id, String name, String heatNum, String lotNum, BaseMaterialType baseMaterialType) {
         this.id = id;
         this.name = name;
         this.heatNum = heatNum;
         this.lotNum = lotNum;
-        this.materialType = materialType;
+        this.baseMaterialType = baseMaterialType;
     }
 
     public BaseMaterialCertificate(BaseMaterialCertificateEntity baseMaterialCertificateEntity) {
@@ -32,7 +32,7 @@ public class BaseMaterialCertificate {
         this.name = baseMaterialCertificateEntity.getName();
         this.heatNum = baseMaterialCertificateEntity.getHeatNum();
         this.lotNum = baseMaterialCertificateEntity.getLotNum();
-        this.materialType = new BaseMaterialType(baseMaterialCertificateEntity.getBaseMaterialType());
+        this.baseMaterialType = new BaseMaterialType(baseMaterialCertificateEntity.getBaseMaterialType());
     }
 
     public int getId() {
@@ -67,12 +67,12 @@ public class BaseMaterialCertificate {
         this.lotNum = lotNum;
     }
 
-    public BaseMaterialType getMaterialType() {
-        return materialType;
+    public BaseMaterialType getBaseMaterialType() {
+        return baseMaterialType;
     }
 
-    public void setMaterialType(BaseMaterialType materialType) {
-        this.materialType = materialType;
+    public void setBaseMaterialType(BaseMaterialType baseMaterialType) {
+        this.baseMaterialType = baseMaterialType;
     }
 
     @Override
@@ -82,7 +82,7 @@ public class BaseMaterialCertificate {
                 ", name='" + name + '\'' +
                 ", heatNum='" + heatNum + '\'' +
                 ", lotNum='" + lotNum + '\'' +
-                ", materialType=" + materialType +
+                ", baseMaterialType=" + baseMaterialType +
                 '}';
     }
 }

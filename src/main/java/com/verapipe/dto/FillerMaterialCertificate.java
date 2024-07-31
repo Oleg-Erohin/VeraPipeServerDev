@@ -6,29 +6,29 @@ public class FillerMaterialCertificate {
     private int id;
     private String name;
     private String heatNum;
-    private FillerMaterialType materialType;
+    private FillerMaterialType fillerMaterialType;
 
     public FillerMaterialCertificate() {
     }
 
-    public FillerMaterialCertificate(String name, String heatNum, FillerMaterialType materialType) {
+    public FillerMaterialCertificate(String name, String heatNum, FillerMaterialType fillerMaterialType) {
         this.name = name;
         this.heatNum = heatNum;
-        this.materialType = materialType;
+        this.fillerMaterialType = fillerMaterialType;
     }
 
-    public FillerMaterialCertificate(int id, String name, String heatNum, byte[] file, FillerMaterialType materialType) {
+    public FillerMaterialCertificate(int id, String name, String heatNum, byte[] file, FillerMaterialType fillerMaterialType) {
         this.id = id;
         this.name = name;
         this.heatNum = heatNum;
-        this.materialType = materialType;
+        this.fillerMaterialType = fillerMaterialType;
     }
 
     public FillerMaterialCertificate(FillerMaterialCertificateEntity fillerMaterialCertificateEntity) {
         this.id = fillerMaterialCertificateEntity.getId();
         this.name = fillerMaterialCertificateEntity.getName();
         this.heatNum = fillerMaterialCertificateEntity.getHeatNum();
-        this.materialType = new FillerMaterialType(fillerMaterialCertificateEntity.getFillerMaterialType());
+        this.fillerMaterialType = new FillerMaterialType(fillerMaterialCertificateEntity.getFillerMaterialType());
     }
 
     public int getId() {
@@ -55,12 +55,12 @@ public class FillerMaterialCertificate {
         this.heatNum = heatNum;
     }
 
-    public FillerMaterialType getMaterialType() {
-        return materialType;
+    public FillerMaterialType getFillerMaterialType() {
+        return fillerMaterialType;
     }
 
-    public void setMaterialType(FillerMaterialType materialType) {
-        this.materialType = materialType;
+    public void setFillerMaterialType(FillerMaterialType fillerMaterialType) {
+        this.fillerMaterialType = fillerMaterialType;
     }
 
     @Override
@@ -69,7 +69,7 @@ public class FillerMaterialCertificate {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", heatNum='" + heatNum + '\'' +
-                ", materialType=" + materialType +
+                ", fillerMaterialType=" + fillerMaterialType +
                 '}';
     }
 }
