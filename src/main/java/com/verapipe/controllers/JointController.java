@@ -1,9 +1,8 @@
 package com.verapipe.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.verapipe.dto.Joint;
-import com.verapipe.entities.*;
-import com.verapipe.enums.UnitOfMeasure;
+import com.verapipe.dto.*;
+import com.verapipe.entities.NdtReportEntity;
 import com.verapipe.logic.JointLogic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -49,32 +48,27 @@ public class JointController {
 
     @GetMapping("/by-filters")
     public List<Joint> getJoints(
-            @RequestParam(required = false) Integer number,
-            @RequestParam(required = false) String coordinatesOnIsometric,
-            @RequestParam(required = false) PidEntity pid,
-            @RequestParam(required = false) IsometricEntity isometric,
-            @RequestParam(required = false) Integer sheetOnIsometric,
-            @RequestParam(required = false) UnitOfMeasure uom,
-            @RequestParam(required = false) String schedule,
-            @RequestParam(required = false) Float diameter,
-            @RequestParam(required = false) String fittingDescription1,
-            @RequestParam(required = false) String comments,
-            @RequestParam(required = false) String fittingDescription2,
-            @RequestParam(required = false) Set<BaseMaterialTypeEntity> baseMaterialTypeList,
-            @RequestParam(required = false) Set<BaseMaterialCertificateEntity> baseMaterialCertificateList,
-            @RequestParam(required = false) Float thickness,
-            @RequestParam(required = false) Set<FillerMaterialTypeEntity> fillerMaterialTypeList,
-            @RequestParam(required = false) Set<FillerMaterialCertificateEntity> fillerMaterialCertificateList,
-            @RequestParam(required = false) ProcessSpecificationProcedureEntity processSpecificationProcedure,
-            @RequestParam(required = false) Set<JoinerEntity> joinersList,
-            @RequestParam(required = false) Date date,
+            @RequestParam(required = false) Set<Integer> numbers,
+            @RequestParam(required = false) Set<Pid> pids,
+            @RequestParam(required = false) Set<Isometric> isometrics,
+            @RequestParam(required = false) Set<String> schedules,
+            @RequestParam(required = false) Set<Float> diameters,
+            @RequestParam(required = false) Set<String> fittingDescriptions,
+            @RequestParam(required = false) Set<BaseMaterialType> baseMaterialTypes,
+            @RequestParam(required = false) Set<BaseMaterialCertificate> baseMaterialCertificates,
+            @RequestParam(required = false) Set<Float> thicknesses,
+            @RequestParam(required = false) Set<FillerMaterialType> fillerMaterialTypes,
+            @RequestParam(required = false) Set<FillerMaterialCertificate> fillerMaterialCertificates,
+            @RequestParam(required = false) Set<ProcessSpecificationProcedure> processSpecificationProcedures,
+            @RequestParam(required = false) Set<Joiner> joiners,
+            @RequestParam(required = false) Set<Date> dates,
             @RequestParam(required = false) Boolean isFitUpDone,
             @RequestParam(required = false) Boolean isVisualInspectionDone,
-            @RequestParam(required = false) NdtReportEntity ndtReport,
+            @RequestParam(required = false) Set<NdtReportEntity> ndtReports,
             @RequestParam(required = false) Boolean isNdtPassed,
-            @RequestParam(required = false) PreheatEntity preheat,
-            @RequestParam(required = false) PostWeldHeatTreatmentEntity postWeldHeatTreatment) throws JsonProcessingException {
+            @RequestParam(required = false) Set<Preheat> preheats,
+            @RequestParam(required = false) Set<PostWeldHeatTreatment> postWeldHeatTreatments) throws JsonProcessingException {
 
-        return this.jointLogic.findJointsByFilters(number, coordinatesOnIsometric, pid, isometric, sheetOnIsometric, uom, schedule, diameter, fittingDescription1, comments, fittingDescription2, baseMaterialTypeList, baseMaterialCertificateList, thickness, fillerMaterialTypeList, fillerMaterialCertificateList, processSpecificationProcedure, joinersList, date, isFitUpDone, isVisualInspectionDone, ndtReport, isNdtPassed, preheat, postWeldHeatTreatment);
+        return this.jointLogic.findJointsByFilters(numbers, pids, isometrics, schedules, diameters, fittingDescriptions, baseMaterialTypes, baseMaterialCertificates, thicknesses, fillerMaterialTypes, fillerMaterialCertificates, processSpecificationProcedures, joiners, dates, isFitUpDone, isVisualInspectionDone, ndtReports, isNdtPassed, preheats, postWeldHeatTreatments);
     }
 }

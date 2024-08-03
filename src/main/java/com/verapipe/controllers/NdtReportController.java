@@ -1,14 +1,14 @@
 package com.verapipe.controllers;
 
 import com.verapipe.dto.NdtReport;
-import com.verapipe.entities.JointEntity;
-import com.verapipe.entities.NdtTypeEntity;
+import com.verapipe.dto.NdtType;
 import com.verapipe.logic.NdtReportLogic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/ndt-reports")
@@ -47,11 +47,10 @@ public class NdtReportController {
 
     @GetMapping("/by-filters")
     public List<NdtReport> getNdtReports(
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) Date date,
-            @RequestParam(required = false) NdtTypeEntity ndtType,
-            @RequestParam(required = false) List<JointEntity> jointsList) {
+            @RequestParam(required = false) Set<String> names,
+            @RequestParam(required = false) Set<Date> dates,
+            @RequestParam(required = false) Set<NdtType> ndtTypes) {
 
-        return this.ndtReportLogic.findNdtReportsByFilters(name, date, ndtType, jointsList);
+        return this.ndtReportLogic.findNdtReportsByFilters(names, dates, ndtTypes);
     }
 }

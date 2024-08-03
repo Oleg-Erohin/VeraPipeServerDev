@@ -6,7 +6,7 @@ import com.verapipe.dto.BaseMaterialType;
 import com.verapipe.dto.FusionProcess;
 import com.verapipe.dto.Joiner;
 import com.verapipe.dto.JointDesign;
-import com.verapipe.entities.*;
+import com.verapipe.entities.JoinerEntity;
 import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.specifications.JoinerSpecifications;
@@ -96,18 +96,16 @@ public class JoinerLogic {
         return joiners;
     }
 
-    public List<Joiner> findJoinersByFilters(Set<String> tagIds, Float certifiedDiameterMinMm, Float certifiedDiameterMaxMm, Float certifiedDiameterMinInch, Float certifiedDiameterMaxInch, Float maxDepositedMaterial, Set<BaseMaterialTypeEntity> baseMaterialTypes, JointDesignEntity jointDesign, FusionProcessEntity fusionProcess, Set<JointEntity> joints) {
+    public List<Joiner> findJoinersByFilters(Set<String> tagIds, Set<Float> certifiedDiameterMin, Set<Float> certifiedDiameterMax, Set<Float> maxDepositedMaterial, Set<BaseMaterialType> baseMaterialTypes, Set<JointDesign> jointDesigns, Set<FusionProcess> fusionProcesses) {
         Specification<JoinerEntity> spec = Specification
                 .where(joinerSpecifications.hasTagIdIn(tagIds))
-                .and(joinerSpecifications.hasCertifiedDiameterMinMm(certifiedDiameterMinMm))
-                .and(joinerSpecifications.hasCertifiedDiameterMaxMm(certifiedDiameterMaxMm))
-                .and(joinerSpecifications.hasCertifiedDiameterMinInch(certifiedDiameterMinInch))
-                .and(joinerSpecifications.hasCertifiedDiameterMaxInch(certifiedDiameterMaxInch))
+                .and(joinerSpecifications.hasCertifiedDiameterMin(certifiedDiameterMin))
+                .and(joinerSpecifications.hasCertifiedDiameterMax(certifiedDiameterMax))
                 .and(joinerSpecifications.hasMaxDepositedMaterial(maxDepositedMaterial))
                 .and(joinerSpecifications.hasBaseMaterialTypesIn(baseMaterialTypes))
-                .and(joinerSpecifications.hasJointDesign(jointDesign))
-                .and(joinerSpecifications.hasFusionProcess(fusionProcess))
-                .and(joinerSpecifications.hasJointsIn(joints));
+                .and(joinerSpecifications.hasJointDesignsIn(jointDesigns))
+                .and(joinerSpecifications.hasFusionProcessesIn(fusionProcesses));
+
         List<JoinerEntity> joinerEntities = this.joinerDal.findAll(spec);
         List<Joiner> joiners = convertEntityListToDtoList(joinerEntities);
         return joiners;
@@ -122,7 +120,6 @@ public class JoinerLogic {
         }
         return joiners;
     }
-
 
     private void validations(Joiner joiner) throws Exception {
         validateJoinerTagId(joiner.getTagId());

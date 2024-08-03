@@ -111,37 +111,55 @@ public class JointLogic {
         return joints;
     }
 
-    public List<Joint> findJointsByFilters(Integer number, String coordinatesOnIsometric, PidEntity pid, IsometricEntity isometric, Integer sheetOnIsometric, UnitOfMeasure uom, String schedule, Float diameter, String fittingDescription1, String comments, String fittingDescription2, Set<BaseMaterialTypeEntity> baseMaterialTypeList, Set<BaseMaterialCertificateEntity> baseMaterialCertificateList, Float thickness, Set<FillerMaterialTypeEntity> fillerMaterialTypeList, Set<FillerMaterialCertificateEntity> fillerMaterialCertificateList, ProcessSpecificationProcedureEntity processSpecificationProcedure, Set<JoinerEntity> joinersList, Date date, Boolean isFitUpDone, Boolean isVisualInspectionDone, NdtReportEntity ndtReport, Boolean isNdtPassed, PreheatEntity preheat, PostWeldHeatTreatmentEntity postWeldHeatTreatment) throws JsonProcessingException {
+    public List<Joint> findJointsByFilters(
+            Set<Integer> numbers,
+            Set<Pid> pids,
+            Set<Isometric> isometrics,
+            Set<String> schedules,
+            Set<Float> diameters,
+            Set<String> fittingDescriptions,
+            Set<BaseMaterialType> baseMaterialTypes,
+            Set<BaseMaterialCertificate> baseMaterialCertificates,
+            Set<Float> thicknesses,
+            Set<FillerMaterialType> fillerMaterialTypes,
+            Set<FillerMaterialCertificate> fillerMaterialCertificates,
+            Set<ProcessSpecificationProcedure> processSpecificationProcedures,
+            Set<Joiner> joiners,
+            Set<Date> dates,
+            Boolean isFitUpDone,
+            Boolean isVisualInspectionDone,
+            Set<NdtReportEntity> ndtReports,
+            Boolean isNdtPassed,
+            Set<Preheat> preheats,
+            Set<PostWeldHeatTreatment> postWeldHeatTreatments
+    ) throws JsonProcessingException {
         Specification<JointEntity> spec = Specification
-                .where(jointSpecifications.hasNumber(number))
-                .and(jointSpecifications.hasCoordinatesOnIsometric(coordinatesOnIsometric))
-                .and(jointSpecifications.hasPid(pid))
-                .and(jointSpecifications.hasIsometric(isometric))
-                .and(jointSpecifications.hasSheetOnIsometric(sheetOnIsometric))
-                .and(jointSpecifications.hasUom(uom))
-                .and(jointSpecifications.hasSchedule(schedule))
-                .and(jointSpecifications.hasDiameter(diameter))
-                .and(jointSpecifications.hasFittingDescription1(fittingDescription1))
-                .and(jointSpecifications.hasComments(comments))
-                .and(jointSpecifications.hasFittingDescription2(fittingDescription2))
-                .and(jointSpecifications.hasBaseMaterialTypesIn(baseMaterialTypeList))
-                .and(jointSpecifications.hasBaseMaterialCertificatesIn(baseMaterialCertificateList))
-                .and(jointSpecifications.hasThickness(thickness))
-                .and(jointSpecifications.hasFillerMaterialTypesIn(fillerMaterialTypeList))
-                .and(jointSpecifications.hasFillerMaterialCertificatesIn(fillerMaterialCertificateList))
-                .and(jointSpecifications.hasProcessSpecificationProcedure(processSpecificationProcedure))
-                .and(jointSpecifications.hasJoinersIn(joinersList))
-                .and(jointSpecifications.hasDate(date))
+                .where(jointSpecifications.hasNumbersIn(numbers))
+                .and(jointSpecifications.hasPidsIn(pids))
+                .and(jointSpecifications.hasIsometricsIn(isometrics))
+                .and(jointSpecifications.hasSchedulesIn(schedules))
+                .and(jointSpecifications.hasDiametersIn(diameters))
+                .and(jointSpecifications.hasFittingDescriptionsIn(fittingDescriptions))
+                .and(jointSpecifications.hasBaseMaterialTypesIn(baseMaterialTypes))
+                .and(jointSpecifications.hasBaseMaterialCertificatesIn(baseMaterialCertificates))
+                .and(jointSpecifications.hasThicknessesIn(thicknesses))
+                .and(jointSpecifications.hasFillerMaterialTypesIn(fillerMaterialTypes))
+                .and(jointSpecifications.hasFillerMaterialCertificatesIn(fillerMaterialCertificates))
+                .and(jointSpecifications.hasProcessSpecificationProceduresIn(processSpecificationProcedures))
+                .and(jointSpecifications.hasJoinersIn(joiners))
+                .and(jointSpecifications.hasDatesIn(dates))
                 .and(jointSpecifications.isFitUpDone(isFitUpDone))
                 .and(jointSpecifications.isVisualInspectionDone(isVisualInspectionDone))
-                .and(jointSpecifications.hasNdtReport(ndtReport))
+                .and(jointSpecifications.hasNdtReportsIn(ndtReports))
                 .and(jointSpecifications.isNdtPassed(isNdtPassed))
-                .and(jointSpecifications.hasPreheat(preheat))
-                .and(jointSpecifications.hasPostWeldHeatTreatment(postWeldHeatTreatment));
+                .and(jointSpecifications.hasPreheatsIn(preheats))
+                .and(jointSpecifications.hasPostWeldHeatTreatmentsIn(postWeldHeatTreatments));
+
         List<JointEntity> jointEntities = this.jointDal.findAll(spec);
-        List<Joint>joints = convertEntityListToDtoList(jointEntities);
+        List<Joint> joints = convertEntityListToDtoList(jointEntities);
         return joints;
     }
+
 
     private List<Joint> convertEntityListToDtoList(List<JointEntity> jointEntities) throws JsonProcessingException {
         List<Joint>joints = new ArrayList<>();

@@ -1,8 +1,8 @@
 package com.verapipe.specifications;
 
+import com.verapipe.dto.Pid;
 import com.verapipe.entities.IsometricEntity;
 import com.verapipe.entities.JointEntity;
-import com.verapipe.entities.PidEntity;
 import com.verapipe.entities.PressureTestPackageEntity;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -50,7 +50,7 @@ public class IsometricSpecifications {
                 comments == null ? null : root.get("comments").in(comments);
     }
 
-    public Specification<IsometricEntity> hasPidsIn(Set<PidEntity> pids) {
+    public Specification<IsometricEntity> hasPidsIn(Set<Pid> pids) {
         return (root, query, criteriaBuilder) -> {
             if (pids == null) {
                 return null;

@@ -30,15 +30,4 @@ public class FillerMaterialCertificateSpecifications {
             }
         };
     }
-
-    public Specification<FillerMaterialCertificateEntity> hasJointNumsIn(List<String> jointNums) {
-        return (root, query, criteriaBuilder) -> {
-            if (jointNums == null) {
-                return null;
-            } else {
-                query.distinct(true);
-                return root.join("jointsList", JoinType.LEFT).get("jointNum").in(jointNums);
-            }
-        };
-    }
 }

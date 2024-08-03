@@ -1,8 +1,6 @@
 Important:
-- Joint - change ndt to Map - Aviad
-- Create filters functions to all entities - Aviad: FillerMaterialCertificate, Isometric, Joiner, Joint, NdtReport
-                                             Aviad: Pid, PWHT, PreHeat, PressureTestPackage, PSP
-- In DTO objects - change to other object rather than identification string (name etc.) - Oleg
+- Create filters functions to all entities - Oleg: FillerMaterialCertificate, Isometric, Joiner, Joint, NdtReport
+                                             Oleg: Pid, PWHT, PreHeat, PressureTestPackage, PSP
 - Add get file revisions as List<String> (with the same resourceId and fileType) - Aviad
 
 To Do Later:
@@ -54,3 +52,5 @@ Done:
 - Add file get functionality - Aviad
 - File - attached with resourceId instead of resourceName - Oleg
 - Add name in BaseMaterialCertificate and FillerMaterialCertificate - Oleg
+- In DTO objects - change to other object rather than identification string (name etc.) - Oleg
+- Joint - change ndt to Map - Aviad

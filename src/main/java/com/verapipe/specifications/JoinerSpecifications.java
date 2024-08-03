@@ -1,11 +1,15 @@
 package com.verapipe.specifications;
 
-import com.verapipe.entities.*;
+import com.verapipe.dto.BaseMaterialType;
+import com.verapipe.dto.FusionProcess;
+import com.verapipe.dto.JointDesign;
+import com.verapipe.entities.JoinerEntity;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.JoinType;
 import java.util.Set;
+
 @Service
 public class JoinerSpecifications {
     public Specification<JoinerEntity> hasTagIdIn(Set<String> tagIds) {
@@ -13,32 +17,22 @@ public class JoinerSpecifications {
                 tagIds == null ? null : root.get("tagId").in(tagIds);
     }
 
-    public Specification<JoinerEntity> hasCertifiedDiameterMinMm(Float certifiedDiameterMinMm) {
+    public Specification<JoinerEntity> hasCertifiedDiameterMin(Set<Float> certifiedDiameterMin) {
         return (root, query, criteriaBuilder) ->
-                certifiedDiameterMinMm == null ? null : criteriaBuilder.equal(root.get("certifiedDiameterMinMm"), certifiedDiameterMinMm);
+                certifiedDiameterMin == null ? null : root.get("certifiedDiameterMin").in(certifiedDiameterMin);
     }
 
-    public Specification<JoinerEntity> hasCertifiedDiameterMaxMm(Float certifiedDiameterMaxMm) {
+    public Specification<JoinerEntity> hasCertifiedDiameterMax(Set<Float> certifiedDiameterMax) {
         return (root, query, criteriaBuilder) ->
-                certifiedDiameterMaxMm == null ? null : criteriaBuilder.equal(root.get("certifiedDiameterMaxMm"), certifiedDiameterMaxMm);
+                certifiedDiameterMax == null ? null : root.get("certifiedDiameterMax").in(certifiedDiameterMax);
     }
 
-    public Specification<JoinerEntity> hasCertifiedDiameterMinInch(Float certifiedDiameterMinInch) {
+    public Specification<JoinerEntity> hasMaxDepositedMaterial(Set<Float> maxDepositedMaterial) {
         return (root, query, criteriaBuilder) ->
-                certifiedDiameterMinInch == null ? null : criteriaBuilder.equal(root.get("certifiedDiameterMinInch"), certifiedDiameterMinInch);
+                maxDepositedMaterial == null ? null : root.get("maxDepositedMaterial").in(maxDepositedMaterial);
     }
 
-    public Specification<JoinerEntity> hasCertifiedDiameterMaxInch(Float certifiedDiameterMaxInch) {
-        return (root, query, criteriaBuilder) ->
-                certifiedDiameterMaxInch == null ? null : criteriaBuilder.equal(root.get("certifiedDiameterMaxInch"), certifiedDiameterMaxInch);
-    }
-
-    public Specification<JoinerEntity> hasMaxDepositedMaterial(Float maxDepositedMaterial) {
-        return (root, query, criteriaBuilder) ->
-                maxDepositedMaterial == null ? null : criteriaBuilder.equal(root.get("maxDepositedMaterial"), maxDepositedMaterial);
-    }
-
-    public Specification<JoinerEntity> hasBaseMaterialTypesIn(Set<BaseMaterialTypeEntity> baseMaterialTypes) {
+    public Specification<JoinerEntity> hasBaseMaterialTypesIn(Set<BaseMaterialType> baseMaterialTypes) {
         return (root, query, criteriaBuilder) -> {
             if (baseMaterialTypes == null) {
                 return null;
@@ -49,24 +43,13 @@ public class JoinerSpecifications {
         };
     }
 
-    public Specification<JoinerEntity> hasJointDesign(JointDesignEntity jointDesign) {
+    public Specification<JoinerEntity> hasJointDesignsIn(Set<JointDesign> jointDesigns) {
         return (root, query, criteriaBuilder) ->
-                jointDesign == null ? null : criteriaBuilder.equal(root.get("jointDesign"), jointDesign);
+                jointDesigns == null ? null : root.get("jointDesign").in(jointDesigns);
     }
 
-    public Specification<JoinerEntity> hasFusionProcess(FusionProcessEntity fusionProcess) {
+    public Specification<JoinerEntity> hasFusionProcessesIn(Set<FusionProcess> fusionProcesses) {
         return (root, query, criteriaBuilder) ->
-                fusionProcess == null ? null : criteriaBuilder.equal(root.get("fusionProcess"), fusionProcess);
-    }
-
-    public Specification<JoinerEntity> hasJointsIn(Set<JointEntity> joints) {
-        return (root, query, criteriaBuilder) -> {
-            if (joints == null) {
-                return null;
-            } else {
-                query.distinct(true);
-                return root.join("jointsList", JoinType.LEFT).in(joints);
-            }
-        };
+                fusionProcesses == null ? null : root.get("fusionProcess").in(fusionProcesses);
     }
 }

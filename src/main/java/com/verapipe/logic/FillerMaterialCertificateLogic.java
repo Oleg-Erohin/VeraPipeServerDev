@@ -94,12 +94,11 @@ public class FillerMaterialCertificateLogic {
         return fillerMaterialCertificates;
     }
 
-    public List<FillerMaterialCertificate> findCertificatesByFilters(List<String> names, List<String> heatNums, List<FillerMaterialType> fillerMaterialTypes, List<String> jointNums) {
+    public List<FillerMaterialCertificate> findCertificatesByFilters(List<String> names, List<String> heatNums, List<FillerMaterialType> fillerMaterialTypes) {
         Specification<FillerMaterialCertificateEntity> spec = Specification
                 .where(this.fillerMaterialCertificateSpecifications.hasNameIn(names))
                 .and(this.fillerMaterialCertificateSpecifications.hasHeatNumIn(heatNums))
-                .and(this.fillerMaterialCertificateSpecifications.hasFillerMaterialTypeIn(fillerMaterialTypes))
-                .and(this.fillerMaterialCertificateSpecifications.hasJointNumsIn(jointNums));
+                .and(this.fillerMaterialCertificateSpecifications.hasFillerMaterialTypeIn(fillerMaterialTypes));
 
         List<FillerMaterialCertificateEntity> fillerMaterialCertificateEntities = this.fillerMaterialCertificateDal.findAll(spec);
         List<FillerMaterialCertificate> fillerMaterialCertificates = convertEntityListToDtoList(fillerMaterialCertificateEntities);

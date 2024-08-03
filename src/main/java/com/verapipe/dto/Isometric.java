@@ -11,10 +11,10 @@ import java.util.*;
 public class Isometric {
     private int id;
     private String name;
-    private Map<Pid, List<Integer>> pidsAndSheets;
     private String revision;
     private Date date;
     private int sheets;
+    private Map<Pid, List<Integer>> pidsAndSheets;
     private List<Coordinates> coordinatesInPid;
     private boolean isApproved;
     private String comments;
@@ -49,7 +49,6 @@ public class Isometric {
         this.id = isometricEntity.getId();
         this.name = isometricEntity.getName();
 
-//        this.pidsAndSheets = isometricEntity.getPidSheets();
         this.pidsAndSheets = initializePidsAndSheets(isometricEntity.getIsometricPidsAndSheets());
 
         this.revision = isometricEntity.getRevision();
@@ -107,8 +106,8 @@ public class Isometric {
         return pidsAndSheets;
     }
 
-    public void setPidsAndSheets(Map<Pid, List<Integer>> pidSheets) {
-        this.pidsAndSheets = pidSheets;
+    public void setPidsAndSheets(Map<Pid, List<Integer>> pidsAndSheets) {
+        this.pidsAndSheets = pidsAndSheets;
     }
 
     public String getRevision() {
@@ -164,7 +163,6 @@ public class Isometric {
         return "Isometric{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-//                ", pidNames='" + pidNames + '\'' +
                 ", pidsAndSheets=" + pidsAndSheets +
                 ", revision='" + revision + '\'' +
                 ", date=" + date +

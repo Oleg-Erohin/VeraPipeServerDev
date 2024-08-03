@@ -1,39 +1,34 @@
 package com.verapipe.specifications;
 
-import com.verapipe.entities.JointEntity;
+import com.verapipe.dto.NdtType;
 import com.verapipe.entities.NdtReportEntity;
-import com.verapipe.entities.NdtTypeEntity;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.JoinType;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 @Service
 public class NdtReportSpecifications {
-    public Specification<NdtReportEntity> hasName(String name) {
+
+    public Specification<NdtReportEntity> hasNamesIn(Set<String> names) {
         return (root, query, criteriaBuilder) ->
-                name == null ? null : criteriaBuilder.equal(root.get("name"), name);
+                names == null ? null : root.get("name").in(names);
     }
 
-    public Specification<NdtReportEntity> hasDate(Date date) {
+    public Specification<NdtReportEntity> hasDatesIn(Set<Date> dates) {
         return (root, query, criteriaBuilder) ->
-                date == null ? null : criteriaBuilder.equal(root.get("date"), date);
+                dates == null ? null : root.get("date").in(dates);
     }
 
-    public Specification<NdtReportEntity> hasNdtType(NdtTypeEntity ndtType) {
-        return (root, query, criteriaBuilder) ->
-                ndtType == null ? null : criteriaBuilder.equal(root.get("ndtType"), ndtType);
-    }
-
-    public Specification<NdtReportEntity> hasJointsIn(List<JointEntity> joints) {
+    public Specification<NdtReportEntity> hasNdtTypesIn(Set<NdtType> ndtTypes) {
         return (root, query, criteriaBuilder) -> {
-            if (joints == null) {
+            if (ndtTypes == null) {
                 return null;
             } else {
                 query.distinct(true);
-                return root.join("jointsList", JoinType.LEFT).in(joints);
+                return root.join("ndtType", JoinType.LEFT).in(ndtTypes);
             }
         };
     }

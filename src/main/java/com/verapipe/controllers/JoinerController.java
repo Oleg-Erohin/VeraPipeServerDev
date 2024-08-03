@@ -1,7 +1,9 @@
 package com.verapipe.controllers;
 
+import com.verapipe.dto.BaseMaterialType;
+import com.verapipe.dto.FusionProcess;
 import com.verapipe.dto.Joiner;
-import com.verapipe.entities.*;
+import com.verapipe.dto.JointDesign;
 import com.verapipe.logic.JoinerLogic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,17 +22,17 @@ public class JoinerController {
     }
 
     @PostMapping
-    public int add (@RequestBody Joiner joiner) throws Exception {
+    public int add(@RequestBody Joiner joiner) throws Exception {
         return this.joinerLogic.add(joiner);
     }
 
     @PutMapping
-    public void update (@RequestBody Joiner joiner) throws Exception {
+    public void update(@RequestBody Joiner joiner) throws Exception {
         this.joinerLogic.update(joiner);
     }
 
     @DeleteMapping("/{id}")
-    public void delete (@PathVariable("id") int id) throws Exception {
+    public void delete(@PathVariable("id") int id) throws Exception {
         this.joinerLogic.delete(id);
     }
 
@@ -46,17 +48,14 @@ public class JoinerController {
 
     @GetMapping("/by-filters")
     public List<Joiner> getJoiners(
-            @RequestParam(required = false) Set<String> tagId,
-            @RequestParam(required = false) Float certifiedDiameterMinMm,
-            @RequestParam(required = false) Float certifiedDiameterMaxMm,
-            @RequestParam(required = false) Float certifiedDiameterMinInch,
-            @RequestParam(required = false) Float certifiedDiameterMaxInch,
-            @RequestParam(required = false) Float maxDepositedMaterial,
-            @RequestParam(required = false) Set<BaseMaterialTypeEntity> baseMaterialTypeList,
-            @RequestParam(required = false) JointDesignEntity jointDesign,
-            @RequestParam(required = false) FusionProcessEntity fusionProcess,
-            @RequestParam(required = false) Set<JointEntity> jointsList) {
+            @RequestParam(required = false) Set<String> tagIds,
+            @RequestParam(required = false) Set<Float> certifiedDiameterMin,
+            @RequestParam(required = false) Set<Float> certifiedDiameterMax,
+            @RequestParam(required = false) Set<Float> maxDepositedMaterial,
+            @RequestParam(required = false) Set<BaseMaterialType> baseMaterialTypes,
+            @RequestParam(required = false) Set<JointDesign> jointDesigns,
+            @RequestParam(required = false) Set<FusionProcess> fusionProcesses) {
 
-        return this.joinerLogic.findJoinersByFilters(tagId, certifiedDiameterMinMm, certifiedDiameterMaxMm, certifiedDiameterMinInch, certifiedDiameterMaxInch, maxDepositedMaterial, baseMaterialTypeList, jointDesign, fusionProcess, jointsList);
+        return this.joinerLogic.findJoinersByFilters(tagIds, certifiedDiameterMin, certifiedDiameterMax, maxDepositedMaterial, baseMaterialTypes, jointDesigns, fusionProcesses);
     }
 }

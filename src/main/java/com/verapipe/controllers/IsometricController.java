@@ -2,9 +2,7 @@ package com.verapipe.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.verapipe.dto.Isometric;
-import com.verapipe.entities.JointEntity;
-import com.verapipe.entities.PidEntity;
-import com.verapipe.entities.PressureTestPackageEntity;
+import com.verapipe.dto.Pid;
 import com.verapipe.logic.IsometricLogic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -50,17 +48,12 @@ public class IsometricController {
 
     @GetMapping("/by-filters")
     public List<Isometric> getIsometrics(
-            @RequestParam(required = false) List<String> name,
-            @RequestParam(required = false) List<String> revision,
-            @RequestParam(required = false) List<Date> date,
-            @RequestParam(required = false) List<Integer> sheets,
-            @RequestParam(required = false) List<String> coordinatesInPid,
+            @RequestParam(required = false) List<String> names,
+            @RequestParam(required = false) List<String> revisions,
+            @RequestParam(required = false) List<Date> dates,
             @RequestParam(required = false) Boolean isApproved,
-            @RequestParam(required = false) List<String> comments,
-            @RequestParam(required = false) Set<PidEntity> pidsList,
-            @RequestParam(required = false) List<JointEntity> jointsList,
-            @RequestParam(required = false) Set<PressureTestPackageEntity> testPacksList) throws JsonProcessingException {
+            @RequestParam(required = false) Set<Pid> pids) throws JsonProcessingException {
 
-        return isometricLogic.findIsometricsByFilters(name, revision, date, sheets, coordinatesInPid, isApproved, comments, pidsList, jointsList, testPacksList);
+        return isometricLogic.findIsometricsByFilters(names, revisions, dates, isApproved, pids);
     }
 }

@@ -4,9 +4,7 @@ import com.verapipe.consts.Consts;
 import com.verapipe.dal.INdtReportDal;
 import com.verapipe.dto.NdtReport;
 import com.verapipe.dto.NdtType;
-import com.verapipe.entities.JointEntity;
 import com.verapipe.entities.NdtReportEntity;
-import com.verapipe.entities.NdtTypeEntity;
 import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.specifications.NdtReportSpecifications;
@@ -15,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class NdtReportLogic {
@@ -99,17 +94,21 @@ public class NdtReportLogic {
         return ndtReports;
     }
 
-    public List<NdtReport> findNdtReportsByFilters(String name, Date date, NdtTypeEntity ndtType, List<JointEntity> jointsList) {
+    public List<NdtReport> findNdtReportsByFilters(
+            Set<String> names,
+            Set<Date> dates,
+            Set<NdtType> ndtTypes
+    ) {
         Specification<NdtReportEntity> spec = Specification
-                .where(ndtReportSpecifications.hasName(name))
-                .and(ndtReportSpecifications.hasDate(date))
-                .and(ndtReportSpecifications.hasNdtType(ndtType))
-                .and(ndtReportSpecifications.hasJointsIn(jointsList));
+                .where(ndtReportSpecifications.hasNamesIn(names))
+                .and(ndtReportSpecifications.hasDatesIn(dates))
+                .and(ndtReportSpecifications.hasNdtTypesIn(ndtTypes));
 
         List<NdtReportEntity> ndtReportEntities = this.ndtReportDal.findAll(spec);
         List<NdtReport> ndtReports = convertEntityListToDtoList(ndtReportEntities);
         return ndtReports;
     }
+
 
     private List<NdtReport> convertEntityListToDtoList(List<NdtReportEntity> ndtReportEntities) {
         List<NdtReport> ndtReports = new ArrayList<>();

@@ -46,9 +46,8 @@ public class FillerMaterialCertificateController {
     public List<FillerMaterialCertificate> getFillerMaterialCertificates(
             @RequestParam(required = false) List<String> names,
             @RequestParam(required = false) List<String> heatNums,
-            @RequestParam(required = false) List<FillerMaterialType> fillerMaterialTypes,
-            @RequestParam(required = false) List<String> jointNums) {
+            @RequestParam(required = false) List<FillerMaterialType> fillerMaterialTypes) {
 
-        return fillerMaterialCertificateLogic.findCertificatesByFilters(names, heatNums, fillerMaterialTypes, jointNums);
+        return fillerMaterialCertificateLogic.findCertificatesByFilters(names, heatNums, fillerMaterialTypes);
     }
 }
