@@ -7,14 +7,14 @@ import com.verapipe.dto.ProcessSpecificationProcedure;
 import com.verapipe.entities.PostWeldHeatTreatmentEntity;
 import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.specifications.PostWeldHeatTreatmentSpecifications;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PostWeldHeatTreatmentLogic {
@@ -87,6 +87,16 @@ public class PostWeldHeatTreatmentLogic {
             throw new ApplicationException(ErrorType.POST_WELD_HEAT_TREATMENT_COULD_NOT_BE_FOUND);
         }
         return postWeldHeatTreatments;
+    }
+
+    public List<PostWeldHeatTreatment> findPostWeldHeatTreatmentsByFilters(Set<String> names, Set<ProcessSpecificationProcedure> processSpecificationProcedures, Set<Date> dates) {
+        Specification<PostWeldHeatTreatmentEntity> spec = Specification
+                .where(PostWeldHeatTreatmentSpecifications.hasNames(names))
+                .and(PostWeldHeatTreatmentSpecifications.hasProcessSpecificationProcedures(processSpecificationProcedures))
+                .and(PostWeldHeatTreatmentSpecifications.hasDates(dates));
+
+        List<PostWeldHeatTreatmentEntity> postWeldHeatTreatmentEntities = this.postWeldHeatTreatmentDal.findAll(spec);
+        return postWeldHeatTreatmentEntities.stream().map(PostWeldHeatTreatment::new).collect(Collectors.toList());
     }
 
     private void validations(PostWeldHeatTreatment postWeldHeatTreatment) throws Exception {

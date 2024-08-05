@@ -1,11 +1,15 @@
 package com.verapipe.controllers;
 
+import com.verapipe.dto.Isometric;
+import com.verapipe.dto.Pid;
 import com.verapipe.dto.PressureTestPackage;
 import com.verapipe.logic.PressureTestPackageLogic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/pressure-test-packages")
@@ -40,5 +44,14 @@ public class PressureTestPackageController {
     @GetMapping("/{id}")
     public PressureTestPackage getById(@PathVariable("id") int id) throws Exception {
         return this.pressureTestPackageLogic.getById(id);
+    }
+
+    @GetMapping("/by-filters")
+    public List<PressureTestPackage> getPressureTestPackages(
+            @RequestParam(required = false) Set<String> names,
+            @RequestParam(required = false) Set<Pid> pids,
+            @RequestParam(required = false) Set<Isometric> isometrics,
+            @RequestParam(required = false) Set<Date> dates) throws Exception {
+        return this.pressureTestPackageLogic.findPressureTestPackagesByFilters(names, pids, isometrics, dates);
     }
 }

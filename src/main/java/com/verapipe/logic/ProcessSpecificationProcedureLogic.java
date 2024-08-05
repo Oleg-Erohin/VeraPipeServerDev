@@ -5,16 +5,20 @@ import com.verapipe.dal.IProcessSpecificationProcedureDal;
 import com.verapipe.dto.*;
 import com.verapipe.entities.ProcessSpecificationProcedureEntity;
 import com.verapipe.enums.ErrorType;
+import com.verapipe.enums.UnitOfMeasure;
 import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.specifications.ProcessSpecificationProcedureSpecifications;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ProcessSpecificationProcedureLogic {
@@ -92,6 +96,33 @@ public class ProcessSpecificationProcedureLogic {
         } catch (Exception e) {
             throw new ApplicationException(ErrorType.PROCESS_SPECIFICATION_PROCEDURE_COULD_NOT_BE_FOUND);
         }
+        return processSpecificationProcedures;
+    }
+
+    public List<ProcessSpecificationProcedure> findProcessSpecificationProceduresByFilters(Set<String> names, Set<JointDesign> jointDesigns, Set<BaseMaterialType> baseMaterialTypes, Set<FusionProcess> fusionProcesses, Set<FillerMaterialType> fillerMaterialTypes, Set<StandardCode> standardCodes, Boolean isPreheatRequired, Boolean isPostWeldHeatTreatmentRequired, Set<UnitOfMeasure> unitsOfMeasure, Set<Float> minDiameters, Set<Float> maxDiameters, Set<Float> minThicknesses, Set<Float> maxThicknesses) throws Exception{
+        Specification<ProcessSpecificationProcedureEntity> spec = Specification
+                .where(ProcessSpecificationProcedureSpecifications.hasNames(names))
+                .and(ProcessSpecificationProcedureSpecifications.hasJointDesigns(jointDesigns))
+                .and(ProcessSpecificationProcedureSpecifications.hasBaseMaterials(baseMaterialTypes))
+                .and(ProcessSpecificationProcedureSpecifications.hasFusionProcesses(fusionProcesses))
+                .and(ProcessSpecificationProcedureSpecifications.hasFillerMaterials(fillerMaterialTypes))
+                .and(ProcessSpecificationProcedureSpecifications.hasStandardCodes(standardCodes))
+                .and(ProcessSpecificationProcedureSpecifications.isPreheatRequired(isPreheatRequired))
+                .and(ProcessSpecificationProcedureSpecifications.isPostWeldHeatTreatmentRequired(isPostWeldHeatTreatmentRequired))
+                .and(ProcessSpecificationProcedureSpecifications.hasUnitsOfMeasure(unitsOfMeasure))
+                .and(ProcessSpecificationProcedureSpecifications.hasDiameterMin(minDiameters))
+                .and(ProcessSpecificationProcedureSpecifications.hasDiameterMax(maxDiameters))
+                .and(ProcessSpecificationProcedureSpecifications.hasThicknessMin(minThicknesses))
+                .and(ProcessSpecificationProcedureSpecifications.hasThicknessMax(maxThicknesses));
+
+        List<ProcessSpecificationProcedureEntity> processSpecificationProcedureEntities = this.processSpecificationProcedureDal.findAll(spec);
+
+        List<ProcessSpecificationProcedure> processSpecificationProcedures = new ArrayList<>();
+        for (ProcessSpecificationProcedureEntity processSpecificationProcedureEntity : processSpecificationProcedureEntities){
+            ProcessSpecificationProcedure processSpecificationProcedure = new ProcessSpecificationProcedure(processSpecificationProcedureEntity);
+            processSpecificationProcedures.add(processSpecificationProcedure);
+        }
+
         return processSpecificationProcedures;
     }
 
