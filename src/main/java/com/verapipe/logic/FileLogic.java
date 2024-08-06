@@ -24,7 +24,9 @@ public class FileLogic {
     }
 
     public int add(File file) throws Exception {
-        validations(file);
+//        validations(file);
+        System.out.println();
+        file.setUploadDate(new Date());
         FileEntity fileEntity = new FileEntity(file);
         try {
             fileEntity = this.fileDal.save(fileEntity);
@@ -36,7 +38,8 @@ public class FileLogic {
     }
 
     public void update(File file) throws Exception {
-        validations(file);
+//        validations(file);
+        file.setUploadDate(new Date());
         FileEntity sentFileEntity = new FileEntity(file);
         try {
             this.fileDal.save(sentFileEntity);

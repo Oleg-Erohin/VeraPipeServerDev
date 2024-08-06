@@ -4,7 +4,6 @@ import com.verapipe.dto.BaseMaterialCertificate;
 
 import javax.persistence.*;
 import java.util.Set;
-
 @Entity
 @Table(name = "base_material_certificate")
 public class BaseMaterialCertificateEntity {

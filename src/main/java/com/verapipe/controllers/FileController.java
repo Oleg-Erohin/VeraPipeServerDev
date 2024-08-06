@@ -18,6 +18,7 @@ public class FileController {
 
     @PostMapping
     public int add(@RequestBody File file) throws Exception {
+        System.out.println();
         return this.fileLogic.add(file);
     }
 

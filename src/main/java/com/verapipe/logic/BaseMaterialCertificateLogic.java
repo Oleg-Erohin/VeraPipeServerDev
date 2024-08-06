@@ -130,7 +130,7 @@ public class BaseMaterialCertificateLogic {
     }
 
     private void validateBaseMaterialCertificateMaterialType(BaseMaterialType materialType) throws Exception {
-        CommonValidations.validateIsExistInBaseMaterialTypes(materialType);
+//        CommonValidations.validateIsExistInBaseMaterialTypes(materialType);
     }
 
     private void validateBaseMaterialCertificateHeatOrLotNum(String heatOrLotNum) throws ApplicationException {
