@@ -7,14 +7,14 @@ import com.verapipe.dto.ProcessSpecificationProcedure;
 import com.verapipe.entities.PreheatEntity;
 import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.specifications.PreheatSpecifications;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PreheatLogic {
@@ -88,6 +88,16 @@ public class PreheatLogic {
         }
 
         return preheats;
+    }
+
+    public List<Preheat> findPreheatsByFilters(Set<String> names, Set<ProcessSpecificationProcedure> processSpecificationProcedures, Set<Date> dates) {
+        Specification<PreheatEntity> spec = Specification
+                .where(PreheatSpecifications.hasNames(names))
+                .and(PreheatSpecifications.hasProcessSpecificationProcedures(processSpecificationProcedures))
+                .and(PreheatSpecifications.hasDates(dates));
+
+        List<PreheatEntity> preheatEntities = this.preheatDal.findAll(spec);
+        return preheatEntities.stream().map(Preheat::new).collect(Collectors.toList());
     }
 
     private void validations(Preheat preheat) throws Exception {

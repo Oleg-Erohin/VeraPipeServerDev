@@ -6,14 +6,14 @@ import com.verapipe.dto.Pid;
 import com.verapipe.entities.PidEntity;
 import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.specifications.PidSpecifications;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PidLogic {
@@ -87,6 +87,16 @@ public class PidLogic {
             throw new ApplicationException(ErrorType.PID_COULD_NOT_BE_FOUND);
         }
         return pids;
+    }
+
+    public List<Pid> findPidsByFilters(Set<String> names, Set<String> revisions, Set<Date> dates) {
+        Specification<PidEntity> spec = Specification
+                .where(PidSpecifications.hasNames(names))
+                .and(PidSpecifications.hasRevisions(revisions))
+                .and(PidSpecifications.hasDates(dates));
+
+        List<PidEntity> pidEntities = this.pidDal.findAll(spec);
+        return pidEntities.stream().map(Pid::new).collect(Collectors.toList());
     }
 
     private void validations(Pid pid) throws Exception {

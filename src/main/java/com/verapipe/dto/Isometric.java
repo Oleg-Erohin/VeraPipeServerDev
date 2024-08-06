@@ -1,6 +1,5 @@
 package com.verapipe.dto;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.verapipe.entities.CoordinatesEntity;
 import com.verapipe.entities.IsometricEntity;
 import com.verapipe.entities.IsometricPidsAndSheetsEntity;
@@ -45,7 +44,7 @@ public class Isometric {
         this.comments = comments;
     }
 
-    public Isometric(IsometricEntity isometricEntity) throws JsonProcessingException {
+    public Isometric(IsometricEntity isometricEntity) {
         this.id = isometricEntity.getId();
         this.name = isometricEntity.getName();
 

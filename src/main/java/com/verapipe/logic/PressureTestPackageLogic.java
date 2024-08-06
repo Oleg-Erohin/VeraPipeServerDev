@@ -8,14 +8,13 @@ import com.verapipe.dto.PressureTestPackage;
 import com.verapipe.entities.PressureTestPackageEntity;
 import com.verapipe.enums.ErrorType;
 import com.verapipe.exceptions.ApplicationException;
+import com.verapipe.specifications.PressureTestPackageSpecifications;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PressureTestPackageLogic {
@@ -87,6 +86,24 @@ public class PressureTestPackageLogic {
         } catch (Exception e) {
             throw new ApplicationException(ErrorType.PRESSURE_TEST_PACKAGE_COULD_NOT_BE_FOUND);
         }
+        return pressureTestPackages;
+    }
+
+    public List<PressureTestPackage> findPressureTestPackagesByFilters(Set<String> names, Set<Pid> pids, Set<Isometric> isometrics, Set<Date> dates) throws Exception{
+        Specification<PressureTestPackageEntity> spec = Specification
+                .where(PressureTestPackageSpecifications.hasNames(names))
+                .and(PressureTestPackageSpecifications.hasPids(pids))
+                .and(PressureTestPackageSpecifications.hasIsometrics(isometrics))
+                .and(PressureTestPackageSpecifications.hasDates(dates));
+
+        List<PressureTestPackageEntity> pressureTestPackageEntities = this.pressureTestPackageDal.findAll(spec);
+
+        List<PressureTestPackage> pressureTestPackages = new ArrayList<>();
+        for (PressureTestPackageEntity pressureTestPackageEntity : pressureTestPackageEntities){
+            PressureTestPackage pressureTestPackage = new PressureTestPackage(pressureTestPackageEntity);
+            pressureTestPackages.add(pressureTestPackage);
+        }
+
         return pressureTestPackages;
     }
 

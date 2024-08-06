@@ -5,7 +5,9 @@ import com.verapipe.logic.PidLogic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/pids")
@@ -40,5 +42,13 @@ public class PidController {
     @GetMapping("/{id}")
     public Pid getById(@PathVariable("id") int id) throws Exception {
         return this.pidLogic.getById(id);
+    }
+
+    @GetMapping("/by-filters")
+    public List<Pid> getPids(
+            @RequestParam(required = false) Set<String> names,
+            @RequestParam(required = false) Set<String> revisions,
+            @RequestParam(required = false) Set<Date> dates) {
+        return this.pidLogic.findPidsByFilters(names, revisions, dates);
     }
 }
