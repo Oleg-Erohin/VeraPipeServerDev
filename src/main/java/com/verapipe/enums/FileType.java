@@ -26,4 +26,12 @@ public enum FileType {
     public void setFileType(String fileType) {
         this.fileType = fileType;
     }
+    public static FileType fromString(String text) {
+        for (FileType ft : FileType.values()) {
+            if (ft.fileType.equalsIgnoreCase(text)) {
+                return ft;
+            }
+        }
+        throw new IllegalArgumentException("No enum constant with text " + text);
+    }
 }

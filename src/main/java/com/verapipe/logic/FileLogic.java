@@ -90,8 +90,10 @@ public class FileLogic {
         return files;
     }
 
-    public File getByFilters(FileType fileType, int resourceId, String revision) {
-        FileEntity fileEntity = new FileEntity();
+    public File getByFilters(String strFileType, int resourceId, String revision) {
+        System.out.println();
+        FileType fileType = FileType.fromString(strFileType);
+        FileEntity fileEntity;
         if (revision.isEmpty()) {
             fileEntity = this.fileDal.findTopByFileTypeAndResourceIdOrderByUploadDateDesc(fileType,resourceId);
         } else {

@@ -1,7 +1,6 @@
 package com.verapipe.controllers;
 
 import com.verapipe.dto.File;
-import com.verapipe.enums.FileType;
 import com.verapipe.logic.FileLogic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,9 +31,10 @@ public class FileController {
         this.fileLogic.delete(id);
     }
     @GetMapping
-    public File get(@RequestParam FileType fileType,
+    public File get(@RequestParam String fileType,
                     @RequestParam int resourceId,
                     @RequestParam(required = false) String revision) {
+        System.out.println();
         return this.fileLogic.getByFilters(fileType, resourceId, revision);
     }
     @GetMapping("/{id}")
