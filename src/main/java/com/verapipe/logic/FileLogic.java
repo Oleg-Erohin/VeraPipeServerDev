@@ -91,7 +91,6 @@ public class FileLogic {
     }
 
     public File getByFilters(String strFileType, int resourceId, String revision) {
-        System.out.println();
         FileType fileType = FileType.fromString(strFileType);
         FileEntity fileEntity;
         if (revision.isEmpty()) {

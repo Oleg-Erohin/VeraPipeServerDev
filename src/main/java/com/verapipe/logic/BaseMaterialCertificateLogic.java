@@ -28,7 +28,7 @@ public class BaseMaterialCertificateLogic {
     public BaseMaterialCertificateLogic(IBaseMaterialCertificateDal baseMaterialCertificateDal,
                                         BaseMaterialCertificateSpecifications baseMaterialCertificateSpecifications,
                                         BaseMaterialTypeLogic baseMaterialTypeLogic
-                                        ) {
+    ) {
         this.baseMaterialCertificateDal = baseMaterialCertificateDal;
         this.baseMaterialCertificateSpecifications = baseMaterialCertificateSpecifications;
         this.baseMaterialTypeLogic = baseMaterialTypeLogic;
@@ -98,12 +98,19 @@ public class BaseMaterialCertificateLogic {
         return baseMaterialCertificates;
     }
 
-    public List<BaseMaterialCertificate> findCertificatesByFilters(List<String> names, List<String> heatNums, List<String> lotNums, List<BaseMaterialType> materialTypes) throws Exception {
+    public List<BaseMaterialCertificate> findCertificatesByFilters(List<String> names, List<String> heatNums, List<String> lotNums, List<String> materialTypeNames) throws Exception {
+        List<BaseMaterialType> baseMaterialTypesList = new ArrayList<>();
+        for (String baseMAterialTypeName : materialTypeNames){
+            BaseMaterialTypeEntity baseMaterialTypeEntity = this.baseMaterialTypeLogic.getByName(baseMAterialTypeName);
+            BaseMaterialType baseMaterialType = new BaseMaterialType(baseMaterialTypeEntity);
+            baseMaterialTypesList.add(baseMaterialType);
+        }
+
         Specification<BaseMaterialCertificateEntity> spec = Specification
                 .where(this.baseMaterialCertificateSpecifications.hasNameIn(names))
                 .and(this.baseMaterialCertificateSpecifications.hasHeatNumIn(heatNums))
                 .and(this.baseMaterialCertificateSpecifications.hasLotNumIn(lotNums))
-                .and(this.baseMaterialCertificateSpecifications.hasMaterialTypeNameIn(materialTypes));
+                .and(this.baseMaterialCertificateSpecifications.hasMaterialTypeNameIn(baseMaterialTypesList));
 
         List<BaseMaterialCertificateEntity> baseMaterialCertificateEntities = this.baseMaterialCertificateDal.findAll(spec);
         List<BaseMaterialCertificate> baseMaterialCertificates = convertEntityListToDtoList(baseMaterialCertificateEntities);
