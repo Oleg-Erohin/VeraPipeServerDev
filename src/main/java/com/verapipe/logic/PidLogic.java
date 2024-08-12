@@ -9,6 +9,8 @@ import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.specifications.PidSpecifications;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,7 @@ public class PidLogic {
         this.pidDal = pidDal;
     }
 
+    @CacheEvict(cacheNames = "pidsCache", allEntries = true)
     public int add(Pid pid) throws Exception {
         validations(pid);
         PidEntity pidEntity = new PidEntity(pid);
@@ -36,6 +39,7 @@ public class PidLogic {
         return addedPidId;
     }
 
+    @CacheEvict(cacheNames = "pidsCache", allEntries = true)
     public void update(Pid pid) throws Exception {
         validations(pid);
         PidEntity sentPidEntity = new PidEntity(pid);
@@ -47,6 +51,7 @@ public class PidLogic {
         }
     }
 
+    @CacheEvict(cacheNames = "pidsCache", allEntries = true)
     public void delete(int id) throws Exception {
         if (!isPidExist(id)) {
             throw new ApplicationException(ErrorType.PID_DOES_NOT_EXIST);
@@ -72,6 +77,7 @@ public class PidLogic {
         return pid;
     }
 
+    @Cacheable(cacheNames = "pidsCache", key = "#root.methodName")
     public List<Pid> getAll() throws Exception {
         Iterable<PidEntity> pidEntities;
         List<Pid> pids = new ArrayList<>();

@@ -12,6 +12,8 @@ import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.specifications.JoinerSpecifications;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,7 @@ public class JoinerLogic {
         this.joinerSpecifications = joinerSpecifications;
     }
 
+    @CacheEvict(cacheNames = "joinersCache", allEntries = true)
     public int add(Joiner joiner) throws Exception {
         validations(joiner);
         JoinerEntity joinerEntity = new JoinerEntity(joiner);
@@ -43,6 +46,7 @@ public class JoinerLogic {
         return addedJoinerId;
     }
 
+    @CacheEvict(cacheNames = "joinersCache", allEntries = true)
     public void update(Joiner joiner) throws Exception {
         validations(joiner);
         JoinerEntity sentJoinerEntity = new JoinerEntity(joiner);
@@ -53,6 +57,7 @@ public class JoinerLogic {
         }
     }
 
+    @CacheEvict(cacheNames = "joinersCache", allEntries = true)
     public void delete(int id) throws Exception {
         if (!isJoinerExist(id)) {
             throw new ApplicationException(ErrorType.JOINER_DOES_NOT_EXIST);
@@ -78,6 +83,7 @@ public class JoinerLogic {
         return joiner;
     }
 
+    @Cacheable(cacheNames = "joinersCache", key = "#root.methodName")
     public List<Joiner> getAll() throws Exception {
         Iterable<JoinerEntity> joinerEntities;
         List<Joiner> joiners = new ArrayList<>();

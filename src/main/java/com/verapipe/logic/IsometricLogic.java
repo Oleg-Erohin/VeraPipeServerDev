@@ -11,6 +11,8 @@ import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.specifications.IsometricSpecifications;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,7 @@ public class IsometricLogic {
         this.isometricSpecifications = isometricSpecifications;
     }
 
+    @CacheEvict(cacheNames = "isometricsCache", allEntries = true)
     public int add(Isometric isometric) throws Exception {
         validations(isometric);
         IsometricEntity isometricEntity = new IsometricEntity(isometric);
@@ -41,6 +44,7 @@ public class IsometricLogic {
         return addedIsometricId;
     }
 
+    @CacheEvict(cacheNames = "isometricsCache", allEntries = true)
     public void update(Isometric isometric) throws Exception {
         validations(isometric);
         IsometricEntity sentIsometricEntity = new IsometricEntity(isometric);
@@ -52,6 +56,7 @@ public class IsometricLogic {
         }
     }
 
+    @CacheEvict(cacheNames = "isometricsCache", allEntries = true)
     public void delete(int id) throws Exception {
         if (!isIsometricExist(id)) {
             throw new ApplicationException(ErrorType.ISOMETRIC_DOES_NOT_EXIST);
@@ -77,6 +82,7 @@ public class IsometricLogic {
         return isometric;
     }
 
+    @Cacheable(cacheNames = "isometricsCache", key = "#root.methodName")
     public List<Isometric> getAll() throws Exception {
         Iterable<IsometricEntity> isometricEntities;
         List<Isometric> isometrics = new ArrayList<>();

@@ -11,6 +11,8 @@ import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.specifications.PressureTestPackageSpecifications;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,7 @@ public class PressureTestPackageLogic {
         this.pressureTestPackageDal = pressureTestPackageDal;
     }
 
+    @CacheEvict(cacheNames = "pressureTestPackagesCache", allEntries = true)
     public int add(PressureTestPackage pressureTestPackage) throws Exception {
         validations(pressureTestPackage);
         PressureTestPackageEntity pressureTestPackageEntity = new PressureTestPackageEntity(pressureTestPackage);
@@ -37,6 +40,7 @@ public class PressureTestPackageLogic {
         return addedPressureTestPackageId;
     }
 
+    @CacheEvict(cacheNames = "pressureTestPackagesCache", allEntries = true)
     public void update(PressureTestPackage pressureTestPackage) throws Exception {
         validations(pressureTestPackage);
         PressureTestPackageEntity sentPressureTestPackageEntity = new PressureTestPackageEntity(pressureTestPackage);
@@ -47,6 +51,7 @@ public class PressureTestPackageLogic {
         }
     }
 
+    @CacheEvict(cacheNames = "pressureTestPackagesCache", allEntries = true)
     public void delete(int id) throws Exception {
         if (!isPressureTestPackageExist(id)) {
             throw new ApplicationException(ErrorType.PRESSURE_TEST_PACKAGE_DOES_NOT_EXIST);
@@ -72,6 +77,7 @@ public class PressureTestPackageLogic {
         return pressureTestPackage;
     }
 
+    @Cacheable(cacheNames = "pressureTestPackagesCache", key = "#root.methodName")
     public List<PressureTestPackage> getAll() throws Exception {
         Iterable<PressureTestPackageEntity> pressureTestPackageEntities;
         List<PressureTestPackage> pressureTestPackages = new ArrayList<>();

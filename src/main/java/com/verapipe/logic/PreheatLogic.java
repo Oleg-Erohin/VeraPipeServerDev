@@ -10,6 +10,8 @@ import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.specifications.PreheatSpecifications;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,8 @@ public class PreheatLogic {
         this.preheatDal = preheatDal;
     }
 
+
+    @CacheEvict(cacheNames = "preheatsCache", allEntries = true)
     public int add(Preheat preheat) throws Exception {
         validations(preheat);
         PreheatEntity preheatEntity = new PreheatEntity(preheat);
@@ -37,6 +41,7 @@ public class PreheatLogic {
         return addedPreheatId;
     }
 
+    @CacheEvict(cacheNames = "preheatsCache", allEntries = true)
     public void update(Preheat preheat) throws Exception {
         validations(preheat);
         PreheatEntity sentPreheatEntity = new PreheatEntity(preheat);
@@ -47,6 +52,7 @@ public class PreheatLogic {
         }
     }
 
+    @CacheEvict(cacheNames = "preheatsCache", allEntries = true)
     public void delete(int id) throws Exception {
         if (!isPreheatExist(id)) {
             throw new ApplicationException(ErrorType.PREHEAT_DOES_NOT_EXIST);
@@ -72,6 +78,7 @@ public class PreheatLogic {
         return preheat;
     }
 
+    @Cacheable(cacheNames = "preheatsCache", key = "#root.methodName")
     public List<Preheat> getAll() throws Exception {
         Iterable<PreheatEntity> preheatEntities;
         List<Preheat> preheats = new ArrayList<>();

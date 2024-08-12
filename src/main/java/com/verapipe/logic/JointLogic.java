@@ -11,6 +11,8 @@ import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.specifications.JointSpecifications;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +49,7 @@ public class JointLogic {
         this.jointSpecifications = jointSpecifications;
     }
 
+    @CacheEvict(cacheNames = "jointsCache", allEntries = true)
     public int add(Joint joint) throws Exception {
         validations(joint);
         JointEntity jointEntity = new JointEntity(joint);
@@ -59,6 +62,7 @@ public class JointLogic {
         return addedJointId;
     }
 
+    @CacheEvict(cacheNames = "jointsCache", allEntries = true)
     public void update(Joint joint) throws Exception {
         validations(joint);
         JointEntity sentJointEntity = new JointEntity(joint);
@@ -69,6 +73,7 @@ public class JointLogic {
         }
     }
 
+    @CacheEvict(cacheNames = "jointsCache", allEntries = true)
     public void delete(int id) throws Exception {
         if (!isJointExist(id)) {
             throw new ApplicationException(ErrorType.JOINT_COULD_NOT_BE_FOUND);
@@ -94,6 +99,7 @@ public class JointLogic {
         return joint;
     }
 
+    @Cacheable(cacheNames = "jointsCache", key = "#root.methodName")
     public List<Joint> getAll() throws Exception {
         Iterable<JointEntity> jointEntities;
         List<Joint> joints = new ArrayList<>();

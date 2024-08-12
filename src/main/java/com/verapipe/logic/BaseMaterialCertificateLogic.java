@@ -11,6 +11,8 @@ import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.specifications.BaseMaterialCertificateSpecifications;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,7 @@ public class BaseMaterialCertificateLogic {
         this.baseMaterialTypeLogic = baseMaterialTypeLogic;
     }
 
+    @CacheEvict(cacheNames = "baseMaterialCertificatesCache", allEntries = true)
     public int add(BaseMaterialCertificate baseMaterialCertificate) throws Exception {
         validations(baseMaterialCertificate);
         BaseMaterialCertificateEntity baseMaterialCertificateEntity = new BaseMaterialCertificateEntity(baseMaterialCertificate);
@@ -46,6 +49,7 @@ public class BaseMaterialCertificateLogic {
         return addedBaseMaterialCertificateId;
     }
 
+    @CacheEvict(cacheNames = "baseMaterialCertificatesCache", allEntries = true)
     public void update(BaseMaterialCertificate baseMaterialCertificate) throws Exception {
         validations(baseMaterialCertificate);
         BaseMaterialCertificateEntity sentBaseMaterialCertificateEntity = new BaseMaterialCertificateEntity(baseMaterialCertificate);
@@ -56,6 +60,7 @@ public class BaseMaterialCertificateLogic {
         }
     }
 
+    @CacheEvict(cacheNames = "baseMaterialCertificatesCache", allEntries = true)
     public void delete(int id) throws Exception {
         if (!isBaseMaterialCertificateExist(id)) {
             throw new ApplicationException(ErrorType.BASE_MATERIAL_CERTIFICATE_DOES_NOT_EXIST);
@@ -81,6 +86,7 @@ public class BaseMaterialCertificateLogic {
         return baseMaterialCertificate;
     }
 
+    @Cacheable(cacheNames = "baseMaterialCertificatesCache", key = "#root.methodName")
     public List<BaseMaterialCertificate> getAll() throws Exception {
         Iterable<BaseMaterialCertificateEntity> baseMaterialCertificateEntities;
         List<BaseMaterialCertificate> baseMaterialCertificates = new ArrayList<>();

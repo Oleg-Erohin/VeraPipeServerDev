@@ -10,6 +10,8 @@ import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.specifications.PostWeldHeatTreatmentSpecifications;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,7 @@ public class PostWeldHeatTreatmentLogic {
         this.postWeldHeatTreatmentDal = postWeldHeatTreatmentDal;
     }
 
+    @CacheEvict(cacheNames = "postWeldHeatTreatmentsCache", allEntries = true)
     public int add(PostWeldHeatTreatment postWeldHeatTreatment) throws Exception {
         validations(postWeldHeatTreatment);
         PostWeldHeatTreatmentEntity postWeldHeatTreatmentEntity = new PostWeldHeatTreatmentEntity(postWeldHeatTreatment);
@@ -37,6 +40,7 @@ public class PostWeldHeatTreatmentLogic {
         return addedPostWeldHeatTreatmentId;
     }
 
+    @CacheEvict(cacheNames = "postWeldHeatTreatmentsCache", allEntries = true)
     public void update(PostWeldHeatTreatment postWeldHeatTreatment) throws Exception {
         validations(postWeldHeatTreatment);
         PostWeldHeatTreatmentEntity sentPostWeldHeatTreatmentEntity = new PostWeldHeatTreatmentEntity(postWeldHeatTreatment);
@@ -47,6 +51,7 @@ public class PostWeldHeatTreatmentLogic {
         }
     }
 
+    @CacheEvict(cacheNames = "postWeldHeatTreatmentsCache", allEntries = true)
     public void delete(int id) throws Exception {
         if (!isPostWeldHeatTreatmentExist(id)) {
             throw new ApplicationException(ErrorType.POST_WELD_HEAT_TREATMENT_DOES_NOT_EXIST);
@@ -72,6 +77,7 @@ public class PostWeldHeatTreatmentLogic {
         return postWeldHeatTreatment;
     }
 
+    @Cacheable(cacheNames = "postWeldHeatTreatmentsCache", key = "#root.methodName")
     public List<PostWeldHeatTreatment> getAll() throws Exception {
         Iterable<PostWeldHeatTreatmentEntity> postWeldHeatTreatmentEntities;
         List<PostWeldHeatTreatment> postWeldHeatTreatments = new ArrayList<>();

@@ -25,7 +25,7 @@ public class NdtTypeLogic {
         this.ndtTypeDal = ndtTypeDal;
     }
 
-    @CacheEvict(cacheNames = "ndtTypeCache", allEntries = true)
+    @CacheEvict(cacheNames = "ndtTypesCache", allEntries = true)
     public int add(NdtType ndtType) throws Exception {
         validations(ndtType);
         NdtTypeEntity ndtTypeEntity = new NdtTypeEntity(ndtType);
@@ -38,7 +38,7 @@ public class NdtTypeLogic {
         return addedNdtTypeId;
     }
 
-    @CacheEvict(cacheNames = "ndtTypeCache", allEntries = true)
+    @CacheEvict(cacheNames = "ndtTypesCache", allEntries = true)
     public void update(NdtType ndtType) throws Exception {
         validations(ndtType);
         NdtTypeEntity sentNdtTypeEntity = new NdtTypeEntity(ndtType);
@@ -49,7 +49,7 @@ public class NdtTypeLogic {
         }
     }
 
-    @CacheEvict(cacheNames = "ndtTypeCache", allEntries = true)
+    @CacheEvict(cacheNames = "ndtTypesCache", allEntries = true)
     public void delete(int id) throws Exception {
         if (!isNdtTypeExist(id)) {
             throw new ApplicationException(ErrorType.NDT_TYPE_DOES_NOT_EXIST);

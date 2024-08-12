@@ -10,6 +10,8 @@ import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.specifications.FillerMaterialCertificateSpecifications;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,7 @@ public class FillerMaterialCertificateLogic {
         this.fillerMaterialCertificateSpecifications = fillerMaterialCertificateSpecifications;
     }
 
+    @CacheEvict(cacheNames = "fillerMaterialCertificatesCache", allEntries = true)
     public int add(FillerMaterialCertificate fillerMaterialCertificate) throws Exception {
         validations(fillerMaterialCertificate);
         FillerMaterialCertificateEntity fillerMaterialCertificateEntity = new FillerMaterialCertificateEntity(fillerMaterialCertificate);
@@ -42,6 +45,7 @@ public class FillerMaterialCertificateLogic {
         return addedFillerMaterialCertificateId;
     }
 
+    @CacheEvict(cacheNames = "fillerMaterialCertificatesCache", allEntries = true)
     public void update(FillerMaterialCertificate fillerMaterialCertificate) throws Exception {
         validations(fillerMaterialCertificate);
         FillerMaterialCertificateEntity sentFillerMaterialCertificateEntity = new FillerMaterialCertificateEntity(fillerMaterialCertificate);
@@ -52,6 +56,7 @@ public class FillerMaterialCertificateLogic {
         }
     }
 
+    @CacheEvict(cacheNames = "fillerMaterialCertificatesCache", allEntries = true)
     public void delete(int id) throws Exception {
         if (!isFillerMaterialCertificateExist(id)) {
             throw new ApplicationException(ErrorType.FILLER_MATERIAL_CERTIFICATE_DOES_NOT_EXIST);
@@ -77,6 +82,7 @@ public class FillerMaterialCertificateLogic {
         return fillerMaterialCertificate;
     }
 
+    @Cacheable(cacheNames = "fillerMaterialCertificatesCache", key = "#root.methodName")
     public List<FillerMaterialCertificate> getAll() throws Exception {
         Iterable<FillerMaterialCertificateEntity> fillerMaterialCertificateEntities;
         List<FillerMaterialCertificate> fillerMaterialCertificates = new ArrayList<>();

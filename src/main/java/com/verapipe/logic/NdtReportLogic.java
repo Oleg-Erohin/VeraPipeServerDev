@@ -10,6 +10,8 @@ import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.specifications.NdtReportSpecifications;
 import com.verapipe.utils.CommonValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,7 @@ public class NdtReportLogic {
         this.ndtReportSpecifications = ndtReportSpecifications;
     }
 
+    @CacheEvict(cacheNames = "ndtReportsCache", allEntries = true)
     public int add(NdtReport ndtReport) throws Exception {
         validations(ndtReport);
         NdtReportEntity ndtReportEntity = new NdtReportEntity(ndtReport);
@@ -40,6 +43,7 @@ public class NdtReportLogic {
         return addedNdtReportId;
     }
 
+    @CacheEvict(cacheNames = "ndtReportsCache", allEntries = true)
     public void update(NdtReport ndtReport) throws Exception {
         validations(ndtReport);
         NdtReportEntity sentNdtReportEntity = new NdtReportEntity(ndtReport);
@@ -50,6 +54,7 @@ public class NdtReportLogic {
         }
     }
 
+    @CacheEvict(cacheNames = "ndtReportsCache", allEntries = true)
     public void delete(int id) throws Exception {
         if (!isNdtReportExist(id)) {
             throw new ApplicationException(ErrorType.NDT_REPORT_DOES_NOT_EXIST);
@@ -75,6 +80,7 @@ public class NdtReportLogic {
         return ndtReport;
     }
 
+    @Cacheable(cacheNames = "ndtReportsCache", key = "#root.methodName")
     public List<NdtReport> getAll() throws Exception {
         Iterable<NdtReportEntity> ndtReportEntities;
         List<NdtReport> ndtReports = new ArrayList<>();
