@@ -1,5 +1,4 @@
 package com.verapipe.enums;
-
 public enum FileType {
     BASE_MATERIAL_CERTIFICATE("BaseMaterialCertificate"),
     FILLER_MATERIAL_CERTIFICATE("FillerMaterialCertificate"),

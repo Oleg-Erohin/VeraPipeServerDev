@@ -25,10 +25,12 @@ public class FileLogic {
 
     public int add(File file) throws Exception {
 //        validations(file);
-        System.out.println();
+        FileType fileType = FileType.fromString(file.getStrFileType());
+        file.setEnumFileType(fileType);
         file.setUploadDate(new Date());
         FileEntity fileEntity = new FileEntity(file);
         try {
+            System.out.println();
             fileEntity = this.fileDal.save(fileEntity);
         } catch (Exception e) {
             throw new ApplicationException(ErrorType.FILE_COULD_NOT_BE_ADDED_OR_UPDATED);
@@ -39,6 +41,8 @@ public class FileLogic {
 
     public void update(File file) throws Exception {
 //        validations(file);
+        FileType fileType = FileType.fromString(file.getStrFileType());
+        file.setEnumFileType(fileType);
         file.setUploadDate(new Date());
         FileEntity sentFileEntity = new FileEntity(file);
         try {
@@ -90,13 +94,36 @@ public class FileLogic {
         return files;
     }
 
-    public File getByFilters(String strFileType, int resourceId, String revision) {
+    public File getDataByFilters(String strFileType, int resourceId, String revision) throws ApplicationException {
+        System.out.println();
         FileType fileType = FileType.fromString(strFileType);
         FileEntity fileEntity;
-        if (revision.isEmpty()) {
-            fileEntity = this.fileDal.findTopByFileTypeAndResourceIdOrderByUploadDateDesc(fileType,resourceId);
-        } else {
-            fileEntity = this.fileDal.findByFileTypeAndResourceIdAndRevision(fileType, resourceId, revision);
+        try {
+            if (revision == null) {
+//            fileEntity = this.fileDal.findTopByFileTypeAndResourceIdOrderByUploadDateDesc(fileType,resourceId);
+                fileEntity = this.fileDal.findLastWithoutFileData(fileType, resourceId);
+            } else {
+                fileEntity = this.fileDal.findWithoutFileData(fileType, resourceId, revision);
+            }
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.FILE_COULD_NOT_BE_FOUND);
+        }
+        File file = new File(fileEntity);
+        return file;
+    }
+
+    public File getFileByFilters(String strFileType, int resourceId, String revision) throws ApplicationException {
+        FileType fileType = FileType.fromString(strFileType);
+        FileEntity fileEntity;
+        try {
+            if (revision == null) {
+//            fileEntity = this.fileDal.findTopByFileTypeAndResourceIdOrderByUploadDateDesc(fileType,resourceId);
+                fileEntity = this.fileDal.findTopByFileTypeAndResourceIdOrderByUploadDateDesc(fileType, resourceId);
+            } else {
+                fileEntity = this.fileDal.findByFileTypeAndResourceIdAndRevision(fileType, resourceId, revision);
+            }
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.FILE_COULD_NOT_BE_FOUND);
         }
         File file = new File(fileEntity);
         return file;
@@ -104,11 +131,11 @@ public class FileLogic {
 
 
     private void validations(File file) throws Exception {
-        validateFileType(file.getFileType());
-        validateResourceName(file.getFileType(), file.getResourceId());
-        validateRevision(file.getFileType(), file.getResourceId(), file.getRevision());
-        validateFile(file.getFile());
-        validateUploadDate(file.getUploadDate());
+//        validateFileType(file.getStrFileType());
+//        validateResourceName(file.getStrFileType(), file.getResourceId());
+//        validateRevision(file.getStrFileType(), file.getResourceId(), file.getRevision());
+//        validateFile(file.getFile());
+//        validateUploadDate(file.getUploadDate());
     }
 
     private void validateFileType(FileType currentFileType) throws ApplicationException {

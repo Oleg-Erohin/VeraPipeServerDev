@@ -1,6 +1,7 @@
 package com.verapipe.controllers;
 
 import com.verapipe.dto.File;
+import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.logic.FileLogic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,7 @@ public class FileController {
 
     @PutMapping
     public void update(@RequestBody File file) throws Exception {
+        System.out.println();
         this.fileLogic.update(file);
     }
 
@@ -30,15 +32,23 @@ public class FileController {
     public void delete(@PathVariable("id") int id) throws Exception {
         this.fileLogic.delete(id);
     }
-    @GetMapping
-    public File get(@RequestParam String fileType,
-                    @RequestParam int resourceId,
-                    @RequestParam(required = false) String revision) {
+    @GetMapping("/get-data")
+    public File getFileData(@RequestParam String fileType,
+                            @RequestParam int resourceId,
+                            @RequestParam(required = false) String revision) throws ApplicationException {
         System.out.println();
-        return this.fileLogic.getByFilters(fileType, resourceId, revision);
+        return this.fileLogic.getDataByFilters(fileType, resourceId, revision);
+    }
+    @GetMapping("/get-file")
+    public File getFile(@RequestParam String fileType,
+                        @RequestParam int resourceId,
+                        @RequestParam(required = false) String revision) throws ApplicationException {
+        System.out.println();
+        return this.fileLogic.getFileByFilters(fileType, resourceId, revision);
     }
     @GetMapping("/{id}")
     public byte[] getById(@PathVariable("id") int id) throws Exception {
+        System.out.println();
         return this.fileLogic.getById(id);
     }
 }

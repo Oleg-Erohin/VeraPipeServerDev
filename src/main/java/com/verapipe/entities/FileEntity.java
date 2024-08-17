@@ -12,6 +12,9 @@ public class FileEntity {
     @Id
     @GeneratedValue
     private int id;
+    @Column(name = "name", unique = false, nullable = false)
+    private String name;
+    @Enumerated(EnumType.STRING)
     @Column(name = "file_type", unique = false, nullable = false)
     private FileType fileType;
     @Column(name = "resource_id", unique = false, nullable = false)
@@ -19,6 +22,7 @@ public class FileEntity {
     @Column(name = "revision", unique = false, nullable = false)
     private String revision;
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     @Column(name = "file", unique = false, nullable = false)
     private byte[] file;
     @Column(name = "upload_date", unique = false, nullable = false)
@@ -29,11 +33,21 @@ public class FileEntity {
 
     public FileEntity(File file) {
         this.id = file.getId();
-        this.fileType = file.getFileType();
+        this.name = file.getName();
+        this.fileType = file.getEnumFileType();
         this.resourceId = file.getResourceId();
         this.revision = file.getRevision();
         this.file = file.getFile();
         this.uploadDate = file.getUploadDate();
+    }
+    // Constructor for selected fields (excluding 'file')
+    public FileEntity(int id, String name, FileType fileType, int resourceId, String revision, Date uploadDate) {
+        this.id = id;
+        this.name = name;
+        this.fileType = fileType;
+        this.resourceId = resourceId;
+        this.revision = revision;
+        this.uploadDate = uploadDate;
     }
 
     public int getId() {
@@ -42,6 +56,14 @@ public class FileEntity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public FileType getFileType() {

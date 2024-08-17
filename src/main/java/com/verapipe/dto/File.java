@@ -8,7 +8,9 @@ import java.util.Date;
 
 public class File {
     private int id;
-    private FileType fileType;
+    private String name;
+    private String  strFileType;
+    private FileType enumFileType;
     private int resourceId;
     private String revision;
     private byte[] file;
@@ -17,17 +19,18 @@ public class File {
     public File() {
     }
 
-    public File(FileType fileType, int resourceId, String revision, byte[] file) {
-        this.fileType = fileType;
+    public File(String  strFileType, int resourceId, String revision, byte[] file) {
+        this.strFileType = strFileType;
         this.resourceId = resourceId;
         this.revision = revision;
         this.file = file;
         this.uploadDate = new Date();
     }
 
-    public File(int id, FileType fileType, int resourceId, String revision, byte[] file) {
+    public File(int id,String name, String  strFileType, int resourceId, String revision, byte[] file) {
         this.id = id;
-        this.fileType = fileType;
+        this.name = name;
+        this.strFileType = strFileType;
         this.resourceId = resourceId;
         this.revision = revision;
         this.file = file;
@@ -35,7 +38,9 @@ public class File {
 
     public File(FileEntity fileEntity) {
         this.id = fileEntity.getId();
-        this.fileType = fileEntity.getFileType();
+        this.name = fileEntity.getName();
+        this.enumFileType = fileEntity.getFileType();
+        this.strFileType = enumFileType.getFileType();
         this.resourceId = fileEntity.getResourceId();
         this.revision = fileEntity.getRevision();
         this.file = fileEntity.getFile();
@@ -50,12 +55,28 @@ public class File {
         this.id = id;
     }
 
-    public FileType getFileType() {
-        return fileType;
+    public String getName() {
+        return name;
     }
 
-    public void setFileType(FileType fileType) {
-        this.fileType = fileType;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String  getStrFileType() {
+        return strFileType;
+    }
+
+    public void setStrFileType(String  strFileType) {
+        this.strFileType = strFileType;
+    }
+
+    public FileType getEnumFileType() {
+        return enumFileType;
+    }
+
+    public void setEnumFileType(FileType enumFileType) {
+        this.enumFileType = enumFileType;
     }
 
     public int getResourceId() {
@@ -94,7 +115,7 @@ public class File {
     public String toString() {
         return "File{" +
                 "id=" + id +
-                ", fileType=" + fileType +
+                ", fileType=" + strFileType +
                 ", resourceId='" + resourceId + '\'' +
                 ", revision='" + revision + '\'' +
                 ", file=" + Arrays.toString(file) +
