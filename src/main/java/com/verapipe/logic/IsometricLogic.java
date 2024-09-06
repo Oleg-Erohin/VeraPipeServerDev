@@ -126,16 +126,16 @@ public class IsometricLogic {
     private void validations(Isometric isometric) throws Exception {
         validateIsometricName(isometric.getName());
 
-        if (isometric.getPidsAndSheets() != null) {
-//            validateIsometricPidSheets(isometric.getPidsAndSheets());
-        }
+//        if (isometric.getPidsAndSheets() != null) {
+////            validateIsometricPidSheets(isometric.getPidsAndSheets());
+//        }
 
         validateIsometricRevision(isometric.getRevision());
         validateIsometricDate(isometric.getDate());
 //        validateIsometricSheets(isometric.getSheets());
-        if (isometric.getCoordinatesInPid() != null) {
-//        validateIsometricCoordinatesInPid(isometric.getCoordinatesInPid());
-        }
+//        if (isometric.getCoordinatesInPid() != null) {
+////        validateIsometricCoordinatesInPid(isometric.getCoordinatesInPid());
+//        }
 //        validateIsometricIsApproves(isometric.isApproved());
         if (isometric.getComments() != null) {
 //        validateIsometricComments(isometric.getComments());

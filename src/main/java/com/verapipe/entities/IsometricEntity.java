@@ -1,12 +1,14 @@
 package com.verapipe.entities;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.verapipe.dto.Coordinates;
 import com.verapipe.dto.Isometric;
-import com.verapipe.dto.Pid;
+import com.verapipe.dto.IsometricLocationInPid;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "isometric")
@@ -27,14 +29,11 @@ public class IsometricEntity {
     @Column(name = "sheets", unique = false, nullable = false)
     private int sheets;
 
-    @OneToMany(mappedBy = "isometric", fetch = FetchType.EAGER)
-    private List<CoordinatesEntity> coordinatesInPid;
-
     @Column(name = "is_approved", unique = false, nullable = false)
     private boolean isApproved;
 
     @OneToMany(mappedBy = "isometric", fetch = FetchType.LAZY)
-    private List<IsometricPidsAndSheetsEntity> isometricPidsAndSheets;
+    private List<IsometricLocationInPidEntity> isometricLocationsInPids;
 
     @Column(name = "comments", unique = false, nullable = true, columnDefinition = "TEXT")
     private String comments;
@@ -42,8 +41,8 @@ public class IsometricEntity {
     @OneToMany(mappedBy = "isometric", fetch = FetchType.LAZY)
     private List<JointEntity> jointsList;
 
-    @ManyToMany(mappedBy = "isometricsList", fetch = FetchType.LAZY)
-    private Set<PressureTestPackageEntity> testPacksList;
+    @ManyToMany(mappedBy = "isometrics", fetch = FetchType.LAZY)
+    private Set<PressureTestPackPidAndIsomtricsEntity> pressureTestPackPidsAndIsomtrics;
 
     public IsometricEntity() {
     }
@@ -54,43 +53,18 @@ public class IsometricEntity {
         this.revision = isometric.getRevision();
         this.date = isometric.getDate();
         this.sheets = isometric.getSheets();
-        this.coordinatesInPid = initializeCoordinates(isometric.getCoordinatesInPid());
         this.isApproved = isometric.isApproved();
-        this.isometricPidsAndSheets = initializePidsAndSheets(isometric.getPidsAndSheets());
+        this.isometricLocationsInPids = initializeIsometricLocationInPids(isometric.getIsometricLocationsInPids());
         this.comments = isometric.getComments();
     }
 
-    private List<CoordinatesEntity> initializeCoordinates(List<Coordinates> coordinatesInPid) {
-        List<CoordinatesEntity> tempCoordinatesList = new ArrayList<>();
-        for (Coordinates currentCoordinates : coordinatesInPid) {
-            CoordinatesEntity tempCoordinatesEntity = new CoordinatesEntity(currentCoordinates);
-            tempCoordinatesList.add(tempCoordinatesEntity);
+    private List<IsometricLocationInPidEntity> initializeIsometricLocationInPids(List<IsometricLocationInPid> isometricLocationInPids) throws JsonProcessingException {
+        List<IsometricLocationInPidEntity> tempPidsAndSheetsEntities = new ArrayList<>();
+        for (IsometricLocationInPid isometricLocationInPid : isometricLocationInPids) {
+            IsometricLocationInPidEntity isometricLocationInPidEntity = new IsometricLocationInPidEntity(isometricLocationInPid);
+            tempPidsAndSheetsEntities.add(isometricLocationInPidEntity);
         }
-        return tempCoordinatesList;
-    }
-
-    private List<IsometricPidsAndSheetsEntity> initializePidsAndSheets(Map<Pid, List<Integer>> pidsAndSheets) {
-        List<IsometricPidsAndSheetsEntity> pidsAndSheetsEntities = new ArrayList<>();
-
-        for (Map.Entry<Pid, List<Integer>> pidAndSheets : pidsAndSheets.entrySet()) {
-            IsometricPidsAndSheetsEntity tempPidAndSheets = new IsometricPidsAndSheetsEntity();
-
-            tempPidAndSheets.setIsometric(this);
-
-            PidEntity tempPid = new PidEntity(pidAndSheets.getKey());
-            tempPidAndSheets.setPid(tempPid);
-
-            List<SheetsInPidWhereIsometricEntity> sheetsInPid = new ArrayList<>();
-            for (Integer sheetInPidWhereIsometric : pidAndSheets.getValue()) {
-                SheetsInPidWhereIsometricEntity tempSheetInPid = new SheetsInPidWhereIsometricEntity();
-                tempSheetInPid.setSheet(sheetInPidWhereIsometric);
-                sheetsInPid.add(tempSheetInPid);
-            }
-            tempPidAndSheets.setSheetsOnPid(sheetsInPid);
-
-            pidsAndSheetsEntities.add(tempPidAndSheets);
-        }
-        return pidsAndSheetsEntities;
+        return tempPidsAndSheetsEntities;
     }
 
     public int getId() {
@@ -133,14 +107,6 @@ public class IsometricEntity {
         this.sheets = sheets;
     }
 
-    public List<CoordinatesEntity> getCoordinatesInPid() {
-        return coordinatesInPid;
-    }
-
-    public void setCoordinatesInPid(List<CoordinatesEntity> coordinatesInPid) {
-        this.coordinatesInPid = coordinatesInPid;
-    }
-
     public boolean isApproved() {
         return isApproved;
     }
@@ -149,12 +115,12 @@ public class IsometricEntity {
         isApproved = approved;
     }
 
-    public List<IsometricPidsAndSheetsEntity> getIsometricPidsAndSheets() {
-        return isometricPidsAndSheets;
+    public List<IsometricLocationInPidEntity> getIsometricLocationsInPids() {
+        return isometricLocationsInPids;
     }
 
-    public void setIsometricPidsAndSheets(List<IsometricPidsAndSheetsEntity> isometricPidsAndSheets) {
-        this.isometricPidsAndSheets = isometricPidsAndSheets;
+    public void setIsometricLocationsInPids(List<IsometricLocationInPidEntity> isometricLocationsInPids) {
+        this.isometricLocationsInPids = isometricLocationsInPids;
     }
 
     public String getComments() {
@@ -173,11 +139,11 @@ public class IsometricEntity {
         this.jointsList = jointsList;
     }
 
-    public Set<PressureTestPackageEntity> getTestPacksList() {
-        return testPacksList;
+    public Set<PressureTestPackPidAndIsomtricsEntity> getPressureTestPackPidsAndIsomtrics() {
+        return pressureTestPackPidsAndIsomtrics;
     }
 
-    public void setTestPacksList(Set<PressureTestPackageEntity> testPacksList) {
-        this.testPacksList = testPacksList;
+    public void setPressureTestPackPidsAndIsomtrics(Set<PressureTestPackPidAndIsomtricsEntity> pressureTestPackPidsAndIsomtrics) {
+        this.pressureTestPackPidsAndIsomtrics = pressureTestPackPidsAndIsomtrics;
     }
 }

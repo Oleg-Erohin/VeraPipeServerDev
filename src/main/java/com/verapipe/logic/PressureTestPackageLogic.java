@@ -114,19 +114,19 @@ public class PressureTestPackageLogic {
     }
 
     private void validations(PressureTestPackage pressureTestPackage) throws Exception {
-        validatePressureTestPackageName(pressureTestPackage.getName());
-        if (pressureTestPackage.getPids() != null) {
-            validatePressureTestPackagePids(pressureTestPackage.getPids());
-        }
-        if (pressureTestPackage.getIsometrics() != null) {
-            validatePressureTestPackageIsometrics(pressureTestPackage.getIsometrics());
-        }
-        if (pressureTestPackage.getCoordinatesInPidsList() != null) {
-//        validatePressureTestPackageCoordinatesInPids(pressureTestPackage.getCoordinatesInPidsList());
-        }
-        if (pressureTestPackage.getDate() != null) {
-            validatePressureTestPackageDate(pressureTestPackage.getDate());
-        }
+//        validatePressureTestPackageName(pressureTestPackage.getName());
+//        if (pressureTestPackage.getPids() != null) {
+//            validatePressureTestPackagePids(pressureTestPackage.getPids());
+//        }
+//        if (pressureTestPackage.getIsometrics() != null) {
+//            validatePressureTestPackageIsometrics(pressureTestPackage.getIsometrics());
+//        }
+//        if (pressureTestPackage.getCoordinatesInPidsList() != null) {
+////        validatePressureTestPackageCoordinatesInPids(pressureTestPackage.getCoordinatesInPidsList());
+//        }
+//        if (pressureTestPackage.getDate() != null) {
+//            validatePressureTestPackageDate(pressureTestPackage.getDate());
+//        }
     }
 
     private void validatePressureTestPackageDate(Date date) throws Exception {

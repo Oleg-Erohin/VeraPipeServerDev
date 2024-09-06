@@ -1,7 +1,6 @@
 package com.verapipe.entities;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.verapipe.dto.Joint;
 import com.verapipe.dto.NdtReport;
 import com.verapipe.enums.UnitOfMeasure;
@@ -15,52 +14,76 @@ public class JointEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @Column(name = "number", unique = false, nullable = false)
     private int number;
-    @Column(name = "coordinates", unique = true, nullable = false)
-    private String coordinatesOnIsometric;
+
+    @OneToOne(mappedBy = "joint")
+    private CoordinateEntity coordinatesOnIsometric;
+
     @ManyToOne(fetch = FetchType.EAGER)
     private PidEntity pid;
+
     @ManyToOne(fetch = FetchType.EAGER)
     private IsometricEntity isometric;
+
     @Column(name = "sheet_on_isometric", unique = false, nullable = false)
     private int sheetOnIsometric;
+
     @Column(name = "uom", unique = false, nullable = false)
     private UnitOfMeasure uom;
+
     @Column(name = "schedule", unique = false, nullable = true)
     private String schedule;
+
     @Column(name = "diameter", unique = false, nullable = false)
     private Float diameter;
+
     @Column(name = "fitting_description_1", unique = false, nullable = false)
     private String fittingDescription1;
+
     @Column(name = "fitting_description_2", unique = false, nullable = false)
     private String fittingDescription2;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<BaseMaterialTypeEntity> baseMaterialTypeList;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<BaseMaterialCertificateEntity> baseMaterialCertificateList;
+
     @Column(name = "thickness", unique = false, nullable = false)
     private Float thickness;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<FillerMaterialTypeEntity> fillerMaterialTypeList;
+
     @ManyToMany
     private Set<FillerMaterialCertificateEntity> fillerMaterialCertificateList;
+
     @ManyToOne(fetch = FetchType.EAGER)
     private ProcessSpecificationProcedureEntity processSpecificationProcedure;
+
     @ManyToMany(mappedBy = "jointsList")
     private Set<JoinerEntity> joinersList;
+
     @Column(name = "date", unique = false, nullable = true)
     private Date date;
+
     @Column(name = "is_fitup_done", unique = false, nullable = true)
     private boolean isFitUpDone;
+
     @Column(name = "is_visual_inspection_done", unique = false, nullable = true)
     private boolean isVisualInspectionDone;
+
     @OneToMany(mappedBy = "joint")
     private List<JointNdtWithResultEntity> jointNdtWithResultsList;
+
     @ManyToOne(fetch = FetchType.EAGER)
     private PreheatEntity preheat;
+
     @ManyToOne(fetch = FetchType.EAGER)
     private PostWeldHeatTreatmentEntity postWeldHeatTreatment;
+
     @Column(name = "comments", unique = false, nullable = true, columnDefinition = "TEXT")
     private String comments;
 
@@ -70,8 +93,7 @@ public class JointEntity {
     public JointEntity(Joint joint) throws JsonProcessingException {
         this.id = joint.getId();
         this.number = joint.getNumber();
-        ObjectMapper objectMapper = new ObjectMapper();
-        this.coordinatesOnIsometric = objectMapper.writeValueAsString(joint.getCoordinatesOnIsometric());
+        this.coordinatesOnIsometric = new CoordinateEntity(joint.getCoordinatesOnIsometric());
         this.pid = new PidEntity(joint.getPid());
         this.isometric = new IsometricEntity(joint.getIsometric());
         this.sheetOnIsometric = joint.getSheetOnIsometric();
@@ -167,11 +189,11 @@ public class JointEntity {
         this.number = number;
     }
 
-    public String getCoordinatesOnIsometric() {
+    public CoordinateEntity getCoordinatesOnIsometric() {
         return coordinatesOnIsometric;
     }
 
-    public void setCoordinatesOnIsometric(String coordinatesOnIsometric) {
+    public void setCoordinatesOnIsometric(CoordinateEntity coordinatesOnIsometric) {
         this.coordinatesOnIsometric = coordinatesOnIsometric;
     }
 

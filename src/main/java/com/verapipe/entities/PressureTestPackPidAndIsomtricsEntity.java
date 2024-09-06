@@ -1,11 +1,11 @@
 package com.verapipe.entities;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "test_pack_pids_and_coordinates")
-public class PressureTestPackPidsAndCoordinatesEntity {
+@Table(name = "test_pack_pids_and_isometrics")
+public class PressureTestPackPidAndIsomtricsEntity {
     @Id
     @GeneratedValue
     private int id;
@@ -16,10 +16,10 @@ public class PressureTestPackPidsAndCoordinatesEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private PidEntity pid;
 
-    @OneToMany(mappedBy = "pressureTestPackPidsAndCoordinates")
-    private List<CoordinatesEntity> coordinatesList;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<IsometricEntity> isometrics;
 
-    public PressureTestPackPidsAndCoordinatesEntity() {
+    public PressureTestPackPidAndIsomtricsEntity() {
     }
 
     public int getId() {
@@ -46,11 +46,11 @@ public class PressureTestPackPidsAndCoordinatesEntity {
         this.pid = pid;
     }
 
-    public List<CoordinatesEntity> getCoordinatesList() {
-        return coordinatesList;
+    public Set<IsometricEntity> getIsometrics() {
+        return isometrics;
     }
 
-    public void setCoordinatesList(List<CoordinatesEntity> coordinatesList) {
-        this.coordinatesList = coordinatesList;
+    public void setIsometrics(Set<IsometricEntity> isometrics) {
+        this.isometrics = isometrics;
     }
 }

@@ -1,66 +1,53 @@
 package com.verapipe.dto;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.verapipe.entities.IsometricEntity;
-import com.verapipe.entities.PidEntity;
+import com.verapipe.entities.PressureTestPackPidAndIsomtricsEntity;
 import com.verapipe.entities.PressureTestPackageEntity;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class PressureTestPackage {
     private int id;
     private String name;
-    private List<Pid> pids;
-    private List<Isometric> isometrics;
-    private List<Coordinates> coordinatesInPidsList;
+    private Map<Pid, List<Isometric>> pidsAndIsometrics;
     private Date date;
 
     public PressureTestPackage() {
     }
 
-    public PressureTestPackage(String name, List<Pid> pids, List<Isometric> isometrics, List<Coordinates> coordinatesInPidsList, Date date) {
+    public PressureTestPackage(String name, Map<Pid, List<Isometric>> pidsAndIsometrics, Date date) {
         this.name = name;
-        this.pids = pids;
-        this.isometrics = isometrics;
-        this.coordinatesInPidsList = coordinatesInPidsList;
+        this.pidsAndIsometrics = pidsAndIsometrics;
         this.date = date;
     }
 
-    public PressureTestPackage(int id, String name, List<Pid> pids, List<Isometric> isometrics, List<Coordinates> coordinatesInPidsList, Date date) {
+    public PressureTestPackage(int id, String name, Map<Pid, List<Isometric>> pidsAndIsometrics, Date date) {
         this.id = id;
         this.name = name;
-        this.pids = pids;
-        this.isometrics = isometrics;
-        this.coordinatesInPidsList = coordinatesInPidsList;
+        this.pidsAndIsometrics = pidsAndIsometrics;
         this.date = date;
     }
 
     public PressureTestPackage(PressureTestPackageEntity pressureTestPackageEntity) throws JsonProcessingException {
         this.id = pressureTestPackageEntity.getId();
         this.name = pressureTestPackageEntity.getName();
-
-        List<PidEntity> pidEntityList = new ArrayList<>();
-        pidEntityList.addAll(pressureTestPackageEntity.getPidsList());
-        for(PidEntity pidEntity : pidEntityList){
-            Pid pid = new Pid(pidEntity);
-            this.pids.add(pid);
-        }
-
-        List<IsometricEntity> isometricEntityList = new ArrayList<>();
-        isometricEntityList.addAll(pressureTestPackageEntity.getIsometricsList());
-        for(IsometricEntity isometricEntity : isometricEntityList){
-            Isometric isometric = new Isometric(isometricEntity);
-            this.isometrics.add(isometric);
-        }
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        this.coordinatesInPidsList = objectMapper.readValue(pressureTestPackageEntity.getCoordinatesInPids(), new TypeReference<List<Coordinates>>(){});
-
+        this.pidsAndIsometrics = initializePidsAndIsometrics(pressureTestPackageEntity.getPidsAndIsometrics());
         this.date = pressureTestPackageEntity.getDate();
+    }
+
+    private Map<Pid, List<Isometric>> initializePidsAndIsometrics(Set<PressureTestPackPidAndIsomtricsEntity> pidsAndIsometrics) {
+        Map<Pid, List<Isometric>> tempPidsAndIsos = new HashMap<>();
+        for (PressureTestPackPidAndIsomtricsEntity pidAndIsometrics: pidsAndIsometrics){
+            Pid pid = new Pid(pidAndIsometrics.getPid());
+            List<Isometric> isometrics = new ArrayList<>();
+            for (IsometricEntity isometricEntity : pidAndIsometrics.getIsometrics()){
+                Isometric isometric = new Isometric(isometricEntity);
+                isometrics.add(isometric);
+            }
+            tempPidsAndIsos.put(pid, isometrics);
+        }
+        return tempPidsAndIsos;
     }
 
     public int getId() {
@@ -79,28 +66,12 @@ public class PressureTestPackage {
         this.name = name;
     }
 
-    public List<Pid> getPids() {
-        return pids;
+    public Map<Pid, List<Isometric>> getPidsAndIsometrics() {
+        return pidsAndIsometrics;
     }
 
-    public void setPids(List<Pid> pids) {
-        this.pids = pids;
-    }
-
-    public List<Isometric> getIsometrics() {
-        return isometrics;
-    }
-
-    public void setIsometrics(List<Isometric> isometrics) {
-        this.isometrics = isometrics;
-    }
-
-    public List<Coordinates> getCoordinatesInPidsList() {
-        return coordinatesInPidsList;
-    }
-
-    public void setCoordinatesInPidsList(List<Coordinates> coordinatesInPidsList) {
-        this.coordinatesInPidsList = coordinatesInPidsList;
+    public void setPidsAndIsometrics(Map<Pid, List<Isometric>> pidsAndIsometrics) {
+        this.pidsAndIsometrics = pidsAndIsometrics;
     }
 
     public Date getDate() {
@@ -116,9 +87,7 @@ public class PressureTestPackage {
         return "PressureTestPackage{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", pids=" + pids +
-                ", isometrics=" + isometrics +
-                ", coordinatesInPidsList=" + coordinatesInPidsList +
+                ", pidsAndIsometrics=" + pidsAndIsometrics +
                 ", date=" + date +
                 '}';
     }

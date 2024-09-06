@@ -28,16 +28,13 @@ public class PidEntity {
     private String comments;
 
     @OneToMany(mappedBy = "pid", fetch = FetchType.LAZY)
-    private List<IsometricPidsAndSheetsEntity> isometricPidsAndSheets;
+    private List<IsometricLocationInPidEntity> isometricPidsAndSheets;
 
     @OneToMany(mappedBy = "pid", fetch = FetchType.LAZY)
     private List<JointEntity> JointsList;
 
-    @ManyToMany(mappedBy = "pidsList", fetch = FetchType.LAZY)
-    private Set<PressureTestPackageEntity> pressureTestPackagesList;
-
-    @OneToMany(mappedBy = "pid")
-    private List<PressureTestPackPidsAndCoordinatesEntity> pressureTestPackPidsAndCoordinatesList;
+    @OneToMany(mappedBy = "pid", fetch = FetchType.LAZY)
+    private Set<PressureTestPackPidAndIsomtricsEntity> pressureTestPackPidsAndIsomtrics;
 
     public PidEntity() {
     }
@@ -99,11 +96,11 @@ public class PidEntity {
         this.comments = comments;
     }
 
-    public List<IsometricPidsAndSheetsEntity> getIsometricPidsAndSheets() {
+    public List<IsometricLocationInPidEntity> getIsometricPidsAndSheets() {
         return isometricPidsAndSheets;
     }
 
-    public void setIsometricPidsAndSheets(List<IsometricPidsAndSheetsEntity> isometricPidsAndSheets) {
+    public void setIsometricPidsAndSheets(List<IsometricLocationInPidEntity> isometricPidsAndSheets) {
         this.isometricPidsAndSheets = isometricPidsAndSheets;
     }
 
@@ -115,19 +112,11 @@ public class PidEntity {
         JointsList = jointsList;
     }
 
-    public Set<PressureTestPackageEntity> getPressureTestPackagesList() {
-        return pressureTestPackagesList;
+    public Set<PressureTestPackPidAndIsomtricsEntity> getPressureTestPackPidsAndIsomtrics() {
+        return pressureTestPackPidsAndIsomtrics;
     }
 
-    public void setPressureTestPackagesList(Set<PressureTestPackageEntity> pressureTestPackagesList) {
-        this.pressureTestPackagesList = pressureTestPackagesList;
-    }
-
-    public List<PressureTestPackPidsAndCoordinatesEntity> getPressureTestPackPidsAndCoordinatesList() {
-        return pressureTestPackPidsAndCoordinatesList;
-    }
-
-    public void setPressureTestPackPidsAndCoordinatesList(List<PressureTestPackPidsAndCoordinatesEntity> pressureTestPackPidsAndCoordinatesList) {
-        this.pressureTestPackPidsAndCoordinatesList = pressureTestPackPidsAndCoordinatesList;
+    public void setPressureTestPackPidsAndIsomtrics(Set<PressureTestPackPidAndIsomtricsEntity> pressureTestPackPidsAndIsomtrics) {
+        this.pressureTestPackPidsAndIsomtrics = pressureTestPackPidsAndIsomtrics;
     }
 }

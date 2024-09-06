@@ -1,8 +1,6 @@
 package com.verapipe.dto;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.verapipe.entities.*;
 import com.verapipe.enums.UnitOfMeasure;
 
@@ -11,7 +9,7 @@ import java.util.*;
 public class Joint {
     private int id;
     private int number;
-    private Coordinates coordinatesOnIsometric;
+    private Coordinate coordinateOnIsometric;
     private Pid pid;
     private Isometric isometric;
     private int sheetOnIsometric;
@@ -43,9 +41,9 @@ public class Joint {
     public Joint() {
     }
 
-    public Joint(int number, Coordinates coordinatesOnIsometric, Pid pid, Isometric isometric, int sheetOnIsometric, UnitOfMeasure uom, String schedule, Float diameter, String fittingDescription1, BaseMaterialType baseMaterialType1, BaseMaterialCertificate baseMaterial1, String fittingDescription2, BaseMaterialType baseMaterialType2, BaseMaterialCertificate baseMaterial2, Float thickness, FillerMaterialType fillerMaterialType1, FillerMaterialCertificate fillerMaterial1, FillerMaterialType fillerMaterialType2, FillerMaterialCertificate fillerMaterial2, ProcessSpecificationProcedure processSpecificationProcedure, Joiner joiner1, Joiner joiner2, Date date, boolean isFitUpDone, boolean isVisualInspectionDone, Map<NdtReport, Boolean> ndtReportsWithResults, Preheat preheat, PostWeldHeatTreatment postWeldHeatTreatment, String comments) {
+    public Joint(int number, Coordinate coordinateOnIsometric, Pid pid, Isometric isometric, int sheetOnIsometric, UnitOfMeasure uom, String schedule, Float diameter, String fittingDescription1, BaseMaterialType baseMaterialType1, BaseMaterialCertificate baseMaterial1, String fittingDescription2, BaseMaterialType baseMaterialType2, BaseMaterialCertificate baseMaterial2, Float thickness, FillerMaterialType fillerMaterialType1, FillerMaterialCertificate fillerMaterial1, FillerMaterialType fillerMaterialType2, FillerMaterialCertificate fillerMaterial2, ProcessSpecificationProcedure processSpecificationProcedure, Joiner joiner1, Joiner joiner2, Date date, boolean isFitUpDone, boolean isVisualInspectionDone, Map<NdtReport, Boolean> ndtReportsWithResults, Preheat preheat, PostWeldHeatTreatment postWeldHeatTreatment, String comments) {
         this.number = number;
-        this.coordinatesOnIsometric = coordinatesOnIsometric;
+        this.coordinateOnIsometric = coordinateOnIsometric;
         this.pid = pid;
         this.isometric = isometric;
         this.sheetOnIsometric = sheetOnIsometric;
@@ -75,10 +73,10 @@ public class Joint {
         this.comments = comments;
     }
 
-    public Joint(int id, int number, Coordinates coordinatesOnIsometric, Pid pid, Isometric isometric, int sheetOnIsometric, UnitOfMeasure uom, String schedule, Float diameter, String fittingDescription1, BaseMaterialType baseMaterialType1, BaseMaterialCertificate baseMaterial1, String fittingDescription2, BaseMaterialType baseMaterialType2, BaseMaterialCertificate baseMaterial2, Float thickness, FillerMaterialType fillerMaterialType1, FillerMaterialCertificate fillerMaterial1, FillerMaterialType fillerMaterialType2, FillerMaterialCertificate fillerMaterial2, ProcessSpecificationProcedure processSpecificationProcedure, Joiner joiner1, Joiner joiner2, Date date, boolean isFitUpDone, boolean isVisualInspectionDone, Map<NdtReport, Boolean> ndtReportsWithResults, Preheat preheat, PostWeldHeatTreatment postWeldHeatTreatment, String comments) {
+    public Joint(int id, int number, Coordinate coordinateOnIsometric, Pid pid, Isometric isometric, int sheetOnIsometric, UnitOfMeasure uom, String schedule, Float diameter, String fittingDescription1, BaseMaterialType baseMaterialType1, BaseMaterialCertificate baseMaterial1, String fittingDescription2, BaseMaterialType baseMaterialType2, BaseMaterialCertificate baseMaterial2, Float thickness, FillerMaterialType fillerMaterialType1, FillerMaterialCertificate fillerMaterial1, FillerMaterialType fillerMaterialType2, FillerMaterialCertificate fillerMaterial2, ProcessSpecificationProcedure processSpecificationProcedure, Joiner joiner1, Joiner joiner2, Date date, boolean isFitUpDone, boolean isVisualInspectionDone, Map<NdtReport, Boolean> ndtReportsWithResults, Preheat preheat, PostWeldHeatTreatment postWeldHeatTreatment, String comments) {
         this.id = id;
         this.number = number;
-        this.coordinatesOnIsometric = coordinatesOnIsometric;
+        this.coordinateOnIsometric = coordinateOnIsometric;
         this.pid = pid;
         this.isometric = isometric;
         this.sheetOnIsometric = sheetOnIsometric;
@@ -112,9 +110,7 @@ public class Joint {
         this.id = jointEntity.getId();
         this.number = jointEntity.getNumber();
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        this.coordinatesOnIsometric = objectMapper.readValue(jointEntity.getCoordinatesOnIsometric(), new TypeReference<Coordinates>() {
-        });
+//        this.coordinatesOnIsometric = jointEntity.getCoordinatesOnIsometric();
 
         this.pid = new Pid(jointEntity.getPid());
         this.isometric = new Isometric(jointEntity.getIsometric());
@@ -190,12 +186,12 @@ public class Joint {
         this.number = number;
     }
 
-    public Coordinates getCoordinatesOnIsometric() {
-        return coordinatesOnIsometric;
+    public Coordinate getCoordinatesOnIsometric() {
+        return coordinateOnIsometric;
     }
 
-    public void setCoordinatesOnIsometric(Coordinates coordinatesOnIsometric) {
-        this.coordinatesOnIsometric = coordinatesOnIsometric;
+    public void setCoordinatesOnIsometric(Coordinate coordinateOnIsometric) {
+        this.coordinateOnIsometric = coordinateOnIsometric;
     }
 
     public Pid getPid() {
@@ -419,7 +415,7 @@ public class Joint {
         return "Joint{" +
                 "id=" + id +
                 ", number=" + number +
-                ", coordinatesOnIsometric=" + coordinatesOnIsometric +
+                ", coordinatesOnIsometric=" + coordinateOnIsometric +
                 ", pid=" + pid +
                 ", isometric=" + isometric +
                 ", sheetOnIsometric=" + sheetOnIsometric +
