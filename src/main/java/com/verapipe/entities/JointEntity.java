@@ -2,11 +2,13 @@ package com.verapipe.entities;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.verapipe.dto.Joint;
-import com.verapipe.dto.NdtReport;
+import com.verapipe.dto.JointNdtWithResult;
 import com.verapipe.enums.UnitOfMeasure;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "joint")
@@ -76,7 +78,7 @@ public class JointEntity {
     private boolean isVisualInspectionDone;
 
     @OneToMany(mappedBy = "joint")
-    private List<JointNdtWithResultEntity> jointNdtWithResultsList;
+    private Set<JointNdtWithResultEntity> jointNdtWithResultsList;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private PreheatEntity preheat;
@@ -120,19 +122,13 @@ public class JointEntity {
         this.comments = joint.getComments();
     }
 
-    private List<JointNdtWithResultEntity> initializeJointNdtWithResultsListWithValues(Map<NdtReport, Boolean> ndtReportsWithResults) {
-        List<JointNdtWithResultEntity> jointNdtWithResultsList = new ArrayList<>();
-        for (Map.Entry<NdtReport, Boolean> ndtReportWithResult : ndtReportsWithResults.entrySet()){
-            JointNdtWithResultEntity jointNdtWithResultEntity = new JointNdtWithResultEntity();
-
-            NdtReportEntity ndtReportEntity = new NdtReportEntity(ndtReportWithResult.getKey());
-            jointNdtWithResultEntity.setNdtReport(ndtReportEntity);
-            jointNdtWithResultEntity.setPassed(ndtReportWithResult.getValue());
-            jointNdtWithResultEntity.setJoint(this);
-
-            jointNdtWithResultsList.add(jointNdtWithResultEntity);
+    private Set<JointNdtWithResultEntity> initializeJointNdtWithResultsListWithValues(Set<JointNdtWithResult> ndtReportsWithResultsEntities) throws JsonProcessingException {
+        Set<JointNdtWithResultEntity> ndtReportsWithResults = new HashSet<>();
+        for (JointNdtWithResult jointNdtWithResult : ndtReportsWithResultsEntities){
+            JointNdtWithResultEntity jointNdtWithResultEntity = new JointNdtWithResultEntity(jointNdtWithResult);
+            ndtReportsWithResults.add(jointNdtWithResultEntity);
         }
-        return jointNdtWithResultsList;
+        return ndtReportsWithResults;
     }
 
     private void initializeBaseMaterialCertificateListWithValues(Joint joint) {
@@ -341,11 +337,11 @@ public class JointEntity {
         isVisualInspectionDone = visualInspectionDone;
     }
 
-    public List<JointNdtWithResultEntity> getJointNdtWithResultsList() {
+    public Set<JointNdtWithResultEntity> getJointNdtWithResultsList() {
         return jointNdtWithResultsList;
     }
 
-    public void setJointNdtWithResultsList(List<JointNdtWithResultEntity> jointNdtWithResultsList) {
+    public void setJointNdtWithResultsList(Set<JointNdtWithResultEntity> jointNdtWithResultsList) {
         this.jointNdtWithResultsList = jointNdtWithResultsList;
     }
 

@@ -9,11 +9,8 @@ import java.util.List;
 public class IsometricLocationInPid {
 
     private int id;
-
     private Isometric isometric;
-
     private Pid pid;
-
     private List<IsometricLocationInSheet> isometricLocationsInSheets;
 
     public IsometricLocationInPid() {

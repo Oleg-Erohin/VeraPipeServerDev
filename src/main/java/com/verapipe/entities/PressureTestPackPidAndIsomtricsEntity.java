@@ -1,6 +1,11 @@
 package com.verapipe.entities;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.verapipe.dto.Isometric;
+import com.verapipe.dto.PressureTestPackagePidAndIsometrics;
+
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -20,6 +25,22 @@ public class PressureTestPackPidAndIsomtricsEntity {
     private Set<IsometricEntity> isometrics;
 
     public PressureTestPackPidAndIsomtricsEntity() {
+    }
+
+    public PressureTestPackPidAndIsomtricsEntity(PressureTestPackagePidAndIsometrics pressureTestPackagePidAndIsometrics) throws JsonProcessingException {
+        this.id = pressureTestPackagePidAndIsometrics.getId();
+        this.pid = new PidEntity(pressureTestPackagePidAndIsometrics.getPid());
+        this.isometrics = initializeIsometrics(pressureTestPackagePidAndIsometrics.getIsometrics());
+    }
+
+    private Set<IsometricEntity> initializeIsometrics(Set<Isometric> isometrics) throws JsonProcessingException {
+        Set<IsometricEntity> isometricEntities = new HashSet<>();
+        for (Isometric isometric : isometrics) {
+            IsometricEntity isometricEntity = new IsometricEntity(isometric);
+            isometricEntities.add(isometricEntity);
+        }
+        return isometricEntities;
+
     }
 
     public int getId() {

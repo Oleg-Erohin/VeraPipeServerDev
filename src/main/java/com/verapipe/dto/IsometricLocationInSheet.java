@@ -9,9 +9,7 @@ import java.util.Set;
 public class IsometricLocationInSheet {
 
     private int id;
-
     private Integer sheet;
-
     private Set<Coordinate> coordinateOnSheet;
 
     public IsometricLocationInSheet() {

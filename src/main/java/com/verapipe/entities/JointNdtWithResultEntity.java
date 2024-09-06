@@ -1,5 +1,8 @@
 package com.verapipe.entities;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.verapipe.dto.JointNdtWithResult;
+
 import javax.persistence.*;
 
 @Entity
@@ -18,6 +21,13 @@ public class JointNdtWithResultEntity {
     public JointNdtWithResultEntity() {
     }
 
+    public JointNdtWithResultEntity(JointNdtWithResult jointNdtWithResult) throws JsonProcessingException {
+        this.id = jointNdtWithResult.getId();
+//        this.joint = new JointEntity(jointNdtWithResult.getJoint());
+        this.ndtReport = new NdtReportEntity(jointNdtWithResult.getNdtReport());
+        this.isPassed = jointNdtWithResult.getPassed();
+    }
+
     public int getId() {
         return id;
     }
@@ -26,13 +36,13 @@ public class JointNdtWithResultEntity {
         this.id = id;
     }
 
-    public JointEntity getJoint() {
-        return joint;
-    }
-
-    public void setJoint(JointEntity joint) {
-        this.joint = joint;
-    }
+//    public JointEntity getJoint() {
+//        return joint;
+//    }
+//
+//    public void setJoint(JointEntity joint) {
+//        this.joint = joint;
+//    }
 
     public NdtReportEntity getNdtReport() {
         return ndtReport;

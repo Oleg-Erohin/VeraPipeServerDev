@@ -1,28 +1,29 @@
 package com.verapipe.dto;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.verapipe.entities.IsometricEntity;
 import com.verapipe.entities.PressureTestPackPidAndIsomtricsEntity;
 import com.verapipe.entities.PressureTestPackageEntity;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PressureTestPackage {
     private int id;
     private String name;
-    private Map<Pid, List<Isometric>> pidsAndIsometrics;
+    private Set<PressureTestPackagePidAndIsometrics> pidsAndIsometrics;
     private Date date;
 
     public PressureTestPackage() {
     }
 
-    public PressureTestPackage(String name, Map<Pid, List<Isometric>> pidsAndIsometrics, Date date) {
+    public PressureTestPackage(String name, Set<PressureTestPackagePidAndIsometrics> pidsAndIsometrics, Date date) {
         this.name = name;
         this.pidsAndIsometrics = pidsAndIsometrics;
         this.date = date;
     }
 
-    public PressureTestPackage(int id, String name, Map<Pid, List<Isometric>> pidsAndIsometrics, Date date) {
+    public PressureTestPackage(int id, String name, Set<PressureTestPackagePidAndIsometrics> pidsAndIsometrics, Date date) {
         this.id = id;
         this.name = name;
         this.pidsAndIsometrics = pidsAndIsometrics;
@@ -36,18 +37,13 @@ public class PressureTestPackage {
         this.date = pressureTestPackageEntity.getDate();
     }
 
-    private Map<Pid, List<Isometric>> initializePidsAndIsometrics(Set<PressureTestPackPidAndIsomtricsEntity> pidsAndIsometrics) {
-        Map<Pid, List<Isometric>> tempPidsAndIsos = new HashMap<>();
-        for (PressureTestPackPidAndIsomtricsEntity pidAndIsometrics: pidsAndIsometrics){
-            Pid pid = new Pid(pidAndIsometrics.getPid());
-            List<Isometric> isometrics = new ArrayList<>();
-            for (IsometricEntity isometricEntity : pidAndIsometrics.getIsometrics()){
-                Isometric isometric = new Isometric(isometricEntity);
-                isometrics.add(isometric);
-            }
-            tempPidsAndIsos.put(pid, isometrics);
+    private Set<PressureTestPackagePidAndIsometrics> initializePidsAndIsometrics(Set<PressureTestPackPidAndIsomtricsEntity> pidsAndIsosEntities) {
+        Set<PressureTestPackagePidAndIsometrics> pidsAndIsos = new HashSet<>();
+        for (PressureTestPackPidAndIsomtricsEntity pidAndIsometricsEntity: pidsAndIsosEntities){
+            PressureTestPackagePidAndIsometrics pidAndIsos = new PressureTestPackagePidAndIsometrics(pidAndIsometricsEntity);
+            pidsAndIsos.add(pidAndIsos);
         }
-        return tempPidsAndIsos;
+        return pidsAndIsos;
     }
 
     public int getId() {
@@ -66,11 +62,11 @@ public class PressureTestPackage {
         this.name = name;
     }
 
-    public Map<Pid, List<Isometric>> getPidsAndIsometrics() {
+    public Set<PressureTestPackagePidAndIsometrics> getPidsAndIsometrics() {
         return pidsAndIsometrics;
     }
 
-    public void setPidsAndIsometrics(Map<Pid, List<Isometric>> pidsAndIsometrics) {
+    public void setPidsAndIsometrics(Set<PressureTestPackagePidAndIsometrics> pidsAndIsometrics) {
         this.pidsAndIsometrics = pidsAndIsometrics;
     }
 

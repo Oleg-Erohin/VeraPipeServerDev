@@ -1,12 +1,13 @@
 package com.verapipe.entities;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.verapipe.dto.Isometric;
-import com.verapipe.dto.Pid;
 import com.verapipe.dto.PressureTestPackage;
+import com.verapipe.dto.PressureTestPackagePidAndIsometrics;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "pressure_test_package")
@@ -34,22 +35,13 @@ public class PressureTestPackageEntity {
         this.date = pressureTestPackage.getDate();
     }
 
-    private Set<PressureTestPackPidAndIsomtricsEntity> initializePidsAndIsometrics(Map<Pid, List<Isometric>> pidsAndIsometrics) throws JsonProcessingException {
-        Set<PressureTestPackPidAndIsomtricsEntity> tempPidsAndIsometrics = new HashSet<>();
-        for (Map.Entry<Pid, List<Isometric>> pidAndIsometrics : pidsAndIsometrics.entrySet()) {
-            PressureTestPackPidAndIsomtricsEntity tempPidAndIsometricsEntity = new PressureTestPackPidAndIsomtricsEntity();
-
-            PidEntity pidEntity = new PidEntity(pidAndIsometrics.getKey());
-            tempPidAndIsometricsEntity.setPid(pidEntity);
-
-            Set<IsometricEntity> isometricEntities = new HashSet<>();
-            for (Isometric isometric : pidAndIsometrics.getValue()){
-                IsometricEntity isometricEntity = new IsometricEntity(isometric);
-                isometricEntities.add(isometricEntity);
-            }
-            tempPidAndIsometricsEntity.setIsometrics(isometricEntities);
+    private Set<PressureTestPackPidAndIsomtricsEntity> initializePidsAndIsometrics(Set<PressureTestPackagePidAndIsometrics> pidsAndIsometrics) throws JsonProcessingException {
+        Set<PressureTestPackPidAndIsomtricsEntity> pidsAndIsosEntities = new HashSet<>();
+        for (PressureTestPackagePidAndIsometrics pidAndIsos: pidsAndIsometrics){
+            PressureTestPackPidAndIsomtricsEntity pidAndIsometricsEntity = new PressureTestPackPidAndIsomtricsEntity(pidAndIsos);
+            pidsAndIsosEntities.add(pidAndIsometricsEntity);
         }
-        return tempPidsAndIsometrics;
+        return pidsAndIsosEntities;
     }
 
     public int getId() {

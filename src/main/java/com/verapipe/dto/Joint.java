@@ -33,7 +33,7 @@ public class Joint {
     private Date date;
     private boolean isFitUpDone;
     private boolean isVisualInspectionDone;
-    private Map<NdtReport, Boolean> ndtReportsWithResults;
+    private Set<JointNdtWithResult> ndtReportsWithResults;
     private Preheat preheat;
     private PostWeldHeatTreatment postWeldHeatTreatment;
     private String comments;
@@ -41,7 +41,7 @@ public class Joint {
     public Joint() {
     }
 
-    public Joint(int number, Coordinate coordinateOnIsometric, Pid pid, Isometric isometric, int sheetOnIsometric, UnitOfMeasure uom, String schedule, Float diameter, String fittingDescription1, BaseMaterialType baseMaterialType1, BaseMaterialCertificate baseMaterial1, String fittingDescription2, BaseMaterialType baseMaterialType2, BaseMaterialCertificate baseMaterial2, Float thickness, FillerMaterialType fillerMaterialType1, FillerMaterialCertificate fillerMaterial1, FillerMaterialType fillerMaterialType2, FillerMaterialCertificate fillerMaterial2, ProcessSpecificationProcedure processSpecificationProcedure, Joiner joiner1, Joiner joiner2, Date date, boolean isFitUpDone, boolean isVisualInspectionDone, Map<NdtReport, Boolean> ndtReportsWithResults, Preheat preheat, PostWeldHeatTreatment postWeldHeatTreatment, String comments) {
+    public Joint(int number, Coordinate coordinateOnIsometric, Pid pid, Isometric isometric, int sheetOnIsometric, UnitOfMeasure uom, String schedule, Float diameter, String fittingDescription1, BaseMaterialType baseMaterialType1, BaseMaterialCertificate baseMaterial1, String fittingDescription2, BaseMaterialType baseMaterialType2, BaseMaterialCertificate baseMaterial2, Float thickness, FillerMaterialType fillerMaterialType1, FillerMaterialCertificate fillerMaterial1, FillerMaterialType fillerMaterialType2, FillerMaterialCertificate fillerMaterial2, ProcessSpecificationProcedure processSpecificationProcedure, Joiner joiner1, Joiner joiner2, Date date, boolean isFitUpDone, boolean isVisualInspectionDone, Set<JointNdtWithResult> ndtReportsWithResults, Preheat preheat, PostWeldHeatTreatment postWeldHeatTreatment, String comments) {
         this.number = number;
         this.coordinateOnIsometric = coordinateOnIsometric;
         this.pid = pid;
@@ -73,7 +73,7 @@ public class Joint {
         this.comments = comments;
     }
 
-    public Joint(int id, int number, Coordinate coordinateOnIsometric, Pid pid, Isometric isometric, int sheetOnIsometric, UnitOfMeasure uom, String schedule, Float diameter, String fittingDescription1, BaseMaterialType baseMaterialType1, BaseMaterialCertificate baseMaterial1, String fittingDescription2, BaseMaterialType baseMaterialType2, BaseMaterialCertificate baseMaterial2, Float thickness, FillerMaterialType fillerMaterialType1, FillerMaterialCertificate fillerMaterial1, FillerMaterialType fillerMaterialType2, FillerMaterialCertificate fillerMaterial2, ProcessSpecificationProcedure processSpecificationProcedure, Joiner joiner1, Joiner joiner2, Date date, boolean isFitUpDone, boolean isVisualInspectionDone, Map<NdtReport, Boolean> ndtReportsWithResults, Preheat preheat, PostWeldHeatTreatment postWeldHeatTreatment, String comments) {
+    public Joint(int id, int number, Coordinate coordinateOnIsometric, Pid pid, Isometric isometric, int sheetOnIsometric, UnitOfMeasure uom, String schedule, Float diameter, String fittingDescription1, BaseMaterialType baseMaterialType1, BaseMaterialCertificate baseMaterial1, String fittingDescription2, BaseMaterialType baseMaterialType2, BaseMaterialCertificate baseMaterial2, Float thickness, FillerMaterialType fillerMaterialType1, FillerMaterialCertificate fillerMaterial1, FillerMaterialType fillerMaterialType2, FillerMaterialCertificate fillerMaterial2, ProcessSpecificationProcedure processSpecificationProcedure, Joiner joiner1, Joiner joiner2, Date date, boolean isFitUpDone, boolean isVisualInspectionDone, Set<JointNdtWithResult> ndtReportsWithResults, Preheat preheat, PostWeldHeatTreatment postWeldHeatTreatment, String comments) {
         this.id = id;
         this.number = number;
         this.coordinateOnIsometric = coordinateOnIsometric;
@@ -159,13 +159,11 @@ public class Joint {
         this.comments = jointEntity.getComments();
     }
 
-    private Map<NdtReport, Boolean> initializeNdtReportsWithResultsWithValues(List<JointNdtWithResultEntity> jointNdtWithResultsList) {
-        Map<NdtReport, Boolean> ndtReportsWithResults = new HashMap<>();
+    private Set<JointNdtWithResult> initializeNdtReportsWithResultsWithValues(Set<JointNdtWithResultEntity> jointNdtWithResultsList) throws JsonProcessingException {
+        Set<JointNdtWithResult> ndtReportsWithResults = new HashSet<>();
         for (JointNdtWithResultEntity jointNdtWithResultEntity : jointNdtWithResultsList){
-            NdtReport tempNdtReport = new NdtReport(jointNdtWithResultEntity.getNdtReport());
-            Boolean tempIsPassed = jointNdtWithResultEntity.getPassed();
-
-            ndtReportsWithResults.put(tempNdtReport, tempIsPassed);
+            JointNdtWithResult jointNdtWithResult = new JointNdtWithResult(jointNdtWithResultEntity);
+            ndtReportsWithResults.add(jointNdtWithResult);
         }
         return ndtReportsWithResults;
     }
@@ -378,11 +376,11 @@ public class Joint {
         isVisualInspectionDone = visualInspectionDone;
     }
 
-    public Map<NdtReport, Boolean> getNdtReportsWithResults() {
+    public Set<JointNdtWithResult> getNdtReportsWithResults() {
         return ndtReportsWithResults;
     }
 
-    public void setNdtReportsWithResults(Map<NdtReport, Boolean> ndtReportsWithResults) {
+    public void setNdtReportsWithResults(Set<JointNdtWithResult> ndtReportsWithResults) {
         this.ndtReportsWithResults = ndtReportsWithResults;
     }
 
