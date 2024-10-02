@@ -1,6 +1,5 @@
 Important:
 
-- Add get file revisions as List<String> (with the same resourceId and fileType) - Aviad
 
 To Do Later:
 - Ensure comments include line breaks
@@ -55,3 +54,4 @@ Done:
 - Joint - change ndt to Map - Aviad
 - Create filters functions to all entities - Oleg: FillerMaterialCertificate, Isometric, Joiner, Joint, NdtReport
                                              Oleg: Pid, PWHT, PreHeat, PressureTestPackage, PSP
+- Add get file revisions as List<String> (with the same resourceId and fileType) - Aviad

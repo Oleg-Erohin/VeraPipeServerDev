@@ -6,6 +6,8 @@ import com.verapipe.logic.FileLogic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/files")
 public class FileController {
@@ -50,5 +52,11 @@ public class FileController {
     public byte[] getById(@PathVariable("id") int id) throws Exception {
         System.out.println();
         return this.fileLogic.getById(id);
+    }
+
+    @GetMapping("/get-revisions")
+    public List<String> getRevisions(@RequestParam String fileType,
+                                     @RequestParam int resourceId) throws ApplicationException {
+        return this.fileLogic.getRevisions(fileType,resourceId);
     }
 }

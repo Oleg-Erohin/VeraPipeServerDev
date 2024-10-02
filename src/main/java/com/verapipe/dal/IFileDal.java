@@ -2,9 +2,12 @@ package com.verapipe.dal;
 
 import com.verapipe.entities.FileEntity;
 import com.verapipe.enums.FileType;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 public interface IFileDal extends PagingAndSortingRepository<FileEntity, Integer> {
 
@@ -21,6 +24,13 @@ public interface IFileDal extends PagingAndSortingRepository<FileEntity, Integer
     @Query("SELECT new com.verapipe.entities.FileEntity(f.id, f.name, f.fileType, f.resourceId, f.revision, f.uploadDate) " +
             "FROM FileEntity f WHERE f.fileType = :fileType AND f.resourceId = :resourceId " +
             "ORDER BY f.uploadDate DESC")
-    FileEntity findLastWithoutFileData(@Param("fileType") FileType fileType,
-                                       @Param("resourceId") int resourceId);
+    List<FileEntity> findLastWithoutFileData(@Param("fileType") FileType fileType,
+                                             @Param("resourceId") int resourceId,
+                                             Pageable pageable);
+
+    @Query("SELECT f.revision FROM FileEntity f WHERE f.resourceId = :resourceId AND f.fileType = :fileType")
+    List<String> findRevisionsByResourceIdAndFileType(
+            @Param("resourceId") int resourceId,
+            @Param("fileType") FileType fileType
+    );
 }

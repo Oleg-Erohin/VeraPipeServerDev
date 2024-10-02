@@ -10,6 +10,7 @@ import com.verapipe.enums.FileType;
 import com.verapipe.exceptions.ApplicationException;
 import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -98,23 +99,26 @@ public class FileLogic {
         System.out.println();
         FileType fileType = FileType.fromString(strFileType);
         FileEntity fileEntity;
+        File file;
         try {
             if (revision == null) {
 //            fileEntity = this.fileDal.findTopByFileTypeAndResourceIdOrderByUploadDateDesc(fileType,resourceId);
-                fileEntity = this.fileDal.findLastWithoutFileData(fileType, resourceId);
+                fileEntity = this.fileDal.findLastWithoutFileData(fileType, resourceId, PageRequest.of(0, 1)).stream().findFirst().orElse(null);
             } else {
                 fileEntity = this.fileDal.findWithoutFileData(fileType, resourceId, revision);
             }
         } catch (Exception e) {
             throw new ApplicationException(ErrorType.FILE_COULD_NOT_BE_FOUND);
         }
-        File file = new File(fileEntity);
+        if (fileEntity != null) {file = new File(fileEntity);}
+        else {file = null;}
         return file;
     }
 
     public File getFileByFilters(String strFileType, int resourceId, String revision) throws ApplicationException {
         FileType fileType = FileType.fromString(strFileType);
         FileEntity fileEntity;
+        File file;
         try {
             if (revision == null) {
 //            fileEntity = this.fileDal.findTopByFileTypeAndResourceIdOrderByUploadDateDesc(fileType,resourceId);
@@ -125,8 +129,18 @@ public class FileLogic {
         } catch (Exception e) {
             throw new ApplicationException(ErrorType.FILE_COULD_NOT_BE_FOUND);
         }
-        File file = new File(fileEntity);
+        if (fileEntity != null) {file = new File(fileEntity);}
+        else {file = null;}
         return file;
+    }
+
+    public List<String> getRevisions (String strFileType, int resourceId) throws ApplicationException {
+        FileType fileType = FileType.fromString(strFileType);
+        try {
+            return this.fileDal.findRevisionsByResourceIdAndFileType(resourceId, fileType);
+        }catch (Exception e){
+            throw new ApplicationException(ErrorType.REVISIONS_COULD_NOT_BE_FOUND);
+        }
     }
 
 
