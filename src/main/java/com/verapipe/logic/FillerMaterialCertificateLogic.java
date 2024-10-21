@@ -6,6 +6,7 @@ import com.verapipe.dto.FillerMaterialCertificate;
 import com.verapipe.dto.FillerMaterialType;
 import com.verapipe.entities.FillerMaterialCertificateEntity;
 import com.verapipe.enums.ErrorType;
+import com.verapipe.enums.FileType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.specifications.FillerMaterialCertificateSpecifications;
 import com.verapipe.utils.CommonValidations;
@@ -23,6 +24,7 @@ import java.util.Optional;
 public class FillerMaterialCertificateLogic {
     private IFillerMaterialCertificateDal fillerMaterialCertificateDal;
     private FillerMaterialCertificateSpecifications fillerMaterialCertificateSpecifications;
+    private FileLogic fileLogic;
 
     @Autowired
     public FillerMaterialCertificateLogic(IFillerMaterialCertificateDal fillerMaterialCertificateDal,
@@ -65,6 +67,12 @@ public class FillerMaterialCertificateLogic {
             this.fillerMaterialCertificateDal.deleteById(id);
         } catch (Exception e) {
             throw new ApplicationException(ErrorType.FAILED_TO_DELETE_FILLER_MATERIAL_CERTIFICATE);
+        }
+        try {
+            FileType fileType = FileType.BASE_MATERIAL_CERTIFICATE; // Or whatever type is used to identify these files
+            fileLogic.deleteByFileTypeAndResourceId(fileType, id); // Delete related files
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_FILE);
         }
     }
 

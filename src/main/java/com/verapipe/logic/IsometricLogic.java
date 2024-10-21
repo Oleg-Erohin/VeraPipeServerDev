@@ -7,6 +7,7 @@ import com.verapipe.dto.Isometric;
 import com.verapipe.dto.Pid;
 import com.verapipe.entities.IsometricEntity;
 import com.verapipe.enums.ErrorType;
+import com.verapipe.enums.FileType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.specifications.IsometricSpecifications;
 import com.verapipe.utils.CommonValidations;
@@ -23,6 +24,7 @@ public class IsometricLogic {
     private IIsometricDal isometricDal;
     private PidLogic pidLogic;
     private IsometricSpecifications isometricSpecifications;
+    private FileLogic fileLogic;
 
     @Autowired
     public IsometricLogic(IIsometricDal isometricDal, PidLogic pidLogic, IsometricSpecifications isometricSpecifications) {
@@ -65,6 +67,12 @@ public class IsometricLogic {
             this.isometricDal.deleteById(id);
         } catch (Exception e) {
             throw new ApplicationException(ErrorType.FAILED_TO_DELETE_ISOMETRIC);
+        }
+        try {
+            FileType fileType = FileType.BASE_MATERIAL_CERTIFICATE; // Or whatever type is used to identify these files
+            fileLogic.deleteByFileTypeAndResourceId(fileType, id); // Delete related files
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_FILE);
         }
     }
 

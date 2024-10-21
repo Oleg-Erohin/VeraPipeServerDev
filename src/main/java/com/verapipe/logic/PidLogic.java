@@ -5,6 +5,7 @@ import com.verapipe.dal.IPidDal;
 import com.verapipe.dto.Pid;
 import com.verapipe.entities.PidEntity;
 import com.verapipe.enums.ErrorType;
+import com.verapipe.enums.FileType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.specifications.PidSpecifications;
 import com.verapipe.utils.CommonValidations;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 @Service
 public class PidLogic {
     private IPidDal pidDal;
+    private FileLogic fileLogic;
 
     @Autowired
     public PidLogic(IPidDal pidDal) {
@@ -60,6 +62,12 @@ public class PidLogic {
             this.pidDal.deleteById(id);
         } catch (Exception e) {
             throw new ApplicationException(ErrorType.FAILED_TO_DELETE_PID);
+        }
+        try {
+            FileType fileType = FileType.BASE_MATERIAL_CERTIFICATE; // Or whatever type is used to identify these files
+            fileLogic.deleteByFileTypeAndResourceId(fileType, id); // Delete related files
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_FILE);
         }
     }
 

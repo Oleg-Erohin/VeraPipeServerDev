@@ -6,6 +6,7 @@ import com.verapipe.dto.NdtReport;
 import com.verapipe.dto.NdtType;
 import com.verapipe.entities.NdtReportEntity;
 import com.verapipe.enums.ErrorType;
+import com.verapipe.enums.FileType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.specifications.NdtReportSpecifications;
 import com.verapipe.utils.CommonValidations;
@@ -22,6 +23,7 @@ public class NdtReportLogic {
     private INdtReportDal ndtReportDal;
     private NdtTypeLogic ndtTypeLogic;
     private NdtReportSpecifications ndtReportSpecifications;
+    private FileLogic fileLogic;
 
     @Autowired
     public NdtReportLogic(INdtReportDal ndtReportDal, NdtTypeLogic ndtTypeLogic, NdtReportSpecifications ndtReportSpecifications) {
@@ -63,6 +65,12 @@ public class NdtReportLogic {
             this.ndtReportDal.deleteById(id);
         } catch (Exception e) {
             throw new ApplicationException(ErrorType.FAILED_TO_DELETE_NDT_REPORT);
+        }
+        try {
+            FileType fileType = FileType.BASE_MATERIAL_CERTIFICATE; // Or whatever type is used to identify these files
+            fileLogic.deleteByFileTypeAndResourceId(fileType, id); // Delete related files
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_FILE);
         }
     }
 

@@ -8,6 +8,7 @@ import com.verapipe.dto.Joiner;
 import com.verapipe.dto.JointDesign;
 import com.verapipe.entities.JoinerEntity;
 import com.verapipe.enums.ErrorType;
+import com.verapipe.enums.FileType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.specifications.JoinerSpecifications;
 import com.verapipe.utils.CommonValidations;
@@ -26,6 +27,7 @@ import java.util.Set;
 public class JoinerLogic {
     private IJoinerDal joinerDal;
     private JoinerSpecifications joinerSpecifications;
+    private FileLogic fileLogic;
 
     @Autowired
     public JoinerLogic(IJoinerDal joinerDal, JoinerSpecifications joinerSpecifications) {
@@ -66,6 +68,12 @@ public class JoinerLogic {
             this.joinerDal.deleteById(id);
         } catch (Exception e) {
             throw new ApplicationException(ErrorType.FAILED_TO_DELETE_JOINER);
+        }
+        try {
+            FileType fileType = FileType.BASE_MATERIAL_CERTIFICATE; // Or whatever type is used to identify these files
+            fileLogic.deleteByFileTypeAndResourceId(fileType, id); // Delete related files
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_FILE);
         }
     }
 

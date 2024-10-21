@@ -6,6 +6,7 @@ import com.verapipe.dto.Preheat;
 import com.verapipe.dto.ProcessSpecificationProcedure;
 import com.verapipe.entities.PreheatEntity;
 import com.verapipe.enums.ErrorType;
+import com.verapipe.enums.FileType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.specifications.PreheatSpecifications;
 import com.verapipe.utils.CommonValidations;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 @Service
 public class PreheatLogic {
     private IPreheatDal preheatDal;
+    private FileLogic fileLogic;
 
     @Autowired
     public PreheatLogic(IPreheatDal preheatDal) {
@@ -61,6 +63,12 @@ public class PreheatLogic {
             this.preheatDal.deleteById(id);
         } catch (Exception e) {
             throw new ApplicationException(ErrorType.FAILED_TO_DELETE_PREHEAT);
+        }
+        try {
+            FileType fileType = FileType.BASE_MATERIAL_CERTIFICATE; // Or whatever type is used to identify these files
+            fileLogic.deleteByFileTypeAndResourceId(fileType, id); // Delete related files
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_FILE);
         }
     }
 

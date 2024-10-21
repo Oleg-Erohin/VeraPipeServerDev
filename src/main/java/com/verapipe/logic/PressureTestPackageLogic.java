@@ -7,6 +7,7 @@ import com.verapipe.dto.Pid;
 import com.verapipe.dto.PressureTestPackage;
 import com.verapipe.entities.PressureTestPackageEntity;
 import com.verapipe.enums.ErrorType;
+import com.verapipe.enums.FileType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.specifications.PressureTestPackageSpecifications;
 import com.verapipe.utils.CommonValidations;
@@ -21,6 +22,7 @@ import java.util.*;
 @Service
 public class PressureTestPackageLogic {
     private IPressureTestPackageDal pressureTestPackageDal;
+    private FileLogic fileLogic;
 
     @Autowired
     public PressureTestPackageLogic(IPressureTestPackageDal pressureTestPackageDal) {
@@ -60,6 +62,12 @@ public class PressureTestPackageLogic {
             this.pressureTestPackageDal.deleteById(id);
         } catch (Exception e) {
             throw new ApplicationException(ErrorType.FAILED_TO_DELETE_PRESSURE_TEST_PACKAGE);
+        }
+        try {
+            FileType fileType = FileType.BASE_MATERIAL_CERTIFICATE; // Or whatever type is used to identify these files
+            fileLogic.deleteByFileTypeAndResourceId(fileType, id); // Delete related files
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_FILE);
         }
     }
 
