@@ -13,30 +13,30 @@ public class Isometric {
     private String revision;
     private Date date;
     private int sheets;
-    private List<IsometricLocationInPid> isometricLocationsInPids;
+    private List<IsometricLocationInPid> isometricLocationInPids;
     private boolean isApproved;
     private String comments;
 
     public Isometric() {
     }
 
-    public Isometric(String name, String revision, Date date, int sheets, List<IsometricLocationInPid> isometricLocationsInPids, boolean isApproved, String comments) {
+    public Isometric(String name, String revision, Date date, int sheets, List<IsometricLocationInPid> isometricLocationInPids, boolean isApproved, String comments) {
         this.name = name;
         this.revision = revision;
         this.date = date;
         this.sheets = sheets;
-        this.isometricLocationsInPids = isometricLocationsInPids;
+        this.isometricLocationInPids = isometricLocationInPids;
         this.isApproved = isApproved;
         this.comments = comments;
     }
 
-    public Isometric(int id, String name, String revision, Date date, int sheets, List<IsometricLocationInPid> isometricLocationsInPids, boolean isApproved, String comments) {
+    public Isometric(int id, String name, String revision, Date date, int sheets, List<IsometricLocationInPid> isometricLocationInPids, boolean isApproved, String comments) {
         this.id = id;
         this.name = name;
         this.revision = revision;
         this.date = date;
         this.sheets = sheets;
-        this.isometricLocationsInPids = isometricLocationsInPids;
+        this.isometricLocationInPids = isometricLocationInPids;
         this.isApproved = isApproved;
         this.comments = comments;
     }
@@ -47,12 +47,12 @@ public class Isometric {
         this.revision = isometricEntity.getRevision();
         this.date = isometricEntity.getDate();
         this.sheets = isometricEntity.getSheets();
-        this.isometricLocationsInPids = initializePidsAndSheets(isometricEntity.getIsometricLocationsInPids());
+        this.isometricLocationInPids = initializeIsometricLocationInPids(isometricEntity.getIsometricLocationsInPids());
         this.isApproved = isometricEntity.isApproved();
         this.comments = isometricEntity.getComments();
     }
 
-    private List<IsometricLocationInPid> initializePidsAndSheets(List<IsometricLocationInPidEntity> isometricLocationsInPidsEntities) {
+    private List<IsometricLocationInPid> initializeIsometricLocationInPids(List<IsometricLocationInPidEntity> isometricLocationsInPidsEntities) {
         List<IsometricLocationInPid> tempIsometricLocationInPid = new ArrayList<>();
         for (IsometricLocationInPidEntity isometricLocationInPidEntity : isometricLocationsInPidsEntities) {
             IsometricLocationInPid isometricLocationInPid = new IsometricLocationInPid(isometricLocationInPidEntity);
@@ -101,12 +101,12 @@ public class Isometric {
         this.sheets = sheets;
     }
 
-    public List<IsometricLocationInPid> getIsometricLocationsInPids() {
-        return isometricLocationsInPids;
+    public List<IsometricLocationInPid> getIsometricLocationInPids() {
+        return isometricLocationInPids;
     }
 
-    public void setIsometricLocationsInPids(List<IsometricLocationInPid> isometricLocationsInPids) {
-        this.isometricLocationsInPids = isometricLocationsInPids;
+    public void setIsometricLocationInPids(List<IsometricLocationInPid> isometricLocationInPids) {
+        this.isometricLocationInPids = isometricLocationInPids;
     }
 
     public boolean isApproved() {
@@ -133,7 +133,7 @@ public class Isometric {
                 ", revision='" + revision + '\'' +
                 ", date=" + date +
                 ", sheets=" + sheets +
-                ", isometricLocationsInPids=" + isometricLocationsInPids +
+                ", isometricLocationInPids=" + isometricLocationInPids +
                 ", isApproved=" + isApproved +
                 ", comments='" + comments + '\'' +
                 '}';

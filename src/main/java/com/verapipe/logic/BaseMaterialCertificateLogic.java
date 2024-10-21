@@ -7,6 +7,7 @@ import com.verapipe.dto.BaseMaterialType;
 import com.verapipe.entities.BaseMaterialCertificateEntity;
 import com.verapipe.entities.BaseMaterialTypeEntity;
 import com.verapipe.enums.ErrorType;
+import com.verapipe.enums.FileType;
 import com.verapipe.exceptions.ApplicationException;
 import com.verapipe.specifications.BaseMaterialCertificateSpecifications;
 import com.verapipe.utils.CommonValidations;
@@ -25,15 +26,18 @@ public class BaseMaterialCertificateLogic {
     private IBaseMaterialCertificateDal baseMaterialCertificateDal;
     private BaseMaterialCertificateSpecifications baseMaterialCertificateSpecifications;
     private BaseMaterialTypeLogic baseMaterialTypeLogic;
+    private FileLogic fileLogic;
 
     @Autowired
     public BaseMaterialCertificateLogic(IBaseMaterialCertificateDal baseMaterialCertificateDal,
                                         BaseMaterialCertificateSpecifications baseMaterialCertificateSpecifications,
-                                        BaseMaterialTypeLogic baseMaterialTypeLogic
+                                        BaseMaterialTypeLogic baseMaterialTypeLogic,
+                                        FileLogic fileLogic
     ) {
         this.baseMaterialCertificateDal = baseMaterialCertificateDal;
         this.baseMaterialCertificateSpecifications = baseMaterialCertificateSpecifications;
         this.baseMaterialTypeLogic = baseMaterialTypeLogic;
+        this.fileLogic = fileLogic;
     }
 
     @CacheEvict(cacheNames = "baseMaterialCertificatesCache", allEntries = true)
@@ -65,10 +69,18 @@ public class BaseMaterialCertificateLogic {
         if (!isBaseMaterialCertificateExist(id)) {
             throw new ApplicationException(ErrorType.BASE_MATERIAL_CERTIFICATE_DOES_NOT_EXIST);
         }
+
         try {
             this.baseMaterialCertificateDal.deleteById(id);
         } catch (Exception e) {
             throw new ApplicationException(ErrorType.FAILED_TO_DELETE_BASE_MATERIAL_CERTIFICATE);
+        }
+
+        try {
+            FileType fileType = FileType.BASE_MATERIAL_CERTIFICATE; // Or whatever type is used to identify these files
+            fileLogic.deleteByFileTypeAndResourceId(fileType, id); // Delete related files
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.FAILED_TO_DELETE_FILE);
         }
     }
 

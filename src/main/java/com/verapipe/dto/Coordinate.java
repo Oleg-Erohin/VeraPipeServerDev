@@ -2,9 +2,6 @@ package com.verapipe.dto;
 
 import com.verapipe.entities.CoordinateEntity;
 
-import javax.persistence.Embeddable;
-
-@Embeddable
 public class Coordinate {
     private int id;
     private Float x;

@@ -54,7 +54,7 @@ public class IsometricEntity {
         this.date = isometric.getDate();
         this.sheets = isometric.getSheets();
         this.isApproved = isometric.isApproved();
-        this.isometricLocationsInPids = initializeIsometricLocationInPids(isometric.getIsometricLocationsInPids());
+        this.isometricLocationsInPids = initializeIsometricLocationInPids(isometric.getIsometricLocationInPids());
         this.comments = isometric.getComments();
     }
 

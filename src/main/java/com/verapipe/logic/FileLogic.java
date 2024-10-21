@@ -12,6 +12,7 @@ import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -54,13 +55,22 @@ public class FileLogic {
     }
 
     public void delete(int id) throws Exception {
-        if (!isFileExist(id)) {
+        if (!isFileExistById(id)) {
             throw new ApplicationException(ErrorType.FILE_DOES_NOT_EXIST);
         }
         try {
             this.fileDal.deleteById(id);
         } catch (Exception e) {
             throw new ApplicationException(ErrorType.FAILED_TO_DELETE_FILE);
+        }
+    }
+
+    @Transactional
+    public void deleteByFileTypeAndResourceId(FileType fileType, int resourceId) throws ApplicationException {
+        try {
+            this.fileDal.deleteByFileTypeAndResourceId(fileType, resourceId);
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.REVISIONS_COULD_NOT_BE_FOUND);
         }
     }
 
@@ -96,7 +106,6 @@ public class FileLogic {
     }
 
     public File getDataByFilters(String strFileType, int resourceId, String revision) throws ApplicationException {
-        System.out.println();
         FileType fileType = FileType.fromString(strFileType);
         FileEntity fileEntity;
         File file;
@@ -110,8 +119,11 @@ public class FileLogic {
         } catch (Exception e) {
             throw new ApplicationException(ErrorType.FILE_COULD_NOT_BE_FOUND);
         }
-        if (fileEntity != null) {file = new File(fileEntity);}
-        else {file = null;}
+        if (fileEntity != null) {
+            file = new File(fileEntity);
+        } else {
+            file = null;
+        }
         return file;
     }
 
@@ -129,16 +141,19 @@ public class FileLogic {
         } catch (Exception e) {
             throw new ApplicationException(ErrorType.FILE_COULD_NOT_BE_FOUND);
         }
-        if (fileEntity != null) {file = new File(fileEntity);}
-        else {file = null;}
+        if (fileEntity != null) {
+            file = new File(fileEntity);
+        } else {
+            file = null;
+        }
         return file;
     }
 
-    public List<String> getRevisions (String strFileType, int resourceId) throws ApplicationException {
+    public List<String> getRevisions(String strFileType, int resourceId) throws ApplicationException {
         FileType fileType = FileType.fromString(strFileType);
         try {
             return this.fileDal.findRevisionsByResourceIdAndFileType(resourceId, fileType);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new ApplicationException(ErrorType.REVISIONS_COULD_NOT_BE_FOUND);
         }
     }
@@ -206,7 +221,12 @@ public class FileLogic {
         return fileExtension;
     }
 
-    private boolean isFileExist(int id) {
+    private boolean isFileExistById(int id) {
         return this.fileDal.existsById(id);
+    }
+
+    public Boolean isFileExistByResource(String strFileType, int resourceId) {
+        FileType fileType = FileType.fromString(strFileType);
+        return this.fileDal.isFileExistByResource(fileType, resourceId);
     }
 }

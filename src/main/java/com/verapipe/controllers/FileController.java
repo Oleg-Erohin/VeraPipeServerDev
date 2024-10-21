@@ -20,13 +20,11 @@ public class FileController {
 
     @PostMapping
     public int add(@RequestBody File file) throws Exception {
-        System.out.println();
         return this.fileLogic.add(file);
     }
 
     @PutMapping
     public void update(@RequestBody File file) throws Exception {
-        System.out.println();
         this.fileLogic.update(file);
     }
 
@@ -34,23 +32,22 @@ public class FileController {
     public void delete(@PathVariable("id") int id) throws Exception {
         this.fileLogic.delete(id);
     }
+
     @GetMapping("/get-data")
     public File getFileData(@RequestParam String fileType,
                             @RequestParam int resourceId,
                             @RequestParam(required = false) String revision) throws ApplicationException {
-        System.out.println();
         return this.fileLogic.getDataByFilters(fileType, resourceId, revision);
     }
     @GetMapping("/get-file")
     public File getFile(@RequestParam String fileType,
                         @RequestParam int resourceId,
                         @RequestParam(required = false) String revision) throws ApplicationException {
-        System.out.println();
         return this.fileLogic.getFileByFilters(fileType, resourceId, revision);
     }
+
     @GetMapping("/{id}")
     public byte[] getById(@PathVariable("id") int id) throws Exception {
-        System.out.println();
         return this.fileLogic.getById(id);
     }
 
@@ -58,5 +55,11 @@ public class FileController {
     public List<String> getRevisions(@RequestParam String fileType,
                                      @RequestParam int resourceId) throws ApplicationException {
         return this.fileLogic.getRevisions(fileType,resourceId);
+    }
+
+    @GetMapping("/is-exist")
+    public Boolean isFileExistByResource(@RequestParam String fileType,
+                        @RequestParam int resourceId) throws ApplicationException {
+        return this.fileLogic.isFileExistByResource(fileType, resourceId);
     }
 }
