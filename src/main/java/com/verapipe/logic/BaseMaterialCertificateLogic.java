@@ -42,6 +42,15 @@ public class BaseMaterialCertificateLogic {
 
     @CacheEvict(cacheNames = "baseMaterialCertificatesCache", allEntries = true)
     public int add(BaseMaterialCertificate baseMaterialCertificate) throws Exception {
+        //Handle new BaseMaterialType
+//        if (baseMaterialCertificate.getBaseMaterialType().getId() == -1) {
+//            BaseMaterialType newBaseMaterial = new BaseMaterialType(baseMaterialCertificate.getBaseMaterialType().getName());
+//            int newBaseMaterialTypeId = baseMaterialTypeLogic.add(newBaseMaterial);
+//            newBaseMaterial.setId(newBaseMaterialTypeId);
+//        }
+        BaseMaterialType baseMaterialType = HandleNewBaseMaterialType(baseMaterialCertificate.getBaseMaterialType());
+        baseMaterialCertificate.setBaseMaterialType(baseMaterialType);
+
         validations(baseMaterialCertificate);
         BaseMaterialCertificateEntity baseMaterialCertificateEntity = new BaseMaterialCertificateEntity(baseMaterialCertificate);
         try {
@@ -55,6 +64,15 @@ public class BaseMaterialCertificateLogic {
 
     @CacheEvict(cacheNames = "baseMaterialCertificatesCache", allEntries = true)
     public void update(BaseMaterialCertificate baseMaterialCertificate) throws Exception {
+        //Handle new BaseMaterialType
+//        if (baseMaterialCertificate.getBaseMaterialType().getId() == -1) {
+//            BaseMaterialType newBaseMaterial = new BaseMaterialType(baseMaterialCertificate.getBaseMaterialType().getName());
+//            int newBaseMaterialTypeId = baseMaterialTypeLogic.add(newBaseMaterial);
+//            newBaseMaterial.setId(newBaseMaterialTypeId);
+//        }
+        BaseMaterialType baseMaterialType = HandleNewBaseMaterialType(baseMaterialCertificate.getBaseMaterialType());
+        baseMaterialCertificate.setBaseMaterialType(baseMaterialType);
+
         validations(baseMaterialCertificate);
         BaseMaterialCertificateEntity sentBaseMaterialCertificateEntity = new BaseMaterialCertificateEntity(baseMaterialCertificate);
         try {
@@ -118,8 +136,8 @@ public class BaseMaterialCertificateLogic {
 
     public List<BaseMaterialCertificate> findCertificatesByFilters(List<String> names, List<String> heatNums, List<String> lotNums, List<String> materialTypeNames) throws Exception {
         List<BaseMaterialType> baseMaterialTypesList = new ArrayList<>();
-        for (String baseMAterialTypeName : materialTypeNames){
-            BaseMaterialTypeEntity baseMaterialTypeEntity = this.baseMaterialTypeLogic.getByName(baseMAterialTypeName);
+        for (String baseMaterialTypeName : materialTypeNames) {
+            BaseMaterialTypeEntity baseMaterialTypeEntity = this.baseMaterialTypeLogic.getByName(baseMaterialTypeName);
             BaseMaterialType baseMaterialType = new BaseMaterialType(baseMaterialTypeEntity);
             baseMaterialTypesList.add(baseMaterialType);
         }
@@ -155,7 +173,7 @@ public class BaseMaterialCertificateLogic {
     }
 
     private void validateBaseMaterialCertificateMaterialType(BaseMaterialType materialType) throws Exception {
-//        CommonValidations.validateIsExistInBaseMaterialTypes(materialType);
+        CommonValidations.validateIsExistInBaseMaterialTypes(materialType);
     }
 
     private void validateBaseMaterialCertificateHeatOrLotNum(String heatOrLotNum) throws ApplicationException {
@@ -164,6 +182,14 @@ public class BaseMaterialCertificateLogic {
 
     private boolean isBaseMaterialCertificateExist(int id) {
         return this.baseMaterialCertificateDal.existsById(id);
+    }
+
+    private BaseMaterialType HandleNewBaseMaterialType(BaseMaterialType baseMaterialType) throws Exception {
+        if (baseMaterialType.getId() == -1) {
+            int newBaseMaterialTypeId = baseMaterialTypeLogic.add(baseMaterialType);
+            baseMaterialType.setId(newBaseMaterialTypeId);
+        }
+        return baseMaterialType;
     }
 
     private BaseMaterialTypeEntity getBaseMaterialTypeByName(String materialTypeName) throws ApplicationException {

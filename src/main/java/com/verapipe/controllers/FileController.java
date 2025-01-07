@@ -59,7 +59,7 @@ public class FileController {
 
     @GetMapping("/is-exist")
     public Boolean isFileExistByResource(@RequestParam String fileType,
-                        @RequestParam int resourceId) throws ApplicationException {
+                                         @RequestParam int resourceId) throws ApplicationException {
         return this.fileLogic.isFileExistByResource(fileType, resourceId);
     }
 }
